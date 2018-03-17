@@ -1,0 +1,3 @@
+http://www.inanzzz.com/index.php/post/d3ne/how-to-defile-unique-fileds-and-uniqueconstraint-in-doctrine
+
+https://github.com/matthewfedak/slim-3-doctrine-2

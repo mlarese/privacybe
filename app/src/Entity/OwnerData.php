@@ -22,9 +22,4 @@ class OwnerData {
      */
     protected $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Owner", inversedBy="owner_data")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id", nullable=false)
-     */
-    protected $owner;
 }

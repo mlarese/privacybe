@@ -32,8 +32,4 @@ class Owner {
      */
     protected $creationDate = '0000-00-00 00:00:00';
 
-    /**
-     * @ORM\OneToOne(targetEntity="OwnerData", mappedBy="owner")
-     */
-    protected $ownerData;
 }

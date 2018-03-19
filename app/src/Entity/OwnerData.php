@@ -17,14 +17,73 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OwnerData {
     /**
+     * @return mixed
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     *
+     * @return OwnerData
+     */
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     *
+     * @return OwnerData
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner() {
+        return $this->owner;
+    }
+
+    /**
+     * @param Owner $owner
+     *
+     * @return OwnerData
+     */
+    public function setOwner($owner) {
+        $this->owner = $owner;
+        $this->id = $owner->getId();
+        return $this;
+    }
+
+    /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Owner", inversedBy="owner_data")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id", nullable=false)
+     * @ORM\Column(type="string", length=50)
      */
-    protected $owner;
+    protected $email;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Owner", inversedBy="ownerData", fetch="LAZY")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+     protected $owner;
 }

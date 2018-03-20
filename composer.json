@@ -24,6 +24,8 @@
         "doctrine/orm": "~2.5",
         "symfony/serializer": "4.0.x-dev",
         "symfony/property-access": "4.0.x-dev",
-        "ramsey/uuid": "4.x-dev"
+        "ramsey/uuid": "4.x-dev",
+        "tuupola/cors-middleware": "0.7.0",
+        "akrabat/rka-slim-session-middleware": "2.0.0"
     }
 }

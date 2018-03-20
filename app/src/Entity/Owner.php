@@ -27,7 +27,7 @@ class Owner {
      * Owner constructor.
      */
     public function __construct() {
-        $this->setCreationDate(new DateTime());
+        $this->setCreationDate(strftime("%F %T"));
     }
 
     /**
@@ -122,7 +122,7 @@ class Owner {
     protected $code;
 
     /**
-     * @ORM\Column(name="creation_date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="creation_date", type="datetime",  options={"default"="CURRENT_TIMESTAMP"})
      */
     protected $creationDate;
 

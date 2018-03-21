@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Courage
- * Date: 21/03/2018
- * Time: 15:16
+ * Date: 19/03/2018
+ * Time: 23:21
  */
 
 namespace App\Entity;
@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="term")
+ * @ORM\Table(name="domain_service")
  */
 
-class term
+class domain_service
 {
     /**
      * @ORM\Id
@@ -23,20 +23,14 @@ class term
      */
     protected $id;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     protected $name;
     /**
-     * @ORM\ownerId
-     * @ORM\Column(name="owner_id", type="integer")
+     * @ORM\Id
+     * @ORM\Column(name="domain_path_id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $ownerId;
-    /**
-     * @ORM\versionId
-     * @ORM\Column(name="version_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $versionId;
+    protected $domainPathId;
 
 }

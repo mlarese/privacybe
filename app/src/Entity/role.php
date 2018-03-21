@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Courage
  * Date: 19/03/2018
- * Time: 23:14
+ * Time: 18:03
  */
 
 namespace App\Entity;
@@ -11,9 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="operator")
+ * @ORM\Table(name="role")
  */
-class operator
+
+class role
 {
     /**
      * @ORM\Id
@@ -22,8 +23,13 @@ class operator
      */
     protected $id;
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(name="string", length=100)
      */
     protected $name;
+    /**
+     * @ORM\Column(name="string", length=20)
+     */
+    protected $code;
+
 
 }

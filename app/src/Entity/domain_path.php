@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Courage
  * Date: 19/03/2018
- * Time: 23:14
+ * Time: 23:31
  */
 
 namespace App\Entity;
@@ -11,9 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="operator")
+ * @ORM\Table(name="domain_path")
  */
-class operator
+
+class domain_path
 {
     /**
      * @ORM\Id
@@ -22,8 +23,14 @@ class operator
      */
     protected $id;
     /**
+     * @ORM\Id
+     * @ORM\Column(name="domain_id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $domainId;
+    /**
      * @ORM\Column(type="string", length=100)
      */
-    protected $name;
+    protected $path;
 
 }

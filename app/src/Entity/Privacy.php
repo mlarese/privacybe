@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="privacy")
  */
 
-class privacy
+class Privacy
 {
     /**
      * @ORM\Id
@@ -29,9 +29,7 @@ class privacy
      */
     protected $domainServiceId;
     /**
-     * @ORM\termId
      * @ORM\Column(name="term_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $termId;
     /**

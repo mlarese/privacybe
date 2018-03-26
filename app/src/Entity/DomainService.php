@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="domain_service")
  */
 
-class domain_service
+class DomainService
 {
     /**
      * @ORM\Id
@@ -27,9 +27,7 @@ class domain_service
      */
     protected $name;
     /**
-     * @ORM\Id
      * @ORM\Column(name="domain_path_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $domainPathId;
 

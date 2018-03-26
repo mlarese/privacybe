@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="general_log")
  */
 
-class general_log
+class GeneralLog
 {
     /**
      * @ORM\Id

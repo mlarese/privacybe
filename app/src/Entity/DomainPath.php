@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Courage
  * Date: 19/03/2018
- * Time: 18:03
+ * Time: 23:31
  */
 
 namespace App\Entity;
@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="role")
+ * @ORM\Table(name="domain_path")
  */
 
-class role
+class DomainPath
 {
     /**
      * @ORM\Id
@@ -23,13 +23,12 @@ class role
      */
     protected $id;
     /**
-     * @ORM\Column(name="string", length=100)
+     * @ORM\Column(name="domain_id", type="integer")
      */
-    protected $name;
+    protected $domainId;
     /**
-     * @ORM\Column(name="string", length=20)
+     * @ORM\Column(type="string", length=100)
      */
-    protected $code;
-
+    protected $path;
 
 }

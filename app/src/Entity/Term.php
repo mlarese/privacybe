@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="term")
  */
 
-class term
+class Term
 {
     /**
      * @ORM\Id
@@ -27,9 +27,7 @@ class term
      */
     protected $name;
     /**
-     * @ORM\ownerId
      * @ORM\Column(name="owner_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $ownerId;
     /**

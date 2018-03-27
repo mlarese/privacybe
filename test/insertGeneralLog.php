@@ -26,13 +26,24 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$role = new \App\Entity\Role();
+$log = new \App\Entity\GeneralLog();
+$log ->setLogDate(new DateTime())
+    ->setType('user insert')
+    ->setDescription('user Juliet added');
+$em ->persist($log);
+$em ->flush();
 
-$role->setCode('MKR')
-    ->setName('Courage Name');
+$log = new \App\Entity\GeneralLog();
+$log ->setLogDate(new DateTime())
+    ->setType('user insert')
+    ->setDescription('user courage added');
+$em ->persist($log);
+$em ->flush();
 
-$em->persist($role);
-
-
-$em->flush();
+$log = new \App\Entity\GeneralLog();
+$log ->setLogDate(new DateTime())
+    ->setDescription('user courage modified')
+    ->setType('user modify');
+$em ->persist($log);
+$em ->flush();
 

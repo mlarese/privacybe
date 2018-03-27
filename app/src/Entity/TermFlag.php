@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Courage
- * Date: 21/03/2018
- * Time: 16:22
+ * Date: 20/03/2018
+ * Time: 13:08
  */
 
 namespace App\Entity;
@@ -11,11 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="term_text"))
+ * @ORM\Table(name="term_flag")
  */
 
-
-class term_text
+class TermFlag
 {
     /**
      * @ORM\Id
@@ -24,18 +23,24 @@ class term_text
      */
     protected $id;
     /**
-     * @ORM\termId
      * @ORM\Column(name="term_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $termId;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=50)
      */
-    protected $text;
+    protected $name;
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="boolean")
      */
-    protected $language;
+    protected $flag;
+    /**
+     * @ORM\Column(name="mandatory_flag", type="boolean")
+     */
+    protected $mandatoryFlag;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $order;
 
 }

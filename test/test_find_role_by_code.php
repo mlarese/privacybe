@@ -1,5 +1,4 @@
 <?php
-
 use App\Entity\Owner;
 use App\Entity\OwnerData;
 use App\Entity\Term;
@@ -26,13 +25,8 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$role = new \App\Entity\Role();
+$roles = $em->getRepository(\App\Entity\Role::class)->findBy([
+    'code' => 'minkia'
+]);
 
-$role->setCode('MKR')
-    ->setName('Courage Name');
-
-$em->persist($role);
-
-
-$em->flush();
-
+print_r($roles);

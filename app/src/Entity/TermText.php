@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Courage
- * Date: 20/03/2018
- * Time: 15:40
+ * Date: 21/03/2018
+ * Time: 16:22
  */
 
 namespace App\Entity;
@@ -11,10 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="privacy")
+ * @ORM\Table(name="term_text"))
  */
 
-class Privacy
+
+class TermText
 {
     /**
      * @ORM\Id
@@ -33,29 +34,11 @@ class Privacy
 
     /**
      * @param mixed $id
-     * @return Privacy
+     * @return TermText
      */
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDomainServiceId()
-    {
-        return $this->domainServiceId;
-    }
-
-    /**
-     * @param mixed $domainServiceId
-     * @return Privacy
-     */
-    public function setDomainServiceId($domainServiceId)
-    {
-        $this->domainServiceId = $domainServiceId;
         return $this;
     }
 
@@ -69,7 +52,7 @@ class Privacy
 
     /**
      * @param mixed $termId
-     * @return Privacy
+     * @return TermText
      */
     public function setTermId($termId)
     {
@@ -80,55 +63,49 @@ class Privacy
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getText()
     {
-        return $this->email;
+        return $this->text;
     }
 
     /**
-     * @param mixed $email
-     * @return Privacy
+     * @param mixed $text
+     * @return TermText
      */
-    public function setEmail($email)
+    public function setText($text)
     {
-        $this->email = $email;
+        $this->text = $text;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTerm()
+    public function getLanguage()
     {
-        return $this->term;
+        return $this->language;
     }
 
     /**
-     * @param mixed $term
-     * @return Privacy
+     * @param mixed $language
+     * @return TermText
      */
-    public function setTerm($term)
+    public function setLanguage($language)
     {
-        $this->term = $term;
+        $this->language = $language;
         return $this;
     }
-    /**
-     * @ORM\Column(name="domain_service_id", type="integer")
-     */
-    protected $domainServiceId;
     /**
      * @ORM\Column(name="term_id", type="integer")
      */
     protected $termId;
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    protected $email;
-    /**
      * @ORM\Column(type="text")
      */
-    protected $term;
-
-
+    protected $text;
+    /**
+     * @ORM\Column(type="string", length=4)
+     */
+    protected $language;
 
 }

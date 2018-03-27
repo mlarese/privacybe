@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Courage
  * Date: 19/03/2018
- * Time: 23:31
+ * Time: 18:03
  */
 
 namespace App\Entity;
@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="domain_path")
+ * @ORM\Table(name="role")
  */
 
-class DomainPath
+class Role
 {
     /**
      * @return mixed
@@ -26,7 +26,7 @@ class DomainPath
 
     /**
      * @param mixed $id
-     * @return DomainPath
+     * @return Role
      */
     public function setId($id)
     {
@@ -37,36 +37,36 @@ class DomainPath
     /**
      * @return mixed
      */
-    public function getDomainId()
+    public function getName()
     {
-        return $this->domainId;
+        return $this->name;
     }
 
     /**
-     * @param mixed $domainId
-     * @return DomainPath
+     * @param mixed $name
+     * @return Role
      */
-    public function setDomainId($domainId)
+    public function setName($name)
     {
-        $this->domainId = $domainId;
+        $this->name = $name;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getPath()
+    public function getCode()
     {
-        return $this->path;
+        return $this->code;
     }
 
     /**
-     * @param mixed $path
-     * @return DomainPath
+     * @param mixed $code
+     * @return Role
      */
-    public function setPath($path)
+    public function setCode($code)
     {
-        $this->path = $path;
+        $this->code = $code;
         return $this;
     }
     /**
@@ -76,12 +76,13 @@ class DomainPath
      */
     protected $id;
     /**
-     * @ORM\Column(name="domain_id", type="integer")
-     */
-    protected $domainId;
-    /**
      * @ORM\Column(type="string", length=100)
      */
-    protected $path;
+    protected $name;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $code;
+
 
 }

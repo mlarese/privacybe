@@ -17,6 +17,59 @@ use Doctrine\ORM\Mapping as ORM;
 class DomainService
 {
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return DomainService
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return DomainService
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDomainPathId()
+    {
+        return $this->domainPathId;
+    }
+
+    /**
+     * @param mixed $domainPathId
+     * @return DomainService
+     */
+    public function setDomainPathId($domainPathId)
+    {
+        $this->domainPathId = $domainPathId;
+        return $this;
+    }
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

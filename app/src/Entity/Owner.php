@@ -14,122 +14,45 @@ use Doctrine\ORM\Mapping as ORM;
 class Owner {
     /**
      * @ORM\Id()
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="string")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=100)
      */
     protected $name;
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $email;
+    /**
+    * @ORM\Column(type="string", length=255)
+    */
+    protected $description;
 
     /**
-     * Owner constructor.
-     */
-    public function __construct() {
-        $this->setCreationDate(strftime("%F %T"));
+    * @ORM\Column(type="json_array", name="domain")
+    */
+    protected $domain;
+    /**
+    {
+    id: 1,
+    name: 'Azze',
+    email: 'email@gmail.com',
+    description: 'azze current account',
+    domains: [
+    {
+    name: 'jesolo.com', +15087628612
+    paths:[
+    {description: 'booking path in 4 part',path: 'booking.html' },
+    {description: 'inform paths in 3 part',path: 'inform.html' },
+    {description: 'reservation paths in 2 part',path: 'reservation.html' },
+    {description: 'offer path in 6 part',path: 'offers.html' }
+    ]
     }
-
-    /**
-     * @return mixed
-     */
-    public function getId() {
-        return $this->id;
+    ]
     }
-
-    /**
-     * @param mixed $id
-     *
-     * @return Owner
      */
-    public function setId($id) {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     *
-     * @return Owner
-     */
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCode() {
-        return $this->code;
-    }
-
-    /**
-     * @param mixed $code
-     *
-     * @return Owner
-     */
-    public function setCode($code) {
-        $this->code = $code;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreationDate() {
-        return $this->creationDate;
-    }
-
-    /**
-     * @param mixed $creationDate
-     *
-     * @return Owner
-     */
-    public function setCreationDate($creationDate) {
-        $this->creationDate = $creationDate;
-        return $this;
-    }
-
-    /**
-     * @return OwnerData
-     */
-    public function getOwnerData() {
-        return $this->ownerData;
-    }
-
-    /**
-     * @param mixed $ownerData
-     *
-     * @return Owner
-     */
-    public function setOwnerData($ownerData) {
-        $ownerData->setId( $this->id);
-        $this->ownerData = $ownerData;
-        return $this;
-    }
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=false)
-     */
-    protected $code;
-
-    /**
-     * @ORM\Column(name="creation_date", type="datetime",  options={"default"="CURRENT_TIMESTAMP"})
-     */
-    protected $creationDate;
-
-    /**
-     * @ORM\OneToOne(targetEntity="OwnerData", mappedBy="owner", cascade={"all"}, fetch="LAZY")
-     */
-    protected $ownerData;
-
 
 }

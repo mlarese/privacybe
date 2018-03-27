@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(
- *     name="owner",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="owner_code_unique", columns={"code"})}
+ *     name="owner"
  * )
  */
 class Owner {

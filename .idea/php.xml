@@ -44,5 +44,5 @@
       <server host="localhost" id="867c6e69-b332-485f-b4ff-c53d6fc4d5e8" name="localhost" />
     </servers>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
 </project>

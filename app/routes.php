@@ -2,7 +2,7 @@
 // Routes
 
 
-use App\Action\HomeAction;
+use App\Action\Home;
 
 $app->get('/test', function() {
     $session = new \RKA\Session();
@@ -14,4 +14,5 @@ $app->get('/test', function() {
 
 });
 
-$app->get('/', 'App\Action\HomeAction:dispatch');
+$app->get('/', 'App\Action\Home:welcome');
+$app->post('/', 'App\Action\Home:welcomepost');

@@ -27,7 +27,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => 'localhost',
+                'host'     => '127.0.0.1',
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',

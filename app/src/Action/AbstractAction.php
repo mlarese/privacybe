@@ -9,14 +9,24 @@
 namespace App\Action;
 
 
+use Doctrine\ORM\EntityManager;
+
 class AbstractAction
 {
     protected $container;
-    protected $em;
+    /**
+     * @var EntityManager
+     */
+    protected $emConfig;
+    /**
+     * @var EntityManager
+     */
+    protected $emPrivacy;
 
     public function __construct( $container) {
         $this->container = $container;
-        $this->em = $container['em'];
+        $this->emConfig = $container['em-config'];
+        $this->emPrivacy = $container['em-privacy'];
     }
 
 }

@@ -17,18 +17,29 @@ $container['logger'] = function ($c) {
 };
 
 // Doctrine
-$container['em'] = function ($c) {
+$container['em-config'] = function ($c) {
     $settings = $c->get('settings');
     $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-        $settings['doctrine']['meta']['entity_path'],
-        $settings['doctrine']['meta']['auto_generate_proxies'],
-        $settings['doctrine']['meta']['proxy_dir'],
-        $settings['doctrine']['meta']['cache'],
+        $settings['doctrine_config']['meta']['entity_path'],
+        $settings['doctrine_config']['meta']['auto_generate_proxies'],
+        $settings['doctrine_config']['meta']['proxy_dir'],
+        $settings['doctrine_config']['meta']['cache'],
         false
     );
-    return \Doctrine\ORM\EntityManager::create($settings['doctrine']['connection'], $config);
+    return \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
 };
 
+$container['em-privacy'] = function ($c) {
+    $settings = $c->get('settings');
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $settings['doctrine_privacy']['meta']['entity_path'],
+        $settings['doctrine_privacy']['meta']['auto_generate_proxies'],
+        $settings['doctrine_privacy']['meta']['proxy_dir'],
+        $settings['doctrine_privacy']['meta']['cache'],
+        false
+    );
+    return \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
+};
 // -----------------------------------------------------------------------------
 // Action factories
 // -----------------------------------------------------------------------------

@@ -37,6 +37,7 @@
       <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
       <path value="$PROJECT_DIR$/vendor/psr/http-server-middleware" />
       <path value="$PROJECT_DIR$/vendor/akrabat/rka-slim-session-middleware" />
+      <path value="$PROJECT_DIR$/vendor/symposium/web-app-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

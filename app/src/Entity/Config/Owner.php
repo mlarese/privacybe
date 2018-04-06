@@ -103,4 +103,9 @@ class Owner {
      * @ORM\Column(name="profile", type="json", nullable=true)
      */
     protected $profile;
+
+    /**
+     * @ORM\Column(name="language", type="string", nullable=false)
+     */
+    protected $language;
 }

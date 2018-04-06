@@ -18,13 +18,23 @@ class Term
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="string", length=128)
+     * @ORM\GeneratedValue(strategy="NONE")
      */
-     protected $id;
+     protected $uid;
+
+     /**
+      * @ORM\Column(name="name", type="string", nullable=false)
+      */
+     protected $name;
 
     /**
      * @ORM\Column(name="paragraphs", type="json", nullable=true)
      */
     protected $paragraphs;
+
+    /**
+     * @ORM\Column(name="pages", type="json_array", nullable=false)
+     */
+    protected $pages;
 }

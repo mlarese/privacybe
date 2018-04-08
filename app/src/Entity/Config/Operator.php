@@ -58,18 +58,6 @@ class Operator
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $name;
-
-    /**
-     * @var $profile
-     *
-     * @ORM\Column(name="profile", type="json", nullable=false)
-     */
-    protected $profile;
-
-    /**
      * @return mixed
      */
     public function getProfile()
@@ -86,6 +74,18 @@ class Operator
         $this->profile = $profile;
         return $this;
     }
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $name;
+
+    /**
+     * @var $profile
+     *
+     * @ORM\Column(name="profile", type="json", nullable=false)
+     */
+    protected $profile;
 
 
 }

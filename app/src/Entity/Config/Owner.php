@@ -90,6 +90,24 @@ class Owner {
     }
 
     /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     * @return Owner
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
      * @param mixed $email
      * @return Owner
      */

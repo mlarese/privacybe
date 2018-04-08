@@ -6,7 +6,7 @@
  * Time: 08:08
  */
 
-namespace App\Entity\Config;
+namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,11 +33,6 @@ class ActionHistory
      * @ORM\Column(name="description", type="string", nullable=false)
      */
     protected $description;
-
-    /**
-     * @ORM\Column(name="date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
-     */
-    protected $date;
 
     /**
      * @return mixed
@@ -146,6 +141,11 @@ class ActionHistory
         $this->userName = $userName;
         return $this;
     }
+
+    /**
+     * @ORM\Column(name="date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
+     */
+    protected $date;
 
     /**
      * ActionHistory constructor.

@@ -17,6 +17,77 @@ use Doctrine\ORM\Mapping as ORM;
 class Term
 {
     /**
+     * @return mixed
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     * @return Term
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return Term
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParagraphs()
+    {
+        return $this->paragraphs;
+    }
+
+    /**
+     * @param mixed $paragraphs
+     * @return Term
+     */
+    public function setParagraphs($paragraphs)
+    {
+        $this->paragraphs = $paragraphs;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param mixed $pages
+     * @return Term
+     */
+    public function setPages($pages)
+    {
+        $this->pages = $pages;
+        return $this;
+    }
+    /**
      * @ORM\Id
      * @ORM\Column(type="string", length=128)
      * @ORM\GeneratedValue(strategy="NONE")

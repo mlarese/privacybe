@@ -4,16 +4,27 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 require 'vendor/autoload.php';
 
 $settings = include 'app/settings.php';
-$settings = $settings['settings']['doctrine'];
+$settingsConfig = $settings['settings']['doctrine_config'];
+$settingsPrivacy= $settings['settings']['doctrine_privacy'];
 
-$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-    $settings['meta']['entity_path'],
-    $settings['meta']['auto_generate_proxies'],
-    $settings['meta']['proxy_dir'],
-    $settings['meta']['cache'],
+$doctrinConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+    $settingsConfig['meta']['entity_path'],
+    $settingsConfig['meta']['auto_generate_proxies'],
+    $settingsConfig['meta']['proxy_dir'],
+    $settingsConfig['meta']['cache'],
     false
 );
 
-$em = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+$doctrinPrivacy = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+    $settingsPrivacy['meta']['entity_path'],
+    $settingsPrivacy['meta']['auto_generate_proxies'],
+    $settingsPrivacy['meta']['proxy_dir'],
+    $settingsPrivacy['meta']['cache'],
+    false
+);
 
-return ConsoleRunner::createHelperSet($em);
+$emConfig = \Doctrine\ORM\EntityManager::create($settingsConfig['connection'], $doctrinConfig);
+$emPrivacy = \Doctrine\ORM\EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
+
+// return ConsoleRunner::createHelperSet($emConfig);
+return ConsoleRunner::createHelperSet($emPrivacy);

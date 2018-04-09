@@ -4,27 +4,6 @@
 $container = $app->getContainer();
 
 // -----------------------------------------------------------------------------
-// Service providers
-// -----------------------------------------------------------------------------
-
-// Twig
-$container['view'] = function ($c) {
-    $settings = $c->get('settings');
-    $view = new \Slim\Views\Twig($settings['view']['template_path'], $settings['view']['twig']);
-
-    // Add extensions
-    $view->addExtension(new Slim\Views\TwigExtension($c->get('router'), $c->get('request')->getUri()));
-    $view->addExtension(new Twig_Extension_Debug());
-
-    return $view;
-};
-
-// Flash messages
-$container['flash'] = function ($c) {
-    return new \Slim\Flash\Messages;
-};
-
-// -----------------------------------------------------------------------------
 // Service factories
 // -----------------------------------------------------------------------------
 
@@ -38,27 +17,33 @@ $container['logger'] = function ($c) {
 };
 
 // Doctrine
-$container['em'] = function ($c) {
+$container['em-config'] = function ($c) {
     $settings = $c->get('settings');
     $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-        $settings['doctrine']['meta']['entity_path'],
-        $settings['doctrine']['meta']['auto_generate_proxies'],
-        $settings['doctrine']['meta']['proxy_dir'],
-        $settings['doctrine']['meta']['cache'],
+        $settings['doctrine_config']['meta']['entity_path'],
+        $settings['doctrine_config']['meta']['auto_generate_proxies'],
+        $settings['doctrine_config']['meta']['proxy_dir'],
+        $settings['doctrine_config']['meta']['cache'],
         false
     );
-    return \Doctrine\ORM\EntityManager::create($settings['doctrine']['connection'], $config);
+    return \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
 };
 
+$container['em-privacy'] = function ($c) {
+    $settings = $c->get('settings');
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $settings['doctrine_privacy']['meta']['entity_path'],
+        $settings['doctrine_privacy']['meta']['auto_generate_proxies'],
+        $settings['doctrine_privacy']['meta']['proxy_dir'],
+        $settings['doctrine_privacy']['meta']['cache'],
+        false
+    );
+    return \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
+};
 // -----------------------------------------------------------------------------
 // Action factories
 // -----------------------------------------------------------------------------
 
 $container['App\Action\HomeAction'] = function ($c) {
-    return new App\Action\HomeAction($c->get('view'), $c->get('logger'));
-};
-
-$container['App\Action\PhotoAction'] = function ($c) {
-    $photoResource = new \App\Resource\PhotoResource($c->get('em'));
-    return new App\Action\PhotoAction($photoResource);
+    return new App\Action\Home($c->get('view'), $c->get('logger'));
 };

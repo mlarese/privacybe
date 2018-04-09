@@ -1,25 +1,15 @@
 <?php
 return [
     'settings' => [
-        // View settings
-        'view' => [
-            'template_path' => __DIR__ . '/templates',
-            'twig' => [
-                'cache' => __DIR__ . '/../cache/twig',
-                'debug' => true,
-                'auto_reload' => true,
-            ],
-        ],
-
         // monolog settings
         'logger' => [
             'name' => 'app',
             'path' => __DIR__ . '/../log/app.log',
         ],
-        'doctrine' => [
+        'doctrine_config' => [
             'meta' => [
                 'entity_path' => [
-                    'app/src/Entity'
+                    'app/src/Entity/Config'
                 ],
                 'auto_generate_proxies' => true,
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
@@ -27,7 +17,24 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => 'localhost',
+                'host'     => '127.0.0.1',
+                'dbname'   => 'privacy_config',
+                'user'     => 'root',
+                'password' => '',
+            ]
+        ],
+        'doctrine_privacy' => [
+            'meta' => [
+                'entity_path' => [
+                    'app/src/Entity/Privacy'
+                ],
+                'auto_generate_proxies' => true,
+                'proxy_dir' =>  __DIR__.'/../cache/proxies',
+                'cache' => null,
+            ],
+            'connection' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '127.0.0.1',
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',

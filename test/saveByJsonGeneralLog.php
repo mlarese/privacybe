@@ -1,8 +1,4 @@
 <?php
-
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -25,14 +21,3 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 );
 
 $em = EntityManager::create($settings['connection'], $config);
-
-$role = new \App\Entity\Role();
-
-$role->setCode('MKR')
-    ->setName('Courage Name');
-
-$em->persist($role);
-
-
-$em->flush();
-

@@ -4,11 +4,12 @@ use Tuupola\Middleware\CorsMiddleware;
 
 $app->add(new SessionMiddleware(['name' => 'base_session']));
 
+
 $app->add(new CorsMiddleware(
     [
         "origin" => ["*"],
         "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE"],
-        "headers.allow" => ["Authorization", "If-Match", "If-Unmodified-Since"],
+        "headers.allow" => ["Authorization", "If-Match", "If-Unmodified-Since", "Token", "Language"],
         "headers.expose" => ["Etag"],
         "credentials" => true,
         "cache" => 86400,

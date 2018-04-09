@@ -23,11 +23,11 @@ class role
      */
     protected $id;
     /**
-     * @ORM\Column(name="string", length=100)
+     * @ORM\Column(type="string", length=100)
      */
     protected $name;
     /**
-     * @ORM\Column(name="string", length=20)
+     * @ORM\Column(type="string", length=20)
      */
     protected $code;
 

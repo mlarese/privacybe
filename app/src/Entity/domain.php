@@ -21,12 +21,7 @@ class domain
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    /**
-     * @ORM\ownerId
-     * @ORM\Column(name="owner_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $ownerId;
+
     /**
      * @ORM\Column(type="string", length=20)
      */

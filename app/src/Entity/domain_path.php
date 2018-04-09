@@ -22,12 +22,7 @@ class domain_path
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="domain_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $domainId;
+
     /**
      * @ORM\Column(type="string", length=100)
      */

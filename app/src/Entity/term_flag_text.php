@@ -23,9 +23,7 @@ class term_flag_text
      */
     protected $id;
     /**
-     * @ORM\termFlagId
      * @ORM\Column(name="term_flag_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $termFlagId;
     /**

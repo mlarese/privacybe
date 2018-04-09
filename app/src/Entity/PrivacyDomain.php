@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *      name="domain",
+ *      name="privacy_domain",
  *      uniqueConstraints={@ORM\UniqueConstraint(name="domain_code_unique", columns={"code"})}
  * )
  */

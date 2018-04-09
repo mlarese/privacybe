@@ -27,15 +27,11 @@ class term
      */
     protected $name;
     /**
-     * @ORM\ownerId
      * @ORM\Column(name="owner_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $ownerId;
     /**
-     * @ORM\versionId
      * @ORM\Column(name="version_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $versionId;
 

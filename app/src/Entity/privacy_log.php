@@ -24,9 +24,7 @@ class privacy_log
      */
     protected $id;
     /**
-     * @ORM\privacy_id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $privacy_id;
     /**
@@ -34,15 +32,15 @@ class privacy_log
      */
     protected $log_date;
     /**
-     * @ORM\Column(name="string", length=50)
+     * @ORM\Column(type="string", length=50)
      */
     protected $type;
     /**
-     * @ORM\Column(name="string", length=225)
+     * @ORM\Column(type="string", length=225)
      */
     protected $description;
     /**
-     * @ORM\Column(name="text")
+     * @ORM\Column(type="text")
      */
     protected $option;
     /**
@@ -50,15 +48,15 @@ class privacy_log
      */
     protected $domain;
     /**
-     * @ORM\Column(name="string", length=100)
+     * @ORM\Column(type="string", length=100)
      */
     protected $path;
     /**
-     * @ORM\Column(name="string", length=100)
+     * @ORM\Column(type="string", length=100)
      */
     protected $service;
     /**
-     * @ORM\Column(name="string", length=50)
+     * @ORM\Column(type="string", length=50)
      */
     protected $email;
 

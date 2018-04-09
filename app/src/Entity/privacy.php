@@ -23,15 +23,11 @@ class privacy
      */
     protected $id;
     /**
-     * @ORM\domainServiceId
      * @ORM\Column(name="domain_service_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $domainServiceId;
     /**
-     * @ORM\termId
      * @ORM\Column(name="term_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $termId;
     /**

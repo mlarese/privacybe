@@ -27,9 +27,7 @@ class domain_service
      */
     protected $name;
     /**
-     * @ORM\Id
      * @ORM\Column(name="domain_path_id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $domainPathId;
 

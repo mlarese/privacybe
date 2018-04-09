@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauroadmin
- * Date: 08/04/18
- * Time: 12:39
- */
-
 namespace App\Action;
 
-
+use App\Entity\Privacy\PrivacyEntry;
 use App\Entity\Privacy\Term;
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -22,14 +18,25 @@ class Privacy extends AbstractAction
      * @return mixed
      */
     public function getWidgetTerm($request, $response, $args) {
-        $ownerId = $args['ownerId'];
-        $termId = $args['termId'];
-        $lang = $args['lang'];
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $termId = $request->getHeader('TermId')[0];
+        $lang = $request->getHeader('Language')[0];
+
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getEmPrivacy($ownerId);
 
         /**
          * @var Term $term
          */
-        $term = $this->getEmPrivacy($ownerId)->find(Term::class, $termId);
+
+        $term = null;
+        try {
+            $term =  $em->find(Term::class, $termId);
+        } catch(\Exception $e) {
+            echo $e->getMessage();
+        }
         $paragraphs = $term->getParagraphs();
 
         $termResponse = array();
@@ -56,11 +63,49 @@ class Privacy extends AbstractAction
             $termResponse[] = $newP;
         }
 
-
+        echo '<pre>';
+        print_r($_SERVER);
+        die('');
         $js = $this->toJson($termResponse);
 
-
         return $response->withJson(array("paragraphs" => $js));
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     */
+    public function savePrivacy($request, $response, $args) {
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $termId = $request->getHeader('TermId')[0];
+
+        $email = '';
+        $form = '';
+        $name = '';
+        $surName = '';
+        $site = '';
+        $privacy = '';
+        $id = '';
+
+        /**
+         * @var EntityManager $em
+         */
+        // $em = $this->getEmPrivacy($ownerId);
+
+        $privacyEntry = new PrivacyEntry();
+
+        $privacyEntry->setCreated( new DateTime())
+            ->setEmail($email)
+            ->setForm($form)
+            ->setName($name)
+            ->setSurname($surName)
+            ->setTermId($termId)
+            ->setSite($site)
+            ->setPrivacy($privacy)
+            ->setId($id)
+        ;
+
 
     }
 }

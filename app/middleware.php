@@ -9,7 +9,16 @@ $app->add(new CorsMiddleware(
     [
         "origin" => ["*"],
         "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE"],
-        "headers.allow" => ["Authorization", "If-Match", "If-Unmodified-Since", "Token", "Language"],
+        "headers.allow" => [
+            "Authorization",
+            "If-Match",
+            "If-Unmodified-Since",
+            "Token",
+            "Language",
+            "OwnerId",
+            "Language",
+            "TermId"
+        ],
         "headers.expose" => ["Etag"],
         "credentials" => true,
         "cache" => 86400,

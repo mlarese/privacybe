@@ -14,4 +14,4 @@ $app->get('/test', function() {
 
 });
 
-$app->get('/widget/owner/{ownerId}/term/{termId}/lang/{lang}', 'App\Action\Privacy:getWidgetTerm');
+$app->get('/widget', 'App\Action\Privacy:getWidgetTerm');

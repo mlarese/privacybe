@@ -31,8 +31,6 @@ class AbstractAction
 
     public function __construct( $container) {
         $this->container = $container;
-
-
     }
 
     /**
@@ -81,7 +79,10 @@ class AbstractAction
             'user'     => $settings['doctrine_privacy']['connection']['user'],
             'password' => $settings['doctrine_privacy']['connection']['password']
         );
-        return \Doctrine\ORM\EntityManager::create($connection , $config);
+
+        $em = \Doctrine\ORM\EntityManager::create($connection , $config);
+
+        return $em;
 
     }
 

@@ -105,7 +105,32 @@ class Term
     protected $paragraphs;
 
     /**
-     * @ORM\Column(name="pages", type="json_array", nullable=false)
+     * @ORM\Column(name="pages", type="json_array", nullable=true)
      */
     protected $pages;
+
+    /**
+     * @ORM\Column(name="status", type="string", nullable=false, length=1)
+     */
+    protected $status;
+    
+    /**
+     * @ORM\Column(name="published", type="datetime", nullable=true)
+     */
+    protected $published;
+    
+    /**
+     * @ORM\Column(name="created", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    protected $created;
+    
+    /**
+     * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    protected $modified;
+    
+    /**
+     * @ORM\Column(name="suspended", type="datetime", nullable=true)
+     */
+    protected $suspended;
 }

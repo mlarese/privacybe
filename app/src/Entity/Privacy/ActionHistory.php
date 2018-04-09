@@ -161,7 +161,7 @@ class ActionHistory
     protected $history;
 
     /**
-     * @ORM\Column(name="user_name", type="string", nullable=false, string=50)
+     * @ORM\Column(name="user_name", type="string", nullable=false, length=50)
      */
     protected $userName;
 }

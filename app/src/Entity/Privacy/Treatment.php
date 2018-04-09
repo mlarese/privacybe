@@ -53,7 +53,7 @@ class Treatment
     }
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", leength=30)
+     * @ORM\Column(type="string", length=30)
      * @ORM\GeneratedValue(strategy="NONE")
      */
      protected $code;

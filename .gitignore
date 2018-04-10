@@ -2,3 +2,6 @@ vendor/
 log/*
 cache/*
 .idea/*
+.idea/dbnavigator.xml
+.idea/deployment.xml
+.idea/markdown-exported-files.xml

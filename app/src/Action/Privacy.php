@@ -29,7 +29,7 @@ class Privacy extends AbstractAction
         $em = $this->getEmPrivacy($ownerId);
 
         /**
-         * @var Term $term
+         * @var Terms $term
          */
 
         $term = null;

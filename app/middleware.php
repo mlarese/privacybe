@@ -8,13 +8,12 @@ $app->add(new SessionMiddleware(['name' => 'base_session']));
 $app->add(new CorsMiddleware(
     [
         "origin" => ["*"],
-        "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE"],
+        "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         "headers.allow" => [
             "Authorization",
             "If-Match",
             "If-Unmodified-Since",
             "Token",
-            "Language",
             "OwnerId",
             "Language",
             "TermId"

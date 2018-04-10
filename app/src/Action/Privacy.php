@@ -11,6 +11,7 @@ use Slim\Http\Response;
 
 class Privacy extends AbstractAction
 {
+
     /**
      * @param $request Request
      * @param $response Response
@@ -63,9 +64,6 @@ class Privacy extends AbstractAction
             $termResponse[] = $newP;
         }
 
-        echo '<pre>';
-        print_r($_SERVER);
-        die('');
         $js = $this->toJson($termResponse);
 
         return $response->withJson(array("paragraphs" => $js));

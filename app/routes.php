@@ -1,10 +1,6 @@
 <?php
 // Routes
 
-
-use App\Action\Home;
-
-
 // Return widget config
 $app->get('/widget', 'App\Action\Privacy:getWidgetTerm');
 

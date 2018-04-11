@@ -65,7 +65,6 @@ class Privacy extends AbstractAction
         }
 
         $js = $this->toJson($termResponse);
-
         return $response->withJson(array("paragraphs" => $js));
     }
 

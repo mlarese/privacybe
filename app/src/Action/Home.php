@@ -19,6 +19,7 @@ class Home extends AbstractAction
     /**
      * @param $request Request
      * @param $response Response
+     * @param $args
      */
     public function welcome($request, $response, $args) {
         $ow=new Owner();

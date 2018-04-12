@@ -6,6 +6,9 @@ return [
             'name' => 'app',
             'path' => __DIR__ . '/../log/app.log',
         ],
+        'auth' => [
+            'secret' => '##scr##mm#prv##tk##str@@'
+        ],
         'doctrine_config' => [
             'meta' => [
                 'entity_path' => [

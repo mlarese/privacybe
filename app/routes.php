@@ -1,17 +1,14 @@
 <?php
 // Routes
 
+// widget
+$app->get('/api/widget', 'App\Action\Privacy:getWidgetTerm');
 
-use App\Action\Home;
+// terms
+$app->get('/api/term', 'App\Action\Terms:getAllTerms');
 
-$app->get('/test', function() {
-    $session = new \RKA\Session();
-    $bar = $session->bar;
-    //$session->foo = 'this';
-    //\RKA\Session::destroy();
 
-    echo json_encode(["result"=>"OK", "session"=>$session->foo]);
-
-});
-
-$app->get('/widget', 'App\Action\Privacy:getWidgetTerm');
+// auth
+$app->post('/api/auth/login', 'App\Action\Auth:login');
+$app->post('/api/auth/logout', 'App\Action\Auth:logout');
+$app->get('/api/auth/user', 'App\Action\Auth:user');

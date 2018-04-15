@@ -8,7 +8,12 @@
 
 namespace App\Action;
 
-class Terms {
+use App\Entity\Privacy\Term;
+use Doctrine\ORM\EntityManager;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
+class Terms extends AbstractAction{
     /**
      * @param $request Request
      * @param $response Response
@@ -25,10 +30,13 @@ class Terms {
 
         $terms = null;
         try {
-            $term =  $em->find(Term::class, $termId);
+            $term =  $em->getRepository( Term::class)->findAll();
         } catch(\Exception $e) {
             echo $e->getMessage();
         }
+
+        $js = $this->toJson($term);
+        return $response->withJson( $js);
     }
 
     /**
@@ -45,5 +53,6 @@ class Terms {
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
+
     }
 }

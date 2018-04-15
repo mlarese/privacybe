@@ -15,6 +15,8 @@ $app->add(new CorsMiddleware(
             "If-Unmodified-Since",
             "Token",
             "OwnerId",
+            "Domain",
+            "Page",
             "Language",
             "TermId"
         ],

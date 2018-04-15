@@ -6,7 +6,7 @@
  * Time: 07:25
  */
 
-namespace App\Entity\Privacy;
+namespace App\Entity\Config;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -77,8 +77,26 @@ class Domain
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOwnerId()
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param mixed $ownerId
+     * @return Domain
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
+
      /**
-      * @ORM\Column(name="description", type="string", nullable=false, length=255)
+      * @ORM\Column(name="description", type="string", nullable=true, length=255)
       */
      protected $description;
 
@@ -86,4 +104,9 @@ class Domain
       * @ORM\Column(name="active", type="boolean", nullable=false)
       */
      protected $active=true;
+
+     /**
+      * @ORM\Column(name="ownerId", type="integer", nullable=false)
+      */
+     protected $ownerId;
 }

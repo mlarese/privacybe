@@ -1,8 +1,11 @@
 <?php
 namespace App\Action;
 
+use App\Entity\Config\Domain;
+use App\Entity\Config\Page;
 use App\Entity\Privacy\PrivacyEntry;
 use App\Entity\Privacy\Term;
+use App\Entity\Privacy\TermAsPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -19,15 +22,43 @@ class Privacy extends AbstractAction
      * @return mixed
      */
     public function getWidgetTerm($request, $response, $args) {
-        $ownerId = $request->getHeader('OwnerId')[0];
-        $termId = $request->getHeader('TermId')[0];
         $lang = $request->getHeader('Language')[0];
+        $pageName = $request->getHeader('Page')[0];
+        $domainName = $request->getHeader('Domain')[0];
+
+        /**
+         * @var EntityManager $em
+         */
+        $cem = $this->getEmConfig();
+        /**
+         * @var Domain $domain
+         */
+        $domain= $cem->find(Domain::class, $domainName);
+
+
+        If(!isset($domain)) {
+            return $response->withStatus(403, "Domain $domainName not found");
+        }
+
+        $ownerId = $domain->getOwnerId();
 
         /**
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
 
+        /**
+         * @var TermAsPage $termHasPage
+         */
+        $termHasPage = $em->
+                            getRepository(TermAsPage::class)
+                            ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
+
+        If(!isset($termHasPage)) {
+            return $response->withStatus(403, "Page $domainName$pageName not found");
+        }
+
+        $termId = $termHasPage->getTermUid();
         /**
          * @var Terms $term
          */
@@ -36,8 +67,13 @@ class Privacy extends AbstractAction
         try {
             $term =  $em->find(Term::class, $termId);
         } catch(\Exception $e) {
-            echo $e->getMessage();
+            return $response->withStatus(403, $e->getMessage());
         }
+
+        If(!isset($term)) {
+            return $response->withStatus(403, "Term not found");
+        }
+
         $paragraphs = $term->getParagraphs();
 
         $termResponse = array();
@@ -55,7 +91,7 @@ class Privacy extends AbstractAction
                    "restrictive" => $t['restrictive'],
                    "mandatory" => $t['mandatory'],
                    "text" => $t['text'][$lang],
-                    "selecteed" => false
+                   "selecteed" => false
 
                 );
 
@@ -66,7 +102,14 @@ class Privacy extends AbstractAction
 
         $js = $this->toJson($termResponse);
 
-        return $response->withJson(array("paragraphs" => $js));
+        return $response->withJson(
+            array(
+                "pageName" => $pageName,
+                "domainName" => $domainName,
+                "termHasPage" => $termHasPage,
+                "paragraphs" => $js
+            )
+        );
     }
 
     /**

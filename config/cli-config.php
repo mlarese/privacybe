@@ -1,5 +1,6 @@
 <?php
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
 
 require 'vendor/autoload.php';
 
@@ -22,6 +23,13 @@ $doctrinPrivacy = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfigurati
     $settingsPrivacy['meta']['cache'],
     false
 );
+
+
+$doctrinPrivacy->addCustomStringFunction(DqlFunctions\JsonExtract::FUNCTION_NAME, DqlFunctions\JsonExtract::class);
+$doctrinPrivacy->addCustomStringFunction(DqlFunctions\JsonSearch::FUNCTION_NAME, DqlFunctions\JsonSearch::class);
+
+$doctrinConfig->addCustomStringFunction(DqlFunctions\JsonExtract::FUNCTION_NAME, DqlFunctions\JsonExtract::class);
+$doctrinConfig->addCustomStringFunction(DqlFunctions\JsonSearch::FUNCTION_NAME, DqlFunctions\JsonSearch::class);
 
 $emConfig = \Doctrine\ORM\EntityManager::create($settingsConfig['connection'], $doctrinConfig);
 $emPrivacy = \Doctrine\ORM\EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);

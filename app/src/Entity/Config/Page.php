@@ -6,9 +6,14 @@
  * Time: 07:35
  */
 
-namespace App\Entity\Privacy;
+namespace App\Entity\Config;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="page")
+ */
 class Page
 {
     /**

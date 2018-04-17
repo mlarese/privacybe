@@ -91,7 +91,7 @@ class Privacy extends AbstractAction
                    "restrictive" => $t['restrictive'],
                    "mandatory" => $t['mandatory'],
                    "text" => $t['text'][$lang],
-                   "selecteed" => false
+                   "selected" => false
 
                 );
 
@@ -104,9 +104,8 @@ class Privacy extends AbstractAction
 
         return $response->withJson(
             array(
-                "pageName" => $pageName,
-                "domainName" => $domainName,
-                "termHasPage" => $termHasPage,
+                "ownerId" => $ownerId,
+                "termId" => $termId,
                 "paragraphs" => $js
             )
         );

@@ -21,14 +21,28 @@ class Terms extends AbstractAction{
      * @return mixed
      */
     public function getAllTerms($request, $response, $args) {
-        $ownerId = $request->getHeader('OwnerId')[0];
+
+        $ownerId = $request->getHeader('OwnerId');
+        $termId = $request->getHeader('TermId');
+
+        if(count($ownerId) === 0) {
+            echo 'error 403 - missing parameter';
+            return $response->withStatus(403, 'missing parameter');
+        }
+
+        $ownerId = $ownerId[0];
 
         /**
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
 
-        $terms = null;
+
+        if(count($termId) === 0) {
+
+        }
+
+        $term = null;
         try {
             $term =  $em->getRepository( Term::class)->findAll();
         } catch(\Exception $e) {

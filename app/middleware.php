@@ -52,7 +52,7 @@ $auth = $settings->get('auth');
 if($authMode === 'jwt') {
     $app->add(new Tuupola\Middleware\JwtAuthentication([
         "path" => ["/api", "/api/auth"],
-        "ignore" => ["/api/widget", "/api/auth"],
+        "ignore" => ["/api/widget", "/api/auth", "/api"],
         "secret" => $auth['secret'],
         "secure" => false,
         // "relaxed" => ["localhost"],

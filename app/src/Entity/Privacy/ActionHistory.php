@@ -148,14 +148,6 @@ class ActionHistory
     protected $date;
 
     /**
-     * ActionHistory constructor.
-     */
-    public function __construct()
-    {
-        $this->date = new \DateTime();
-    }
-
-    /**
      * @ORM\Column(name="history", type="json", nullable=true)
      */
     protected $history;

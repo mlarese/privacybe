@@ -57,7 +57,7 @@ class Treatment
      * @ORM\GeneratedValue(strategy="NONE")
      */
      protected $code;
-     
+
      /**
       * @ORM\Column(name="name", type="string", nullable=false)
       */

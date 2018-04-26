@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="action_history")
  */
 
-class ActionHistory
+class PrivacyHistory
 {
     /**
      * @ORM\Id
@@ -44,7 +44,8 @@ class ActionHistory
 
     /**
      * @param mixed $id
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setId($id)
     {
@@ -62,7 +63,8 @@ class ActionHistory
 
     /**
      * @param mixed $type
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setType($type)
     {
@@ -80,7 +82,8 @@ class ActionHistory
 
     /**
      * @param mixed $description
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setDescription($description)
     {
@@ -98,7 +101,8 @@ class ActionHistory
 
     /**
      * @param mixed $date
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setDate($date)
     {
@@ -116,7 +120,8 @@ class ActionHistory
 
     /**
      * @param mixed $history
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setHistory($history)
     {
@@ -134,7 +139,8 @@ class ActionHistory
 
     /**
      * @param mixed $userName
-     * @return ActionHistory
+     *
+     * @return PrivacyHistory
      */
     public function setUserName($userName)
     {

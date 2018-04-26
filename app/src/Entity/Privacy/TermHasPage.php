@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="term_as_page")
  */
-class TermAsPage
+class TermHasPage
 {
     /**
      * @ORM\Column(name="term_uid", type="string", nullable=false)
@@ -32,7 +32,8 @@ class TermAsPage
 
     /**
      * @param mixed $termUid
-     * @return TermAsPage
+     *
+     * @return TermHasPage
      */
     public function setTermUid($termUid)
     {
@@ -50,7 +51,8 @@ class TermAsPage
 
     /**
      * @param mixed $domain
-     * @return TermAsPage
+     *
+     * @return TermHasPage
      */
     public function setDomain($domain)
     {
@@ -68,14 +70,15 @@ class TermAsPage
 
     /**
      * @param mixed $page
-     * @return TermAsPage
+     *
+     * @return TermHasPage
      */
     public function setPage($page)
     {
         $this->page = $page;
         return $this;
     }
-    
+
     /**
      * @ORM\Column(name="domain", type="string", nullable=false)
      * @ORM\Id

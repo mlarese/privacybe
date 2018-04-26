@@ -113,24 +113,39 @@ class Term
      * @ORM\Column(name="status", type="string", nullable=false, length=1)
      */
     protected $status;
-    
+
     /**
      * @ORM\Column(name="published", type="datetime", nullable=true)
      */
     protected $published;
-    
+
+    /**
+     * @return mixed
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
     /**
      * @ORM\Column(name="created", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     protected $created;
-    
+
     /**
      * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     protected $modified;
-    
+
     /**
      * @ORM\Column(name="suspended", type="datetime", nullable=true)
      */
     protected $suspended;
+
 }

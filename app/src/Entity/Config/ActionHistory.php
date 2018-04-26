@@ -148,7 +148,7 @@ class ActionHistory
     }
 
     /**
-     * ActionHistory constructor.
+     * PrivacyHistory constructor.
      */
     public function __construct()
     {

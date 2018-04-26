@@ -3,7 +3,7 @@ namespace App\Action;
 
 use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
-use App\Entity\Privacy\PrivacyEntry;
+use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermAsPage;
 use DateTime;
@@ -12,7 +12,7 @@ use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class Privacy extends AbstractAction
+class PrivacyManager extends AbstractAction
 {
 
     /**
@@ -133,7 +133,7 @@ class Privacy extends AbstractAction
          */
         // $em = $this->getEmPrivacy($ownerId);
 
-        $privacyEntry = new PrivacyEntry();
+        $privacyEntry = new PrivacyManager();
 
         $privacyEntry->setCreated( new DateTime())
             ->setEmail($email)

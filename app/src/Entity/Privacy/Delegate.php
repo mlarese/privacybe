@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="responsible")
  */
 
-class Responsible
+class Delegate
 {
     /**
      * @ORM\Id
@@ -55,7 +55,8 @@ class Responsible
 
     /**
      * @param mixed $uid
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setUid($uid)
     {
@@ -73,7 +74,8 @@ class Responsible
 
     /**
      * @param mixed $name
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setName($name)
     {
@@ -91,7 +93,8 @@ class Responsible
 
     /**
      * @param mixed $surname
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setSurname($surname)
     {
@@ -109,7 +112,8 @@ class Responsible
 
     /**
      * @param mixed $zip
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setZip($zip)
     {
@@ -127,7 +131,8 @@ class Responsible
 
     /**
      * @param mixed $email
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setEmail($email)
     {
@@ -145,7 +150,8 @@ class Responsible
 
     /**
      * @param mixed $telephone
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setTelephone($telephone)
     {
@@ -163,7 +169,8 @@ class Responsible
 
     /**
      * @param mixed $city
-     * @return Responsible
+     *
+     * @return Delegate
      */
     public function setCity($city)
     {
@@ -181,7 +188,7 @@ class Responsible
 
     /**
      * @param mixed $address
-     * @return Responsible
+     * @return Delegate
      */
     public function setAddress($address)
     {
@@ -193,6 +200,20 @@ class Responsible
       * @ORM\Column(name="telephone", type="string", nullable=true, length=100)
       */
      protected $telephone;
+
+    /**
+     * @return mixed
+     */
+    public function getRole() {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role) {
+        $this->role = $role;
+    }
 
      /**
       * @ORM\Column(name="city", type="string", nullable=true, length=100)
@@ -208,4 +229,5 @@ class Responsible
       * @ORM\Column(name="role", type="string", nullable=false, length=50)
       */
      protected $role;
+
 }

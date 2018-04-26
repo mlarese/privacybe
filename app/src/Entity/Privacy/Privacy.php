@@ -4,11 +4,10 @@ namespace App\Entity\Privacy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * privacyEntry
  * @ORM\Table(name="privacy_entry")
  * @ORM\Entity
  */
-class PrivacyEntry {
+class Privacy {
     /**
      * @ORM\Id
      * @ORM\Column(name="uid", type="string", nullable=false, length=120)
@@ -37,19 +36,29 @@ class PrivacyEntry {
     protected $surname;
 
     /**
-     * @ORM\Column(name="form", type="text", nullable=true)
+     * @ORM\Column(name="form", type="json", nullable=true)
      */
     protected $form;
 
     /**
-     * @ORM\Column(name="privacy", type="text", nullable=false)
+     * @ORM\Column(name="privacy", type="json", nullable=false)
      */
     protected $privacy;
+
+    /**
+     * @ORM\Column(name="$privacy_flags", type="json", nullable=false)
+     */
+    protected $privacyFlags;
 
     /**
      * @ORM\Column(name="term_id", type="string", nullable=false, length=128)
      */
     protected $termId;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $domain;
 
     /**
      * @ORM\Column(name="site", type="string", nullable=false, length=255)
@@ -66,7 +75,7 @@ class PrivacyEntry {
     /**
      * @param mixed $id
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setId($id) {
         $this->id = $id;
@@ -83,7 +92,7 @@ class PrivacyEntry {
     /**
      * @param mixed $created
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setCreated($created) {
         $this->created = $created;
@@ -100,7 +109,7 @@ class PrivacyEntry {
     /**
      * @param mixed $email
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setEmail($email) {
         $this->email = $email;
@@ -117,7 +126,7 @@ class PrivacyEntry {
     /**
      * @param mixed $name
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setName($name) {
         $this->name = $name;
@@ -134,7 +143,7 @@ class PrivacyEntry {
     /**
      * @param mixed $surname
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setSurname($surname) {
         $this->surname = $surname;
@@ -151,7 +160,7 @@ class PrivacyEntry {
     /**
      * @param mixed $form
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setForm($form) {
         $this->form = $form;
@@ -168,7 +177,7 @@ class PrivacyEntry {
     /**
      * @param mixed $privacy
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setPrivacy($privacy) {
         $this->privacy = $privacy;
@@ -185,7 +194,7 @@ class PrivacyEntry {
     /**
      * @param mixed $termId
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setTermId($termId) {
         $this->termId = $termId;
@@ -202,10 +211,38 @@ class PrivacyEntry {
     /**
      * @param mixed $site
      *
-     * @return PrivacyEntry
+     * @return Privacy
      */
     public function setSite($site) {
         $this->site = $site;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPrivacyFlags() {
+        return $this->privacyFlags;
+    }
+
+    /**
+     * @param mixed $privacyFlags
+     */
+    public function setPrivacyFlags($privacyFlags) {
+        $this->privacyFlags = $privacyFlags;
+    }
+
+    /**
+     * @var $ip  string
+     *
+     * @ORM\Column(name="ip", type="string", nullable=true, length=100)
+     */
+    protected $ip;
+
+    /**
+     * @var $telephone  string
+     *
+     * @ORM\Column(name="telephone", type="string", nullable=false, length=120)
+     */
+    protected $telephone;
 }

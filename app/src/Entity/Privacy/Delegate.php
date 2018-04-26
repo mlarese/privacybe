@@ -19,10 +19,10 @@ class Delegate
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=128)
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-     protected $uid;
+     protected $id;
 
      /**
       * @ORM\Column(name="name", type="string", nullable=false, length=80)
@@ -54,15 +54,22 @@ class Delegate
     }
 
     /**
-     * @param mixed $uid
+     * @return mixed
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
      *
      * @return Delegate
      */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
+    public function setId($id) {
+        $this->id = $id;
         return $this;
     }
+
 
     /**
      * @return mixed

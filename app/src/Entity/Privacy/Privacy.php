@@ -13,7 +13,7 @@ class Privacy {
      * @ORM\Column(name="uid", type="string", nullable=false, length=120)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="created", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})

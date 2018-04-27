@@ -2,7 +2,9 @@
 
 namespace App\Action;
 
+use App\Entity\Privacy\Privacy;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
 use Slim\Http\Request;use Slim\Http\Response;
 use Tuupola\Base62;
@@ -38,14 +40,41 @@ class Auth extends AbstractAction {
         return $data;
     }
 
+    private function testE () {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getEmPrivacy(1);
+
+        $p = new Privacy();
+
+        $p->setCreated(new DateTime())
+            ->setForm('{"name":"form"}')
+            ->setName('name')
+            ->setPrivacy('privacy')
+            ->setPrivacyFlags('flags')
+            ->setSite('flags')
+            ->setSurname('flags')
+            ->setTermId('uid')
+            ->setDomain('uid')
+            ->setIp('uid')
+            ->setTelephone('uid')
+            ->setEmail('ema');
+
+        $em->persist($p);
+        $em->flush();
+    }
+
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      */
     public function login($request, $response, $args) {
+        $this->testE();
         $found = true;
-        $user = $request->getParam('user');
+        $user = $request->getParam('username');
+        $password = $request->getParam('password');
 
         if($found) {
             $userSpec = ["user" => $user, "userName" => "Mauro Larese Moro", "role" => "owners"];

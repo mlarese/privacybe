@@ -5,7 +5,6 @@ use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
-use App\Entity\Privacy\TermAsPage;
 use App\Entity\Privacy\TermHasPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;

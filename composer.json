@@ -30,6 +30,8 @@
         "akrabat/rka-slim-session-middleware": "2.0.0",
         "syslogic/doctrine-json-functions": "2.1.0",
         "tuupola/base62": "0.10.0",
-        "adbario/slim-secure-session-middleware": "1.3.4"
+        "adbario/slim-secure-session-middleware": "1.3.4",
+        "michaeldegroot/doctrine-encrypt-bundle": "4.0.1",
+        "51systems/doctrine-encrypt": "v6.0.0"
     }
 }

@@ -6,6 +6,7 @@ $app->get('/api/widget', 'App\Action\Privacy:getWidgetTerm');
 
 // terms
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
+$app->get('/api/owner/term/[id]', 'App\Action\Terms:getTerm');
 
 
 // auth

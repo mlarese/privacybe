@@ -55,12 +55,17 @@ class Terms extends AbstractAction{
      */
     public function getTerm($request, $response, $args) {
         $ownerId = $request->getHeader('OwnerId')[0];
-        $termId = $request->getHeader('TermId')[0];
+        $termId = $args['id'];
 
         /**
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
+
+        $em->find(Term::class, $termId);
+
+        $term = $js = $this->toJson($term);
+        return $response->withJson( $js);
 
     }
 }

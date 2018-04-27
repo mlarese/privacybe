@@ -2,6 +2,7 @@
 namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineEncrypt\Configuration\Encrypted;
 
 /**
  * @ORM\Table(name="privacy_entry")
@@ -37,6 +38,7 @@ class Privacy {
 
     /**
      * @ORM\Column(name="form", type="json", nullable=true)
+     * @Encrypted
      */
     protected $form;
 
@@ -230,6 +232,7 @@ class Privacy {
      */
     public function setPrivacyFlags($privacyFlags) {
         $this->privacyFlags = $privacyFlags;
+        return $this;
     }
 
     /**
@@ -238,6 +241,60 @@ class Privacy {
      * @ORM\Column(name="ip", type="string", nullable=true, length=100)
      */
     protected $ip;
+
+    /**
+     * @return mixed
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @param mixed $domain
+     * @return Privacy
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * @param string $ip
+     * @return Privacy
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @param string $telephone
+     * @return Privacy
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
 
     /**
      * @var $telephone  string

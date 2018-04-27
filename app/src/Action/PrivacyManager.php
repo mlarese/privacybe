@@ -6,6 +6,7 @@ use App\Entity\Config\Page;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermAsPage;
+use App\Entity\Privacy\TermHasPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -48,10 +49,10 @@ class PrivacyManager extends AbstractAction
         $em = $this->getEmPrivacy($ownerId);
 
         /**
-         * @var TermAsPage $termHasPage
+         * @var TermHasPage $termHasPage
          */
         $termHasPage = $em->
-                            getRepository(TermAsPage::class)
+                            getRepository(TermHasPage::class)
                             ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
 
         If(!isset($termHasPage)) {
@@ -133,7 +134,7 @@ class PrivacyManager extends AbstractAction
          */
         // $em = $this->getEmPrivacy($ownerId);
 
-        $privacyEntry = new PrivacyManager();
+        $privacyEntry = new Privacy();
 
         $privacyEntry->setCreated( new DateTime())
             ->setEmail($email)
@@ -145,8 +146,6 @@ class PrivacyManager extends AbstractAction
             ->setPrivacy($privacy)
             ->setId($id)
         ;
-
-
     }
 
 

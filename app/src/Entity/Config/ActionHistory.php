@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauroadmin
- * Date: 06/04/18
- * Time: 08:08
- */
 
 namespace App\Entity\Config;
 

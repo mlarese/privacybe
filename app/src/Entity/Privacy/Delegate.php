@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauroadmin
- * Date: 17/04/18
- * Time: 22:01
- */
 
 namespace App\Entity\Privacy;
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 26/04/2018
- * Time: 12:26
- */
 
 namespace App\Entity\Config;
 
@@ -16,10 +10,88 @@ namespace App\Entity\Config;
 class User {
     /**
      * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+     protected $id;
+
+    /**
      * @ORM\Column(name="user", type="string", nullable=false, length=100)
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return User
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return User
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return User
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
 
     /**
      * @var $password  string
@@ -28,17 +100,8 @@ class User {
     protected $password;
 
     /**
-     * @var $type  string values: admin, operator, delegate, owner
-     * @ORM\Column(name="type", type="string", nullable=false, length=50)
+     * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    protected $type;
-
-    /**
-     * @var $ownerId  int
-     * null for admin and operator
-     * @ORM\Column(name="owner_id", type="int", nullable=true)
-     */
-    protected $ownerId;
-    
+    protected $active=true;
 
 }

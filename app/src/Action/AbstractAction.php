@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauroadmin
- * Date: 27/03/18
- * Time: 17:07
- */
 
 namespace App\Action;
 
 
 use Doctrine\ORM\EntityManager;
+use Slim\Container;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -18,6 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 class AbstractAction
 {
     protected $container;
+    protected $session;
 
     public function toJson($obj) {
         $on = new ObjectNormalizer();
@@ -29,8 +25,13 @@ class AbstractAction
         return $s->normalize($obj,'json');
     }
 
+    /**
+     * AbstractAction constructor.
+     * @param $container Container
+     */
     public function __construct( $container) {
         $this->container = $container;
+        $this->session = $container->get('session');
     }
 
     /**

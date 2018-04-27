@@ -7,9 +7,16 @@ use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 
 /**
+ * @var Collection $settings
+ */
+$settings = $app->getContainer()->get('settings');
+
+/**
  * @var App $app
  */
-$app->add(new SessionMiddleware(['name' => 'base_session']));
+// $app->add(new SessionMiddleware(['name' => 'base_session']));
+
+$app->add(new \Adbar\SessionMiddleware($settings['session']));
 
 $app->add(new CorsMiddleware(
     [
@@ -43,18 +50,16 @@ $app->add(new CorsMiddleware(
 // jwt, oauth
 $authMode = 'jwt';
 
-/**
- * @var Collection $settings
- */
-$settings = $app->getContainer()->get('settings');
+
 $auth = $settings->get('auth');
 
 if($authMode === 'jwt') {
     $app->add(new Tuupola\Middleware\JwtAuthentication([
         "path" => ["/api", "/api/auth"],
-        "ignore" => ["/api/widget", "/api/auth", "/api"],
+        "ignore" => ["/api/widget", "/api/auth/login"],
         "secret" => $auth['secret'],
         "secure" => false,
+        "attribute" => "token",
         // "relaxed" => ["localhost"],
         "error" => function ($response, $arguments) {
             $data["status"] = "error";

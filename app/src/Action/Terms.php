@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 10/04/2018
- * Time: 13:05
- */
 
 namespace App\Action;
 

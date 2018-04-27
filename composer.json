@@ -28,6 +28,8 @@
         "tuupola/cors-middleware": "0.7.0",
         "tuupola/slim-jwt-auth": "3.0.0",
         "akrabat/rka-slim-session-middleware": "2.0.0",
-        "syslogic/doctrine-json-functions": "2.1.0"
+        "syslogic/doctrine-json-functions": "2.1.0",
+        "tuupola/base62": "0.10.0",
+        "adbario/slim-secure-session-middleware": "1.3.4"
     }
 }

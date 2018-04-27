@@ -40,10 +40,9 @@ $container['em-privacy'] = function ($c) {
     );
     return \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
 };
-// -----------------------------------------------------------------------------
-// Action factories
-// -----------------------------------------------------------------------------
 
-$container['App\Action\HomeAction'] = function ($c) {
-    return new App\Action\Home($c->get('view'), $c->get('logger'));
+$container['session'] = function ($container) {
+    return new \Adbar\Session(
+        $container->get('settings')['session']['namespace']
+    );
 };

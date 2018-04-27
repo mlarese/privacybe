@@ -1,0 +1,48 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="localhost" />
+        <option name="name" value="PHPSESSID" />
+        <option name="path" value="/" />
+        <option name="value" value="95cd4d3dce2a05080ef432498c444888" />
+      </Biscuit>
+      <Biscuit>
+        <option name="date" value="1524803474000" />
+        <option name="domain" value="localhost" />
+        <option name="name" value="slim_session" />
+        <option name="path" value="/privacybe/public/" />
+        <option name="value" value="efc8f82f1f4d10aa9c5259ce2dac24d67f439004de1d3acad29ad190ce2561825ebe8c0e1a6d1e0426ec923903c412600ffe6221e0e52e28c3a2d8b1da8e15a0" />
+      </Biscuit>
+    </list>
+  </option>
+  <option name="httpMethod" value="GET" />
+  <option name="urlBase" value="http://localhost" />
+  <option name="urlPath" value="/privacybe/public/api/auth/user" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Authorization" />
+        <option name="value" value="bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MjQ3ODY0MDEsImV4cCI6MTUyNDgwMDgwMSwianRpIjoiM2VFcUdHZzBnY3pJRFY3QktSdEpLcyIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJ1c3IiOnsidXNlciI6Im1sYXJlc2UiLCJ1c2VyTmFtZSI6Ik1hdXJvIExhcmVzZSIsInJvbGUiOiJvd25lcnMifSwic3ViIjoibWxhcmVzZSJ9.dbHqQZWI9Jbdly8B7KKSezOzHvhQXBROiLTGlSDC29g" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list />
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>

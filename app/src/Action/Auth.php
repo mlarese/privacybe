@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -65,17 +66,28 @@ class Auth extends AbstractAction {
         $em->flush();
     }
 
+    // private function userIsAuth
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      */
     public function login($request, $response, $args) {
-        $this->testE();
+        // $this->testE();
+
         $found = true;
         $user = $request->getParam('username');
         $password = $request->getParam('password');
 
+        /*
+        $userEntity = $this ->getEmConfig()
+                            ->getRepository(User::class)
+                            ->findOneBy(['user' => $user]);
+
+        if(isset($userEntity)) {
+
+        }
+        */
         if($found) {
             $userSpec = ["user" => $user, "userName" => "Mauro Larese Moro", "role" => "owners"];
             $data = $this->defineJwtToken($request, $userSpec);

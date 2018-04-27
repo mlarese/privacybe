@@ -1,6 +1,8 @@
 <?php
 // Routes
 
+$app->get('/api/test/welcome', 'App\Action\Privacy:getWidgetTerm');
+
 // widget
 $app->get('/api/widget', 'App\Action\Privacy:getWidgetTerm');
 

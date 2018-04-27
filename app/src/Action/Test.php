@@ -14,6 +14,6 @@ class Test extends AbstractAction
      * @param $args
      */
     public function welcome($request, $response, $args) {
-        return $response->withJson(["result" => "welcomw"]);
+        return $response->withJson(["result" => "welcome"]);
     }
 }

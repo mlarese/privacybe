@@ -3,6 +3,9 @@
 namespace App\Action;
 
 
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Test extends AbstractAction
 {
     /**
@@ -11,6 +14,6 @@ class Test extends AbstractAction
      * @param $args
      */
     public function welcome($request, $response, $args) {
-
+        return $response->withJson(["result" => "welcomw"]);
     }
 }

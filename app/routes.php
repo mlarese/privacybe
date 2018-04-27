@@ -1,10 +1,10 @@
 <?php
 // Routes
 
-$app->get('/api/test/welcome', 'App\Action\Privacy:getWidgetTerm');
+$app->get('/api/test/welcome', 'App\Action\Test:welcome');
 
 // widget
-$app->get('/api/widget', 'App\Action\Privacy:getWidgetTerm');
+$app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 
 // terms
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');

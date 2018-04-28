@@ -7,6 +7,7 @@ use App\Entity\Privacy\Privacy;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
+use function md5;
 use Slim\Http\Request;use Slim\Http\Response;
 use Tuupola\Base62;
 
@@ -66,7 +67,25 @@ class Auth extends AbstractAction {
         $em->flush();
     }
 
-    // private function userIsAuth
+    private function userIsAuth ($user, $pwd) {
+        /**
+         * @var User $userEntity
+         */
+        $userEntity = $this ->getEmConfig()
+            ->getRepository(User::class)
+            ->findOneBy(['user' => $user]);
+
+        if(isset($userEntity)) {
+            $cfp = md5($pwd);
+            if(!$userEntity->getActive()) {
+                return false;
+            }
+            return ($userEntity->getPassword() === $cfp);
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @param $request Request
      * @param $response Response
@@ -79,15 +98,8 @@ class Auth extends AbstractAction {
         $user = $request->getParam('username');
         $password = $request->getParam('password');
 
-        /*
-        $userEntity = $this ->getEmConfig()
-                            ->getRepository(User::class)
-                            ->findOneBy(['user' => $user]);
+        $found = $this->userIsAuth($user, $password);
 
-        if(isset($userEntity)) {
-
-        }
-        */
         if($found) {
             $userSpec = ["user" => $user, "userName" => "Mauro Larese Moro", "role" => "owners"];
             $data = $this->defineJwtToken($request, $userSpec);
@@ -96,7 +108,7 @@ class Auth extends AbstractAction {
                 ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
         } else {
-            return $response->withStatus(401, 'User not found,');
+            return $response->withStatus(401, 'User not found');
         }
     }
 

@@ -16,7 +16,7 @@ class Json
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
         $dtn = new DateTimeNormalizer('Y-m-d');
         $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
-
+\\
         return $s->normalize($obj,'json');
     }
 

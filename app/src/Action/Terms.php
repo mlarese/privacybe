@@ -15,26 +15,12 @@ class Terms extends AbstractAction{
      * @return mixed
      */
     public function getAllTerms($request, $response, $args) {
-
-        $ownerId = $request->getHeader('OwnerId');
-        $termId = $request->getHeader('TermId');
-
-        if(count($ownerId) === 0) {
-            echo 'error 403 - missing parameter';
-            return $response->withStatus(403, 'missing parameter');
-        }
-
-        $ownerId = $ownerId[0];
+        $ownerId = $this->getOwnerId($request);
 
         /**
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
-
-
-        if(count($termId) === 0) {
-
-        }
 
         $term = null;
         try {
@@ -52,9 +38,12 @@ class Terms extends AbstractAction{
      * @param $response Response
      * @param $args
      * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getTerm($request, $response, $args) {
-        $ownerId = $request->getHeader('OwnerId')[0];
+        $ownerId = $this->getOwnerId($request);
         $termId = $args['id'];
 
         /**
@@ -62,10 +51,9 @@ class Terms extends AbstractAction{
          */
         $em = $this->getEmPrivacy($ownerId);
 
-        $em->find(Term::class, $termId);
+        $term = $em->find(Term::class, $termId);
 
-        $term = $js = $this->toJson($term);
+        $js = $this->toJson($term);
         return $response->withJson( $js);
-
     }
 }

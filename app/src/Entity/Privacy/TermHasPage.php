@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="term_as_page")
+ * @ORM\Table(name="term_has_page")
  */
 class TermHasPage
 {

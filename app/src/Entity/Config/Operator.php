@@ -77,7 +77,7 @@ class Operator
     /**
      * @var $profile
      *
-     * @ORM\Column(name="profile", type="json", nullable=false)
+     * @ORM\Column(name="profile", type="json", nullable=true)
      */
     protected $profile;
 

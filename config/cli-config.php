@@ -29,5 +29,5 @@ $doctrinPrivacy = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfigurati
 $emConfig = \Doctrine\ORM\EntityManager::create($settingsConfig['connection'], $doctrinConfig);
 $emPrivacy = \Doctrine\ORM\EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
 
-// return ConsoleRunner::createHelperSet($emConfig);
-return ConsoleRunner::createHelperSet($emPrivacy);
+return ConsoleRunner::createHelperSet($emConfig);
+// return ConsoleRunner::createHelperSet($emPrivacy);

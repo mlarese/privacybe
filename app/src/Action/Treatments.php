@@ -2,19 +2,20 @@
 
 namespace App\Action;
 
-use App\Entity\Privacy\Term;
+use App\Entity\Privacy\Treatment;
 use Doctrine\ORM\EntityManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class Terms extends AbstractAction{
+class Treatments extends AbstractAction{
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      * @return mixed
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getAllTerms($request, $response, $args) {
+    public function getAllTreatments($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
 
         /**
@@ -24,7 +25,7 @@ class Terms extends AbstractAction{
 
         $term = null;
         try {
-            $term =  $em->getRepository( Term::class)->findAll();
+            $term =  $em->getRepository( Treatment::class)->findAll();
         } catch(\Exception $e) {
             echo $e->getMessage();
         }
@@ -42,7 +43,7 @@ class Terms extends AbstractAction{
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function getTerm($request, $response, $args) {
+    public function getTreatment($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
         $termId = $args['id'];
 
@@ -51,7 +52,7 @@ class Terms extends AbstractAction{
          */
         $em = $this->getEmPrivacy($ownerId);
 
-        $term = $em->find(Term::class, $termId);
+        $term = $em->find(Treatment::class, $termId);
 
         $js = $this->toJson($term);
         return $response->withJson( $js);

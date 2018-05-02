@@ -133,6 +133,78 @@ class Term
     protected $created;
 
     /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     * @return Term
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * @param mixed $modified
+     * @return Term
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSuspended()
+    {
+        return $this->suspended;
+    }
+
+    /**
+     * @param mixed $suspended
+     * @return Term
+     */
+    public function setSuspended($suspended)
+    {
+        $this->suspended = $suspended;
+        return $this;
+    }
+
+    /**
+     * @param mixed $published
+     * @return Term
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+        return $this;
+    }
+
+    /**
      * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     protected $modified;

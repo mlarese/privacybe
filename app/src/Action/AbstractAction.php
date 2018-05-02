@@ -5,6 +5,7 @@ namespace App\Action;
 
 use Doctrine\ORM\EntityManager;
 use Slim\Container;
+use Slim\Http\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -57,13 +58,40 @@ class AbstractAction
     }
 
     /**
+     * @param $ownerId
      * @return EntityManager
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getEmPrivacy($ownerId)
     {
         return $this->buildEntityManager($ownerId);
     }
 
+    /**
+     * @param $request Request
+     * @return array
+     */
+    public function getToken ($request) {
+        return $token = $request->getAttribute("token");
+    }
+
+    /**
+     * @param $request Request
+     * @return \stdClass
+     */
+    public function getUserData ($request) {
+        $token = $this->getToken($request);
+        return  $token['user'];
+    }
+
+    /**
+     * @param $request Request
+     * @return string
+     */
+    public function getOwnerId ($request) {
+        $user = $this->getUserData($request);
+        return $user->ownerId;
+    }
     /**
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException

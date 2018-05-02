@@ -38,7 +38,6 @@ class Privacy {
 
     /**
      * @ORM\Column(name="form", type="json", nullable=true)
-     * @Encrypted
      */
     protected $form;
 

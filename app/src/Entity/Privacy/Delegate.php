@@ -30,7 +30,7 @@ class Delegate
 
 
      /**
-      * @ORM\Column(name="zip", type="string", nullable=false, length=10)
+      * @ORM\Column(name="zip", type="string", nullable=true, length=10)
       */
      protected $zip;
 
@@ -226,9 +226,32 @@ class Delegate
       */
      protected $address;
 
+    /**
+     * @return mixed
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param mixed $profile
+     * @return Delegate
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
      /**
       * @ORM\Column(name="role", type="string", nullable=false, length=50)
       */
      protected $role;
+
+     /**
+      * @ORM\Column(name="profile", type="json", nullable=true)
+      */
+     protected $profile;
 
 }

@@ -7,6 +7,7 @@ use App\Entity\Privacy\Privacy;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
+use function md5;
 use Slim\Http\Request;use Slim\Http\Response;
 use Tuupola\Base62;
 
@@ -41,62 +42,73 @@ class Auth extends AbstractAction {
         return $data;
     }
 
-    private function testE () {
+    /**
+     * @param $user
+     * @param $pwd
+     * @return User
+     * @throws UserNotAuthorizedException
+     */
+    private function userHasAuth ($user, $pwd) {
         /**
-         * @var EntityManager $em
+         * @var User $userEntity
          */
-        $em = $this->getEmPrivacy(1);
+        $userEntity = $this ->getEmConfig()
+            ->getRepository(User::class)
+            ->findOneBy(['user' => $user]);
 
-        $p = new Privacy();
+        $valid = false;
 
-        $p->setCreated(new DateTime())
-            ->setForm('{"name":"form"}')
-            ->setName('name')
-            ->setPrivacy('privacy')
-            ->setPrivacyFlags('flags')
-            ->setSite('flags')
-            ->setSurname('flags')
-            ->setTermId('uid')
-            ->setDomain('uid')
-            ->setIp('uid')
-            ->setTelephone('uid')
-            ->setEmail('ema');
+        if(isset($userEntity)) {
+            if($userEntity->getActive()) {
+                $cfp = md5($pwd);
+                if ($userEntity->getPassword() === $cfp) {
+                    $valid = true;
+                }
+            }
 
-        $em->persist($p);
-        $em->flush();
+        }
+
+        if ($valid) {
+            return $userEntity;
+        }
+        throw new UserNotAuthorizedException('User Not Authorized Exception');
+
     }
 
-    // private function userIsAuth
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      */
     public function login($request, $response, $args) {
-        // $this->testE();
-
-        $found = true;
+        $found = false;
         $user = $request->getParam('username');
         $password = $request->getParam('password');
 
-        /*
-        $userEntity = $this ->getEmConfig()
-                            ->getRepository(User::class)
-                            ->findOneBy(['user' => $user]);
+        /**
+         * @var User $ue
+         */
+        $ue = null;
 
-        if(isset($userEntity)) {
-
+        try {
+            $ue = $this->userHasAuth($user, $password);
+            $found = true ;
+        } catch (UserNotAuthorizedException $e) {
+            return $response->withStatus(401, 'User not authorized');
         }
-        */
+
         if($found) {
-            $userSpec = ["user" => $user, "userName" => "Mauro Larese Moro", "role" => "owners"];
+            $userSpec = [
+                "user" => $user,
+                "userName" => $ue->getName(),
+                "role" => $ue->getType(),
+                "ownerId" => $ue->getOwnerId()
+            ];
             $data = $this->defineJwtToken($request, $userSpec);
             return $response->withStatus(201)
                 ->withHeader("Content-Type", "application/json")
                 ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
-        } else {
-            return $response->withStatus(401, 'User not found,');
         }
     }
 

@@ -206,7 +206,7 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=unsubscribe&lg=" . $subscriber->getLanguage());
+        return $response->withRedirect($subscriber->getDomainpath()->getAlternativeredirurl() . "?action=unsubscribe&lg=" . $subscriber->getLanguage());
 
 
     }

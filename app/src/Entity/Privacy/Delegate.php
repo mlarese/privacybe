@@ -39,13 +39,7 @@ class Delegate
       */
      protected $email;
 
-    /**
-     * @return mixed
-     */
-    public function getUid()
-    {
-        return $this->uid;
-    }
+
 
     /**
      * @return mixed
@@ -253,5 +247,74 @@ class Delegate
       * @ORM\Column(name="profile", type="json", nullable=true)
       */
      protected $profile;
+
+     /**
+      * @ORM\Column(name="periodFrom", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      */
+     protected $periodFrom;
+
+     /**
+      * @ORM\Column(name="periodTo", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      */
+     protected $periodTo;
+
+    /**
+     * @return mixed
+     */
+    public function getPeriodFrom()
+    {
+        return $this->periodFrom;
+    }
+
+    /**
+     * @param mixed $periodFrom
+     * @return Delegate
+     */
+    public function setPeriodFrom($periodFrom)
+    {
+        $this->periodFrom = $periodFrom;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPeriodTo()
+    {
+        return $this->periodTo;
+    }
+
+    /**
+     * @param mixed $periodTo
+     * @return Delegate
+     */
+    public function setPeriodTo($periodTo)
+    {
+        $this->periodTo = $periodTo;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * @param mixed $domains
+     * @return Delegate
+     */
+    public function setDomains($domains)
+    {
+        $this->domains = $domains;
+        return $this;
+    }
+
+     /**
+      * @ORM\Column(name="domains", type="json", nullable=true)
+      */
+     protected $domains;
 
 }

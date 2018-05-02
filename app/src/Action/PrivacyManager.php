@@ -16,16 +16,27 @@ class PrivacyManager extends AbstractAction
 {
 
     /**
+     * @return string
+     */
+    private function getIp () {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+    /**
      * @param $request Request
      * @param $response Response
      * @param $args
      * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getWidgetTerm($request, $response, $args) {
         $lang = $request->getHeader('Language')[0];
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
 
+        return $response->withJson(["a"=>$_SERVER]);
         /**
          * @var EntityManager $em
          */
@@ -34,7 +45,6 @@ class PrivacyManager extends AbstractAction
          * @var Domain $domain
          */
         $domain= $cem->find(Domain::class, $domainName);
-
 
         If(!isset($domain)) {
             return $response->withStatus(403, "Domain $domainName not found");
@@ -117,13 +127,15 @@ class PrivacyManager extends AbstractAction
      * @param $args
      */
     public function savePrivacy($request, $response, $args) {
-        $ownerId = $request->getHeader('OwnerId')[0];
+        $ownerId = $this->getOwnerId($request);
         $termId = $request->getHeader('TermId')[0];
 
+        $ip = $this->getIp();
+        $domain = '';
         $email = '';
         $form = '';
         $name = '';
-        $surName = '';
+        $surname = '';
         $site = '';
         $privacy = '';
         $id = '';
@@ -135,11 +147,14 @@ class PrivacyManager extends AbstractAction
 
         $privacyEntry = new Privacy();
 
-        $privacyEntry->setCreated( new DateTime())
+        $privacyEntry
+            ->setCreated( new DateTime())
+            ->setIp($ip)
+            ->setDomain($domain)
             ->setEmail($email)
             ->setForm($form)
             ->setName($name)
-            ->setSurname($surName)
+            ->setSurname($surname)
             ->setTermId($termId)
             ->setSite($site)
             ->setPrivacy($privacy)

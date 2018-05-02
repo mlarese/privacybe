@@ -12,7 +12,7 @@ class Privacy {
     /**
      * @ORM\Id
      * @ORM\Column(name="uid", type="string", nullable=false, length=120)
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
 

@@ -257,12 +257,12 @@ class Subscribers extends AbstractAction
                 $response->getBody()->write($v->getName() . "\n<br/>");
 
                 $path = 'https://privacy.dataone.online/upgrade/allow/' . $domainElementObject->getDomainpath()->getId() . '/' .
-                    $domainElementObject->getPrivacydisclaimer()->getId() . '/';
+                    $domainElementObject->getPrivacydisclaimer()->getId() . '/%%emailaddress%%';
 
                 $response->getBody()->write($path . "\n<br/>");
 
                 $path = 'https://privacy.dataone.online/upgrade/disallow/' . $domainElementObject->getDomainpath()->getId() . '/' .
-                    $domainElementObject->getPrivacydisclaimer()->getId() . '/';
+                    $domainElementObject->getPrivacydisclaimer()->getId() . '/%%emailaddress%%';
 
                 $response->getBody()->write($path . "\n<br/>");
                 $response->getBody()->write("-------------------------------------------------------\n<br/>");

@@ -52,9 +52,78 @@ class Treatment
      */
      protected $code;
 
+    /**
+     * @return mixed
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     * @return Treatment
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+        return $this;
+    }
+
      /**
       * @ORM\Column(name="name", type="string", nullable=false)
       */
      protected $name;
+
+     /**
+      * @ORM\Column(name="note", type="text", nullable=true)
+      */
+     protected $note;
+
+     /**
+      * @ORM\Column(name="created", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      */
+     protected $created;
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     * @return Treatment
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param mixed $creator
+     * @return Treatment
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
+        return $this;
+    }
+
+     /**
+      * @ORM\Column(name="creator", type="json", nullable=true)
+      */
+     protected $creator;
 
 }

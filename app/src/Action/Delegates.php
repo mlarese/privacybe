@@ -2,12 +2,13 @@
 
 namespace App\Action;
 
-use App\Entity\Privacy\Treatment;
+use App\Entity\Privacy\Delegate;
 use Doctrine\ORM\EntityManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class Treatments extends AbstractAction{
+class Delegates extends AbstractAction
+{
     /**
      * @param $request Request
      * @param $response Response
@@ -15,7 +16,7 @@ class Treatments extends AbstractAction{
      * @return mixed
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getAllTreatments($request, $response, $args) {
+    public function getAllDelegates($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
 
         /**
@@ -25,7 +26,7 @@ class Treatments extends AbstractAction{
 
         $term = null;
         try {
-            $term =  $em->getRepository( Treatment::class)->findAll();
+            $term =  $em->getRepository( Delegate::class)->findAll();
         } catch(\Exception $e) {
             echo $e->getMessage();
         }
@@ -43,16 +44,16 @@ class Treatments extends AbstractAction{
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function getTreatment($request, $response, $args) {
+    public function getDelegate($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
-        $treatmentCode = $args['code'];
+        $id = $args['id'];
 
         /**
          * @var EntityManager $em
          */
         $em = $this->getEmPrivacy($ownerId);
 
-        $term = $em->find(Treatment::class, $treatmentCode);
+        $term = $em->find(Delegate::class, $id);
 
         $js = $this->toJson($term);
         return $response->withJson( $js);

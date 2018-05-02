@@ -111,7 +111,7 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?subscribe=1");
+        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=subscribe&lg=". $subscriber->getLanguage());
 
     }
 
@@ -206,7 +206,7 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?unsubscribe=1");
+        return $response->withRedirect($subscriber->getDomainpath()->getAlternativeredirurl() . "?action=unsubscribe&lg=" . $subscriber->getLanguage());
 
 
     }
@@ -257,12 +257,12 @@ class Subscribers extends AbstractAction
                 $response->getBody()->write($v->getName() . "\n<br/>");
 
                 $path = 'https://privacy.dataone.online/upgrade/allow/' . $domainElementObject->getDomainpath()->getId() . '/' .
-                    $domainElementObject->getPrivacydisclaimer()->getId() . '/';
+                    $domainElementObject->getPrivacydisclaimer()->getId() . '/%%emailaddress%%';
 
                 $response->getBody()->write($path . "\n<br/>");
 
                 $path = 'https://privacy.dataone.online/upgrade/disallow/' . $domainElementObject->getDomainpath()->getId() . '/' .
-                    $domainElementObject->getPrivacydisclaimer()->getId() . '/';
+                    $domainElementObject->getPrivacydisclaimer()->getId() . '/%%emailaddress%%';
 
                 $response->getBody()->write($path . "\n<br/>");
                 $response->getBody()->write("-------------------------------------------------------\n<br/>");

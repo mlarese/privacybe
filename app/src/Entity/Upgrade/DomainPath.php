@@ -42,6 +42,17 @@ class DomainPath
      */
     private $redirurl;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alternativeredirurl", type="string", length=255, nullable=false)
+     */
+    private $alternativeredirurl;
+
+
+
+
     /**
      * @return int
      */
@@ -106,5 +117,20 @@ class DomainPath
         $this->redirurl = $redirurl;
     }
 
+    /**
+     * @return string
+     */
+    public function getAlternativeredirurl(): string
+    {
+        return $this->alternativeredirurl;
+    }
+
+    /**
+     * @param string $alternativeredirurl
+     */
+    public function setAlternativeredirurl(string $alternativeredirurl): void
+    {
+        $this->alternativeredirurl = $alternativeredirurl;
+    }
 
 }

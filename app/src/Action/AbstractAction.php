@@ -14,12 +14,17 @@ use Symfony\Component\Serializer\Serializer;
 class AbstractAction
 {
     protected $container;
+
     protected $session;
 
+    protected $context;
+
     public function toJson($obj) {
+
         $on = new ObjectNormalizer();
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+
         $dtn = new DateTimeNormalizer('Y-m-d');
         $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
 
@@ -33,6 +38,7 @@ class AbstractAction
     public function __construct( $container) {
         $this->container = $container;
         $this->session = $container->get('session');
+        $this->context = $container->get('settings')['applicationContext'];
     }
 
     /**
@@ -94,20 +100,26 @@ class AbstractAction
         $settings = $this->container['settings'];
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-            $settings['doctrine_privacy']['meta']['entity_path'],
-            $settings['doctrine_privacy']['meta']['auto_generate_proxies'],
-            $settings['doctrine_privacy']['meta']['proxy_dir'],
-            $settings['doctrine_privacy']['meta']['cache'],
+            $settings[$this->context]['meta']['entity_path'],
+            $settings[$this->context]['meta']['auto_generate_proxies'],
+            $settings[$this->context]['meta']['proxy_dir'],
+            $settings[$this->context]['meta']['cache'],
             false
         );
 
+
         $connection = array(
-            'driver'   => $settings['doctrine_privacy']['connection']['driver'],
-            'host'     => $settings['doctrine_privacy']['connection']['host'],
-            'dbname'   => $settings['doctrine_privacy']['connection']['dbname'] . "_$ownerId",
-            'user'     => $settings['doctrine_privacy']['connection']['user'],
-            'password' => $settings['doctrine_privacy']['connection']['password']
+            'driver'   => $settings[$this->context]['connection']['driver'],
+            'host'     => $settings[$this->context]['connection']['host'],
+            'dbname'   => $settings[$this->context]['connection']['dbname'],
+            'user'     => $settings[$this->context]['connection']['user'],
+            'password' => $settings[$this->context]['connection']['password']
         );
+        if($ownerId!==null) {
+            $connection['dbname'] =  $settings[$this->context]['connection']['dbname'] . "_$ownerId";
+        }
+
+
 
         $em = \Doctrine\ORM\EntityManager::create($connection , $config);
 

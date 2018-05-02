@@ -1,6 +1,12 @@
 <?php
 return [
     'settings' => [
+        'applications' => [
+            'apps' => [
+                'doctrine_upgrade' => function ($path){return $path == 'upgrade';},
+                'doctrine_privacy' => function ($path){return true;},
+            ]
+        ],
         // monolog settings
         'logger' => [
             'name' => 'app',
@@ -68,6 +74,23 @@ return [
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',
+            ]
+        ],
+        'doctrine_upgrade' => [
+            'meta' => [
+                'entity_path' => [
+                    'app/src/Entity/Upgrade'
+                ],
+                'auto_generate_proxies' => true,
+                'proxy_dir' =>  __DIR__.'/../cache/proxies',
+                'cache' => null,
+            ],
+            'connection' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '10.0.28.1',
+                'dbname'   => 'gdpr_upgrade',
+                'user'     => 'gdprupgrade',
+                'password' => 'JGXMOHFnj4EPfnYP',
             ]
         ]
     ],

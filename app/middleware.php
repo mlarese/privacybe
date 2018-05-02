@@ -14,7 +14,8 @@ $settings = $app->getContainer()->get('settings');
 /**
  * @var App $app
  */
-// $app->add(new SessionMiddleware(['name' => 'base_session']));
+
+$app->add( new \App\Manager\ApplicationMiddleware($settings['applications'],$app));
 
 $app->add(new \Adbar\SessionMiddleware($settings['session']));
 

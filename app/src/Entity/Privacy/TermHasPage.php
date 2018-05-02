@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class TermHasPage
 {
     /**
-     * @ORM\Column(name="term_uid", type="string", nullable=false)
      * @ORM\Id
+     * @ORM\Column(name="term_uid", type="string", nullable=false)
      */
     protected $termUid;
 
@@ -74,8 +74,8 @@ class TermHasPage
     }
 
     /**
-     * @ORM\Column(name="domain", type="string", nullable=false)
      * @ORM\Id
+     * @ORM\Column(name="domain", type="string", nullable=false)
      */
     protected $domain;
 

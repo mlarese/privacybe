@@ -8,7 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(
- *     name="owner"
+ *     name="owner",
+ *     indexes={
+ *          @ORM\Index(name="owner_email", columns={"email"}),
+ *          @ORM\Index(name="owner_name", columns={"name"})
+ *     }
  * )
  */
 class Owner {

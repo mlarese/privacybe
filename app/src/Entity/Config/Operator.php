@@ -5,7 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="operator")
+ * @ORM\Table(
+ *     name="operator",
+ *     indexes={
+ *          @ORM\Index(name="operator_name", columns={"name"})
+ *     }
+ * )
  */
 class Operator
 {

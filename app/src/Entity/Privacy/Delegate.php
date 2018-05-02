@@ -6,7 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="responsible")
+ * @ORM\Table(
+ *     name="delegate",
+ *     indexes={
+ *          @ORM\Index(name="delegate_name", columns={"name"}),
+ *          @ORM\Index(name="delegate_role", columns={"role"}),
+ *          @ORM\Index(name="delegate_period_from", columns={"period_from"}),
+ *          @ORM\Index(name="delegate_period_to", columns={"period_to"})
+ *     }
+ * )
  */
 
 class Delegate
@@ -249,12 +257,12 @@ class Delegate
      protected $profile;
 
      /**
-      * @ORM\Column(name="periodFrom", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      * @ORM\Column(name="period_from", type="datetime")
       */
      protected $periodFrom;
 
      /**
-      * @ORM\Column(name="periodTo", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      * @ORM\Column(name="period_to", type="datetime")
       */
      protected $periodTo;
 

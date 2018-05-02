@@ -71,7 +71,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
-                'dbname'   => 'privacy',
+                'dbname'   => 'privacy_1',
                 'user'     => 'root',
                 'password' => '',
             ]

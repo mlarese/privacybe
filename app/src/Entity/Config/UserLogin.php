@@ -99,7 +99,10 @@ class UserLogin
      protected $ipAddress;
 
      /**
-      * @ORM\Column(name="user_id", type="integer", nullable=false)
+      * @ORM\ManyToOne(targetEntity="User", fetch="EXTRA_LAZY")
+      * @ORM\JoinColumns({
+      *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+      * })
       */
-     protected $userId;
+     protected $user;
 }

@@ -5,7 +5,15 @@ use Doctrine\ORM\Mapping as ORM;
 use DoctrineEncrypt\Configuration\Encrypted;
 
 /**
- * @ORM\Table(name="privacy_entry")
+ * @ORM\Table(
+ *     name="privacy_entry",
+ *     indexes={
+ *          @ORM\Index(name="privacy_created", columns={"created"}),
+ *          @ORM\Index(name="privacy_name_surname", columns={"name","surname"}),
+ *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
+ *          @ORM\Index(name="privacy_email", columns={"email"})
+ *     }
+ * )
  * @ORM\Entity
  */
 class Privacy {
@@ -47,14 +55,35 @@ class Privacy {
     protected $privacy;
 
     /**
-     * @ORM\Column(name="$privacy_flags", type="json", nullable=false)
+     * @ORM\Column(name="privacy_flags", type="json", nullable=false)
      */
     protected $privacyFlags;
 
     /**
-     * @ORM\Column(name="term_id", type="string", nullable=false, length=128)
+     * @return Term
      */
-    protected $termId;
+    public function getTerm(): Term {
+        return $this->term;
+    }
+
+    /**
+     * @param Term $term
+     *
+     * @return Privacy
+     */
+    public function setTerm(Term $term): Privacy {
+        $this->term = $term;
+        return $this;
+    }
+
+    /**
+     * @var Term $term
+     * @ORM\ManyToOne(targetEntity="Term", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumns(
+     *     @ORM\JoinColumn(name="term_uid", referencedColumnName="uid")
+     * )
+     */
+    protected $term;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -188,23 +217,6 @@ class Privacy {
     /**
      * @return mixed
      */
-    public function getTermId() {
-        return $this->termId;
-    }
-
-    /**
-     * @param mixed $termId
-     *
-     * @return Privacy
-     */
-    public function setTermId($termId) {
-        $this->termId = $termId;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getSite() {
         return $this->site;
     }
@@ -297,8 +309,7 @@ class Privacy {
 
     /**
      * @var $telephone  string
-     *
-     * @ORM\Column(name="telephone", type="string", nullable=false, length=120)
+     * @ORM\Column(name="telephone", type="string", nullable=true, length=120)
      */
     protected $telephone;
 }

@@ -64,6 +64,8 @@ class SendOneCoupon
 
         try {
 
+
+            var_dump($_SERVER['DOCUMENT_ROOT']);
             $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/' . $param->getLanguage() . '/template.php');
 
 

@@ -96,6 +96,7 @@ class Subscribers extends AbstractAction
 
         if (!$subscriber) return false;
 
+
         /**
          * @var $subscriber SubscriberDomainPath
          */
@@ -106,6 +107,22 @@ class Subscribers extends AbstractAction
         $em->persist($subscriber);
 
         $em->flush();
+
+
+        /*
+         * Verifica azioni connesse
+         */
+
+        $action = $subscriber->getDomainpath()->getAction();
+
+        if($action!==null && $action->count()==1){
+            $container = $this->getContainer();
+            $service   = $container->get('actionHandler');
+            $service->setConfig($action[0]);
+            $service->execute($subscriber);
+
+        }
+
 
         $response = $response->withAddedHeader('Cache-Control', 'no-cache, must-revalidate');
 

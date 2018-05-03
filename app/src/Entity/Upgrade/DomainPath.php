@@ -53,6 +53,17 @@ class DomainPath
 
 
 
+
+    /**
+     * @var \App\Entity\Upgrade\Actions
+     *
+     * @ORM\OneToMany(targetEntity="Actions", mappedBy="id")
+     *
+     */
+    private $action;
+
+
+
     /**
      * @return int
      */
@@ -132,5 +143,22 @@ class DomainPath
     {
         $this->alternativeredirurl = $alternativeredirurl;
     }
+
+    /**
+     * @return Actions
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param Actions $action
+     */
+    public function setAction(Actions $action): void
+    {
+        $this->action = $action;
+    }
+
 
 }

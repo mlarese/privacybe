@@ -46,3 +46,34 @@ $container['session'] = function ($container) {
         $container->get('settings')['session']['namespace']
     );
 };
+
+
+
+$container['sendCoupon'] = function ($container) {
+    $couponService = new \App\Action\SendOneCoupon();
+    $settings = $container->get('settings');
+
+    if(isset($settings['StoreOne']) && isset($settings['StoreOne']['url'])){
+        $couponService->setUrl($settings['StoreOne']['url']);
+    }
+
+    return $couponService;
+};
+
+$container['couponStoreOne'] = function ($container) {
+    $couponService = new \App\Action\StoreOneCoupon();
+    $settings = $container->get('settings');
+
+    if(isset($settings['StoreOne']) && isset($settings['StoreOne']['url'])){
+        $couponService->setUrl($settings['StoreOne']['url']);
+    }
+
+    return $couponService;
+};
+
+$container['actionHandler'] = function ($container) {
+    $actionHandler = new \App\Action\ActionHandler($container);
+
+
+    return $actionHandler;
+};

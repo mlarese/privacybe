@@ -32,6 +32,8 @@
         "tuupola/base62": "0.10.0",
         "adbario/slim-secure-session-middleware": "1.3.4",
         "michaeldegroot/doctrine-encrypt-bundle": "4.0.1",
-        "51systems/doctrine-encrypt": "v6.0.0"
+        "51systems/doctrine-encrypt": "v6.0.0",
+        "symfony/yaml": "^4.0",
+        "guzzlehttp/guzzle": "^6.3"
     }
 }

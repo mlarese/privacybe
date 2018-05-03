@@ -5,6 +5,7 @@ $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 
 // widget
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
+$app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 
 // terms
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');

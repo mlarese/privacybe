@@ -14,7 +14,7 @@ use App\Entity\Upgrade\SubscriberDomainPath;
 class SendOneCoupon
 {
 
-    protected $url = 'http://servicehub.abs-one.com';
+    protected $url = 'https://servicehub.abs-one.com';
 
     protected $config = null;
 
@@ -65,8 +65,7 @@ class SendOneCoupon
         try {
 
 
-            var_dump($_SERVER['DOCUMENT_ROOT']);
-            die;
+
             $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/' . $param->getLanguage() . '/template.php');
 
 

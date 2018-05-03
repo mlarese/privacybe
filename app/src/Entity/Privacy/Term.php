@@ -6,7 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="term")
+ * @ORM\Table(
+ *     name="term",
+ *     indexes={
+ *          @ORM\Index(name="term_created", columns={"created"}),
+ *          @ORM\Index(name="term_suspended", columns={"suspended"}),
+ *          @ORM\Index(name="term_published", columns={"published"}),
+ *          @ORM\Index(name="term_modified", columns={"modified"})
+ *     }
+ * )
  */
 class Term
 {

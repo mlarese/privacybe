@@ -7,8 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
  * user
  * @ORM\Table(
  *     name="user",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="user_uq_user", columns={"user"})} ,
- *     indexes={@ORM\Index(name="user_type", columns={"type"}) }
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="user_uq_user", columns={"user"})
+ *     },
+ *     indexes={
+ *          @ORM\Index(name="user_type", columns={"type"}),
+ *          @ORM\Index(name="user_active", columns={"active"})
+ *     }
  * )
  * @ORM\Entity
  */
@@ -147,24 +152,6 @@ class User {
     }
 
     /**
-     * @return mixed
-     */
-    public function getOwnerId()
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * @param mixed $ownerId
-     * @return User
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
-        return $this;
-    }
-
-    /**
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     protected $active=true;
@@ -192,14 +179,18 @@ class User {
         return $this;
     }
 
-    /**
-     * @ORM\Column(name="owner_id", type="integer", nullable=true)
-     */
-    protected $ownerId;
 
     /**
      * @ORM\Column(name="name", type="string", nullable=false, length=50)
      */
     protected $name;
 
+    /**
+     * @var Owner
+     * @ORM\ManyToOne(targetEntity="Owner")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * })
+     */
+    protected $owner;
 }

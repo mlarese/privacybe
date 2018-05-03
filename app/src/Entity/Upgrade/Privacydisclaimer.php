@@ -89,8 +89,4 @@ class Privacydisclaimer
     {
         $this->version = $version;
     }
-
-
-
-
 }

@@ -6,7 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="action_history")
+ * @ORM\Table(
+ *     name="action_history",
+ *     indexes={
+ *          @ORM\Index(name="action_history_type", columns={"type"}),
+ *          @ORM\Index(name="action_history_date", columns={"date"}),
+ *          @ORM\Index(name="action_history_user_name", columns={"user_name"})
+ *     }
+ * )
  */
 
 class ActionHistory

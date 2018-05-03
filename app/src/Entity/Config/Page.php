@@ -6,7 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="page")
+ * @ORM\Table(
+ *     name="page",
+ *     indexes={
+ *          @ORM\Index(name="page_active", columns={"active"})
+ *     }
+ * )
  */
 class Page
 {
@@ -75,11 +80,11 @@ class Page
      * @ORM\Column(type="string")
      */
     protected $page;
-    
+
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     protected $active=true;
-    
+
 
 }

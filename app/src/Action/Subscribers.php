@@ -119,9 +119,9 @@ class Subscribers extends AbstractAction
 
 
                 $params =  array();
-                if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+                if ($request->getParam('action') ) {
                     $link = UrlUtils::repair($request->getParams());
-                    $params['%%unsubscribelink%%']  = $link;
+                    $params['%%link_subscriber_info%%']  = $link;
                     $params['%%email%%']  = $email;
                 }
 
@@ -244,12 +244,12 @@ class Subscribers extends AbstractAction
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
 
-        if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+        if ($request->getParam('action') ) {
+
 
            $link = UrlUtils::repair($request->getParams());
 
-
-           return $response->withRedirect($link);
+           return $response->withRedirect($subscriber->getDomainpath()->getAlternativeredirurl() . "?" . $link);
         }
 
 

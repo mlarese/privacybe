@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="action_history")
  */
 
-class PrivacyHistory
+class ActionHistory
 {
     /**
      * @ORM\Id
@@ -39,7 +39,7 @@ class PrivacyHistory
     /**
      * @param mixed $id
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setId($id)
     {
@@ -58,7 +58,7 @@ class PrivacyHistory
     /**
      * @param mixed $type
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setType($type)
     {
@@ -77,7 +77,7 @@ class PrivacyHistory
     /**
      * @param mixed $description
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setDescription($description)
     {
@@ -96,7 +96,7 @@ class PrivacyHistory
     /**
      * @param mixed $date
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setDate($date)
     {
@@ -115,7 +115,7 @@ class PrivacyHistory
     /**
      * @param mixed $history
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setHistory($history)
     {
@@ -134,7 +134,7 @@ class PrivacyHistory
     /**
      * @param mixed $userName
      *
-     * @return PrivacyHistory
+     * @return ActionHistory
      */
     public function setUserName($userName)
     {

@@ -5,7 +5,7 @@ use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
-use App\Entity\Privacy\TermHasPage;
+use App\Entity\Privacy\TermPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -36,22 +36,12 @@ class PrivacyManager extends AbstractAction
         $lang = $request->getHeader('Language')[0];
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
+        $ownerId = $request->getHeader('OwnerId')[0];
 
         /**
          * @var EntityManager $em
          */
         $cem = $this->getEmConfig();
-        /**
-         * @var Domain $domain
-         */
-        $domain= $cem->find(Domain::class, $domainName);
-
-        If(!isset($domain)) {
-            return $response->withStatus(403, "Domain $domainName not found");
-        }
-
-
-        $ownerId = $domain->getOwnerId();
 
         /**
          * @var EntityManager $em
@@ -59,17 +49,19 @@ class PrivacyManager extends AbstractAction
         $em = $this->getEmPrivacy($ownerId);
 
         /**
-         * @var TermHasPage $termHasPage
+         * @var TermPage $termPage
          */
-        $termHasPage = $em->
-                            getRepository(TermHasPage::class)
+        $termPage = $em->
+                            getRepository(TermPage::class)
                             ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
 
-        If(!isset($termHasPage)) {
+        die('qui');
+
+        If(!isset($termPage)) {
             return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
         }
 
-        $termId = $termHasPage->getTermUid();
+        $termId = $termPage->getTermUid();
         /**
          * @var Terms $term
          */

@@ -39,6 +39,12 @@ $emConfig = \Doctrine\ORM\EntityManager::create($settingsConfig['connection'], $
 $emPrivacy = \Doctrine\ORM\EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
 $emUpgrade = \Doctrine\ORM\EntityManager::create($settingsUpgrade['connection'], $doctrinUpgrade);
 
-//return ConsoleRunner::createHelperSet($emConfig);
-return ConsoleRunner::createHelperSet($emPrivacy);
+return ConsoleRunner::createHelperSet($emConfig);
+// return ConsoleRunner::createHelperSet($emPrivacy);
+
+
+
+
+
+
 //return ConsoleRunner::createHelperSet($emUpgrade);

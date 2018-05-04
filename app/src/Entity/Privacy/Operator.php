@@ -7,17 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *     name="delegate",
+ *     name="operator",
  *     indexes={
- *          @ORM\Index(name="delegate_name", columns={"name"}),
- *          @ORM\Index(name="delegate_role", columns={"role"}),
- *          @ORM\Index(name="delegate_period_from", columns={"period_from"}),
- *          @ORM\Index(name="delegate_period_to", columns={"period_to"})
+ *          @ORM\Index(name="operator_name", columns={"name"}),
+ *          @ORM\Index(name="operator_role", columns={"role"}),
+ *          @ORM\Index(name="operator_period_from", columns={"period_from"}),
+ *          @ORM\Index(name="operator_period_to", columns={"period_to"})
  *     }
  * )
  */
 
-class Delegate
+class Operator
 {
     /**
      * @ORM\Id
@@ -59,7 +59,7 @@ class Delegate
     /**
      * @param mixed $id
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setId($id) {
         $this->id = $id;
@@ -78,7 +78,7 @@ class Delegate
     /**
      * @param mixed $name
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setName($name)
     {
@@ -97,7 +97,7 @@ class Delegate
     /**
      * @param mixed $surname
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setSurname($surname)
     {
@@ -116,7 +116,7 @@ class Delegate
     /**
      * @param mixed $zip
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setZip($zip)
     {
@@ -135,7 +135,7 @@ class Delegate
     /**
      * @param mixed $email
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setEmail($email)
     {
@@ -154,7 +154,7 @@ class Delegate
     /**
      * @param mixed $telephone
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setTelephone($telephone)
     {
@@ -173,7 +173,7 @@ class Delegate
     /**
      * @param mixed $city
      *
-     * @return Delegate
+     * @return Operator
      */
     public function setCity($city)
     {
@@ -191,7 +191,8 @@ class Delegate
 
     /**
      * @param mixed $address
-     * @return Delegate
+     *
+     * @return Operator
      */
     public function setAddress($address)
     {
@@ -238,7 +239,8 @@ class Delegate
 
     /**
      * @param mixed $profile
-     * @return Delegate
+     *
+     * @return Operator
      */
     public function setProfile($profile)
     {
@@ -276,7 +278,8 @@ class Delegate
 
     /**
      * @param mixed $periodFrom
-     * @return Delegate
+     *
+     * @return Operator
      */
     public function setPeriodFrom($periodFrom)
     {
@@ -294,7 +297,8 @@ class Delegate
 
     /**
      * @param mixed $periodTo
-     * @return Delegate
+     *
+     * @return Operator
      */
     public function setPeriodTo($periodTo)
     {
@@ -312,7 +316,8 @@ class Delegate
 
     /**
      * @param mixed $domains
-     * @return Delegate
+     *
+     * @return Operator
      */
     public function setDomains($domains)
     {

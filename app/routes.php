@@ -11,15 +11,17 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 
+// owners
+$app->post('/api/owner', 'App\Action\Owners:newOwner');
 
 // treatments
 $app->get('/api/owner/treatment', 'App\Action\Treatments:getAllTreatments');
 $app->get('/api/owner/treatment/{code}', 'App\Action\Treatments:getTreatment');
 
 
-// owners operators (delegates)
-$app->get('/api/owner/operator', 'App\Action\Delegates:getAllDelegates');
-$app->get('/api/owner/operator/{id}', 'App\Action\Delegates:getDelegate');
+// owners operators
+$app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');
+$app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 
 
 // auth

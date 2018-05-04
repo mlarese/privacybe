@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Config;
+namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -81,31 +81,9 @@ class Domain
       */
      protected $description;
 
-    /**
-     * @return mixed
-     */
-    public function getOwnerId() {
-        return $this->ownerId;
-    }
-
-    /**
-     * @param mixed $ownerId
-     *
-     * @return Domain
-     */
-    public function setOwnerId($ownerId) {
-        $this->ownerId = $ownerId;
-        return $this;
-    }
-
      /**
       * @ORM\Column(name="active", type="boolean", nullable=false)
       */
      protected $active=true;
-
-     /**
-      * @ORM\Column(name="owner_id", type="integer", nullable=false)
-      */
-     protected $ownerId;
 
 }

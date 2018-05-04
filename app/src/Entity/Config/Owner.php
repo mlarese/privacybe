@@ -9,8 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(
  *     name="owner",
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="owner_uq_company", columns={"company"}),
+ *          @ORM\UniqueConstraint(name="owner_uq_email", columns={"email"})
+ *     },
  *     indexes={
- *          @ORM\Index(name="owner_email", columns={"email"}),
  *          @ORM\Index(name="owner_name", columns={"name"})
  *     }
  * )
@@ -22,10 +25,58 @@ class Owner {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
-     * @ORM\Column(type="string", length=100)
+     * @return mixed
+     */
+    public function getSurname() {
+        return $this->surname;
+    }
+
+    /**
+     * @param mixed $surname
+     *
+     * @return Owner
+     */
+    public function setSurname($surname) {
+        $this->surname = $surname;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany() {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     *
+     * @return Owner
+     */
+    public function setCompany($company) {
+        $this->company = $company;
+        return $this;
+    }
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $name;
+
+    /**
+     * @ORM\Column(name="surname", type="string", nullable=true, length=100)
+     */
+    protected $surname;
+
+
+
+    /**
+     * @ORM\Column(name="company", type="string", nullable=false)
+     */
+    protected $company;
+
+
     /**
      * @ORM\Column(type="string", length=100)
      */
@@ -122,12 +173,101 @@ class Owner {
     }
 
     /**
+     * @return mixed
+     */
+    public function getCountry() {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     *
+     * @return Owner
+     */
+    public function setCountry($country) {
+        $this->country = $country;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getZip() {
+        return $this->zip;
+    }
+
+    /**
+     * @param mixed $zip
+     *
+     * @return Owner
+     */
+    public function setZip($zip) {
+        $this->zip = $zip;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress() {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     *
+     * @return Owner
+     */
+    public function setAddress($address) {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity() {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     *
+     * @return Owner
+     */
+    public function setCity($city) {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
      * @ORM\Column(name="profile", type="json", nullable=true)
      */
     protected $profile;
 
     /**
-     * @ORM\Column(name="language", type="string", nullable=false)
+     * @ORM\Column(name="language", type="string", nullable=true)
      */
     protected $language;
+
+    /**
+     * @ORM\Column(name="country", type="string", nullable=true, length=4)
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(name="zip", type="string", nullable=true, length=20)
+     */
+    protected $zip;
+
+    /**
+     * @ORM\Column(name="address", type="string", nullable=true)
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(name="city", type="string", nullable=true)
+     */
+    protected $city;
 }

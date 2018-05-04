@@ -2,6 +2,7 @@
 
 namespace App\Entity\Config;
 use Doctrine\ORM\Mapping as ORM;
+use function md5;
 
 /**
  * user
@@ -69,7 +70,7 @@ class User {
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = md5( $password);
         return $this;
     }
 

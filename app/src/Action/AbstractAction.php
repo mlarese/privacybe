@@ -4,6 +4,7 @@ namespace App\Action;
 
 
 use Doctrine\ORM\EntityManager;
+use Exception;
 use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
@@ -32,6 +33,24 @@ class AbstractAction
         return $s->normalize($obj,'json');
     }
 
+    /**
+     * @param $name
+     * @param $collection
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    protected function getAttribute($name, $collection, $mandatory=false) {
+        if(isset($collection[$name])) {
+            return $collection[$name];
+        }
+
+        if($mandatory) {
+            throw new Exception("$name not found");
+        } else {
+            return null;
+        }
+    }
     /**
      * AbstractAction constructor.
      * @param $container Container

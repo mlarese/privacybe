@@ -68,6 +68,10 @@ return [
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
             ],
+            'dynamic_user' => [
+                'user'     => 'privacy',
+                'password' => 'fm7bKMWAHVD3thGn',
+            ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',

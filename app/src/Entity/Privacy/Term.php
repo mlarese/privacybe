@@ -73,23 +73,6 @@ class Term
     }
 
     /**
-     * @return mixed
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
-    /**
-     * @param mixed $pages
-     * @return Term
-     */
-    public function setPages($pages)
-    {
-        $this->pages = $pages;
-        return $this;
-    }
-    /**
      * @ORM\Id
      * @ORM\Column(type="string", length=128)
      * @ORM\GeneratedValue(strategy="NONE")
@@ -105,11 +88,6 @@ class Term
      * @ORM\Column(name="paragraphs", type="json", nullable=true)
      */
     protected $paragraphs;
-
-    /**
-     * @ORM\Column(name="pages", type="json_array", nullable=true)
-     */
-    protected $pages;
 
     /**
      * @ORM\Column(name="status", type="string", nullable=false, length=1)

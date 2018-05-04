@@ -15,7 +15,7 @@ use App\Entity\Upgrade\SubscriberDomainPath;
 class SendOneCoupon
 {
 
-    protected $url = 'https://servicehub.abs-one.com';
+    protected $url = 'http://servicehub.abs-one.com';
 
     protected $config = null;
 

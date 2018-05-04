@@ -79,6 +79,8 @@ class Auth extends AbstractAction {
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
+     * @return mixed
      */
     public function login($request, $response, $args) {
         $found = false;
@@ -98,6 +100,7 @@ class Auth extends AbstractAction {
         }
 
         if($found) {
+
             $userSpec = [
                 "user" => $user,
                 "userName" => $ue->getName(),

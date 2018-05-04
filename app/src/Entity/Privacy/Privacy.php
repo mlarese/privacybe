@@ -60,31 +60,26 @@ class Privacy {
     protected $privacyFlags;
 
     /**
-     * @return Term
+     * @ORM\Column(name="term_id", type="string", nullable=false)
      */
-    public function getTerm(): Term {
-        return $this->term;
+    protected $termId;
+
+    /**
+     * @return mixed
+     */
+    public function getTermId() {
+        return $this->termId;
     }
 
     /**
-     * @param Term $term
+     * @param mixed $termId
      *
      * @return Privacy
      */
-    public function setTerm(Term $term): Privacy {
-        $this->term = $term;
+    public function setTermId($termId) {
+        $this->termId = $termId;
         return $this;
     }
-
-    /**
-     * @var Term $term
-     * @ORM\ManyToOne(targetEntity="Term", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumns(
-     *     @ORM\JoinColumn(name="term_uid", referencedColumnName="uid")
-     * )
-     */
-    protected $term;
-
     /**
      * @ORM\Column(type="string", nullable=false)
      */

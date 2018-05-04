@@ -9,6 +9,7 @@ use App\Entity\Privacy\TermHasPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -36,7 +37,6 @@ class PrivacyManager extends AbstractAction
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
 
-        return $response->withJson(["a"=>$_SERVER]);
         /**
          * @var EntityManager $em
          */
@@ -49,6 +49,7 @@ class PrivacyManager extends AbstractAction
         If(!isset($domain)) {
             return $response->withStatus(403, "Domain $domainName not found");
         }
+
 
         $ownerId = $domain->getOwnerId();
 
@@ -65,7 +66,7 @@ class PrivacyManager extends AbstractAction
                             ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
 
         If(!isset($termHasPage)) {
-            return $response->withStatus(403, "Page $domainName$pageName not found");
+            return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
         }
 
         $termId = $termHasPage->getTermUid();
@@ -92,7 +93,8 @@ class PrivacyManager extends AbstractAction
             $newP = array(
               "text" => $p['text'][$lang],
               "treatments" => array(),
-              "scrolled" => false
+              "scrolled" => false,
+              "title" => $p['title'][$lang]
             );
 
             foreach($p['treatments'] as $t) {
@@ -102,7 +104,6 @@ class PrivacyManager extends AbstractAction
                    "mandatory" => $t['mandatory'],
                    "text" => $t['text'][$lang],
                    "selected" => false
-
                 );
 
                 $newP['treatments'][] = $newT;
@@ -127,39 +128,59 @@ class PrivacyManager extends AbstractAction
      * @param $args
      */
     public function savePrivacy($request, $response, $args) {
-        $ownerId = $this->getOwnerId($request);
-        $termId = $request->getHeader('TermId')[0];
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $body = $request->getParsedBody();
 
         $ip = $this->getIp();
-        $domain = '';
-        $email = '';
-        $form = '';
-        $name = '';
-        $surname = '';
-        $site = '';
-        $privacy = '';
-        $id = '';
+        $domain = $body['domain'];
+        $email = $body['email'];
+        $name = $body['name'];
+        $surname = $body['surname'];
+
+        $site = $body['site'];
+        $privacy = $body['privacy'];
+        $id = $body['id'];
+        $termId = $body['termId'];
+        $form = $body['form'];
+        $privacyFlags = $body['privacyFlags'];
+        $telephone = $body['telephone'];
 
         /**
          * @var EntityManager $em
          */
-        // $em = $this->getEmPrivacy($ownerId);
+        $em = $this->getEmPrivacy($ownerId);
 
         $privacyEntry = new Privacy();
 
         $privacyEntry
             ->setCreated( new DateTime())
             ->setIp($ip)
-            ->setDomain($domain)
-            ->setEmail($email)
             ->setForm($form)
             ->setName($name)
             ->setSurname($surname)
             ->setTermId($termId)
             ->setSite($site)
             ->setPrivacy($privacy)
-            ->setId($id)
+            ->setId($id)//
+            ->setDomain($domain)
+            ->setEmail($email)
+            ->setPrivacyFlags($privacyFlags)
+            ->setTelephone($telephone)
         ;
+
+        try{
+            $em->merge($privacyEntry);
+            $em->flush();
+        } catch (Exception $e) {
+
+            $r = $this->toJson($privacyEntry);
+            echo($e->getMessage());
+
+            // print_r($r);
+            die;
+        }
+
+        return $response->withJson($this->success()) ;
     }
 
 

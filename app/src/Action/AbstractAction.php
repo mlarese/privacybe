@@ -4,6 +4,7 @@ namespace App\Action;
 
 
 use Doctrine\ORM\EntityManager;
+use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -119,12 +120,13 @@ class AbstractAction
             $connection['dbname'] =  $settings[$this->context]['connection']['dbname'] . "_$ownerId";
         }
 
-
-
         $em = \Doctrine\ORM\EntityManager::create($connection , $config);
 
         return $em;
 
     }
 
+    protected function success () {
+        return ["success"=>true];
+    }
 }

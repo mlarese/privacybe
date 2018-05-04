@@ -81,36 +81,31 @@ class Domain
       */
      protected $description;
 
+    /**
+     * @return mixed
+     */
+    public function getOwnerId() {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param mixed $ownerId
+     *
+     * @return Domain
+     */
+    public function setOwnerId($ownerId) {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
+
      /**
       * @ORM\Column(name="active", type="boolean", nullable=false)
       */
      protected $active=true;
 
+     /**
+      * @ORM\Column(name="owner_id", type="integer", nullable=false)
+      */
+     protected $ownerId;
 
-    /**
-     * @return Owner
-     */
-    public function getOwner() {
-        return $this->owner;
-    }
-
-    /**
-     * @param Owner $owner
-     *
-     * @return Domain
-     */
-    public function setOwner($owner) {
-        $this->owner = $owner;
-        return $this;
-
-    }
-
-    /**
-     * @var Owner
-     * @ORM\ManyToOne(targetEntity="Owner", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
-     * })
-     */
-    protected $owner;
 }

@@ -25,6 +25,7 @@ class User {
      */
      protected $id;
 
+
     /**
      * @ORM\Column(name="user", type="string", nullable=false, length=100)
      */
@@ -186,11 +187,25 @@ class User {
     protected $name;
 
     /**
-     * @var Owner
-     * @ORM\ManyToOne(targetEntity="Owner")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
-     * })
+     * @return mixed
      */
-    protected $owner;
+    public function getOwnerId() {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param mixed $ownerId
+     *
+     * @return User
+     */
+    public function setOwnerId($ownerId) {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="owner_id", type="integer", nullable=true)
+     */
+    protected $ownerId;
+
 }

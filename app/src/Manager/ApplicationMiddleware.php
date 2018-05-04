@@ -46,18 +46,14 @@ class ApplicationMiddleware
                 if($path && isset($path[0]) && $path[0] == ''){
                     unset($path[0]);
                     $path =reset($path);
-                    $context = $this->detectContext($path);
-
-                    if(!empty($context)){
-
-                        $request = $request->withAttribute('applicationContext', $context);
-
-                        $this->app->getContainer()->get('settings')->offsetSet('applicationContext', $context);
-
-                    }
-
                 }
 
+                $context = $this->detectContext($path);
+
+                if(!empty($context)){
+                    $request = $request->withAttribute('applicationContext', $context);
+                    $this->app->getContainer()->get('settings')->offsetSet('applicationContext', $context);
+                }
             }
 
         }

@@ -116,14 +116,26 @@ class Subscribers extends AbstractAction
             $action = $subscriber->getDomainpath()->getAction();
 
             if ($action !== null && $action->count() == 1) {
+
+
+                $params =  array();
+                if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+                    $link = UrlUtils::repair($request->getParams());
+                    $params['%%unsubscribelink%%']  = $link;
+                    $params['%%email%%']  = $email;
+                }
+
                 $container = $this->getContainer();
                 $service = $container->get('actionHandler');
                 $service->setConfig($action[0]);
+                $service->setParameters($params);
                 $service->execute($subscriber);
 
             }
 
+
         }
+
 
 
         $response = $response->withAddedHeader('Cache-Control', 'no-cache, must-revalidate');

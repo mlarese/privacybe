@@ -6,6 +6,7 @@ use App\Entity\Upgrade\DomainDisclaimer;
 use App\Entity\Upgrade\DomainPath;
 use App\Entity\Upgrade\Privacydisclaimer;
 use App\Helpers\IP;
+use App\Helpers\UrlUtils;
 use Doctrine\Common\Collections\Expr\Comparison;
 use App\Entity\Privacy\Term;
 use App\Entity\Upgrade\SubscriberDomainPath;
@@ -230,9 +231,15 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        if ($request->getParam('action')) {
-            $response->withRedirect($request->getParam('action'));
+
+        if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+
+           $link = UrlUtils::repair($request->getParams());
+
+
+           return $response->withRedirect($link);
         }
+
 
         return $response->withRedirect($subscriber->getDomainpath()->getAlternativeredirurl() . "?action=unsubscribe&lg=" . $subscriber->getLanguage());
 

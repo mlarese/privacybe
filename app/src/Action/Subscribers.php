@@ -6,6 +6,7 @@ use App\Entity\Upgrade\DomainDisclaimer;
 use App\Entity\Upgrade\DomainPath;
 use App\Entity\Upgrade\Privacydisclaimer;
 use App\Helpers\IP;
+use App\Helpers\UrlUtils;
 use Doctrine\Common\Collections\Expr\Comparison;
 use App\Entity\Privacy\Term;
 use App\Entity\Upgrade\SubscriberDomainPath;
@@ -82,6 +83,7 @@ class Subscribers extends AbstractAction
             );
 
 
+
         } catch (\Exception $e) {
             echo $e->getMessage();
 
@@ -97,41 +99,60 @@ class Subscribers extends AbstractAction
         if (!$subscriber) return false;
 
 
-        /**
-         * @var $subscriber SubscriberDomainPath
-         */
-        $subscriber->setStatus(1);
-        $subscriber->setIp(IP::determineHostIP());
-        $subscriber->setUpgradedate(new \DateTime());
+        if ($subscriber->getStatus() != 1) {
+            /**
+             * @var $subscriber SubscriberDomainPath
+             */
+            $subscriber->setStatus(1);
+            $subscriber->setIp(IP::determineHostIP());
+            $subscriber->setUpgradedate(new \DateTime());
 
-        $em->persist($subscriber);
+            $em->persist($subscriber);
 
-        $em->flush();
+            $em->flush();
+            /*
+             * Verifica azioni connesse
+             */
+
+            $action = $subscriber->getDomainpath()->getAction();
+
+            if ($action !== null && $action->count() == 1) {
 
 
-        /*
-         * Verifica azioni connesse
-         */
+                $params =  array();
+                if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+                    $link = UrlUtils::repair($request->getParams());
+                    $params['%%link_subscriber_info%%']  = $link;
+                    $params['%%email%%']  = $email;
+                }
 
-        $action = $subscriber->getDomainpath()->getAction();
+                $container = $this->getContainer();
+                $service = $container->get('actionHandler');
+                $service->setConfig($action[0]);
+                $service->setParameters($params);
+                $service->execute($subscriber);
 
-        if($action!==null && $action->count()==1){
-            $container = $this->getContainer();
-            $service   = $container->get('actionHandler');
-            $service->setConfig($action[0]);
-            $service->execute($subscriber);
+            }
+
 
         }
+
 
 
         $response = $response->withAddedHeader('Cache-Control', 'no-cache, must-revalidate');
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=subscribe&lg=". $subscriber->getLanguage());
+        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=subscribe&lg=" . $subscriber->getLanguage());
 
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
     public function disallow($request, $response, $args)
     {
 
@@ -223,6 +244,16 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
+
+        if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
+
+           $link = UrlUtils::repair($request->getParams());
+
+
+           return $response->withRedirect($link);
+        }
+
+
         return $response->withRedirect($subscriber->getDomainpath()->getAlternativeredirurl() . "?action=unsubscribe&lg=" . $subscriber->getLanguage());
 
 
@@ -261,15 +292,15 @@ class Subscribers extends AbstractAction
 
         $response->getBody()->write("<html><body>");
 
-        if($domainObject && count($domainObject)>0){
+        if ($domainObject && count($domainObject) > 0) {
             /**
              * @var $v DomainPath
              */
-            foreach ($domainObject as $k => $v){
+            foreach ($domainObject as $k => $v) {
                 /**
                  * @var $domainElementObject SubscriberDomainPath
                  */
-                $domainElementObject = $em->getRepository(SubscriberDomainPath::class)->findOneBy(array('domainpath'=>$v));
+                $domainElementObject = $em->getRepository(SubscriberDomainPath::class)->findOneBy(array('domainpath' => $v));
 
                 $response->getBody()->write($v->getName() . "\n<br/>");
 

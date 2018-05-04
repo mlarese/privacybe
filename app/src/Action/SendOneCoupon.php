@@ -8,15 +8,18 @@
 
 namespace App\Action;
 
+use App\Helpers\EmailUtils;
 use GuzzleHttp;
 use App\Entity\Upgrade\SubscriberDomainPath;
 
 class SendOneCoupon
 {
 
-    protected $url = 'https://servicehub.abs-one.com';
+    protected $url = 'http://servicehub.abs-one.com';
 
     protected $config = null;
+
+    protected $parameters = null;
 
     /**
      * @return string
@@ -51,6 +54,14 @@ class SendOneCoupon
     }
 
     /**
+     * @param null $config
+     */
+    public function setParameters($config): void
+    {
+        $this->parameters = $config;
+    }
+
+    /**
      * @param $param SubscriberDomainPath
      */
     public function execute($param){
@@ -68,7 +79,9 @@ class SendOneCoupon
 
             $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/' . $param->getLanguage() . '/template.php');
 
-
+            if($this->parameters && is_array($this->parameters)){
+                $bodyHtml = EmailUtils::makeGlobalReplace($this->parameters,$bodyHtml);
+            }
 
             $json = new \stdClass();
             $json->from = $this->config->from;

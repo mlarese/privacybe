@@ -18,6 +18,7 @@ class StoreOneCoupon
 
     protected $config = null;
 
+    protected $parameters = null;
     /**
      * @return string
      */
@@ -48,6 +49,14 @@ class StoreOneCoupon
     public function setConfig($config): void
     {
         $this->config = $config;
+    }
+
+    /**
+     * @param null $config
+     */
+    public function setParameters($config): void
+    {
+        $this->parameters = $config;
     }
 
     /**

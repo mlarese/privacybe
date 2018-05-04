@@ -15,6 +15,8 @@ class ActionHandler
 {
 
     protected $config = null;
+
+    protected $parameters = null;
     /**
      * @var Container
      */
@@ -41,6 +43,14 @@ class ActionHandler
         $this->config = $config;
     }
 
+    /**
+     * @param null $config
+     */
+    public function setParameters($config): void
+    {
+        $this->parameters = $config;
+    }
+
 
     /**
      * @param $param SubscriberDomainPath
@@ -54,6 +64,8 @@ class ActionHandler
                     $service = $this->container->get($this->config->getFactoryClass());
 
                     $service->setConfig($this->config->getParameters());
+
+                    $service->setParameters($this->parameters);
 
                     $command = $this->config->getCommand();
                     if(empty($command)){

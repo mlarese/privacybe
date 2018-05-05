@@ -82,8 +82,31 @@ class Domain
      protected $description;
 
      /**
-      * @ORM\Column(name="active", type="boolean", nullable=false)
+      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
       */
      protected $active=true;
+
+     /**
+      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+      */
+     protected $deleted;
+
+     /**
+      * @return mixed
+      */
+     public function getDeleted()
+     {
+         return $this->deleted;
+     }
+
+     /**
+      * @param mixed $deleted
+      * @return Domain
+      */
+     public function setDeleted($deleted)
+     {
+         $this->deleted = $deleted;
+         return $this;
+     }
 
 }

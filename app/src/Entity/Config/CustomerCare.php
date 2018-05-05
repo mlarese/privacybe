@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="customer_care",
  *     indexes={
- *          @ORM\Index(name="customer_care_name", columns={"name"})
+ *          @ORM\Index(name="customer_care_name", columns={"name"}),
+ *          @ORM\Index(name="customer_care_email", columns={"email"})
  *     }
  * )
  */
@@ -54,7 +55,7 @@ class CustomerCare
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
 
@@ -154,4 +155,52 @@ class CustomerCare
      * @ORM\Column(name="last_name", type="string", nullable=true, length=100)
      */
     protected $lastName;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return CustomerCare
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     */
+    protected $active;
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return CustomerCare
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+
 }

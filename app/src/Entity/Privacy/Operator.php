@@ -22,7 +22,7 @@ class Operator
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
      protected $id;
 
@@ -213,10 +213,12 @@ class Operator
     }
 
     /**
-     * @param mixed $role
+     * @param $role
+     * @return Operator
      */
     public function setRole($role) {
         $this->role = $role;
+        return $this;
     }
 
      /**
@@ -329,5 +331,50 @@ class Operator
       * @ORM\Column(name="domains", type="json", nullable=true)
       */
      protected $domains;
+
+     /**
+      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+      */
+     protected $deleted;
+
+     /**
+      * @return mixed
+      */
+     public function getDeleted()
+     {
+         return $this->deleted;
+     }
+
+     /**
+      * @param mixed $deleted
+      * @return Operator
+      */
+     public function setDeleted($deleted)
+     {
+         $this->deleted = $deleted;
+         return $this;
+     }
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     */
+    protected $active;
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return Operator
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
 
 }

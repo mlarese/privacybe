@@ -270,4 +270,50 @@ class Owner {
      * @ORM\Column(name="city", type="string", nullable=true)
      */
     protected $city;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return Owner
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     */
+    protected $active;
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return Owner
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
 }

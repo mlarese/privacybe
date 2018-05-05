@@ -20,9 +20,7 @@ class Owners extends AbstractAction
      * @throws \Doctrine\DBAL\DBALException
      */
     private function createOwnerDb ($db) {
-        $sql = "CREATE DATABASE $db;";
-        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
-        return $stmt->execute();
+        return $this->executeConfigSql("CREATE DATABASE $db;");
     }
 
     /**
@@ -32,22 +30,24 @@ class Owners extends AbstractAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function createDbUser($dbName, $user, $password) {
-        $sql = "CREATE USER '$user'@'localhost' IDENTIFIED BY '$password'";
-        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
-        $stmt->execute();
+    private function createDbUser($user, $password) {
+        $this->executeConfigSql("CREATE USER '$user'@'localhost' IDENTIFIED BY '$password'");
+        $this->executeConfigSql("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
+        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@localhost IDENTIFIED BY '$password';");
+        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@'%' IDENTIFIED BY '$password';");
+    }
 
-        $sql = "CREATE USER '$user'@'%' IDENTIFIED BY '$password'";
-        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
-        $stmt->execute();
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \RuntimeException
+     */
+    private function createPrivacyTables() {
+        $dbScript = realpath(__DIR__ . "/../../privacy_create.sql");
+        if(!file_exists($dbScript))
+            throw new \RuntimeException("The SQL file privacy_create not exists");
 
-        $sql = "GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@localhost IDENTIFIED BY '$password';";
-        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
-        $stmt->execute();
-
-        $sql = "GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@'%' IDENTIFIED BY '$password';";
-        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
-        $stmt->execute();
+        $sql = file_get_contents($dbScript);
+        $this->executeConfigSql($sql);
     }
 
     /**
@@ -59,14 +59,14 @@ class Owners extends AbstractAction
      * @throws \Doctrine\DBAL\DBALException
      */
     public function newOwner($request, $response, $args) {
-        $no = new Owner();
-        $nu = new User();
-        $nop = new Operator();
+        $newOwner = new Owner();
+        $newUser = new User();
+        $newOperator = new Operator();
 
         try {
             $body = $request->getParsedBody();
 
-            $no
+            $newOwner
                 ->setLanguage( $this->getAttribute('language',$body))
                 ->setEmail($this->getAttribute('email',$body, true))
                 ->setName($this->getAttribute('name',$body))
@@ -80,20 +80,23 @@ class Owners extends AbstractAction
 
 
         try {
-            $msg = "persisting";
-            $this->getEmConfig()->persist($no);
-                $msg = "after persist";
+            $msg = "persisting owner";
+            $this->getEmConfig()->persist($newOwner);
+                $msg = "after persist owner";
                 $this->getEmConfig()->flush();
-                $currentOwnerId = $no->getId();
+                $currentOwnerId = $newOwner->getId();
 
-            $nu
-                ->setUser( $no->getEmail())
-                ->setOwnerId( $no->getId())
-                ->setName( $no->getCompany() . ' admin')
+            $newUser
+                ->setUser( $newOwner->getEmail())
+                ->setOwnerId( $newOwner->getId())
+                ->setName( $newOwner->getCompany() . ' admin')
                 ->setType('owner')
                 ->setPassword('pwdprivacyuser')
-                ->setRefId(1)
             ;
+
+            $this->getEmConfig()->persist($newUser);
+                $this->getEmConfig()->flush();
+                $currentUserId = $newUser->getId();
 
             $newDb = "privacy_$currentOwnerId";
             $dbUser = "prvusr_$currentOwnerId";
@@ -105,13 +108,24 @@ class Owners extends AbstractAction
             $msg = "after creating $newDb";
 
             $msg = "creating db user";
-            $this->createDbUser($newDb,$dbUser,$dbpwd);
+            $this->createDbUser($dbUser,$dbpwd);
 
+            $this->createPrivacyTables();
 
+            $newOperator
+                ->setEmail($newOwner->getEmail())
+                ->setId($currentUserId)
+                ->setPeriodFrom(new \DateTime())
+                ->setRole('owner')
+                ->setName($newOwner->getName())
+                ->setSurname($newOwner->getSurname())
+            ;
 
+            // correggere con privacydb
+            $this->getEmConfig()->persist($newOperator);
+            $this->getEmConfig()->flush();
 
-
-            return $response->withJson( $this->toJson($no));
+            return $response->withJson( $this->toJson($newOwner));
         } catch (Exception $e) {
             $this->getEmConfig()->getConnection()->rollBack();
             echo $e->getMessage();

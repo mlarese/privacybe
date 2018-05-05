@@ -148,4 +148,14 @@ class AbstractAction
     protected function success () {
         return ["success"=>true];
     }
+
+    /**
+     * @param $sql
+     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function executeConfigSql($sql) {
+        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
+        return $stmt->execute();
+    }
 }

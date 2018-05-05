@@ -136,32 +136,10 @@ class User {
     }
 
     /**
-     * @return mixed
-     */
-    public function getRefId()
-    {
-        return $this->refId;
-    }
-
-    /**
-     * @param mixed $refId
-     * @return User
-     */
-    public function setRefId($refId)
-    {
-        $this->refId = $refId;
-        return $this;
-    }
-
-    /**
-     * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
      */
     protected $active=true;
 
-    /**
-     * @ORM\Column(name="ref_id", type="integer", nullable=false)
-     */
-    protected $refId;
 
     /**
      * @return mixed
@@ -208,5 +186,29 @@ class User {
      * @ORM\Column(name="owner_id", type="integer", nullable=true)
      */
     protected $ownerId;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return User
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
 
 }

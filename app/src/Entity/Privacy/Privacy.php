@@ -307,4 +307,27 @@ class Privacy {
      * @ORM\Column(name="telephone", type="string", nullable=true, length=120)
      */
     protected $telephone;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return Privacy
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
 }

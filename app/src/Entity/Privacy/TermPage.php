@@ -84,4 +84,27 @@ class TermPage
      * @ORM\Column(name="page", type="string", nullable=false)
      */
     protected $page;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return TermPage
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
 }

@@ -1,0 +1,1879 @@
+{
+  "front-version": "2.17.2",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Project",
+      "description": "",
+      "id": "e92925ce-d83e-49e0-80be-b1c55cf8dca3",
+      "lastModified": "2017-11-30T15:56:43.370+01:00",
+      "name": "ECOMMERCE-BOOKING"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "reservation.abs.tmp",
+        "path": "/RESTfulAPI/booking/comparator/compare"
+      },
+      "id": "b47fda16-19e1-4f80-9dad-f4669ec6db52",
+      "lastModified": "2017-11-21T13:27:13.138+01:00",
+      "name": "Comparator compare",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "ChannelId",
+          "value": "6"
+        },
+        {
+          "enabled": true,
+          "name": "Checkin",
+          "value": "01-12-2017"
+        },
+        {
+          "enabled": true,
+          "name": "Checkout",
+          "value": "8-12-2017"
+        },
+        {
+          "enabled": true,
+          "name": "Adults",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "Children",
+          "value": "[]"
+        },
+        {
+          "enabled": true,
+          "name": "Boarding",
+          "value": "BB"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "reservation.abs.tmp",
+        "path": "/RESTfulAPI/booking/allianz/quote"
+      },
+      "id": "7373178c-b1a8-4e3f-acc9-8d76f666805e",
+      "lastModified": "2017-11-20T11:08:37.603+01:00",
+      "name": "QuoteAllianz",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "Total",
+          "value": "104"
+        },
+        {
+          "enabled": true,
+          "name": "InsuranceType",
+          "value": "0"
+        },
+        {
+          "enabled": true,
+          "name": "Adults",
+          "value": "3"
+        },
+        {
+          "enabled": true,
+          "name": "Children",
+          "value": "[]"
+        },
+        {
+          "enabled": true,
+          "name": "Checkin",
+          "value": "03-11-2017"
+        },
+        {
+          "enabled": true,
+          "name": "Checkout",
+          "value": "04-11-2017"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n      'itemId':532,\n      'variants':[\n        {'vCatId': 0,'vId': 1,'vValue': 3},\n        {'vCatId': 0,'vId': 2,'vValue': 2},\n        {'vCatId': 0,'vId': 3,'vValue': 2},\n        {'vCatId': 0,'vId': 4,'vValue': 0}\n       ]\n    }"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "reservation.abs.tmp",
+        "path": "/RESTfulAPI/booking/cart/quote/"
+      },
+      "id": "797fc46f-2955-4298-95c2-bd1fbe87cbbd",
+      "lastModified": "2017-11-04T03:44:24.398+01:00",
+      "name": "QuoteItem",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "secure": true,
+          "name": "https",
+          "version": "V11"
+        },
+        "host": "reservation.abs.tmp",
+        "path": "/RESTfulAPI/booking/specialservices"
+      },
+      "id": "57ee58ec-f964-484c-8ad5-90cc1667d45e",
+      "lastModified": "2017-10-25T16:30:07.667+02:00",
+      "name": "abs specialservices",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/catalog/partner/categories"
+      },
+      "id": "546e7d96-27ce-459f-9e59-f36bcddc9a8d",
+      "lastModified": "2017-11-30T15:56:43.370+01:00",
+      "name": "ec categories",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+        },
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "PartnerId",
+          "value": "3"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/catalog/products"
+      },
+      "id": "477d6dad-47ef-4126-8f66-3a29c16a7686",
+      "lastModified": "2017-11-21T14:10:52.269+01:00",
+      "name": "ec products",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+        },
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "CategoryId",
+          "value": "11279"
+        },
+        {
+          "enabled": true,
+          "name": "PartnerId",
+          "value": "3"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded"
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "reservation.abs.tmp",
+        "path": "/RESTfulAPI/booking/cart/010187bedab6e1bb6f2878d0ba6bbea08294f72d5ecb2b11fad38ccfe15fffa8"
+      },
+      "id": "cb80e232-dd25-4e88-8c6c-d30fe0ad108c",
+      "lastModified": "2017-11-04T03:33:45.201+01:00",
+      "name": "putcart",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e92925ce-d83e-49e0-80be-b1c55cf8dca3"
+    },
+    {
+      "type": "Project",
+      "id": "6288e06f-45a7-4ebc-ba04-c3ef6ad8b61a",
+      "lastModified": "2017-12-28T15:05:52.812+01:00",
+      "name": "cro"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "secure": true,
+          "name": "https",
+          "version": "V11"
+        },
+        "host": "reservation.cmsone.it",
+        "path": "/RESTfulAPI/booking/structure/pageDetails/126"
+      },
+      "id": "48333df6-52d8-4916-acc2-9247bbf20949",
+      "lastModified": "2017-12-28T15:05:42.645+01:00",
+      "name": "Lista foto",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1151"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "en"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "6288e06f-45a7-4ebc-ba04-c3ef6ad8b61a"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "secure": true,
+          "name": "https",
+          "version": "V11"
+        },
+        "host": "reservation.cmsone.it",
+        "path": "/RESTfulAPI/booking/structure/pages/5"
+      },
+      "id": "76dad413-4e64-4d23-a2e1-83d4dc03f637",
+      "lastModified": "2017-12-28T15:05:52.812+01:00",
+      "name": "Lista pagine",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1151"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "6288e06f-45a7-4ebc-ba04-c3ef6ad8b61a"
+    },
+    {
+      "type": "Project",
+      "id": "87f5571f-af4a-4de3-9045-e1503eee33ba",
+      "lastModified": "2017-12-01T12:03:18.937+01:00",
+      "name": "ecommerce-trattamenti"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/product/availability/105038"
+      },
+      "id": "d9f93efd-93b5-439e-adc3-1036724f2785",
+      "lastModified": "2017-12-01T12:00:37.389+01:00",
+      "name": "get product-availability",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "From",
+          "value": "2017-11-10"
+        },
+        {
+          "enabled": true,
+          "name": "Months",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "CartId",
+          "value": "xxxxxxx"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "87f5571f-af4a-4de3-9045-e1503eee33ba"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/product/availability/timeslots/105038/2017-12-09"
+      },
+      "id": "a964619c-5f4b-491e-9887-15d8b5ecdab0",
+      "lastModified": "2017-11-30T17:33:18.994+01:00",
+      "name": "get timeslot product-availability",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "CartId",
+          "value": "xxxxxxx"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "87f5571f-af4a-4de3-9045-e1503eee33ba"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/product/availability/book/timeslot/105038/2017-12-8/1/1"
+      },
+      "id": "b3e7cc82-3eea-4da6-aba4-cab8e6ece13e",
+      "lastModified": "2017-12-01T12:03:02.834+01:00",
+      "name": "post book timeslot product-availability",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "CartId",
+          "value": "xxxxxxx"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "87f5571f-af4a-4de3-9045-e1503eee33ba"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/product/availability/105038"
+      },
+      "id": "c5269a82-9acd-4ff0-aed4-0fb48d938fb3",
+      "lastModified": "2017-12-01T12:03:10.850+01:00",
+      "name": "post product-availability",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "From",
+          "value": "2017-12-10"
+        },
+        {
+          "enabled": true,
+          "name": "Months",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "CartId",
+          "value": "xxxxxxx"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "87f5571f-af4a-4de3-9045-e1503eee33ba"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "ecommerce.abs-one.dev",
+        "path": "/RESTfulAPI/product/availability/timeslots/105038/2017-12-03"
+      },
+      "id": "3e63d67a-9ed2-45f7-9c2f-ea1fd926b235",
+      "lastModified": "2017-12-01T12:03:18.937+01:00",
+      "name": "post timeslot product-availability",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "ShopId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "CartId",
+          "value": "xxxxxxx"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "87f5571f-af4a-4de3-9045-e1503eee33ba"
+    },
+    {
+      "type": "Project",
+      "id": "b351bf75-aa0a-487f-9663-7d1747e886f5",
+      "lastModified": "2018-04-16T11:59:58.960+02:00",
+      "name": "frequent guest"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"name\":\"other\", \"status\":true}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/backend/groups"
+      },
+      "id": "a93f34d7-c265-44c7-aabd-1b610e453997",
+      "lastModified": "2018-04-16T11:37:42.255+02:00",
+      "name": "Add group",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "157"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalCode",
+          "value": "RES"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"usergroup_id\":76, \"user_id\":113970}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/backend/members/group/76"
+      },
+      "id": "298889ac-fa0b-481d-bbc8-7bdd3ac165b5",
+      "lastModified": "2018-04-16T11:57:37.063+02:00",
+      "name": "Add member",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "157"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalCode",
+          "value": "RES"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"id\": 64}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/backend/groups"
+      },
+      "id": "96c9f5ae-25af-4387-b212-fc8f03d18bb6",
+      "lastModified": "2018-04-16T11:45:41.157+02:00",
+      "name": "Delete group",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "157"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalCode",
+          "value": "RES"
+        },
+        {
+          "enabled": true,
+          "name": "GroupId",
+          "value": "72"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"usergroup_id\":76, \"user_id\":113970}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/backend/members/84"
+      },
+      "id": "87c47b52-b92b-478e-95c9-d5a843545157",
+      "lastModified": "2018-04-16T11:59:58.960+02:00",
+      "name": "Delete member",
+      "headers": [],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/portals/bemenu"
+      },
+      "id": "e0386524-ad49-492e-a1ca-d8a5cff39cdf",
+      "lastModified": "2018-03-29T18:30:54.708+02:00",
+      "name": "Get bemenu",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "0"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "02"
+        },
+        {
+          "enabled": true,
+          "name": "PortalCode",
+          "value": "AZZ"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"name\":\"test mod 1\", \"status\":0, \"id\": 64}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/backend/groups"
+      },
+      "id": "3f4e96c1-bf72-48d5-9199-340254c2394f",
+      "lastModified": "2018-04-16T11:21:45.628+02:00",
+      "name": "Modify group",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "157"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalCode",
+          "value": "RES"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "b351bf75-aa0a-487f-9663-7d1747e886f5"
+    },
+    {
+      "type": "Project",
+      "description": "",
+      "id": "981457ef-9354-437e-b341-0fcd3de0889f",
+      "lastModified": "2018-03-29T15:47:40.795+02:00",
+      "name": "offersapi"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "reservation.cmsone.it",
+        "path": "/RESTfulAPI/offers/detail/0/8/393"
+      },
+      "id": "1c2973e7-3850-4eb1-a2c3-e4df5c26ed25",
+      "lastModified": "2018-03-29T15:47:40.796+02:00",
+      "name": "get offer detail",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "StartDate",
+          "value": "2018-03-19"
+        },
+        {
+          "enabled": true,
+          "name": "OfferType",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "MaxData",
+          "value": "-1"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/offers/portal/1"
+      },
+      "id": "57c82aae-90b0-4d21-be40-2f2bdc27173d",
+      "lastModified": "2018-03-20T15:05:12.595+01:00",
+      "name": "get portal offers",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/offers/portal/1/118"
+      },
+      "id": "4cfe5cb7-36e3-48de-bb54-3ed24dfcbf7b",
+      "lastModified": "2018-03-02T15:01:38.358+01:00",
+      "name": "get struct offers",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": ""
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/offers/users/2"
+      },
+      "id": "1a4ad92d-bb6e-4151-a60f-d607632d0420",
+      "lastModified": "2018-03-28T12:47:28.957+02:00",
+      "name": "get user offers",
+      "headers": [],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": ""
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/reservedoffers/users/114123"
+      },
+      "id": "4e67e40c-018c-48e0-bdcd-381e33e9d732",
+      "lastModified": "2018-03-29T15:47:22.340+02:00",
+      "name": "get user reserved offers",
+      "headers": [],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/offers/structure/checkin"
+      },
+      "id": "209a1a51-fd18-43b8-b4de-2831d5c8e879",
+      "lastModified": "2018-03-28T12:23:38.943+02:00",
+      "name": "offers checkin",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "UserLanguageCode",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "StructureId",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "PortalId",
+          "value": "0"
+        },
+        {
+          "enabled": true,
+          "name": "OfferId",
+          "value": "384"
+        },
+        {
+          "enabled": true,
+          "name": "Startdate",
+          "value": "2018-03-21"
+        },
+        {
+          "enabled": true,
+          "name": "Maxdate",
+          "value": "-1"
+        },
+        {
+          "enabled": true,
+          "name": "Checkin",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "name": "Checkout",
+          "value": ""
+        },
+        {
+          "enabled": true,
+          "name": "NumRooms",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "ReqRooms",
+          "value": "1"
+        },
+        {
+          "enabled": true,
+          "name": "NumPax",
+          "value": "2"
+        },
+        {
+          "enabled": true,
+          "name": "OfferType",
+          "value": "1"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\"user_id\":2, \"offers\":{\"m-10\": true, \"m-87\": true}}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/frequentguest/offers/users/2"
+      },
+      "id": "1e5c89d1-fb1a-48ee-a871-bcbee39b82a6",
+      "lastModified": "2018-03-28T12:47:01.739+02:00",
+      "name": "put user offers",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "981457ef-9354-437e-b341-0fcd3de0889f"
+    },
+    {
+      "type": "Project",
+      "description": "",
+      "id": "9f3c9835-50b6-414a-9696-ef270e2c503b",
+      "lastModified": "2018-05-04T15:44:28.276+02:00",
+      "name": "privacy"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost",
+        "path": "/privacybe/public/api/term"
+      },
+      "id": "6e7b5762-d76d-43ab-a236-100ed96c3373",
+      "lastModified": "2018-04-12T11:00:22.327+02:00",
+      "name": "Get terms",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "OwnerId",
+          "value": "1"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "e0455fd7-fcc2-4191-9f35-4b9a2c06b3df"
+      },
+      "parentId": "9f3c9835-50b6-414a-9696-ef270e2c503b"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost",
+        "path": "/privacybe/public/api/widget"
+      },
+      "id": "e0455fd7-fcc2-4191-9f35-4b9a2c06b3df",
+      "lastModified": "2018-05-04T15:43:43.650+02:00",
+      "name": "Get widget term",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Page",
+          "value": "/booking/index.php"
+        },
+        {
+          "enabled": true,
+          "name": "Language",
+          "value": "it"
+        },
+        {
+          "enabled": true,
+          "name": "Domain",
+          "value": "reservation.cmsone.it"
+        },
+        {
+          "enabled": true,
+          "name": "OwnerId",
+          "value": "1"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "9f3c9835-50b6-414a-9696-ef270e2c503b"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost",
+        "path": "/privacybe/public/api/owner"
+      },
+      "id": "f111a731-20ce-4f1c-a8ce-4aaa1d19a435",
+      "lastModified": "2018-05-04T15:44:28.277+02:00",
+      "name": "Post owner",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "e0455fd7-fcc2-4191-9f35-4b9a2c06b3df"
+      },
+      "parentId": "9f3c9835-50b6-414a-9696-ef270e2c503b"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"domain\": \"localhost:8080\",\n  \"email\": \"mauro.larese@gmail.com\",\n  \"form\": {\"form\":\"yes\"},\n  \"name\": \"Mauro\",\n  \"surname\": \"Larese Moro\",\n  \"site\":\"/info/index.html\",\n  \"privacy\":{\"privacy\":\"empty\"},\n  \"id\":\"aaa-bbb\",\n  \"termId\":\"3\",\n  \"privacyFlags\":{\"privacy\":true, \"promo\":false},\n  \"telephone\":\"33445566\"\n \n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost",
+        "path": "/privacybe/public/api/widget"
+      },
+      "id": "993b18a5-066d-445d-bd1b-44dc63f9299c",
+      "lastModified": "2018-05-03T13:51:05.106+02:00",
+      "name": "Save Privacy",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "OwnerId",
+          "value": "2"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "9f3c9835-50b6-414a-9696-ef270e2c503b"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "username",
+              "value": "mlarese"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "password",
+              "value": "asemota91"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\"username\":\"mlarese\", \"password\":\"asemota91\"}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost",
+        "path": "/privacybe/public/api/auth/login"
+      },
+      "id": "f2bf7a0f-34f4-4151-b656-0f2dfab1d55e",
+      "lastModified": "2018-05-03T12:04:48.306+02:00",
+      "name": "login",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "9f3c9835-50b6-414a-9696-ef270e2c503b"
+    },
+    {
+      "type": "Project",
+      "id": "e66e4c99-6b87-4958-8e24-3aefa6acf706",
+      "lastModified": "2018-02-01T15:16:06.489+01:00",
+      "name": "ratecopy"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/backend/manager/ratecopy/router.php"
+      },
+      "id": "b88f2015-bddc-4687-aa6f-3d8ef0223526",
+      "lastModified": "2018-02-01T15:16:06.489+01:00",
+      "name": "Request 2",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e66e4c99-6b87-4958-8e24-3aefa6acf706"
+    },
+    {
+      "type": "Project",
+      "id": "9295230c-9c53-404b-8802-5db74fa957e9",
+      "lastModified": "2018-04-17T12:45:56.366+02:00",
+      "name": "servicehub"
+    },
+    {
+      "type": "Scenario",
+      "id": "2f48f128-f385-42e5-9264-8e4381cf3b6f",
+      "lastModified": "2018-04-17T12:39:20.045+02:00",
+      "name": "Scenario 1",
+      "requestOrder": [],
+      "parentId": "9295230c-9c53-404b-8802-5db74fa957e9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "mauro.abs.tmp",
+        "path": "/RESTfulAPI/servicehub/hasguestreview/structure/157"
+      },
+      "id": "bb1212ef-fec3-4073-87e2-3dfbf7e4832a",
+      "lastModified": "2018-04-17T12:45:56.366+02:00",
+      "name": "Structure Has guest review",
+      "headers": [],
+      "metaInfo": {},
+      "parentId": "9295230c-9c53-404b-8802-5db74fa957e9"
+    }
+  ]
+}

@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Encryptors;
-use DoctrineEncrypt\Encryptors\EncryptorInterface;
+namespace App\DoctrineEncrypt\Encryptors;
 
 /**
  * Class for OpenSSL encryption
- *
- * @author Victor Melnik <melnikvictorl@gmail.com>
  */
 class OpenSslEncryptor implements EncryptorInterface
 {

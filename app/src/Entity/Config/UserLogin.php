@@ -65,6 +65,18 @@ class UserLogin
     }
 
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+     protected $id;
+
+     /**
+      * @ORM\Column(name="loginDate", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+      */
+     protected $loginDate;
+
+    /**
      * @return mixed
      */
     public function getUserId()
@@ -81,28 +93,15 @@ class UserLogin
         $this->userId = $userId;
         return $this;
     }
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-     protected $id;
-
-     /**
-      * @ORM\Column(name="loginDate", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-      */
-     protected $loginDate;
 
      /**
       * @ORM\Column(name="ip_address", type="string", nullable=false, length=50)
       */
      protected $ipAddress;
 
-     /**
-      * @ORM\ManyToOne(targetEntity="User", fetch="EXTRA_LAZY")
-      * @ORM\JoinColumns({
-      *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-      * })
-      */
-     protected $user;
+    /**
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    protected $userId;
+     
 }

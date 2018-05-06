@@ -1,16 +1,21 @@
 <?php
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
-
+use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 require 'vendor/autoload.php';
+AnnotationRegistry::registerLoader('class_exists');
 
 $settings = include 'app/settings.php';
 $settingsConfig = $settings['settings']['doctrine_config'];
 $settingsPrivacy= $settings['settings']['doctrine_privacy'];
 $settingsUpgrade= $settings['settings']['doctrine_upgrade'];
 
-$doctrinConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+$doctrinConfig = Setup::createAnnotationMetadataConfiguration(
     $settingsConfig['meta']['entity_path'],
     $settingsConfig['meta']['auto_generate_proxies'],
     $settingsConfig['meta']['proxy_dir'],
@@ -18,7 +23,7 @@ $doctrinConfig = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguratio
     false
 );
 
-$doctrinPrivacy = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+$doctrinPrivacy = Setup::createAnnotationMetadataConfiguration(
     $settingsPrivacy['meta']['entity_path'],
     $settingsPrivacy['meta']['auto_generate_proxies'],
     $settingsPrivacy['meta']['proxy_dir'],
@@ -26,7 +31,7 @@ $doctrinPrivacy = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfigurati
     false
 );
 
-$doctrinUpgrade = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+$doctrinUpgrade = Setup::createAnnotationMetadataConfiguration(
     $settingsUpgrade['meta']['entity_path'],
     $settingsUpgrade['meta']['auto_generate_proxies'],
     $settingsUpgrade['meta']['proxy_dir'],
@@ -35,9 +40,20 @@ $doctrinUpgrade = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfigurati
 );
 
 
-$emConfig = \Doctrine\ORM\EntityManager::create($settingsConfig['connection'], $doctrinConfig);
-$emPrivacy = \Doctrine\ORM\EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
-$emUpgrade = \Doctrine\ORM\EntityManager::create($settingsUpgrade['connection'], $doctrinUpgrade);
+$emConfig = EntityManager::create($settingsConfig['connection'], $doctrinConfig);
+$emPrivacy = EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
+$emUpgrade = EntityManager::create($settingsUpgrade['connection'], $doctrinUpgrade);
+
+$subscriber = new DoctrineEncryptSubscriber(
+    new AnnotationReader,
+    new OpenSslEncryptor('jkkkkjjjjkkjkjkj')
+);
+
+$eventManager = $emConfig->getEventManager();
+$eventManager->addEventSubscriber($subscriber);
+
+$eventManagerp = $emPrivacy->getEventManager();
+$eventManagerp->addEventSubscriber($subscriber);
 
 return ConsoleRunner::createHelperSet($emConfig);
 // return ConsoleRunner::createHelperSet($emPrivacy);

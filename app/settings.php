@@ -43,6 +43,7 @@ return [
             'namespace'      => 'privacy_app'
         ],
         'doctrine_config' => [
+            'encryption_key' => 'o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW',
             'meta' => [
                 'entity_path' => [
                     'app/src/Entity/Config'
@@ -60,6 +61,7 @@ return [
             ]
         ],
         'doctrine_privacy' => [
+            'encryption_key' => 'o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW',
             'meta' => [
                 'entity_path' => [
                     'app/src/Entity/Privacy'

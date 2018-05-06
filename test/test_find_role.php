@@ -3,6 +3,8 @@ use App\Entity\Owner;
 use App\Entity\OwnerData;
 use App\Entity\Term;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use App\DoctrineEncrypt\Configuration\Encrypted;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -11,6 +13,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 require_once "../vendor/autoload.php";
+AnnotationRegistry::registerLoader('class_exists');
 
 $settings = include '../app/settings.php';
 $settings = $settings['settings']['doctrine'];

@@ -49,7 +49,7 @@ $app->add(new CorsMiddleware(
 ));
 
 // jwt, oauth
-$authMode = 'jwts';
+$authMode = 'jwt';
 
 
 $auth = $settings->get('auth');
@@ -57,7 +57,7 @@ $auth = $settings->get('auth');
 if($authMode === 'jwt') {
     $app->add(new Tuupola\Middleware\JwtAuthentication([
         "path" => ["/api", "/api/auth"],
-        "ignore" => ["/api/widget", "/api/auth/login", "/api/test", "/api/owner"],
+        "ignore" => ["/api/widget", "/api/auth/login", "/api/test"],
         "secret" => $auth['secret'],
         "secure" => false,
         "attribute" => "token",

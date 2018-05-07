@@ -316,4 +316,52 @@ class Owner {
         $this->active = $active;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCounty() {
+        return $this->county;
+    }
+
+    /**
+     * @param mixed $county
+     *
+     * @return Owner
+     */
+    public function setCounty($county) {
+        $this->county = $county;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="county", type="string", nullable=true, length=120)
+     */
+    protected $county;
+
+    /**
+     * @return mixed
+     */
+    public function getDomains() {
+        if(!isset($this->domains)) {
+            $this->domains = [];
+        }
+        return $this->domains;
+    }
+
+    /**
+     * @param mixed $domains
+     *
+     * @return Owner
+     */
+    public function setDomains($domains) {
+        $this->domains = $domains;
+        return $this;
+    }
+
+    /**
+     * @var $domains
+     */
+    protected $domains;
+
 }

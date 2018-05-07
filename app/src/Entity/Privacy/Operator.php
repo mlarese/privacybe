@@ -266,7 +266,7 @@ class Operator
      protected $periodFrom;
 
      /**
-      * @ORM\Column(name="period_to", type="datetime")
+      * @ORM\Column(name="period_to", type="datetime", nullable=true)
       */
      protected $periodTo;
 

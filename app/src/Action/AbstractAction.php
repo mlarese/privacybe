@@ -21,6 +21,11 @@ class AbstractAction
 
     protected $context;
 
+    /**
+     * @param $obj
+     *
+     * @return array|bool|float|int|object|string
+     */
     public function toJson($obj) {
 
         $on = new ObjectNormalizer();
@@ -82,9 +87,9 @@ class AbstractAction
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getEmPrivacy($ownerId)
+    public function getEmPrivacy($ownerId, $user=null, $pwd=null)
     {
-        return $this->buildEntityManager($ownerId);
+        return $this->buildEntityManager($ownerId, $user, $pwd);
     }
 
     /**
@@ -92,7 +97,8 @@ class AbstractAction
      * @return array
      */
     public function getToken ($request) {
-        return $token = $request->getAttribute("token");
+       $token = $request->getAttribute("token");
+       return $token;
     }
 
     /**
@@ -116,8 +122,16 @@ class AbstractAction
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException
      */
-    private function buildEntityManager($ownerId) {
+    private function buildEntityManager($ownerId, $user=null, $pwd=null) {
         $settings = $this->container['settings'];
+
+        if($user === null) {
+            $user = $settings[$this->context]['connection']['user'];
+        }
+
+        if($pwd === null) {
+            $pwd = $settings[$this->context]['connection']['password'];
+        }
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
             $settings[$this->context]['meta']['entity_path'],
@@ -132,9 +146,10 @@ class AbstractAction
             'driver'   => $settings[$this->context]['connection']['driver'],
             'host'     => $settings[$this->context]['connection']['host'],
             'dbname'   => $settings[$this->context]['connection']['dbname'],
-            'user'     => $settings[$this->context]['connection']['user'],
-            'password' => $settings[$this->context]['connection']['password']
+            'user'     => $user,
+            'password' => $pwd
         );
+
         if($ownerId!==null) {
             $connection['dbname'] =  $settings[$this->context]['connection']['dbname'] . "_$ownerId";
         }

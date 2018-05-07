@@ -2,7 +2,7 @@
 namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineEncrypt\Configuration\Encrypted;
+use App\DoctrineEncrypt\Configuration\Encrypted;
 
 /**
  * @ORM\Table(
@@ -45,9 +45,15 @@ class Privacy {
     protected $surname;
 
     /**
-     * @ORM\Column(name="form", type="text", nullable=true, length=4294967295)
+     * @ORM\Column(name="form", type="json", nullable=true, length=4294967295)
      */
     protected $form;
+
+    /**
+     * @ORM\Column(name="crypted_form", type="text", nullable=true, length=4294967295)
+     * @Encrypted
+     */
+    protected $cryptedForm;
 
     /**
      * @ORM\Column(name="privacy", type="text", nullable=true, length=4294967295)
@@ -290,6 +296,23 @@ class Privacy {
     public function getTelephone()
     {
         return $this->telephone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCryptedForm() {
+        return $this->cryptedForm;
+    }
+
+    /**
+     * @param mixed $cryptedForm
+     *
+     * @return Privacy
+     */
+    public function setCryptedForm($cryptedForm) {
+        $this->cryptedForm = $cryptedForm;
+        return $this;
     }
 
     /**

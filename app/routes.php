@@ -14,7 +14,10 @@ $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 
 // owners
-$app->post('/api/owner', 'App\Action\Owners:newOwner');
+$app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
+$app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
+$app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
+$app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 
 // treatments
 $app->get('/api/owner/treatment', 'App\Action\Treatments:getAllTreatments');

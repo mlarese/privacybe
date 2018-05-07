@@ -28,6 +28,24 @@ class Enc
     /**
      * @return mixed
      */
+    public function getSurname() {
+        return $this->surname;
+    }
+
+    /**
+     * @param mixed $surname
+     */
+    public function setSurname($surname): void {
+        $this->surname = $surname;
+    }
+
+     /**
+      * @ORM\Column(name="surname", type="string", nullable=true)
+      */
+     protected $surname;
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

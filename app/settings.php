@@ -71,7 +71,7 @@ return [
                 'cache' => null,
             ],
             'dynamic_user' => [
-                'user'     => 'privacy',
+                'user'     => 'prvusr',
                 'password' => 'fm7bKMWAHVD3thGn',
             ],
             'connection' => [

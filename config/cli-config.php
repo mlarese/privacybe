@@ -44,19 +44,26 @@ $emConfig = EntityManager::create($settingsConfig['connection'], $doctrinConfig)
 $emPrivacy = EntityManager::create($settingsPrivacy['connection'], $doctrinPrivacy);
 $emUpgrade = EntityManager::create($settingsUpgrade['connection'], $doctrinUpgrade);
 
-$subscriber = new DoctrineEncryptSubscriber(
-    new AnnotationReader,
-    new OpenSslEncryptor('jkkkkjjjjkkjkjkj')
-);
 
-$eventManager = $emConfig->getEventManager();
-$eventManager->addEventSubscriber($subscriber);
+ $subscriber = new DoctrineEncryptSubscriber(
+     new AnnotationReader,
+     new OpenSslEncryptor('jkkkkjjjjkkjkjkj')
+ );
 
-$eventManagerp = $emPrivacy->getEventManager();
-$eventManagerp->addEventSubscriber($subscriber);
+ $subscriber1 = new DoctrineEncryptSubscriber(
+     new AnnotationReader,
+     new OpenSslEncryptor('jkkkkjjjjkkjkjkj')
+ );
 
-return ConsoleRunner::createHelperSet($emConfig);
-// return ConsoleRunner::createHelperSet($emPrivacy);
+ $eventManager = $emConfig->getEventManager();
+ $eventManager->addEventSubscriber($subscriber);
+
+ $eventManagerp = $emPrivacy->getEventManager();
+ $eventManagerp->addEventSubscriber($subscriber1);
+
+
+// return ConsoleRunner::createHelperSet($emConfig);
+return ConsoleRunner::createHelperSet($emPrivacy);
 
 
 

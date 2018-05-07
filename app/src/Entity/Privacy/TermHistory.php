@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *     name="term",
+ *     name="term_history",
  *     indexes={
  *          @ORM\Index(name="term_history_created", columns={"created"}),
  *          @ORM\Index(name="term_history_modifier", columns={"modifier"}),

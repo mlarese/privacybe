@@ -335,7 +335,7 @@ class Operator
      /**
       * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
       */
-     protected $deleted;
+     protected $deleted=0;
 
      /**
       * @return mixed
@@ -357,7 +357,7 @@ class Operator
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
      */
-    protected $active;
+    protected $active=1;
 
     /**
      * @return mixed

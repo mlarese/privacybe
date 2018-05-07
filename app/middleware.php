@@ -49,7 +49,7 @@ $app->add(new CorsMiddleware(
 ));
 
 // jwt, oauth
-$authMode = 'jwt';
+$authMode = 'jwts';
 
 
 $auth = $settings->get('auth');

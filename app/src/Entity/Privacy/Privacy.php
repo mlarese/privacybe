@@ -45,17 +45,17 @@ class Privacy {
     protected $surname;
 
     /**
-     * @ORM\Column(name="form", type="json", nullable=true)
+     * @ORM\Column(name="form", type="text", nullable=true, length=4294967295)
      */
     protected $form;
 
     /**
-     * @ORM\Column(name="privacy", type="json", nullable=false)
+     * @ORM\Column(name="privacy", type="text", nullable=true, length=4294967295)
      */
     protected $privacy;
 
     /**
-     * @ORM\Column(name="privacy_flags", type="json", nullable=false)
+     * @ORM\Column(name="privacy_flags", type="json", nullable=true)
      */
     protected $privacyFlags;
 
@@ -311,7 +311,7 @@ class Privacy {
     /**
      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
      */
-    protected $deleted;
+    protected $deleted=0;
 
     /**
      * @return mixed

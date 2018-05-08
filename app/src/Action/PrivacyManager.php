@@ -9,6 +9,7 @@ use App\Entity\Privacy\TermPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use function json_decode;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -40,6 +41,7 @@ class PrivacyManager extends AbstractAction
         $ref = $request->getHeader('Ref')[0];
         $termId = $request->getHeader('TermId')[0];
 
+
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
 
         /** @var EntityManager $em */
@@ -66,15 +68,15 @@ class PrivacyManager extends AbstractAction
         try {
             $term =  $em->find(Term::class, $termId);
         } catch(\Exception $e) {
-            return $response->withStatus(403, $e->getMessage());
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'Error finding term');
         }
 
         If(!isset($term)) {
-            return $response->withStatus(403, "Term not found");
+            return $response->withStatus(403, "Term not found [$termId]");
         }
 
         $paragraphs = $term->getParagraphs();
-
         $termResponse = array();
 
         foreach($paragraphs as $p) {

@@ -52,6 +52,13 @@ return [
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
             ],
+            'connection_r' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '127.0.0.1',
+                'dbname'   => 'privacy_config',
+                'user'     => 'prvcfg',
+                'password' => '7d4UXHCeRhyeWbPe',
+            ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
@@ -74,12 +81,19 @@ return [
                 'user'     => 'prvusr',
                 'password' => 'fm7bKMWAHVD3thGn',
             ],
-            'connection' => [
+            'connection_l' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',
+            ],
+            'connection' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '10.0.28.1',
+                'dbname'   => 'privacy',
+                'user'     => 'prvcfg',
+                'password' => '7d4UXHCeRhyeWbPe',
             ]
         ],
         'doctrine_upgrade' => [

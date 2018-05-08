@@ -10,7 +10,6 @@ if (PHP_SAPI == 'cli-server') {
 }
 
 require __DIR__ . '/../vendor/autoload.php';
-AnnotationRegistry::registerLoader('class_exists');
 
 // session_start();
 

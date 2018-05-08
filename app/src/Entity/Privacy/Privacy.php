@@ -46,7 +46,7 @@ class Privacy {
     protected $surname;
 
     /**
-     * @ORM\Column(name="form", type="json", nullable=true, length=4294967295)
+     * @ORM\Column(name="form", type="json", nullable=true)
      */
     protected $form;
 

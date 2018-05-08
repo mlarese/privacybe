@@ -160,8 +160,8 @@ class AbstractAction
 
     }
 
-    protected function success () {
-        return ["success"=>true];
+    protected function success ($options=[]) {
+        return ["success"=>true, "options"=>$options];
     }
 
     /**

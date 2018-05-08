@@ -90,7 +90,7 @@ class Term
     protected $paragraphs;
 
     /**
-     * @ORM\Column(name="status", type="string", nullable=false, length=1)
+     * @ORM\Column(name="status", type="string", nullable=false, length=30)
      */
     protected $status;
 
@@ -211,6 +211,30 @@ class Term
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+
+    /**
+     * @ORM\Column(name="options", type="json", nullable=true)
+     */
+    protected $options;
+
+    /**
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param mixed $options
+     * @return Term
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+        return $this;
     }
 
     /**

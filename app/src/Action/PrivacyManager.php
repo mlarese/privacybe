@@ -37,35 +37,31 @@ class PrivacyManager extends AbstractAction
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
         $ownerId = $request->getHeader('OwnerId')[0];
+        $ref = $request->getHeader('Ref')[0];
+        $termId = $request->getHeader('TermId')[0];
 
-        /**
-         * @var EntityManager $em
-         */
+        // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
+
+        /** @var EntityManager $em */
         $cem = $this->getEmConfig();
 
-        /**
-         * @var EntityManager $em
-         */
+        /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
-        /**
-         * @var TermPage $termPage
-         */
-        $termPage = $em->
-                            getRepository(TermPage::class)
-                            ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
+        if($termId===''){
+            /** @var TermPage $termPage  */
+            $termPage = $em
+                        ->getRepository(TermPage::class)
+                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
 
-        die('qui');
+            If(!isset($termPage)) {
+                return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            }
 
-        If(!isset($termPage)) {
-            return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            $termId = $termPage->getTermUid();
         }
 
-        $termId = $termPage->getTermUid();
-        /**
-         * @var Terms $term
-         */
-
+        /** @var Terms $term */
         $term = null;
         try {
             $term =  $em->find(Term::class, $termId);

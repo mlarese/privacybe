@@ -54,6 +54,7 @@ class Owners extends AbstractAction
             created DATETIME DEFAULT CURRENT_TIMESTAMP, 
             email VARCHAR(100) NOT NULL, 
             name VARCHAR(100) NOT NULL, 
+            ref VARCHAR(100) DEFAULT NULL, 
             surname VARCHAR(100) NOT NULL, 
             form LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
             crypted_form LONGTEXT DEFAULT NULL, 
@@ -64,7 +65,11 @@ class Owners extends AbstractAction
             site VARCHAR(255) NOT NULL, 
             ip VARCHAR(100) DEFAULT NULL, 
             telephone VARCHAR(120) DEFAULT NULL, 
-            deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX privacy_created (created), INDEX privacy_name_surname (name, surname), INDEX privacy_domain_site (domain, site), INDEX privacy_email (email), PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+            deleted TINYINT(1) DEFAULT '0' NOT NULL, 
+            INDEX privacy_created (created), INDEX privacy_name_surname (name, surname), 
+            INDEX privacy_ref (ref), 
+            INDEX privacy_email (email), 
+            PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.operator (id INT NOT NULL, name VARCHAR(80) NOT NULL, surname VARCHAR(80) NOT NULL, zip VARCHAR(10) DEFAULT NULL, email VARCHAR(150) DEFAULT NULL, telephone VARCHAR(100) DEFAULT NULL, city VARCHAR(100) DEFAULT NULL, address VARCHAR(255) DEFAULT NULL, role VARCHAR(50) NOT NULL, profile LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', period_from DATETIME NOT NULL, period_to DATETIME NULL, domains LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', deleted TINYINT(1) DEFAULT '0' NOT NULL, active TINYINT(1) DEFAULT '1' NOT NULL, INDEX operator_name (name), INDEX operator_role (role), INDEX operator_period_from (period_from), INDEX operator_period_to (period_to), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.term_page (term_uid VARCHAR(255) NOT NULL, domain VARCHAR(255) NOT NULL, page VARCHAR(255) NOT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, PRIMARY KEY(term_uid, domain, page)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.treatment (code VARCHAR(30) NOT NULL, name VARCHAR(255) NOT NULL, note LONGTEXT DEFAULT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, creator LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', deleted TINYINT(1) DEFAULT '0' NOT NULL, PRIMARY KEY(code)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

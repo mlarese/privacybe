@@ -11,6 +11,7 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_created", columns={"created"}),
  *          @ORM\Index(name="privacy_name_surname", columns={"name","surname"}),
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
+ *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
  *     }
  * )
@@ -351,6 +352,29 @@ class Privacy {
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="ref", type="string", nullable=false, length=100)
+     */
+    protected $ref;
+
+    /**
+     * @return mixed
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @param mixed $ref
+     * @return Privacy
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
         return $this;
     }
 }

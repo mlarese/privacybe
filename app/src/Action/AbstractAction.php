@@ -3,6 +3,8 @@
 namespace App\Action;
 
 
+use App\Resource\MandatoryFieldMissingException;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use function print_r;
@@ -21,13 +23,23 @@ class AbstractAction
 
     protected $context;
 
+    public function toDateTime($date) {
+        if(!isset($date)) {
+            return $date;
+        }
+        if(is_string($date)) {
+            $date = new DateTime($date);
+        }
+
+        return $date;
+    }
+
     /**
      * @param $obj
      *
      * @return array|bool|float|int|object|string
      */
     public function toJson($obj) {
-
         $on = new ObjectNormalizer();
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
@@ -39,11 +51,12 @@ class AbstractAction
     }
 
     /**
-     * @param $name
-     * @param $collection
+     * @param      $name
+     * @param      $collection
+     * @param bool $mandatory
      *
-     * @return mixed
-     * @throws Exception
+     * @return null
+     * @throws MandatoryFieldMissingException
      */
     protected function getAttribute($name, $collection, $mandatory=false) {
         if(isset($collection[$name])) {
@@ -51,14 +64,16 @@ class AbstractAction
         }
 
         if($mandatory) {
-            throw new Exception("$name not found");
+            throw new MandatoryFieldMissingException("$name not found");
         } else {
             return null;
         }
     }
+
     /**
      * AbstractAction constructor.
-     * @param $container Container
+     *
+     * @param $container
      */
     public function __construct( $container) {
         $this->container = $container;

@@ -27,6 +27,8 @@ $app->get('/api/owner/treatment/{code}', 'App\Action\Treatments:getTreatment');
 
 
 // owners operators
+$app->put('/api/owner/operator/{id}', 'App\Action\Operators:updateOperator');
+$app->post('/api/owner/operator', 'App\Action\Operators:newOperator');
 $app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');
 $app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 

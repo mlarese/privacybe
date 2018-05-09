@@ -231,7 +231,7 @@ class Owners extends AbstractAction
                     $prEm->remove($newOperator);
             }
 
-            echo $e->getMessage();
+            // echo $e->getMessage();
             return $response->withStatus(500, "Error creating owner - $msg ");
         }
 
@@ -248,10 +248,14 @@ class Owners extends AbstractAction
     public function getOwners($request, $response, $args) {
         $owR = $this->getEmConfig()->getRepository(Owner::class);
         $owners = [];
+
+
         try{
             $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
+
         }catch(Exception $e) {
-            $response->withStatus(500, $e->getMessage());
+            // die($e->getMessage());
+            return $response->withStatus(500, 'Error loading owners');
         }
 
         return $response->withJson( $this->toJson($owners));

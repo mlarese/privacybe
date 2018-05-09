@@ -81,14 +81,14 @@ return [
                 'user'     => 'prvusr',
                 'password' => 'fm7bKMWAHVD3thGn',
             ],
-            'connection_l' => [
+            'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',
             ],
-            'connection' => [
+            'connection_r' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
                 'dbname'   => 'privacy',

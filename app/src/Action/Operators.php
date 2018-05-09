@@ -113,7 +113,7 @@ class Operators extends AbstractAction
                 ->setOwnerId( $ownerId)
                 ->setName($name)
                 ->setType('owners')
-                ->setPassword($userPassword)
+                ->setPassword( md5($userPassword))
             ;
 
             $this->getEmConfig()->persist($newUser);

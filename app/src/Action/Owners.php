@@ -172,7 +172,7 @@ class Owners extends AbstractAction
                 ->setOwnerId( $newOwner->getId())
                 ->setName( $newOwner->getCompany() . ' admin')
                 ->setType('owners')
-                ->setPassword($userPassword)
+                ->setPassword(md5($userPassword))
             ;
 
             $this->getEmConfig()->persist($newUser);

@@ -8,8 +8,10 @@ use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Exception;
 use function json_decode;
+use function json_encode;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -121,53 +123,58 @@ class PrivacyManager extends AbstractAction
         $ownerId = $request->getHeader('OwnerId')[0];
         $body = $request->getParsedBody();
 
-        $ip = $this->getIp();
-        $domain = $body['domain'];
-        $email = $body['email'];
-        $name = $body['name'];
-        $surname = $body['surname'];
-
-        $site = $body['site'];
-        $privacy = $body['privacy'];
-        $id = $body['id'];
-        $termId = $body['termId'];
-        $form = $body['form'];
-        $privacyFlags = $body['privacyFlags'];
-        $telephone = $body['telephone'];
-
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getEmPrivacy($ownerId);
-
-        $privacyEntry = new Privacy();
-
-        $privacyEntry
-            ->setCreated( new DateTime())
-            ->setIp($ip)
-            ->setForm($form)
-            ->setName($name)
-            ->setSurname($surname)
-            ->setTermId($termId)
-            ->setSite($site)
-            ->setPrivacy($privacy)
-            ->setId($id)//
-            ->setDomain($domain)
-            ->setEmail($email)
-            ->setPrivacyFlags($privacyFlags)
-            ->setTelephone($telephone)
-        ;
+        try {
+            $ip = $this->getIp();
+            $domain = $body['domain'];
+            $id = $body['id'];
+            $email = $body['record']['email'];
+            $name = $body['record']['name'];
+            $surname = $body['record']['surname'];
+            $telephone = $body['record']['telephone'];
+            $site = $body['page'];
+            $termId = $body['termId'];
+            $privacyFlags = $body['flags'];
+            $privacy = $body['term'];
+            $form = $body['form'];
+            $cryptedForm = $body['cryptedForm'];
+            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
+            $ref = $body['ref'];
+            if (!isset($ref)) {
+                $ref = '';
+            }
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+            $privacyEntry = new Privacy();
+            $privacyEntry
+                ->setCreated(new DateTime())
+                ->setDeleted(false)
+                ->setIp($ip)
+                ->setForm($form)
+                ->setCryptedForm($cryptedForm)
+                ->setName($name)
+                ->setSurname($surname)
+                ->setTermId($termId)
+                ->setSite($site)
+                ->setPrivacy($privacy)
+                ->setId($id)//
+                ->setRef($ref)//
+                ->setDomain($domain)
+                ->setEmail($email)
+                ->setPrivacyFlags($privacyFlags)
+                ->setTelephone($telephone);
+        } catch (ORMException $e) {
+            return $response->withStatus(500, 'Orm Exception saving privacy');
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
 
         try{
             $em->merge($privacyEntry);
             $em->flush();
         } catch (Exception $e) {
-
-            $r = $this->toJson($privacyEntry);
-            echo($e->getMessage());
-
-            // print_r($r);
-            die;
+            return $response->withStatus(500, 'Orm Exception on merge privacy');
         }
 
         return $response->withJson($this->success()) ;

@@ -171,6 +171,14 @@ class AbstractAction
 
         $em = \Doctrine\ORM\EntityManager::create($connection , $config);
 
+        $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+            new \Doctrine\Common\Annotations\AnnotationReader(),
+            new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+        );
+
+        $eventManager = $em->getEventManager();
+        $eventManager->addEventSubscriber($subscriber);
+
         return $em;
 
     }

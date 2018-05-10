@@ -13,6 +13,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 // session_start();
 
+require __DIR__ . '/../app/src/DoctrineEncrypt/Configuration/Encrypted.php';
+
 // Instantiate the app
 $settings = require __DIR__ . '/../app/settings.php';
 $app = new \Slim\App($settings);

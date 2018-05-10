@@ -57,7 +57,7 @@ class Privacy {
     protected $cryptedForm;
 
     /**
-     * @ORM\Column(name="privacy", type="text", nullable=true, length=4294967295)
+     * @ORM\Column(name="privacy", type="json_array", nullable=true, length=4294967295)
      */
     protected $privacy;
 
@@ -356,7 +356,7 @@ class Privacy {
     }
 
     /**
-     * @ORM\Column(name="ref", type="string", nullable=false, length=100)
+     * @ORM\Column(name="ref", type="string", nullable=true, length=100)
      */
     protected $ref;
 

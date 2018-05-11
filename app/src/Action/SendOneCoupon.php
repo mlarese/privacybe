@@ -81,6 +81,12 @@ class SendOneCoupon
 
             $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/' . $param->getLanguage() . '/template.php');
 
+            if(!$bodyHtml || empty($bodyHtml)){
+                $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/en/template.php');
+            }
+            elseif(!$bodyHtml || empty($bodyHtml)){
+                $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/it/template.php');
+            }
 
             if($this->parameters && is_array($this->parameters)){
                 $bodyHtml = EmailUtils::makeGlobalReplace($this->parameters,$bodyHtml);

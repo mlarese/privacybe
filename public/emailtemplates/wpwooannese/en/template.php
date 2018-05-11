@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <!--[if gte mso 9]><xml>
         <o:OfficeDocumentSettings>
@@ -338,7 +339,11 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 55px; padding-left: 55px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                                         <div style="font-family:&#39;Roboto&#39;, Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 55px; padding-left: 55px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:&#39;Roboto&#39;, Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><span style="font-size: 16px; line-height: 24px;">Copia e incolla il codice <strong>NEWSLETTER5%</strong> al momento dell&rsquo;acquisto</span></p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><span style="font-size: 16px; line-height: 24px;">per avere lo sconto immediato!</span><br></p></div>
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:&#39;Roboto&#39;, Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><span style="font-size: 16px; line-height: 24px;">Copia e incolla il codice <strong>NEWSLETTER5%</strong> al momento dell&rsquo;acquisto</span></p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><span style="font-size: 16px; line-height: 24px;">per avere lo sconto immediato!</span><br></p>
+                                                <p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><br>
+                                                    <span style="font-size: 16px; line-height: 24px;">Codice sconto valido fino al 20 maggio 2018</span>
+                                                </p>
+                                            </div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

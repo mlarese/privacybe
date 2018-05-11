@@ -55,7 +55,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '127.0.0.1',
+                'host'     => '10.0.28.1',
                 'dbname'   => 'privacy_config',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',

@@ -6,9 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="action_history")
+ * @ORM\Table(
+ *     name="privacy",
+ *     indexes={
+ *          @ORM\Index(name="privacy_history_created", columns={"created"}),
+ *          @ORM\Index(name="privacy_history_privacy_id", columns={"privacy_id"}),
+ *     }
+ * )
  */
-
 class PrivacyHistory
 {
     /**
@@ -19,14 +24,15 @@ class PrivacyHistory
      protected $id;
 
     /**
-     * @ORM\Column(name="type", type="string", nullable=false, length=50)
+     * @ORM\Column(name="created", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    protected $type;
+    protected $created;
 
     /**
-     * @ORM\Column(name="description", type="string", nullable=false)
+     * @ORM\Column(name="privacy", type="json", nullable=true)
      */
-    protected $description;
+    protected $privacy;
+
 
     /**
      * @return mixed
@@ -38,7 +44,6 @@ class PrivacyHistory
 
     /**
      * @param mixed $id
-     *
      * @return PrivacyHistory
      */
     public function setId($id)
@@ -46,6 +51,66 @@ class PrivacyHistory
         $this->id = $id;
         return $this;
     }
+
+    /**
+     * @ORM\Column(name="privacy_id", type="integer", nullable=false)
+     */
+    protected $privacyId;
+
+    /**
+     * @return mixed
+     */
+    public function getPrivacyId()
+    {
+        return $this->privacyId;
+    }
+
+    /**
+     * @param mixed $privacyId
+     * @return PrivacyHistory
+     */
+    public function setPrivacyId($privacyId)
+    {
+        $this->privacyId = $privacyId;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     * @return PrivacyHistory
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
+    }
+
+    /**
+     * @param mixed $privacy
+     * @return PrivacyHistory
+     */
+    public function setPrivacy($privacy)
+    {
+        $this->privacy = $privacy;
+        return $this;
+    }
+
 
     /**
      * @return mixed
@@ -57,7 +122,6 @@ class PrivacyHistory
 
     /**
      * @param mixed $type
-     *
      * @return PrivacyHistory
      */
     public function setType($type)
@@ -76,7 +140,6 @@ class PrivacyHistory
 
     /**
      * @param mixed $description
-     *
      * @return PrivacyHistory
      */
     public function setDescription($description)
@@ -85,75 +148,14 @@ class PrivacyHistory
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
 
     /**
-     * @param mixed $date
-     *
-     * @return PrivacyHistory
+     * @ORM\Column(name="type", type="string", nullable=false)
      */
-    public function setDate($date)
-    {
-        $this->date = $date;
-        return $this;
-    }
+    protected $type;
 
     /**
-     * @return mixed
+     * @ORM\Column(name="description", type="string", nullable=false)
      */
-    public function getHistory()
-    {
-        return $this->history;
-    }
-
-    /**
-     * @param mixed $history
-     *
-     * @return PrivacyHistory
-     */
-    public function setHistory($history)
-    {
-        $this->history = $history;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserName()
-    {
-        return $this->userName;
-    }
-
-    /**
-     * @param mixed $userName
-     *
-     * @return PrivacyHistory
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-        return $this;
-    }
-
-    /**
-     * @ORM\Column(name="date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
-     */
-    protected $date;
-
-    /**
-     * @ORM\Column(name="history", type="json", nullable=true)
-     */
-    protected $history;
-
-    /**
-     * @ORM\Column(name="user_name", type="string", nullable=false, length=50)
-     */
-    protected $userName;
+    protected $description;
 }

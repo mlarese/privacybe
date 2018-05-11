@@ -126,4 +126,27 @@ class Treatment
       */
      protected $creator;
 
+     /**
+      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+      */
+     protected $deleted=0;
+
+     /**
+      * @return mixed
+      */
+     public function getDeleted()
+     {
+         return $this->deleted;
+     }
+
+     /**
+      * @param mixed $deleted
+      * @return Treatment
+      */
+     public function setDeleted($deleted)
+     {
+         $this->deleted = $deleted;
+         return $this;
+     }
+
 }

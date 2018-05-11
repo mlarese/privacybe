@@ -59,7 +59,7 @@ class Auth extends AbstractAction {
         $valid = false;
 
         if(isset($userEntity)) {
-            if($userEntity->getActive()) {
+            if($userEntity->getActive() && !$userEntity->getDeleted()) {
                 $cfp = md5($pwd);
                 if ($userEntity->getPassword() === $cfp) {
                     $valid = true;
@@ -100,7 +100,6 @@ class Auth extends AbstractAction {
         }
 
         if($found) {
-
             $userSpec = [
                 "user" => $user,
                 "userName" => $ue->getName(),
@@ -131,6 +130,9 @@ class Auth extends AbstractAction {
      */
     public function user($request, $response, $args) {
         $token = $request->getAttribute("token");
+
+        $ud = $this->getUserData($request);
+
         return $response->withJson( ["user" => $token['user'] ] );
     }
 }

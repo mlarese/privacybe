@@ -73,23 +73,6 @@ class Term
     }
 
     /**
-     * @return mixed
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
-    /**
-     * @param mixed $pages
-     * @return Term
-     */
-    public function setPages($pages)
-    {
-        $this->pages = $pages;
-        return $this;
-    }
-    /**
      * @ORM\Id
      * @ORM\Column(type="string", length=128)
      * @ORM\GeneratedValue(strategy="NONE")
@@ -107,12 +90,7 @@ class Term
     protected $paragraphs;
 
     /**
-     * @ORM\Column(name="pages", type="json_array", nullable=true)
-     */
-    protected $pages;
-
-    /**
-     * @ORM\Column(name="status", type="string", nullable=false, length=1)
+     * @ORM\Column(name="status", type="string", nullable=false, length=30)
      */
     protected $status;
 
@@ -221,5 +199,52 @@ class Term
      * @ORM\Column(name="suspended", type="datetime", nullable=true)
      */
     protected $suspended;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted=0;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+
+    /**
+     * @ORM\Column(name="options", type="json", nullable=true)
+     */
+    protected $options;
+
+    /**
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param mixed $options
+     * @return Term
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return Term
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
 
 }

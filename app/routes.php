@@ -2,6 +2,8 @@
 // Routes
 
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
+$app->get('/api/test/enc', 'App\Action\Test:testEnc');
+$app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 // widget
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
@@ -11,15 +13,24 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 
+// owners
+$app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
+$app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
+$app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
+$app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 
 // treatments
+$app->put('/api/owner/treatment/{code}', 'App\Action\Treatments:updateTreatment');
+$app->post('/api/owner/treatment', 'App\Action\Treatments:newTreatment');
 $app->get('/api/owner/treatment', 'App\Action\Treatments:getAllTreatments');
 $app->get('/api/owner/treatment/{code}', 'App\Action\Treatments:getTreatment');
 
 
-// owners operators (delegates)
-$app->get('/api/owner/operator', 'App\Action\Delegates:getAllDelegates');
-$app->get('/api/owner/operator/{id}', 'App\Action\Delegates:getDelegate');
+// owners operators
+$app->put('/api/owner/operator/{id}', 'App\Action\Operators:updateOperator');
+$app->post('/api/owner/operator', 'App\Action\Operators:newOperator');
+$app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');
+$app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 
 
 // auth

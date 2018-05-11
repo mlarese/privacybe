@@ -43,6 +43,7 @@ return [
             'namespace'      => 'privacy_app'
         ],
         'doctrine_config' => [
+            'encryption_key' => 'o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW',
             'meta' => [
                 'entity_path' => [
                     'app/src/Entity/Config'
@@ -50,6 +51,13 @@ return [
                 'auto_generate_proxies' => true,
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
+            ],
+            'connection_r' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '127.0.0.1',
+                'dbname'   => 'privacy_config',
+                'user'     => 'prvcfg',
+                'password' => '7d4UXHCeRhyeWbPe',
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
@@ -60,6 +68,7 @@ return [
             ]
         ],
         'doctrine_privacy' => [
+            'encryption_key' => 'o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW',
             'meta' => [
                 'entity_path' => [
                     'app/src/Entity/Privacy'
@@ -68,12 +77,23 @@ return [
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
             ],
+            'dynamic_user' => [
+                'user'     => 'prvusr',
+                'password' => 'fm7bKMWAHVD3thGn',
+            ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
                 'dbname'   => 'privacy',
                 'user'     => 'root',
                 'password' => '',
+            ],
+            'connection_r' => [
+                'driver'   => 'pdo_mysql',
+                'host'     => '10.0.28.1',
+                'dbname'   => 'privacy',
+                'user'     => 'prvcfg',
+                'password' => '7d4UXHCeRhyeWbPe',
             ]
         ],
         'doctrine_upgrade' => [

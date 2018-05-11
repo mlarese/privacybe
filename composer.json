@@ -1,14 +1,13 @@
 {
-    "name": "akrabat/slim3-skeleton",
-    "description": "Simple Slim Framework 3 skeleton with Twig & Monolog.",
+    "name": "mmone/private-backend",
+    "description": "Backend for data one.",
     "license": "BSD-3-Clause",
     "type": "project",
-    "keywords": ["slim-framework", "skeleton"],
+    "keywords": ["data-one", "mm-one"],
     "authors": [
         {
-            "name": "Rob Allen",
-            "email": "rob@akrabat.com",
-            "homepage": "http://akrabat.com"
+            "name": "Rmauro larese",
+            "email": "mauro.larese@mm-one.com"
         }
     ],
     "autoload": {
@@ -32,7 +31,6 @@
         "tuupola/base62": "0.10.0",
         "adbario/slim-secure-session-middleware": "1.3.4",
         "michaeldegroot/doctrine-encrypt-bundle": "4.0.1",
-        "51systems/doctrine-encrypt": "v6.0.0",
         "symfony/yaml": "^4.0",
         "guzzlehttp/guzzle": "^6.3"
     }

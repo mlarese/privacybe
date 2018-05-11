@@ -1,5 +1,5 @@
 <?php
-
+use Doctrine\Common\Annotations\AnnotationRegistry;
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -12,6 +12,8 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../vendor/autoload.php';
 
 // session_start();
+
+require __DIR__ . '/../app/src/DoctrineEncrypt/Configuration/Encrypted.php';
 
 // Instantiate the app
 $settings = require __DIR__ . '/../app/settings.php';

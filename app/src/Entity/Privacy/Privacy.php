@@ -2,7 +2,7 @@
 namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineEncrypt\Configuration\Encrypted;
+use App\DoctrineEncrypt\Configuration\Encrypted;
 
 /**
  * @ORM\Table(
@@ -11,6 +11,7 @@ use DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_created", columns={"created"}),
  *          @ORM\Index(name="privacy_name_surname", columns={"name","surname"}),
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
+ *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
  *     }
  * )
@@ -50,12 +51,18 @@ class Privacy {
     protected $form;
 
     /**
-     * @ORM\Column(name="privacy", type="json", nullable=false)
+     * @ORM\Column(name="crypted_form", type="text", nullable=true, length=4294967295)
+     * @Encrypted
+     */
+    protected $cryptedForm;
+
+    /**
+     * @ORM\Column(name="privacy", type="json_array", nullable=true, length=4294967295)
      */
     protected $privacy;
 
     /**
-     * @ORM\Column(name="privacy_flags", type="json", nullable=false)
+     * @ORM\Column(name="privacy_flags", type="json", nullable=true)
      */
     protected $privacyFlags;
 
@@ -293,6 +300,23 @@ class Privacy {
     }
 
     /**
+     * @return mixed
+     */
+    public function getCryptedForm() {
+        return $this->cryptedForm;
+    }
+
+    /**
+     * @param mixed $cryptedForm
+     *
+     * @return Privacy
+     */
+    public function setCryptedForm($cryptedForm) {
+        $this->cryptedForm = $cryptedForm;
+        return $this;
+    }
+
+    /**
      * @param string $telephone
      * @return Privacy
      */
@@ -307,4 +331,50 @@ class Privacy {
      * @ORM\Column(name="telephone", type="string", nullable=true, length=120)
      */
     protected $telephone;
+
+    /**
+     * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
+     */
+    protected $deleted=0;
+
+    /**
+     * @return mixed
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param mixed $deleted
+     * @return Privacy
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="ref", type="string", nullable=true, length=100)
+     */
+    protected $ref;
+
+    /**
+     * @return mixed
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @param mixed $ref
+     * @return Privacy
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+        return $this;
+    }
 }

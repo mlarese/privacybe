@@ -3,7 +3,10 @@
 namespace App\Action;
 
 
+use App\Resource\MandatoryFieldMissingException;
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
@@ -20,8 +23,23 @@ class AbstractAction
 
     protected $context;
 
-    public function toJson($obj) {
+    public function toDateTime($date) {
+        if(!isset($date)) {
+            return $date;
+        }
+        if(is_string($date)) {
+            $date = new DateTime($date);
+        }
 
+        return $date;
+    }
+
+    /**
+     * @param $obj
+     *
+     * @return array|bool|float|int|object|string
+     */
+    public function toJson($obj) {
         $on = new ObjectNormalizer();
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
@@ -33,8 +51,29 @@ class AbstractAction
     }
 
     /**
+     * @param      $name
+     * @param      $collection
+     * @param bool $mandatory
+     *
+     * @return null
+     * @throws MandatoryFieldMissingException
+     */
+    protected function getAttribute($name, $collection, $mandatory=false) {
+        if(isset($collection[$name])) {
+            return $collection[$name];
+        }
+
+        if($mandatory) {
+            throw new MandatoryFieldMissingException("$name not found");
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * AbstractAction constructor.
-     * @param $container Container
+     *
+     * @param $container
      */
     public function __construct( $container) {
         $this->container = $container;
@@ -63,9 +102,9 @@ class AbstractAction
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getEmPrivacy($ownerId)
+    public function getEmPrivacy($ownerId, $user=null, $pwd=null)
     {
-        return $this->buildEntityManager($ownerId);
+        return $this->buildEntityManager($ownerId, $user, $pwd);
     }
 
     /**
@@ -73,7 +112,8 @@ class AbstractAction
      * @return array
      */
     public function getToken ($request) {
-        return $token = $request->getAttribute("token");
+       $token = $request->getAttribute("token");
+       return $token;
     }
 
     /**
@@ -97,8 +137,16 @@ class AbstractAction
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException
      */
-    private function buildEntityManager($ownerId) {
+    private function buildEntityManager($ownerId, $user=null, $pwd=null) {
         $settings = $this->container['settings'];
+
+        if($user === null) {
+            $user = $settings[$this->context]['connection']['user'];
+        }
+
+        if($pwd === null) {
+            $pwd = $settings[$this->context]['connection']['password'];
+        }
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
             $settings[$this->context]['meta']['entity_path'],
@@ -113,20 +161,39 @@ class AbstractAction
             'driver'   => $settings[$this->context]['connection']['driver'],
             'host'     => $settings[$this->context]['connection']['host'],
             'dbname'   => $settings[$this->context]['connection']['dbname'],
-            'user'     => $settings[$this->context]['connection']['user'],
-            'password' => $settings[$this->context]['connection']['password']
+            'user'     => $user,
+            'password' => $pwd
         );
+
         if($ownerId!==null) {
             $connection['dbname'] =  $settings[$this->context]['connection']['dbname'] . "_$ownerId";
         }
 
         $em = \Doctrine\ORM\EntityManager::create($connection , $config);
 
+        $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+            new \Doctrine\Common\Annotations\AnnotationReader(),
+            new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+        );
+
+        $eventManager = $em->getEventManager();
+        $eventManager->addEventSubscriber($subscriber);
+
         return $em;
 
     }
 
-    protected function success () {
-        return ["success"=>true];
+    protected function success ($options=[]) {
+        return ["success"=>true, "options"=>$options];
+    }
+
+    /**
+     * @param $sql
+     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function executeConfigSql($sql) {
+        $stmt = $this->getEmConfig()->getConnection()->prepare($sql);
+        return $stmt->execute();
     }
 }

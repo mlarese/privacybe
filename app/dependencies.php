@@ -16,6 +16,7 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+
 // Doctrine
 $container['em-config'] = function ($c) {
     $settings = $c->get('settings');
@@ -26,7 +27,16 @@ $container['em-config'] = function ($c) {
         $settings['doctrine_config']['meta']['cache'],
         false
     );
-    return \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
+
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+        new \Doctrine\Common\Annotations\AnnotationReader(),
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_config']['encryption_key'])
+    );
+    $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
+    $eventManager = $em->getEventManager();
+    $eventManager->addEventSubscriber($subscriber);
+
+    return $em;
 };
 
 $container['em-privacy'] = function ($c) {
@@ -38,7 +48,17 @@ $container['em-privacy'] = function ($c) {
         $settings['doctrine_privacy']['meta']['cache'],
         false
     );
-    return \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
+
+
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+        new \Doctrine\Common\Annotations\AnnotationReader(),
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+    );
+    $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
+    $eventManager = $em->getEventManager();
+    $eventManager->addEventSubscriber($subscriber);
+
+    return $em;
 };
 
 $container['session'] = function ($container) {

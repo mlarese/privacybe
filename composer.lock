@@ -1,66 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "975e77a60f99c8a83abc5f191e457e72",
+    "content-hash": "d9ce9bf67a1c2edb32fe4ef922135823",
     "packages": [
-        {
-            "name": "51systems/doctrine-encrypt",
-            "version": "v6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/51systems/doctrine-encrypt.git",
-                "reference": "eac8f362be96589d89f255abed0240e02120373d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/51systems/doctrine-encrypt/zipball/eac8f362be96589d89f255abed0240e02120373d",
-                "reference": "eac8f362be96589d89f255abed0240e02120373d",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "^2.5",
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "illuminate/encryption": "^5.4",
-                "phpunit/phpunit": "^5.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DoctrineEncrypt\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Victor Melnik",
-                    "email": "melnikvictorl@gmail.com"
-                },
-                {
-                    "name": "Dustin Thomson",
-                    "email": "dthomson@51systems.com"
-                },
-                {
-                    "name": "Dries Vints",
-                    "email": "dries.vints@gmail.com"
-                }
-            ],
-            "description": "Package encrypts and decrypts Doctrine fields through life cycle events.",
-            "keywords": [
-                "aes256",
-                "decrypt",
-                "doctrine",
-                "encrypt"
-            ],
-            "time": "2017-03-12T17:38:53+00:00"
-        },
         {
             "name": "adbario/php-dot-notation",
             "version": "1.2.0",

@@ -32,6 +32,7 @@ $app->add(new CorsMiddleware(
             "OwnerId",
             "Domain",
             "Page",
+            "Ref",
             "Language",
             "TermId"
         ],

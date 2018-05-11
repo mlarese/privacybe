@@ -5,10 +5,13 @@ use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
-use App\Entity\Privacy\TermHasPage;
+use App\Entity\Privacy\TermPage;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Exception;
+use function json_decode;
+use function json_encode;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -36,57 +39,46 @@ class PrivacyManager extends AbstractAction
         $lang = $request->getHeader('Language')[0];
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $ref = $request->getHeader('Ref')[0];
+        $termId = $request->getHeader('TermId')[0];
 
-        /**
-         * @var EntityManager $em
-         */
+
+        // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
+
+        /** @var EntityManager $em */
         $cem = $this->getEmConfig();
-        /**
-         * @var Domain $domain
-         */
-        $domain= $cem->find(Domain::class, $domainName);
 
-        If(!isset($domain)) {
-            return $response->withStatus(403, "Domain $domainName not found");
-        }
-
-
-        $ownerId = $domain->getOwnerId();
-
-        /**
-         * @var EntityManager $em
-         */
+        /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
-        /**
-         * @var TermHasPage $termHasPage
-         */
-        $termHasPage = $em->
-                            getRepository(TermHasPage::class)
-                            ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
+        if($termId===''){
+            /** @var TermPage $termPage  */
+            $termPage = $em
+                        ->getRepository(TermPage::class)
+                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
 
-        If(!isset($termHasPage)) {
-            return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            If(!isset($termPage)) {
+                return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            }
+
+            $termId = $termPage->getTermUid();
         }
 
-        $termId = $termHasPage->getTermUid();
-        /**
-         * @var Terms $term
-         */
-
+        /** @var Terms $term */
         $term = null;
         try {
             $term =  $em->find(Term::class, $termId);
         } catch(\Exception $e) {
-            return $response->withStatus(403, $e->getMessage());
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'Error finding term');
         }
 
         If(!isset($term)) {
-            return $response->withStatus(403, "Term not found");
+            return $response->withStatus(403, "Term not found [$termId]");
         }
 
         $paragraphs = $term->getParagraphs();
-
         $termResponse = array();
 
         foreach($paragraphs as $p) {
@@ -131,53 +123,58 @@ class PrivacyManager extends AbstractAction
         $ownerId = $request->getHeader('OwnerId')[0];
         $body = $request->getParsedBody();
 
-        $ip = $this->getIp();
-        $domain = $body['domain'];
-        $email = $body['email'];
-        $name = $body['name'];
-        $surname = $body['surname'];
-
-        $site = $body['site'];
-        $privacy = $body['privacy'];
-        $id = $body['id'];
-        $termId = $body['termId'];
-        $form = $body['form'];
-        $privacyFlags = $body['privacyFlags'];
-        $telephone = $body['telephone'];
-
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getEmPrivacy($ownerId);
-
-        $privacyEntry = new Privacy();
-
-        $privacyEntry
-            ->setCreated( new DateTime())
-            ->setIp($ip)
-            ->setForm($form)
-            ->setName($name)
-            ->setSurname($surname)
-            ->setTermId($termId)
-            ->setSite($site)
-            ->setPrivacy($privacy)
-            ->setId($id)//
-            ->setDomain($domain)
-            ->setEmail($email)
-            ->setPrivacyFlags($privacyFlags)
-            ->setTelephone($telephone)
-        ;
+        try {
+            $ip = $this->getIp();
+            $domain = $body['domain'];
+            $id = $body['id'];
+            $email = $body['record']['email'];
+            $name = $body['record']['name'];
+            $surname = $body['record']['surname'];
+            $telephone = $body['record']['telephone'];
+            $site = $body['page'];
+            $termId = $body['termId'];
+            $privacyFlags = $body['flags'];
+            $privacy = $body['term'];
+            $form = $body['form'];
+            $cryptedForm = $body['cryptedForm'];
+            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
+            $ref = $body['ref'];
+            if (!isset($ref)) {
+                $ref = '';
+            }
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+            $privacyEntry = new Privacy();
+            $privacyEntry
+                ->setCreated(new DateTime())
+                ->setDeleted(false)
+                ->setIp($ip)
+                ->setForm($form)
+                ->setCryptedForm($cryptedForm)
+                ->setName($name)
+                ->setSurname($surname)
+                ->setTermId($termId)
+                ->setSite($site)
+                ->setPrivacy($privacy)
+                ->setId($id)//
+                ->setRef($ref)//
+                ->setDomain($domain)
+                ->setEmail($email)
+                ->setPrivacyFlags($privacyFlags)
+                ->setTelephone($telephone);
+        } catch (ORMException $e) {
+            return $response->withStatus(500, 'Orm Exception saving privacy');
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
 
         try{
             $em->merge($privacyEntry);
             $em->flush();
         } catch (Exception $e) {
-
-            $r = $this->toJson($privacyEntry);
-            echo($e->getMessage());
-
-            // print_r($r);
-            die;
+            return $response->withStatus(500, 'Orm Exception on merge privacy');
         }
 
         return $response->withJson($this->success()) ;

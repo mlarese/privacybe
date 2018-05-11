@@ -6,6 +6,14 @@ namespace App\Action;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Privacy\Operator;
+use App\Resource\OperatorResource;
+use App\Resource\OwnerResource;
+use App\Resource\UserExistException;
+use App\Resource\UserResource;
+use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Exception;
 use function print_r;
 use Slim\Http\Request;
@@ -30,11 +38,11 @@ class Owners extends AbstractAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function createDbUser($user, $password) {
+    private function createDbUser($user, $password, $db) {
         $this->executeConfigSql("CREATE USER '$user'@'localhost' IDENTIFIED BY '$password'");
         $this->executeConfigSql("CREATE USER '$user'@'%' IDENTIFIED BY '$password'");
-        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@localhost IDENTIFIED BY '$password';");
-        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON *.* to $user@'%' IDENTIFIED BY '$password';");
+        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON $db.* to $user@localhost IDENTIFIED BY '$password';");
+        $this->executeConfigSql("GRANT SELECT, INSERT, UPDATE, DELETE ON $db.* to $user@'%' IDENTIFIED BY '$password';");
     }
 
     /**
@@ -78,29 +86,6 @@ class Owners extends AbstractAction
     }
 
     /**
-     * @param $owner Owner
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    private function fillOwner(&$owner, $body) {
-        $owner
-            ->setLanguage( $this->getAttribute('language',$body))
-            ->setEmail($this->getAttribute('email',$body, true))
-            ->setName($this->getAttribute('name',$body))
-            ->setSurname($this->getAttribute('surname',$body))
-            ->setCity($this->getAttribute('city',$body))
-            ->setZip($this->getAttribute('zip',$body))
-            ->setAddress($this->getAttribute('address',$body))
-            ->setCountry($this->getAttribute('country',$body))
-            ->setCounty($this->getAttribute('county',$body,true))
-            ->setCompany($this->getAttribute('company',$body,true))
-
-        ;
-
-        return $owner;
-    }
-    /**
      * @param $request Request
      * @param $response Response
      * @param $args
@@ -110,130 +95,91 @@ class Owners extends AbstractAction
      */
     public function newOwner($request, $response, $args) {
         $newOwner = new Owner();
-        $newUser = new User();
-        $newOperator = new Operator();
-        $repoUser = $this->getEmConfig()->getRepository( User::class);
-        $repoOwner = $this->getEmConfig()->getRepository( Owner::class);
 
         try {
             $body = $request->getParsedBody();
             $userName = $this->getAttribute('user',$body,true);
             $userPassword = $this->getAttribute('password',$body, true);
-
-            /**
-             * @var User $exUsr
-             */
-            $exUsr = $repoUser->findOneBy(['user' => $body['user'] ] );
-            if($exUsr && $exUsr->getUser() === $body['user']) {
-                return $response->withStatus(500,"user alredy registered");
-            }
-
-            $this->fillOwner($newOwner, $body);
+            $language = $this->getAttribute('language',$body);
+            $email = $this->getAttribute('email',$body, true);
+            $name =  $this->getAttribute('name',$body);
+            $surname=$this->getAttribute('surname',$body);
+            $city = $this->getAttribute('city',$body);
+            $zip = $this->getAttribute('zip',$body);
+            $address=$this->getAttribute('address',$body);
+            $country=$this->getAttribute('country',$body);
+            $profile=$this->getAttribute('profile',$body);
+            $county=$this->getAttribute('county',$body,true);
+            $company=$this->getAttribute('company',$body,true);
 
         } catch(Exception $e) {
             return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
         }
 
-        try{
-            /**
-             * @var $exOwn Owner
-             */
-            $exOwn = $repoOwner->findOneBy(['company' => $body['company'] ] );
-            if($exOwn && $exOwn->getCompany() === $body['company']) {
-                return $response->withStatus(500,"company alredy registered");
-            }
 
-            $exOwn = $repoOwner->findOneBy(['email' => $body['email'] ] );
-            if($exOwn && $exOwn->getEmail() === $body['email']) {
-                return $response->withStatus(500,"email alredy registered");
-            }
-
-            $this->getEmConfig()->getConnection()->beginTransaction();
-        } catch(Exception $e) {
-            return $response->withStatus(500, 'Error ' . $e->getMessage());
-        }
+        $this->getEmConfig()->getConnection()->beginTransaction();
 
         try {
-
             /***************************************************
              * creating Owner
              **************************************************/
-            $msg = "persisting owner";
-            $this->getEmConfig()->persist($newOwner);
-                $msg = "after persist owner";
-                $this->getEmConfig()->flush();
-                $currentOwnerId = $newOwner->getId();
-
+            $ownRes = new OwnerResource($this->getEmConfig());
+            $newOwner = $ownRes->insert($email,$company,$name,$surname, $city,$zip,$address,$county,$county,$language,$profile );
+            $currentOwnerId = $newOwner->getId();
             /***************************************************
              * creating User
              **************************************************/
-            $newUser
-                ->setUser( $userName)
-                ->setOwnerId( $newOwner->getId())
-                ->setName( $newOwner->getCompany() . ' admin')
-                ->setType('owners')
-                ->setPassword(md5($userPassword))
-            ;
-
-            $this->getEmConfig()->persist($newUser);
-                $this->getEmConfig()->flush();
-                $currentUserId = $newUser->getId();
-
+            $userRes = new UserResource($this->getEmConfig());
+            $newUser = $userRes->insert($userName, $userPassword, 'owners', $currentOwnerId, $company . ' owner');
+            $currentUserId = $newUser->getId();
             $newDb = "privacy_$currentOwnerId";
             $dbUser = "prvusr_$currentOwnerId";
             $dbpwd = "pwdprivacyuser";
-
-            $msg = "after setting parameters";
 
             /***************************************************
              * creating Privacy db
              **************************************************/
             $done = $this->createOwnerDb($newDb);
-            $msg = "after creating $newDb";
 
-            $msg = "creating db user";
-            $this->createDbUser($dbUser,$dbpwd);
-
+            $this->createDbUser($dbUser, $dbpwd, $newDb);
             /***************************************************
              * adding tables to Privacy db
              **************************************************/
-            $msg = "creating PrivacyTables";
-            $this->createPrivacyTables($newDb);
 
+            $this->createPrivacyTables($newDb);
             /***************************************************
              * creating privacy owner Operator
              **************************************************/
-            $newOperator
-                ->setEmail($newOwner->getEmail())
-                ->setId($currentUserId)
-                ->setPeriodFrom(new \DateTime())
-                ->setRole('owner')
-                ->setName($newOwner->getName())
-                ->setSurname($newOwner->getSurname())
-            ;
-
             $prEm = $this->getEmPrivacy($currentOwnerId, $dbUser, $dbpwd);
-            $prEm->persist($newOperator);
-            $prEm->flush();
+            $prEm->getConnection()->beginTransaction();
 
-            return $response->withJson( $this->toJson($newOwner));
+            $operatorRes = new OperatorResource($prEm);
+            $newOperator = $operatorRes->insert($currentUserId,'owner', new \DateTime(),$email, $name, $surname);
+            return $response->withJson($this->toJson($newOwner));
+
+        } catch (UserExistException $e) {
+            $this->getEmConfig()->getConnection()->rollBack();
+            return $response->withStatus(500, $e->getMessage());
+        } catch (DBALException $e) {
+            $this->getEmConfig()->getConnection()->rollBack();
+            return $response->withStatus(500, "Error creating owner ");
+        } catch (OptimisticLockException $e) {
+            $this->getEmConfig()->getConnection()->rollBack();
+            $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "Error creating owner ");
+        } catch (ORMException $e) {
+            $this->getEmConfig()->getConnection()->rollBack();
+            $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "Error creating owner ");
         } catch (Exception $e) {
             $this->getEmConfig()->getConnection()->rollBack();
-
-            if(false) {
-                if ($newUser && $newUser->getId())
-                    $this->getEmConfig()->remove($newUser);
-                if ($newOwner && $newOwner->getId())
-                    $this->getEmConfig()->remove($newOwner);
-                if ($newOperator && $newOperator->getId())
-                    $this->getEmConfig()->remove($newOperator);
-                if ($prEm)
-                    $prEm->remove($newOperator);
-            }
+            $prEm->getConnection()->rollBack();
 
             // echo $e->getMessage();
-            return $response->withStatus(500, "Error creating owner - $msg ");
+            return $response->withStatus(500, "Error creating owner");
         }
+        $this->getEmConfig()->commit();
+        $prEm->commit();
 
     }
 

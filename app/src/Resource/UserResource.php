@@ -9,8 +9,7 @@ use App\Entity\Config\User;
  * Class Resource
  * @package App
  */
-class UserResource extends AbstractResource
-{
+class UserResource extends AbstractResource{
     public function update($data) {
 
     }
@@ -37,9 +36,11 @@ class UserResource extends AbstractResource
     }
 
     /**
-     * @param $data
+     * @param $user
+     * @param $password
      * @param $type
-     *
+     * @param $ownerId
+     * @param $name
      * @return User
      * @throws UserExistException
      * @throws \Doctrine\ORM\OptimisticLockException

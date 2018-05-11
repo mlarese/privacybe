@@ -82,13 +82,28 @@ class AbstractAction
     }
 
     protected function getGuestDbCredentials($ownerId) {
-        $dynaDb = $this->container['dyn-privacy-db'];
+        if($ownerId!==null) {
 
-        return [
-            "db" => $dynaDb['db'] . "_$ownerId",
-            "user" => $dynaDb['user']."_$ownerId",
-            "password" => md5($dynaDb['password'] ."Fx8k_${ownerId}_5tFg")
-        ];
+
+            $dynaDb = $this->container['dyn-privacy-db'];
+
+            return [
+                "db" => $dynaDb['db'] . "_$ownerId",
+                "user" => $dynaDb['user'] . "_$ownerId",
+                "password" => md5($dynaDb['password'] . "Fx8k_${ownerId}_5tFg")
+            ];
+
+        }
+        else{
+            $settings = $this->container['settings'];
+
+            return [
+                "db" => $settings[$this->context]['connection']['dbname'],
+                "user" => $settings[$this->context]['connection']['user'],
+                "password" => $settings[$this->context]['connection']['password']
+            ];
+
+        }
     }
     /**
      * @return mixed
@@ -152,17 +167,21 @@ class AbstractAction
      * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \Doctrine\ORM\ORMException
      */
-    private function buildEntityManager($ownerId, $user=null, $pwd=null) {
+    private function buildEntityManager($ownerId) {
         $settings = $this->container['settings'];
+
+
+
         $guestCredentials = $this->getGuestDbCredentials($ownerId);
 
-        if($user === null) {
-            $user = $guestCredentials['user'];
-        }
 
-        if($pwd === null) {
-            $pwd = $guestCredentials['password'];
-        }
+        $dbname = $guestCredentials['db'];
+
+        $user = $guestCredentials['user'];
+
+        $pwd = $guestCredentials['password'];
+
+
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
             $settings[$this->context]['meta']['entity_path'],
@@ -176,14 +195,12 @@ class AbstractAction
         $connection = array(
             'driver'   => $settings[$this->context]['connection']['driver'],
             'host'     => $settings[$this->context]['connection']['host'],
-            'dbname'   => $settings[$this->context]['connection']['dbname'],
+            'dbname'   => $dbname,
             'user'     => $user,
             'password' => $pwd
         );
 
-        if($ownerId!==null) {
-            $connection['dbname'] =  $settings[$this->context]['connection']['dbname'] . "_$ownerId";
-        }
+
 
         $em = \Doctrine\ORM\EntityManager::create($connection , $config);
 

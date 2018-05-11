@@ -16,6 +16,10 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+$container['dyn-privacy-db'] = function ($c) {
+    $settings = $c->get('settings');
+    return $settings['doctrine_privacy']['dynamic_db'];
+};
 
 // Doctrine
 $container['em-config'] = function ($c) {

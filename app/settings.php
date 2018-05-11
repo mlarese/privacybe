@@ -77,7 +77,8 @@ return [
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
             ],
-            'dynamic_user' => [
+            'dynamic_db' => [
+                'db'       => 'privacy',
                 'user'     => 'prvusr',
                 'password' => 'fm7bKMWAHVD3thGn',
             ],

@@ -81,6 +81,15 @@ class AbstractAction
         $this->context = $container->get('settings')['applicationContext'];
     }
 
+    protected function getGuestDbCredentials($ownerId) {
+        $dynaDb = $this->container['dyn-privacy-db'];
+
+        return [
+            "db" => $dynaDb['db'] . "_$ownerId",
+            "user" => $dynaDb['user']."_$ownerId",
+            "password" => md5($dynaDb['password'] ."Fx8k_${ownerId}_5tFg")
+        ];
+    }
     /**
      * @return mixed
      */
@@ -133,19 +142,26 @@ class AbstractAction
         $user = $this->getUserData($request);
         return $user->ownerId;
     }
+
     /**
+     * @param      $ownerId
+     * @param null $user
+     * @param null $pwd
+     *
      * @return EntityManager
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \Doctrine\ORM\ORMException
      */
     private function buildEntityManager($ownerId, $user=null, $pwd=null) {
         $settings = $this->container['settings'];
+        $guestCredentials = $this->getGuestDbCredentials($ownerId);
 
         if($user === null) {
-            $user = $settings[$this->context]['connection']['user'];
+            $user = $guestCredentials['user'];
         }
 
         if($pwd === null) {
-            $pwd = $settings[$this->context]['connection']['password'];
+            $pwd = $guestCredentials['password'];
         }
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(

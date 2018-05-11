@@ -86,16 +86,15 @@ class Owners extends AbstractAction
     }
 
     /**
-     * @param $request Request
-     * @param $response Response
+     * @param $request
+     * @param $response
      * @param $args
      *
      * @return mixed
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function newOwner($request, $response, $args) {
         $newOwner = new Owner();
-
         try {
             $body = $request->getParsedBody();
             $userName = $this->getAttribute('user',$body,true);
@@ -109,7 +108,7 @@ class Owners extends AbstractAction
             $address=$this->getAttribute('address',$body);
             $country=$this->getAttribute('country',$body);
             $profile=$this->getAttribute('profile',$body);
-            $county=$this->getAttribute('county',$body,true);
+            $county=$this->getAttribute('county',$body);
             $company=$this->getAttribute('company',$body,true);
 
         } catch(Exception $e) {
@@ -126,15 +125,18 @@ class Owners extends AbstractAction
             $ownRes = new OwnerResource($this->getEmConfig());
             $newOwner = $ownRes->insert($email,$company,$name,$surname, $city,$zip,$address,$county,$county,$language,$profile );
             $currentOwnerId = $newOwner->getId();
+
             /***************************************************
              * creating User
              **************************************************/
             $userRes = new UserResource($this->getEmConfig());
             $newUser = $userRes->insert($userName, $userPassword, 'owners', $currentOwnerId, $company . ' owner');
             $currentUserId = $newUser->getId();
-            $newDb = "privacy_$currentOwnerId";
-            $dbUser = "prvusr_$currentOwnerId";
-            $dbpwd = "pwdprivacyuser";
+            $dynaDb = $this->getGuestDbCredentials($currentOwnerId);
+
+            $newDb =  $dynaDb['db'] ;
+            $dbUser = $dynaDb['user'] ;
+            $dbpwd = $dynaDb['password']  ;
 
             /***************************************************
              * creating Privacy db
@@ -150,11 +152,15 @@ class Owners extends AbstractAction
             /***************************************************
              * creating privacy owner Operator
              **************************************************/
-            $prEm = $this->getEmPrivacy($currentOwnerId, $dbUser, $dbpwd);
+            $prEm = $this->getEmPrivacy($currentOwnerId);
             $prEm->getConnection()->beginTransaction();
 
             $operatorRes = new OperatorResource($prEm);
             $newOperator = $operatorRes->insert($currentUserId,'owner', new \DateTime(),$email, $name, $surname);
+
+            $this->getEmConfig()->commit();
+            $prEm->commit();
+
             return $response->withJson($this->toJson($newOwner));
 
         } catch (UserExistException $e) {
@@ -162,25 +168,36 @@ class Owners extends AbstractAction
             return $response->withStatus(500, $e->getMessage());
         } catch (DBALException $e) {
             $this->getEmConfig()->getConnection()->rollBack();
-            return $response->withStatus(500, "Error creating owner ");
+            return $response->withStatus(500, "DBALException creating owner ");
         } catch (OptimisticLockException $e) {
             $this->getEmConfig()->getConnection()->rollBack();
-            $prEm->getConnection()->rollBack();
-            return $response->withStatus(500, "Error creating owner ");
+            if(isset($prEm))
+                $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "OptimisticLockException creating owner ");
         } catch (ORMException $e) {
             $this->getEmConfig()->getConnection()->rollBack();
-            $prEm->getConnection()->rollBack();
-            return $response->withStatus(500, "Error creating owner ");
-        } catch (Exception $e) {
+            if(isset($prEm))
+                $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "ORMException creating owner ");
+        } catch (CompanyExistException $e) {
             $this->getEmConfig()->getConnection()->rollBack();
-            $prEm->getConnection()->rollBack();
+            if(isset($prEm))
+                $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "Company Exist Exception");
+        } catch (EmailExistException $e) {
+            $this->getEmConfig()->getConnection()->rollBack();
+            if(isset($prEm))
+                $prEm->getConnection()->rollBack();
+            return $response->withStatus(500, "Email Exist Exception");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $this->getEmConfig()->getConnection()->rollBack();
+            if(isset($prEm))
+                $prEm->getConnection()->rollBack();
 
             // echo $e->getMessage();
-            return $response->withStatus(500, "Error creating owner");
+            return $response->withStatus(500, "Exception creating owner " .$e->getMessage());
         }
-        $this->getEmConfig()->commit();
-        $prEm->commit();
-
     }
 
     /**

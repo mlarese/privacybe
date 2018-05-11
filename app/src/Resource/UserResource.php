@@ -54,7 +54,7 @@ class UserResource extends AbstractResource{
             ->setOwnerId( $ownerId)
             ->setName($name)
             ->setType($type)
-            ->setPassword( md5($password))
+            ->setPassword($password )
         ;
 
         $this->checkUserExistence($user);

@@ -66,11 +66,13 @@ class SendOneCoupon
      */
     public function execute($param){
 
+
+
         if($this->config && $this->config!=''){
             $this->config = json_decode($this->config);
         }
 
-        
+
         $client = new GuzzleHttp\Client(['base_uri' => $this->url]);
 
         try {
@@ -78,6 +80,7 @@ class SendOneCoupon
 
 
             $bodyHtml = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/emailtemplates/' . $this->config->path . '/' . $param->getLanguage() . '/template.php');
+
 
             if($this->parameters && is_array($this->parameters)){
                 $bodyHtml = EmailUtils::makeGlobalReplace($this->parameters,$bodyHtml);

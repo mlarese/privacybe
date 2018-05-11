@@ -44,6 +44,12 @@ class Actions
     private $parameters;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DomainPath", inversedBy="action")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    private $domain;
+
+    /**
      * @return int
      */
     public function getId(): int

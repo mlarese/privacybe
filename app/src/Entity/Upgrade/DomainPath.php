@@ -57,7 +57,7 @@ class DomainPath
     /**
      * @var \App\Entity\Upgrade\Actions
      *
-     * @ORM\OneToMany(targetEntity="Actions", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Actions", mappedBy="domain")
      *
      */
     private $action;

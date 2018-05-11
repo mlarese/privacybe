@@ -116,8 +116,8 @@ class Subscribers extends AbstractAction
 
             $action = $subscriber->getDomainpath()->getAction();
 
-            if ($action !== null && $action->count() == 1) {
 
+            if ($action !== null && $action->count() == 1) {
 
                 $params =  array();
                 if ($request->getParam('action') && strpos($request->getParam('action') ,$subscriber->getDomainpath()->getAlternativeredirurl())!==false) {
@@ -130,6 +130,8 @@ class Subscribers extends AbstractAction
                 $service = $container->get('actionHandler');
                 $service->setConfig($action[0]);
                 $service->setParameters($params);
+
+
                 $service->execute($subscriber);
 
             }
@@ -143,7 +145,24 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=subscribe&lg=" . $subscriber->getLanguage());
+        $tmpRedir = $subscriber->getDomainpath()->getRedirurl();
+        $jsonRedir = json_decode($tmpRedir,true);
+        if($jsonRedir && is_array($jsonRedir) && !empty($jsonRedir)){
+
+            if(isset($jsonRedir[$subscriber->getLanguage()])){
+
+                $tmpRedir =$jsonRedir[$subscriber->getLanguage()];
+
+            }elseif (isset($jsonRedir['en'])){
+
+                $tmpRedir =$jsonRedir['en'];
+            }
+            else{
+                $tmpRedir =$jsonRedir['it'];
+            }
+        }
+
+        return $response->withRedirect($tmpRedir . "?action=subscribe&lg=" . $subscriber->getLanguage());
 
     }
 

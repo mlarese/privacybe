@@ -143,7 +143,24 @@ class Subscribers extends AbstractAction
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
-        return $response->withRedirect($subscriber->getDomainpath()->getRedirurl() . "?action=subscribe&lg=" . $subscriber->getLanguage());
+        $tmpRedir = $subscriber->getDomainpath()->getRedirurl();
+        $jsonRedir = json_decode($tmpRedir,true);
+        if($jsonRedir && is_array($jsonRedir) && !empty($jsonRedir)){
+
+            if(isset($jsonRedir[$subscriber->getLanguage()])){
+
+                $tmpRedir =$jsonRedir[$subscriber->getLanguage()];
+
+            }elseif (isset($jsonRedir['en'])){
+
+                $tmpRedir =$jsonRedir['en'];
+            }
+            else{
+                $tmpRedir =$jsonRedir['it'];
+            }
+        }
+
+        return $response->withRedirect($tmpRedir . "?action=subscribe&lg=" . $subscriber->getLanguage());
 
     }
 

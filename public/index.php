@@ -16,7 +16,17 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../app/src/DoctrineEncrypt/Configuration/Encrypted.php';
 
 // Instantiate the app
-$settings = require __DIR__ . '/../app/settings.php';
+
+$localSettingsPath = __DIR__ . '/../app/settings_local.php';
+$settingsPath = __DIR__ . '/../app/settings.php';
+
+if(file_exists($localSettingsPath)) {
+    $settings = require $localSettingsPath;
+} else {
+    $settings = require __DIR__ . '/../app/settings.php';
+}
+
+print_r($settings);  die('settings');
 $app = new \Slim\App($settings);
 
 // Set up dependencies

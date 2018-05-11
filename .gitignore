@@ -5,3 +5,5 @@ cache/*
 .idea/dbnavigator.xml
 .idea/deployment.xml
 .idea/markdown-exported-files.xml
+/public/localtest/*
+app/settings_local.php

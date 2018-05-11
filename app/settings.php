@@ -1,6 +1,7 @@
 <?php
 return [
     'settings' => [
+        'label' => 'production',
         'applications' => [
             'apps' => [
                 'doctrine_upgrade' => function ($path){return $path == 'upgrade';},
@@ -52,19 +53,12 @@ return [
                 'proxy_dir' =>  __DIR__.'/../cache/proxies',
                 'cache' => null,
             ],
-            'connection_r' => [
+            'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '127.0.0.1',
                 'dbname'   => 'privacy_config',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
-            ],
-            'connection' => [
-                'driver'   => 'pdo_mysql',
-                'host'     => '127.0.0.1',
-                'dbname'   => 'privacy_config',
-                'user'     => 'root',
-                'password' => '',
             ]
         ],
         'doctrine_privacy' => [
@@ -83,13 +77,6 @@ return [
                 'password' => 'fm7bKMWAHVD3thGn',
             ],
             'connection' => [
-                'driver'   => 'pdo_mysql',
-                'host'     => '127.0.0.1',
-                'dbname'   => 'privacy',
-                'user'     => 'root',
-                'password' => '',
-            ],
-            'connection_r' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
                 'dbname'   => 'privacy',

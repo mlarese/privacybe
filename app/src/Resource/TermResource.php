@@ -77,4 +77,35 @@ class TermResource extends AbstractResource
         $this->entityManager->persist($term);
         $this->entityManager->flush();
     }
+
+    public function update(
+        $name,
+        $options,
+        $paragraphs,
+        $status,
+        $uid
+    ){
+        if ($paragraphs === null ) {
+            $paragraphs=[$this->emptyParagraph()];
+        }
+
+        if ($status === null ) {
+            $status= self::PUBLISHED;
+        }
+
+        $term = new Term();
+        $term->setDeleted(0)
+            ->setName($name)
+            ->setOptions($options)
+            ->setParagraphs($paragraphs)
+            ->setStatus($status)
+            ->setUid($uid)
+        ;
+
+        $this->entityManager->persist($term);
+        $this->entityManager->flush();
+    }
+
+
+
 }

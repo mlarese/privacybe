@@ -62,7 +62,38 @@ class Terms extends AbstractAction{
         $js = $this->toJson($term);
         return $response->withJson( $js);
     }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function updateTerm ($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+        $body = $request->getParsedBody();
 
+        try {
+            $uid = $this->getAttribute('uid', $body, true);
+            $name = $this->getAttribute('name', $body, true);
+
+            $deleted = $this->getAttribute('modified', $body);
+            $modified = $this->getAttribute('modified', $body);
+            $published = $this->getAttribute('published', $body);
+            $suspended = $this->getAttribute('suspended', $body);
+
+            $status = $this->getAttribute('status', $body, false);
+            $paragraphs = $this->getAttribute('paragraphs', $body, false);
+            $options = $this->getAttribute('options', $body, false );
+        } catch (MandatoryFieldMissingException $e) {
+            return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
+        }
+
+    }
     /**
      * @param $request Request
      * @param $response Response

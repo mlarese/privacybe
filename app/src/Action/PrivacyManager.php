@@ -6,6 +6,7 @@ use App\Entity\Config\Page;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use function base64_encode;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
@@ -26,6 +27,27 @@ class PrivacyManager extends AbstractAction
         return $_SERVER['REMOTE_ADDR'];
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getWidgetTermById($request, $response, $args) {
+        $id = $args['id'];
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $em = $this->getEmPrivacy($ownerId);
+
+        /** @var Privacy $pr */
+        $pr = $em->find(Privacy::class,$id);
+$cr = $pr->getCryptedForm();
+        echo  $cr ; die;
+        print_r($pr);die;
+
+    }
     /**
      * @param $request Request
      * @param $response Response

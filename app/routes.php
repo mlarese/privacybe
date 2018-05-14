@@ -8,8 +8,9 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 // widget
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
-
+$app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
 // terms
+$app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');
 $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');

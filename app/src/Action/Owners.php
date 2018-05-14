@@ -5,7 +5,9 @@ namespace App\Action;
 
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use App\Entity\Privacy\Domain;
 use App\Entity\Privacy\Operator;
+use App\Resource\DomainResource;
 use App\Resource\OperatorResource;
 use App\Resource\OwnerResource;
 use App\Resource\UserExistException;
@@ -110,6 +112,8 @@ class Owners extends AbstractAction
             $profile=$this->getAttribute('profile',$body);
             $county=$this->getAttribute('county',$body);
             $company=$this->getAttribute('company',$body,true);
+
+            $domains=$this->getAttribute('domains',$body);
 
         } catch(Exception $e) {
             return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
@@ -240,11 +244,23 @@ class Owners extends AbstractAction
          */
         $em = $this->getEmConfig();
 
+        /** @var EntityManager $em */
+        $emp = $this->getEmPrivacy($currId);
+
         /** @var Owner $res */
         $res = $em->find(Owner::class, $currId);
 
         if(!$res) {
             return $response->withStatus(500, 'Not found');
+        }
+
+
+        try {
+            $domains = $emp->getRepository(Domain::class)->findAll();
+            if ($domains)
+                $res->setDomains($domains);
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
 
         $js = $this->toJson($res);
@@ -278,13 +294,46 @@ class Owners extends AbstractAction
 
         try {
             $body = $request->getParsedBody();
-            $this->fillOwner($res, $body);
+            $language = $this->getAttribute('language',$body);
+            $email = $this->getAttribute('email',$body, true);
+            $name =  $this->getAttribute('name',$body);
+            $surname=$this->getAttribute('surname',$body);
+            $city = $this->getAttribute('city',$body);
+            $zip = $this->getAttribute('zip',$body);
+            $address=$this->getAttribute('address',$body);
+            $country=$this->getAttribute('country',$body);
+            $profile=$this->getAttribute('profile',$body);
+            $county=$this->getAttribute('county',$body);
+            $company=$this->getAttribute('company',$body,true);
+
+            $domains=$this->getAttribute('domains',$body);
+
+            $res
+                ->setName($name)
+                ->setSurname($surname)
+                ->setEmail($email)
+                ->setCity($city)
+                ->setAddress($address)
+                ->setZip($zip)
+                ->setLanguage($language)
+                ->setCountry($country)
+                ->setCounty($county)
+            ;
+
         } catch(Exception $e) {
-            return $response->withStatus(500, 'Error ' . $e->getMessage());
+            return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
         }
 
 
         try {
+
+            if(isset($body['domains'])){
+                $em = $this->getEmPrivacy($currId);
+
+                $domRes = new DomainResource($em);
+                $domRes->merge($body['domains']);
+            }
+
             $this->getEmConfig()->merge($res);
             $this->getEmConfig()->flush();
         } catch(Exception $e) {
@@ -292,6 +341,23 @@ class Owners extends AbstractAction
         }
 
         $js = $this->toJson($this->success());
+        return $response->withJson( $js);
+    }
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws ORMException
+     */
+    public function getDomains ($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        /** @var EntityManager $em */
+        $emp = $this->getEmPrivacy($ownerId);
+        $currentDomains = $emp->getRepository(Domain::class)->findAll();
+        $js = $this->toJson($currentDomains);
         return $response->withJson( $js);
     }
 }

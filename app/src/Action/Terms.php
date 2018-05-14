@@ -167,4 +167,5 @@ class Terms extends AbstractAction{
 
         return $response->withJson($this->success());
     }
+
 }

@@ -2,7 +2,6 @@
 
 namespace App\Resource;
 
-use App\AbstractResource;
 use App\Entity\Config\User;
 
 /**

@@ -58,7 +58,7 @@ class AbstractAction
      * @return null
      * @throws MandatoryFieldMissingException
      */
-    protected function getAttribute($name, $collection, $mandatory=false) {
+    protected function getAttribute($name, $collection, $mandatory=false, $default=null) {
         if(isset($collection[$name])) {
             return $collection[$name];
         }
@@ -66,7 +66,7 @@ class AbstractAction
         if($mandatory) {
             throw new MandatoryFieldMissingException("$name not found");
         } else {
-            return null;
+            return $default;
         }
     }
 

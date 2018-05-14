@@ -108,9 +108,11 @@ class Term
 
     /**
      * @param mixed $status
+     * @return Term
      */
     public function setStatus($status) {
         $this->status = $status;
+        return $this;
     }
 
     /**

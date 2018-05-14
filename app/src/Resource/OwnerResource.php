@@ -2,8 +2,6 @@
 
 namespace App\Resource;
 
-
-use App\AbstractResource;
 use App\Entity\Config\Owner;
 
 class OwnerResource extends AbstractResource {

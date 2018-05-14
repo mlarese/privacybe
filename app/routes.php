@@ -10,6 +10,7 @@ $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 
 // terms
+$app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 

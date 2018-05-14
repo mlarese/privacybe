@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
 use DateTime;
@@ -52,11 +53,14 @@ class Auth extends AbstractAction {
         /**
          * @var User $userEntity
          */
+
         $userEntity = $this ->getEmConfig()
             ->getRepository(User::class)
             ->findOneBy(['user' => $user]);
 
         $valid = false;
+
+
 
         if(isset($userEntity)) {
             if($userEntity->getActive() && !$userEntity->getDeleted()) {
@@ -83,6 +87,7 @@ class Auth extends AbstractAction {
      * @return mixed
      */
     public function login($request, $response, $args) {
+
         $found = false;
         $user = $request->getParam('username');
         $password = $request->getParam('password');
@@ -93,6 +98,7 @@ class Auth extends AbstractAction {
         $ue = null;
 
         try {
+
             $ue = $this->userHasAuth($user, $password);
             $found = true ;
         } catch (UserNotAuthorizedException $e) {
@@ -118,6 +124,7 @@ class Auth extends AbstractAction {
      * @param $request Request
      * @param $response Response
      * @param $args
+     * @return mixed
      */
     public function logout($request, $response, $args) {
         return $response->withJson( array("logout"=>"ok"));
@@ -127,6 +134,7 @@ class Auth extends AbstractAction {
      * @param $request Request
      * @param $response Response
      * @param $args
+     * @return mixed
      */
     public function user($request, $response, $args) {
         $token = $request->getAttribute("token");

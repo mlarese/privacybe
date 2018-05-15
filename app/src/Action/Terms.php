@@ -59,8 +59,10 @@ class Terms extends AbstractAction{
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
+        /** @var Term $term */
         $term = $em->find(Term::class, $termId);
 
+        $term->setPages([]);
         $js = $this->toJson($term);
         return $response->withJson( $js);
     }

@@ -256,7 +256,8 @@ class Owners extends AbstractAction
 
 
         try {
-            $domains = $emp->getRepository(Domain::class)->findAll();
+            $domainsRes =  new DomainResource($emp);
+            $domains = $domainsRes->findAll();
             if ($domains)
                 $res->setDomains($domains);
         } catch (Exception $e) {
@@ -356,7 +357,10 @@ class Owners extends AbstractAction
         $ownerId = $this->getOwnerId($request);
         /** @var EntityManager $em */
         $emp = $this->getEmPrivacy($ownerId);
-        $currentDomains = $emp->getRepository(Domain::class)->findAll();
+
+        $domRes = new DomainResource($emp);
+
+        $currentDomains = $domRes->findAll();
         $js = $this->toJson($currentDomains);
         return $response->withJson( $js);
     }

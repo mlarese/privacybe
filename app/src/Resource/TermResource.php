@@ -47,6 +47,7 @@ class TermResource extends AbstractResource
             ->setName('')
             ->setUid( self::guidv4())
             ->setOptions($options)
+            ->setPages([])
         ;
         return $n;
     }

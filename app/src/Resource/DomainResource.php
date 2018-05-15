@@ -13,6 +13,13 @@ class DomainResource extends AbstractResource {
         return $this->entityManager->getRepository( Domain::class);
     }
 
+    public function findAll() {
+        return $this->getRepository()->findBy(["deleted"=>false]);
+    }
+    /**
+     * @param $domains
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function merge(
         $domains
     ) {
@@ -20,23 +27,20 @@ class DomainResource extends AbstractResource {
             $domains = [];
         }
 
-        $currentDomains = $this->entityManager->getRepository(Domain::class)->findAll();
-        $domainsByName = [];
-
         foreach ($domains as $domain) {
-            $domainsByName[$domain['name']] =$domain;
             $d = new Domain();
-            $d->setName($domain['name']);
-            $this->entityManager->merge($d);
-            $this->entityManager->flush();
-        }
-        /** @var Domain $currentDomain */
-        foreach ($currentDomains as $currentDomain) {
-            $key =  $currentDomain->getName();
-            if(!key_exists($key,$domainsByName)) {
-                $this->entityManager->remove($currentDomain);
+            $deleted = false;
+            if(isset($domain['deleted'])) {
+                $deleted = $domain['deleted'];
             }
+            $d
+                ->setName($domain['name'])
+                ->setDeleted($deleted)
+                ->setActive(true)
+            ;
+            $this->entityManager->merge($d);
         }
+
         $this->entityManager->flush();
     }
 

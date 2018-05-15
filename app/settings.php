@@ -1,4 +1,5 @@
 <?php
+// return require 'settings_local.php';
 return [
     'settings' => [
         'label' => 'production',

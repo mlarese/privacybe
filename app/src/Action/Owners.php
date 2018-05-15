@@ -13,6 +13,7 @@ use App\Resource\OwnerResource;
 use App\Resource\UserExistException;
 use App\Resource\UserResource;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -31,6 +32,8 @@ class Owners extends AbstractAction
      */
     private function createOwnerDb ($db) {
         return $this->executeConfigSql("CREATE DATABASE $db;");
+        $this->executeConfigSql("GRANT ALL PRIVILEGES ON $db.* to $user@localhost IDENTIFIED BY '$password';");
+        $this->executeConfigSql("GRANT ALL PRIVILEGES ON $db.* to $user@'%' IDENTIFIED BY '$password';");
     }
 
     /**
@@ -134,7 +137,8 @@ class Owners extends AbstractAction
              * creating User
              **************************************************/
             $userRes = new UserResource($this->getEmConfig());
-            $newUser = $userRes->insert($userName, $userPassword, 'owners', $currentOwnerId, $company . ' owner');
+            $md5UserPassword = md5($userPassword);
+            $newUser = $userRes->insert($userName, $md5UserPassword, 'owners', $currentOwnerId, $company . ' owner');
             $currentUserId = $newUser->getId();
             $dynaDb = $this->getGuestDbCredentials($currentOwnerId);
 
@@ -162,6 +166,17 @@ class Owners extends AbstractAction
             $operatorRes = new OperatorResource($prEm);
             $newOperator = $operatorRes->insert($currentUserId,'owner', new \DateTime(),$email, $name, $surname);
 
+            try {
+                if(isset($body['domains'])){
+                    $domRes = new DomainResource($prEm);
+                    $domRes->merge($body['domains']);
+                }
+
+            } catch(Exception $e) {
+                // return $response->withStatus(500, 'Error updating record');
+            }
+
+
             $this->getEmConfig()->commit();
             $prEm->commit();
 
@@ -171,24 +186,29 @@ class Owners extends AbstractAction
             $this->getEmConfig()->getConnection()->rollBack();
             return $response->withStatus(500, $e->getMessage());
         } catch (DBALException $e) {
+            echo $e->getMessage();
             $this->getEmConfig()->getConnection()->rollBack();
             return $response->withStatus(500, "DBALException creating owner ");
         } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
             $this->getEmConfig()->getConnection()->rollBack();
             if(isset($prEm))
                 $prEm->getConnection()->rollBack();
             return $response->withStatus(500, "OptimisticLockException creating owner ");
         } catch (ORMException $e) {
+            echo $e->getMessage();
             $this->getEmConfig()->getConnection()->rollBack();
             if(isset($prEm))
                 $prEm->getConnection()->rollBack();
             return $response->withStatus(500, "ORMException creating owner ");
         } catch (CompanyExistException $e) {
+            echo $e->getMessage();
             $this->getEmConfig()->getConnection()->rollBack();
             if(isset($prEm))
                 $prEm->getConnection()->rollBack();
             return $response->withStatus(500, "Company Exist Exception");
         } catch (EmailExistException $e) {
+            echo $e->getMessage();
             $this->getEmConfig()->getConnection()->rollBack();
             if(isset($prEm))
                 $prEm->getConnection()->rollBack();
@@ -221,8 +241,8 @@ class Owners extends AbstractAction
             $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
 
         }catch(Exception $e) {
-            // die($e->getMessage());
-            return $response->withStatus(500, 'Error loading owners');
+            echo($e->getMessage());
+            return $response->withStatus(500, 'Exception loading owners');
         }
 
         return $response->withJson( $this->toJson($owners));

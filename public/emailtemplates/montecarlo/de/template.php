@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <!--[if gte mso 9]><xml>
         <o:OfficeDocumentSettings>
@@ -236,8 +235,8 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-                                        <div style="color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">If you do not see this email properly, <a style="color:#555555;text-decoration: underline;" href="%%webversion%%" target="_blank" rel="noopener" data-mce-selected="1">click here</a></span></p></div>
+                                        <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;color:#555555; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
+                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">Wenn Sie diese E-Mail nicht korrekt sehen k&ouml;nnen, <a style="color:#555555;text-decoration: underline;" href="%%webversion%%" target="_blank" rel="noopener">klicken Sie bitte hier</a></span></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -261,8 +260,8 @@
 
                                     <div align="center" class="img-container center  autowidth  fullwidth " style="padding-right: 0px;  padding-left: 0px;">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-                                        <a href="https://www.hotel-montecarlo.com/eng/" target="_blank">
-                                            <img class="center  autowidth  fullwidth" align="center" border="0" src="https://www.hotel-montecarlo.com/newsletter/2018/007/eng/images/hotelmontecarlo_dem_logo.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;width: 100%;max-width: 550px" width="550">
+                                        <a href="https://www.hotel-montecarlo.com/deu/" target="_blank">
+                                            <img class="center  autowidth  fullwidth" align="center" border="0" src="https://www.hotel-montecarlo.com/newsletter/2018/007/deu/images/hotelmontecarlo_dem_logo.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;width: 100%;max-width: 550px" width="550">
                                         </a>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -287,8 +286,8 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
-                                        <div style="color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px"><span style="font-size: 16px; line-height: 24px;"><strong>THANK YOU!</strong></span></p><p style="margin: 0;font-size: 14px;line-height: 21px"><span style="font-size: 16px; line-height: 24px;"><br>As promised here is your <strong>5% DISCOUNT<br>on your next telephone reservation</strong> at Hotel Montecarlo.</span><span style="font-size: 16px; line-height: 24px;"></span></p></div>
+                                        <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px"><strong>DANKE!</strong></p><p style="margin: 0;font-size: 14px;line-height: 21px"><br data-mce-bogus="1"></p><p style="margin: 0;font-size: 14px;line-height: 21px">Hier wie versprochen der <strong>Rabatt-Gutschein &uuml;ber 5 %</strong><br><strong>f&uuml;r Ihre n&auml;chste telefonische Buchung</strong> im Hotel Montecarlo</p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -312,7 +311,7 @@
 
                                     <div align="center" class="img-container center  autowidth  fullwidth " style="padding-right: 0px;  padding-left: 0px;">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-                                        <img class="center  autowidth  fullwidth" align="center" border="0" src="https://www.hotel-montecarlo.com/newsletter/2018/007/eng/images/zecchinel_dem_discount5_eng.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 550px" width="550">
+                                        <img class="center  autowidth  fullwidth" align="center" border="0" src="https://www.hotel-montecarlo.com/newsletter/2018/007/deu/images/zecchinel_dem_discount5_deu.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 550px" width="550">
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
 
@@ -336,8 +335,8 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
-                                        <div style="color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Communicate the discount code <strong>NEWSLETTER5%</strong> during your next telephone reservation and get an immediate discount!</p></div>
+                                        <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align:center">Teilen sie uns ihren <strong>NEWSLETTER5%</strong> rabatt-gutschein bei der n&auml;chsten telefonischen buchung mit, um sofort vom rabatt profitieren zu k&ouml;nnen<br><br><strong>Sonderrabatt für einen Mindestaufenthalt von 6 Nächten</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -345,9 +344,9 @@
 
 
                                     <div align="center" class="button-container center " style="padding-right: 10px; padding-left: 10px; padding-top:10px; padding-bottom:10px;">
-                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top:10px; padding-bottom:10px;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.hotel-montecarlo.com/eng/contacts/" style="height:31pt; v-text-anchor:middle; width:111pt;" arcsize="10%" strokecolor="#c3a52f" fillcolor="#c3a52f"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size:16px;"><![endif]-->
-                                        <a href="https://www.hotel-montecarlo.com/eng/contacts/" target="_blank" style="display: block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #ffffff; background-color: #c3a52f; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; max-width: 148px; width: 108px;width: auto; border-top: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent; border-left: 0px solid transparent; padding-top: 5px; padding-right: 20px; padding-bottom: 5px; padding-left: 20px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;mso-border-alt: none">
-                                            <span style="font-size:16px;line-height:32px;"><strong>BOOK NOW&#160; ›</strong></span>
+                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top:10px; padding-bottom:10px;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.hotel-montecarlo.com/deu/kontakte/" style="height:31pt; v-text-anchor:middle; width:148pt;" arcsize="10%" strokecolor="#c3a52f" fillcolor="#c3a52f"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size:16px;"><![endif]-->
+                                        <a href="https://www.hotel-montecarlo.com/deu/kontakte/" target="_blank" style="display: block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #ffffff; background-color: #c3a52f; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; max-width: 198px; width: 158px;width: auto; border-top: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent; border-left: 0px solid transparent; padding-top: 5px; padding-right: 20px; padding-bottom: 5px; padding-left: 20px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;mso-border-alt: none">
+                                            <span style="font-size:16px;line-height:32px;"><strong>BUCHEN SIE JETZT&#160; ›</strong></span>
                                         </a>
                                         <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
                                     </div>
@@ -356,8 +355,8 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
-                                        <div style="color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: right">See you soon!</p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: right"><em>Hotel Montecarlo</em></p></div>
+                                        <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: right">Bis Bald</p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: right"><em>Hotel Montecarlo</em></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -381,8 +380,8 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-                                        <div style="color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">Hotel Montecarlo - <a style="color:#555555;text-decoration: underline;" href="https://www.hotel-montecarlo.com/eng/privacy-policy.html" target="_blank" rel="noopener" data-mce-selected="1">Privacy Policy</a></span></p><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">If you don't want to receive further e-mails from us, please, <a style="color:#555555;color:#555555;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/3/3/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener">click here</a></span></p><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 11px; line-height: 13px;">&copy; 2018 Hotel Montecarlo - All rights reserved</span></p></div>
+                                        <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;color:#555555; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
+                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">Hotel Montecarlo - <a style="color:#555555;text-decoration: underline;" href="https://www.hotel-montecarlo.com/deu/privacy-policy.html" target="_blank" rel="noopener" data-mce-selected="1">Privacy Policy</a></span></p><p style="margin: 0;font-size: 11px;line-height: 14px;text-align: center"><span style="font-size: 11px; line-height: 13px;">Wenn Sie diese E-Mail nicht korrekt sehen k&ouml;nnen, <a style="color:#555555;color:#555555;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/3/3/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener">klicken Sie bitte hier</a></span></p><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 11px; line-height: 13px;">&copy; 2018 Hotel Montecarlo - All rights reserved</span></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

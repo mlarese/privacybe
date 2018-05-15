@@ -8,6 +8,7 @@ use App\Resource\TermResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -51,18 +52,73 @@ class Terms extends AbstractAction{
         $termId = $args['id'];
 
         if($termId === '_empty_') {
-            $js = $this->toJson( TermResource::emptyTerm() );
+            $userData = get_object_vars($this->getUserData($request) );
+            $js = $this->toJson( TermResource::emptyTerm($userData) );
             return $response->withJson( $js);
         }
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
+        /** @var Term $term */
         $term = $em->find(Term::class, $termId);
 
+        $term->setPages([]);
         $js = $this->toJson($term);
         return $response->withJson( $js);
     }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function updateTerm ($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        $uid = $args['id'];
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+        $body = $request->getParsedBody();
 
+        try {
+            $name = $this->getAttribute('name', $body, true);
+            $deleted = $this->getAttribute('deleted', $body);
+
+            $status = $this->getAttribute('status', $body );
+            $paragraphs = $this->getAttribute('paragraphs', $body );
+            $options = $this->getAttribute('options', $body );
+        } catch (MandatoryFieldMissingException $e) {
+            return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
+        }
+
+        $res = new TermResource($em);
+
+        try {
+            $res->update(
+                $uid,
+                $name,
+                $deleted,
+                $status,
+                $paragraphs,
+                $options);
+            return $response->withJson($this->success());
+        } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'OptimisticLockException inserting term');
+        } catch (TransactionRequiredException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'TransactionRequiredException inserting term');
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException inserting term');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception inserting term');
+        }
+
+    }
     /**
      * @param $request Request
      * @param $response Response
@@ -102,15 +158,16 @@ class Terms extends AbstractAction{
             );
         } catch (OptimisticLockException $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'OptimisticLockException inserting term');
+            return $response->withStatus(500, 'OptimisticLockException inserting term');
         } catch (ORMException $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'ORMException inserting term');
+            return $response->withStatus(500, 'ORMException inserting term');
         }catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'Exception inserting term');
+            return $response->withStatus(500, 'Exception inserting term');
         }
 
         return $response->withJson($this->success());
     }
+
 }

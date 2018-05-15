@@ -249,4 +249,25 @@ class Term
         return $this;
     }
 
+    protected $pages;
+
+    /**
+     * @return mixed
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * @param mixed $pages
+     * @return Term
+     */
+    public function setPages($pages)
+    {
+        $this->pages = $pages;
+        return $this;
+    }
+
+
 }

@@ -138,7 +138,6 @@ class Auth extends AbstractAction {
      */
     public function user($request, $response, $args) {
         $token = $request->getAttribute("token");
-
         $ud = $this->getUserData($request);
 
         return $response->withJson( ["user" => $token['user'] ] );

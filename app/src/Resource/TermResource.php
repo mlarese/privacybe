@@ -3,6 +3,8 @@
 namespace App\Resource;
 
 use App\Entity\Privacy\Term;
+use DateTime;
+use Exception;
 
 class TermResource extends AbstractResource
 {
@@ -10,6 +12,8 @@ class TermResource extends AbstractResource
      * @return \Doctrine\ORM\EntityRepository
      */
     const PUBLISHED = 'published';
+    const SUSPENDED = 'suspended';
+    const DRAFT = 'draft';
 
     protected function getRepository() {
         return $this->entityManager->getRepository( Term::class);
@@ -30,13 +34,20 @@ class TermResource extends AbstractResource
         ];
     }
 
-    public static function emptyTerm() {
+    public static function emptyTerm($user) {
+        $options = [
+            "history" => [
+                ["action" => "creation", "date" => new DateTime(), "user"=>$user, "description"=>""]
+            ]
+        ];
         $n = new Term();
-        $n->setStatus(self::PUBLISHED)
+        $n->setStatus(self::DRAFT)
             ->setCreated(new \DateTime())
             ->setParagraphs(  [self::emptyParagraph()])
             ->setName('')
             ->setUid( self::guidv4())
+            ->setOptions($options)
+            ->setPages([])
         ;
         return $n;
     }
@@ -77,4 +88,55 @@ class TermResource extends AbstractResource
         $this->entityManager->persist($term);
         $this->entityManager->flush();
     }
+
+    /**
+     * @param $uid
+     * @param $name
+     * @param $deleted
+     * @param $modified
+     * @param $published
+     * @param $suspended
+     * @param $status
+     * @param $paragraphs
+     * @param $options
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws Exception
+     */
+    public function update(
+        $uid,
+        $name,
+        $deleted,
+        $status,
+        $paragraphs,
+        $options
+    ){
+
+        /** @var Term $term */
+        $term = $this->entityManager->find(Term::class, $uid);
+
+        if ($name !== null ) $term->setName($name);
+        if ($deleted !== null ) $term->setDeleted($deleted);
+
+        if($status === self::PUBLISHED && $term->getStatus() !== $status) {
+            $term->setPublished(new DateTime());
+        } else if( $status === self::SUSPENDED && $term->getStatus() !== $status) {
+            $term->setSuspended(new DateTime());
+        }
+
+        $term->setModified(new DateTime());
+
+        if ($status !== null ) $term->setStatus($status);
+        if ($paragraphs !== null ) $term->setParagraphs($paragraphs);
+        if ($options !== null ) $term->setOptions($options);
+
+
+        $this->entityManager->merge($term);
+        $this->entityManager->flush();
+    }
+
+
+
 }

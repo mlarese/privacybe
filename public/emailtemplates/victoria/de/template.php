@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <!--[if gte mso 9]><xml>
         <o:OfficeDocumentSettings>
@@ -337,7 +336,9 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;"><![endif]-->
                                         <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px">Teilen sie uns ihren <strong>NEWSLETTER5%</strong> rabatt-gutschein bei der n&auml;chsten telefonischen buchung mit, um sofort vom rabatt profitieren zu k&ouml;nnen</p></div>
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Teilen sie uns ihren <strong>NEWSLETTER5%</strong> rabatt-gutschein bei der n&auml;chsten telefonischen buchung mit, um sofort vom rabatt profitieren zu k&ouml;nnen<br>
+                                                    <br>
+                                                    <strong>Sonderrabatt für einen Mindestaufenthalt von 6 Nächten</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

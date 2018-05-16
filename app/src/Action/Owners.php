@@ -339,6 +339,7 @@ class Owners extends AbstractAction
                 ->setLanguage($language)
                 ->setCountry($country)
                 ->setCounty($county)
+                ->setProfile($profile)
             ;
 
         } catch(Exception $e) {

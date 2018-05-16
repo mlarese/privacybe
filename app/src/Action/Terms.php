@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Entity\Privacy\Term;
 use App\Resource\MandatoryFieldMissingException;
+use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -61,19 +62,18 @@ class Terms extends AbstractAction{
 
         /** @var Term $term */
         $term = $em->find(Term::class, $termId);
-
-        $term->setPages([]);
+        $pagesRes = new TermPageResource($em);
+        $term->setPages( $pagesRes->findAll($termId) );
         $js = $this->toJson($term);
         return $response->withJson( $js);
     }
+
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws ORMException
      */
     public function updateTerm ($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
@@ -88,12 +88,14 @@ class Terms extends AbstractAction{
 
             $status = $this->getAttribute('status', $body );
             $paragraphs = $this->getAttribute('paragraphs', $body );
+            $pages = $this->getAttribute('pages', $body, false, [] );
             $options = $this->getAttribute('options', $body );
         } catch (MandatoryFieldMissingException $e) {
             return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
         }
 
         $res = new TermResource($em);
+        $pagRes = new TermPageResource($em);
 
         try {
             $res->update(
@@ -103,6 +105,9 @@ class Terms extends AbstractAction{
                 $status,
                 $paragraphs,
                 $options);
+
+            $pagRes->merge($pages);
+
             return $response->withJson($this->success());
         } catch (OptimisticLockException $e) {
             echo $e->getMessage();
@@ -113,12 +118,17 @@ class Terms extends AbstractAction{
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'ORMException inserting term');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Exception inserting term');
         }
 
     }
+
+    /**
+     * $testo_new = htmlspecialchars_decode(htmlentities($testo_new, ENT_NOQUOTES, 'UTF-8'), ENT_NOQUOTES);
+     */
+
     /**
      * @param $request Request
      * @param $response Response
@@ -141,6 +151,7 @@ class Terms extends AbstractAction{
             $status = $this->getAttribute('status', $body, false);
             $paragraphs = $this->getAttribute('paragraphs', $body, false);
             $options = $this->getAttribute('options', $body, false, [] );
+            $pages = $this->getAttribute('pages', $body, false, [] );
         } catch (MandatoryFieldMissingException $e) {
             return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
         }
@@ -156,6 +167,10 @@ class Terms extends AbstractAction{
                 $status,
                 $uid
             );
+
+            $pagRes = new TermPageResource($em);
+            $pagRes->merge($pages);
+            return $response->withJson($this->success());
         } catch (OptimisticLockException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'OptimisticLockException inserting term');
@@ -166,8 +181,6 @@ class Terms extends AbstractAction{
             echo $e->getMessage();
             return $response->withStatus(500, 'Exception inserting term');
         }
-
-        return $response->withJson($this->success());
     }
 
 }

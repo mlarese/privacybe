@@ -159,7 +159,7 @@ class CustomerCare
     /**
      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
      */
-    protected $deleted=0;
+    protected $deleted;
 
     /**
      * @return mixed
@@ -182,7 +182,7 @@ class CustomerCare
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
      */
-    protected $active=1;
+    protected $active;
 
     /**
      * @return mixed

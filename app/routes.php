@@ -20,6 +20,7 @@ $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
 $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
+$app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 
 // treatments
 $app->put('/api/owner/treatment/{code}', 'App\Action\Treatments:updateTreatment');

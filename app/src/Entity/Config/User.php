@@ -190,7 +190,7 @@ class User {
     /**
      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
      */
-    protected $deleted=0;
+    protected $deleted;
 
     /**
      * @return mixed

@@ -248,6 +248,10 @@ class Owners extends AbstractAction
         return $response->withJson( $this->toJson($owners));
     }
 
+
+    protected function emptyProfile () {
+        return ["marker"=>"marker"];
+    }
     /**
      * @param $request Request
      * @param $response Response
@@ -269,6 +273,11 @@ class Owners extends AbstractAction
 
         /** @var Owner $res */
         $res = $em->find(Owner::class, $currId);
+
+        $curp = $res->getProfile();
+        if(!isset($curp)) {
+            $res->setProfile( $this->emptyProfile());
+        }
 
         if(!$res) {
             return $response->withStatus(500, 'Not found');
@@ -366,6 +375,43 @@ class Owners extends AbstractAction
         return $response->withJson( $js);
     }
 
+    public function updateOwnerProfile($request, $response, $args) {
+        $currId = $args['id'];
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getEmConfig();
+
+        /**
+         * @var Owner $res
+         */
+        $res = $em->find(Owner::class, $currId);
+
+        if(!$res) {
+            return $response->withStatus(500, 'Not found');
+        }
+
+        try {
+            $body = $request->getParsedBody();
+            $profile=$this->getAttribute('profile',$body);
+            $res
+                ->setProfile($profile)
+            ;
+
+        } catch(Exception $e) {
+            return $response->withStatus(500, 'Missing parameter ' . $e->getMessage());
+        }
+
+        try {
+            $this->getEmConfig()->merge($res);
+            $this->getEmConfig()->flush();
+        } catch(Exception $e) {
+            return $response->withStatus(500, 'Error updating record');
+        }
+
+        $js = $this->toJson($this->success());
+        return $response->withJson( $js);
+    }
 
     /**
      * @param $request Request

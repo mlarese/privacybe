@@ -1,4 +1,8 @@
 <?php
+
+/**
+ *  Abilitare per update in database locale
+ */
 return require 'settings_local.php';
 
 return [

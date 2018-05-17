@@ -1,0 +1,56 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: mauro.larese
+ * Date: 17/05/2018
+ * Time: 10:55
+ */
+
+namespace App\Resource;
+
+
+use App\Entity\Config\Properties;
+
+class PropertiesResource extends AbstractResource {
+    /**
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function languages () {
+        return $this->findBy('languages');
+    }
+
+    /**
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function widgetScrollText () {
+        return $this->findBy('widget_scroll_text');
+    }
+
+    /**
+     * @param $propertyName
+     *
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    protected function findBy($propertyName) {
+        /** @var Properties $property */
+        $property = $this->entityManager->find(Properties::class, $propertyName) ;
+        $data = $property->getData();
+        if(!isset($property)) {
+            throw new PropertyNotFoundException("Property $propertyName not found");
+        }
+
+        return $data[$propertyName] ;
+    }
+}

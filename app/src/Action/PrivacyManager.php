@@ -3,13 +3,18 @@ namespace App\Action;
 
 use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
+use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use App\Resource\PropertiesResource;
+use App\Resource\PropertyNotFoundException;
 use function base64_encode;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function json_decode;
 use function json_encode;
@@ -43,7 +48,7 @@ class PrivacyManager extends AbstractAction
 
         /** @var Privacy $pr */
         $pr = $em->find(Privacy::class,$id);
-$cr = $pr->getCryptedForm();
+        $cr = $pr->getCryptedForm();
         echo  $cr ; die;
         print_r($pr);die;
 
@@ -87,28 +92,52 @@ $cr = $pr->getCryptedForm();
             $termId = $termPage->getTermUid();
         }
 
+        $propRes = new PropertiesResource($this->getEmConfig());
         /** @var Terms $term */
         $term = null;
+
         try {
-            $term =  $em->find(Term::class, $termId);
-        } catch(\Exception $e) {
+            $term = $em->find(Term::class, $termId);
+            $scrollText = $propRes->widgetScrollText();
+        } catch (PropertyNotFoundException $e) {
             die($ownerId . ' e '.$e->getMessage());
-            return $response->withStatus(403, 'Error finding term');
+            return $response->withStatus(403, 'PropertyNotFoundException finding term');
+        } catch (OptimisticLockException $e) {
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'OptimisticLockException finding term');
+        } catch (TransactionRequiredException $e) {
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'TransactionRequiredException finding term');
+        } catch (ORMException $e) {
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'ORMException finding term');
+        } catch (Exception $e) {
+            die($ownerId . ' e '.$e->getMessage());
+            return $response->withStatus(403, 'Exception finding term');
         }
+
 
         If(!isset($term)) {
             return $response->withStatus(403, "Term not found [$termId]");
         }
-
         $paragraphs = $term->getParagraphs();
         $termResponse = array();
 
         foreach($paragraphs as $p) {
+            if(!isset($p['text'][$lang])) {
+                $lang = 'en';
+                if(!isset($p['text'][$lang])) {
+                    $lang = 'it';
+                }
+            }
+
+
             $newP = array(
               "text" => $p['text'][$lang],
               "treatments" => array(),
               "scrolled" => false,
-              "title" => $p['title'][$lang]
+              "title" => $p['title'][$lang],
+              "scrollText" => $scrollText[$lang]
             );
 
             foreach($p['treatments'] as $t) {

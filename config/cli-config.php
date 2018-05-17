@@ -61,7 +61,14 @@ $emUpgrade = EntityManager::create($settingsUpgrade['connection'], $doctrinUpgra
  $eventManagerp = $emPrivacy->getEventManager();
  $eventManagerp->addEventSubscriber($subscriber1);
 
+/***********************
+ *  Config
+ */
  return ConsoleRunner::createHelperSet($emConfig);
+
+ /***********************
+ *  Privacy
+ */
  //return ConsoleRunner::createHelperSet($emPrivacy);
 
 

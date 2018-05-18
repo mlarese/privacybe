@@ -105,12 +105,15 @@ class Auth extends AbstractAction {
             return $response->withStatus(401, 'User not authorized');
         }
 
+        $settings = $this->getContainer()->get('settings');
+        $host = $settings["doctrine_config"]['connection']['host'];
         if($found) {
             $userSpec = [
                 "user" => $user,
                 "userName" => $ue->getName(),
                 "role" => $ue->getType(),
-                "ownerId" => $ue->getOwnerId()
+                "ownerId" => $ue->getOwnerId(),
+                "source" => ($host==='127.0.0.1' )?'local': 'remote'
             ];
             $data = $this->defineJwtToken($request, $userSpec);
             return $response->withStatus(201)

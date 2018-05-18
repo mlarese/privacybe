@@ -72,6 +72,7 @@ class OperatorResource extends AbstractResource
             ->setDomains($domains)
             ->setActive($active)
             ->setSurname($surname)
+            ->setDeleted(false)
         ;
 
         $this->entityManager->persist($newOperator);

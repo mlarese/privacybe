@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Entity\Privacy\Treatment;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -83,10 +84,16 @@ class Treatments extends AbstractAction{
                 ->setCreator($this->getAttribute('creator',$body))
                 ->setNote($this->getAttribute('note',$body))
                 ->setCreated(new \DateTime())
+                ->setDeleted(false)
             ;
 
-            $em->persist($nt);
-            $em->flush();
+            try {
+                $em->persist($nt);
+                $em->flush();
+            } catch (OptimisticLockException $e) {
+                echo ($e->getMessage());
+                $response->withStatus(500, 'OptimisticLockException saving treatment');
+            }
 
             return $response->withJson($this->success());
         } catch (\Exception $e) {

@@ -54,6 +54,7 @@ class UserResource extends AbstractResource{
             ->setName($name)
             ->setType($type)
             ->setPassword($password )
+            ->setDeleted(false)
         ;
 
         $this->checkUserExistence($user);

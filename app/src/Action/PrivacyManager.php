@@ -185,7 +185,14 @@ class PrivacyManager extends AbstractAction
             $surname = $body['record']['surname'];
             $telephone = $body['record']['telephone'];
             $site = $body['page'];
-            $termId = $body['termId'];
+
+            if(isset($termId)) {
+                $termId = $body['termId'];
+            } else {
+                // nessuna normativa associata
+                $termId = 0 ;
+            }
+
             $privacyFlags = $body['flags'];
             $privacy = $body['term'];
             $form = $body['form'];

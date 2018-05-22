@@ -169,6 +169,8 @@ class PrivacyManager extends AbstractAction
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
+     * @return mixed
      */
     public function savePrivacy($request, $response, $args) {
         $ownerId = $request->getHeader('OwnerId')[0];
@@ -183,7 +185,14 @@ class PrivacyManager extends AbstractAction
             $surname = $body['record']['surname'];
             $telephone = $body['record']['telephone'];
             $site = $body['page'];
-            $termId = $body['termId'];
+
+            if(isset($termId)) {
+                $termId = $body['termId'];
+            } else {
+                // nessuna normativa associata
+                $termId = 0 ;
+            }
+
             $privacyFlags = $body['flags'];
             $privacy = $body['term'];
             $form = $body['form'];
@@ -216,6 +225,7 @@ class PrivacyManager extends AbstractAction
                 ->setPrivacyFlags($privacyFlags)
                 ->setTelephone($telephone);
         } catch (ORMException $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Orm Exception saving privacy');
         } catch (Exception $e) {
             return $response->withStatus(500, 'Exception saving privacy');
@@ -225,6 +235,7 @@ class PrivacyManager extends AbstractAction
             $em->merge($privacyEntry);
             $em->flush();
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Orm Exception on merge privacy');
         }
 

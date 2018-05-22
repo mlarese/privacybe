@@ -11,6 +11,24 @@ class PrivacyResource extends AbstractResource
 {
 
     /**
+     * @param $privacyId
+     *
+     * @return null|object
+     * @throws PrivacyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getPrivacy($privacyId){
+        $prRec =  $this->entityManager->find(Privacy::class, $privacyId);
+
+        if(!isset($prRec)) {
+            throw new PrivacyNotFoundException('Privacy not found');
+        }
+
+        return $prRec;
+    }
+    /**
      * @param      $privacyId
      * @param      $jsonPrivacy
      * @param      $type

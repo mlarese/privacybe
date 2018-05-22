@@ -7,6 +7,7 @@ use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use App\Resource\OwnerExistException;
 use App\Resource\PrivacyNotFoundException;
 use App\Resource\PrivacyResource;
 use App\Resource\PropertiesResource;
@@ -23,6 +24,7 @@ use function json_encode;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use function substr;
 
 class PrivacyManager extends AbstractAction
 {
@@ -35,6 +37,28 @@ class PrivacyManager extends AbstractAction
     }
 
     /**
+     * @param $hash
+     *
+     * @return int
+     * @throws OwnerExistException
+     */
+    private function findOwnerIdFromHash($hash) {
+        $ownerId = 0;
+        for($i=0;$i<900000;$i++) {
+            $m = md5($i);
+            if($hash === $m) {
+                $ownerId = $i;
+                break;
+            }
+        }
+
+        if($ownerId === 0) {
+            throw new OwnerExistException('Owner not found');
+        }
+
+        return $ownerId;
+    }
+    /**
      * @param $request Request
      * @param $response Response
      * @param $args
@@ -45,8 +69,43 @@ class PrivacyManager extends AbstractAction
      */
     public function getPrivacy($request, $response, $args) {
         $id = $args['id'];
+        $uid = substr($id,0, 36);
+        $ownerHash = substr($id,37, strlen ($id));
 
-        return $response->withJson($this->success());
+        try {
+            $ownerId = $this->findOwnerIdFromHash($ownerHash);
+        } catch (OwnerExistException $e) {
+            $response->withStatus(500,$e->getMessage());
+        }
+        $em = $this->getEmPrivacy($ownerId);
+        $pres = new PrivacyResource($em);
+
+        try {
+            /** @var Privacy $p */
+            $p = $pres->getPrivacy($uid);
+
+            $cForm = $p->getCryptedForm();
+            $cForm = json_decode($cForm, true);
+
+            $p->setCryptedForm($cForm);
+        } catch (PrivacyNotFoundException $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'PrivacyNotFoundException');
+        } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'OptimisticLockException');
+        } catch (TransactionRequiredException $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'TransactionRequiredException');
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'ORMException');
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'Exception');
+        }
+
+        return $response->withJson( $this->toJson($p));
     }
     /**
      * @param $request Request

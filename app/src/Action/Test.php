@@ -22,6 +22,9 @@ class Test extends AbstractAction
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function testEnc($request, $response, $args) {
         $e = new Enc();
@@ -44,13 +47,15 @@ class Test extends AbstractAction
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function testEncRead($request, $response, $args) {
 
-
-
         $r = $this->getEmConfig()->find(Enc::class,11);
-
 
 
         return $response->withJson(["result" => "encrypted ", "cl"=>  $this->toJson($r) ]);

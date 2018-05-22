@@ -3,6 +3,7 @@
 namespace App\Resource;
 
 use App\Entity\Privacy\Term;
+use App\Entity\Privacy\TermHistory;
 use DateTime;
 use Exception;
 
@@ -53,6 +54,34 @@ class TermResource extends AbstractResource
     }
 
     /**
+     * @param string $type
+     * @param string $term
+     * @param        $termuid
+     * @param        $userId
+     * @param null   $description
+     *
+     * @return TermHistory
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveLog(string $type, $term, $termuid, $userId,$description=null) {
+        /** @var TermHistory $log */
+        $log = new TermHistory();
+
+        $log
+            ->setCreated(new DateTime())
+            ->setDescription($description)
+            ->setModifier($userId)
+            ->setTerm($term)
+            ->setTermUid($termuid)
+            ->setType($type)
+        ;
+
+        $this->entityManager->persist($log);
+        $this->entityManager->flush();
+
+        return $log;
+    }
+    /**
      * @param $name
      * @param $options
      * @param $paragraphs
@@ -87,6 +116,8 @@ class TermResource extends AbstractResource
 
         $this->entityManager->persist($term);
         $this->entityManager->flush();
+
+        return $term;
     }
 
     /**
@@ -135,6 +166,8 @@ class TermResource extends AbstractResource
 
         $this->entityManager->merge($term);
         $this->entityManager->flush();
+
+        return $term;
     }
 
 

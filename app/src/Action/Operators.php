@@ -155,11 +155,12 @@ class Operators extends AbstractAction
 
             $operRes->insert(
                 $user->getId(),
-                $this->getAttribute('email', $body, true),
                 $this->getAttribute('role', $body, true),
+                $this->getAttribute('periodFrom', $body),
+                $this->getAttribute('email', $body, true),
                 $this->getAttribute('name', $body, true),
                 $this->getAttribute('surname', $body, true),
-                $this->getAttribute('periodFrom', $body),
+
                 $this->getAttribute('periodTo', $body),
                 $this->getAttribute('telephone', $body),
                 $this->getAttribute('zip', $body),

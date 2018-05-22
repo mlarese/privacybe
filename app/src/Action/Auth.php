@@ -9,12 +9,17 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
 use function md5;
-use Slim\Http\Request;use Slim\Http\Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Tuupola\Base62;
 
 class Auth extends AbstractAction {
     /**
-     * @param $request Request
+     * @param       $request Request
+     * @param       $user
+     * @param array $scope
+     *
+     * @return mixed
      */
     private function defineJwtToken ($request, $user, $scope = ["read", "write", "delete"]) {
         $requested_scopes = $request->getParsedBody() ?: [];
@@ -109,6 +114,7 @@ class Auth extends AbstractAction {
         $host = $settings["doctrine_config"]['connection']['host'];
         if($found) {
             $userSpec = [
+                "userId" => $ue->getId(),
                 "user" => $user,
                 "userName" => $ue->getName(),
                 "role" => $ue->getType(),

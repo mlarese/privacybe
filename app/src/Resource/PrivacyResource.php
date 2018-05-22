@@ -5,32 +5,39 @@ namespace App\Resource;
 
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
+use function json_encode;
 
 class PrivacyResource extends AbstractResource
 {
 
     /**
-     * @param string $jsonPrivacy
-     * @param string $type
+     * @param      $privacyId
+     * @param      $jsonPrivacy
+     * @param      $type
      * @param null $description
+     *
+     * @return PrivacyHistory
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function savePrivacyLog(string $jsonPrivacy, string $type, $description=null)
+    public function savePrivacyLog($privacyId, $jsonPrivacy, $type, $description=null)
     {
         if(!isset($description)) {
             $description = 'privacy '. $type;
         }
+
        $ph = new PrivacyHistory();
        $ph
            ->setCreated(new \DateTime())
            ->setDescription($description)
-           ->setPrivacyId($jsonPrivacy->getId())
+           ->setPrivacyId($privacyId)
            ->setType($type)
            ->setPrivacy($jsonPrivacy)
        ;
 
        $this->entityManager->persist($ph);
        $this->entityManager->flush();
+
+       return $ph;
     }
 
     /**

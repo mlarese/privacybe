@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
+use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -77,6 +78,11 @@ class Terms extends AbstractAction{
      */
     public function updateTerm ($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
+        $user = $this->getUserData($request);
+        $userId = 0;
+        if(isset($user)) {
+            $userId = $user->userId;
+        }
         $uid = $args['id'];
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
@@ -98,7 +104,8 @@ class Terms extends AbstractAction{
         $pagRes = new TermPageResource($em);
 
         try {
-            $res->update(
+            /** @var Term $term */
+            $term = $res->update(
                 $uid,
                 $name,
                 $deleted,
@@ -107,6 +114,9 @@ class Terms extends AbstractAction{
                 $options);
 
             $pagRes->merge($pages);
+
+            $termJson = $this->toJson($term);
+            $res->saveLog('update',$termJson, $term->getUid(), $userId,'update term');
 
             return $response->withJson($this->success());
         } catch (OptimisticLockException $e) {
@@ -140,6 +150,13 @@ class Terms extends AbstractAction{
      */
     public function insertTerm ($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
+        $user = $this->getUserData($request);
+        $userId = 0;
+
+        if(isset($user)) {
+            $userId = $user->userId;
+        }
+
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
@@ -170,6 +187,11 @@ class Terms extends AbstractAction{
 
             $pagRes = new TermPageResource($em);
             $pagRes->merge($pages);
+
+
+            $termJson = $this->toJson($term);
+            $termRsc->saveLog('insert',$termJson, $term->getUid(), $userId,'insert new term');
+
             return $response->withJson($this->success());
         } catch (OptimisticLockException $e) {
             echo $e->getMessage();

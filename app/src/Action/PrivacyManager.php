@@ -242,7 +242,8 @@ class PrivacyManager extends AbstractAction
             );
 
             $jsonPrivacy = $this->toJson($pr);
-            $prRes->savePrivacyLog($jsonPrivacy, 'save from website');
+            $jsonPrivacy = json_encode($jsonPrivacy);
+            $ph = $prRes->savePrivacyLog($id, $jsonPrivacy, 'save from website');
 
         } catch (ORMException $e) {
             echo $e->getMessage();
@@ -252,7 +253,7 @@ class PrivacyManager extends AbstractAction
         }
 
 
-        return $response->withJson($this->success()) ;
+        return $response->withJson($this->success(["h"=>$this->toJson($ph)])) ;
     }
 
     /**
@@ -298,7 +299,8 @@ class PrivacyManager extends AbstractAction
                     $telephone
                 );
                 $jsonPrivacy = $this->toJson($pr);
-                $prRes->savePrivacyLog($jsonPrivacy, 'privacy update');
+                $jsonPrivacy = json_encode($jsonPrivacy);
+                $prRes->savePrivacyLog($id,$jsonPrivacy, 'privacy update');
             } catch (PrivacyNotFoundException $e) {
                 echo $e->getMessage();
                 return $response->withStatus(500, 'Privacy Not Found Exception  saving privacy');

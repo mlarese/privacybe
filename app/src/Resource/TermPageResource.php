@@ -52,6 +52,8 @@ class TermPageResource extends AbstractResource {
         }
 
         $this->entityManager->flush();
+
+        return $d;
     }
 
 }

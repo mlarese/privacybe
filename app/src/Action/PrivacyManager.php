@@ -7,6 +7,8 @@ use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use App\Resource\PrivacyNotFoundException;
+use App\Resource\PrivacyResource;
 use App\Resource\PropertiesResource;
 use App\Resource\PropertyNotFoundException;
 use function base64_encode;
@@ -32,6 +34,20 @@ class PrivacyManager extends AbstractAction
         return $_SERVER['REMOTE_ADDR'];
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getPrivacy($request, $response, $args) {
+        $id = $args['id'];
+
+        return $response->withJson($this->success());
+    }
     /**
      * @param $request Request
      * @param $response Response
@@ -206,24 +222,28 @@ class PrivacyManager extends AbstractAction
              * @var EntityManager $em
              */
             $em = $this->getEmPrivacy($ownerId);
-            $privacyEntry = new Privacy();
-            $privacyEntry
-                ->setCreated(new DateTime())
-                ->setDeleted(false)
-                ->setIp($ip)
-                ->setForm($form)
-                ->setCryptedForm($cryptedForm)
-                ->setName($name)
-                ->setSurname($surname)
-                ->setTermId($termId)
-                ->setSite($site)
-                ->setPrivacy($privacy)
-                ->setId($id)//
-                ->setRef($ref)//
-                ->setDomain($domain)
-                ->setEmail($email)
-                ->setPrivacyFlags($privacyFlags)
-                ->setTelephone($telephone);
+            $prRes = new PrivacyResource($em);
+
+            $pr=$prRes->savePrivacy(
+                $ip,
+                $form,
+                $cryptedForm,
+                $name,
+                $surname,
+                $termId,
+                $site,
+                $privacy,
+                $id,
+                $ref,
+                $domain,
+                $email,
+                $privacyFlags,
+                $telephone
+            );
+
+            $jsonPrivacy = $this->toJson($pr);
+            $prRes->savePrivacyLog($jsonPrivacy, 'save from website');
+
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Orm Exception saving privacy');
@@ -231,16 +251,76 @@ class PrivacyManager extends AbstractAction
             return $response->withStatus(500, 'Exception saving privacy');
         }
 
-        try{
-            $em->merge($privacyEntry);
-            $em->flush();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Orm Exception on merge privacy');
-        }
 
         return $response->withJson($this->success()) ;
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function updatePrivacy($request, $response, $args) {
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $body = $request->getParsedBody();
+        $id = $args['id'] ;
+
+        try {
+            $email = $body['record']['email'];
+            $name = $body['record']['name'];
+            $surname = $body['record']['surname'];
+            $telephone = $body['record']['telephone'];
+
+            $privacyFlags = $body['flags'];
+            $privacy = $body['term'];
+            $form = $body['form'];
+            $cryptedForm = $body['cryptedForm'];
+            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
+
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+            $prRes = new PrivacyResource($em);
+
+            try {
+                $pr = $prRes->updatePrivacy(
+                    $id,
+                    $form,
+                    $cryptedForm,
+                    $name,
+                    $surname,
+                    $privacy,
+                    $email,
+                    $privacyFlags,
+                    $telephone
+                );
+                $jsonPrivacy = $this->toJson($pr);
+                $prRes->savePrivacyLog($jsonPrivacy, 'privacy update');
+            } catch (PrivacyNotFoundException $e) {
+                echo $e->getMessage();
+                return $response->withStatus(500, 'Privacy Not Found Exception  saving privacy');
+            } catch (OptimisticLockException $e) {
+                echo $e->getMessage();
+                return $response->withStatus(500, 'OptimisticLockExceptionsaving privacy');
+            } catch (TransactionRequiredException $e) {
+                echo $e->getMessage();
+                return $response->withStatus(500, 'TransactionRequiredException privacy');
+            } catch (ORMException $e) {
+                echo $e->getMessage();
+                return $response->withStatus(500, 'ORMException privacy');
+            }
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+
+        return $response->withJson($this->success()) ;
+
+    }
 
 }

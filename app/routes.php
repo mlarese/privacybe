@@ -22,6 +22,9 @@ $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 
+$app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+$app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+
 // treatments
 $app->put('/api/owner/treatment/{code}', 'App\Action\Treatments:updateTreatment');
 $app->post('/api/owner/treatment', 'App\Action\Treatments:newTreatment');

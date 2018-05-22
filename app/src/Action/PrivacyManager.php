@@ -75,7 +75,7 @@ class PrivacyManager extends AbstractAction
         try {
             $ownerId = $this->findOwnerIdFromHash($ownerHash);
         } catch (OwnerExistException $e) {
-            $response->withStatus(500,$e->getMessage());
+            return $response->withStatus(500,$e->getMessage());
         }
         $em = $this->getEmPrivacy($ownerId);
         $pres = new PrivacyResource($em);
@@ -90,19 +90,19 @@ class PrivacyManager extends AbstractAction
             $p->setCryptedForm($cForm);
         } catch (PrivacyNotFoundException $e) {
             echo $e->getMessage();
-            $response->withStatus(500,'PrivacyNotFoundException');
+            return $response->withStatus(500,'PrivacyNotFoundException');
         } catch (OptimisticLockException $e) {
             echo $e->getMessage();
-            $response->withStatus(500,'OptimisticLockException');
+            return $response->withStatus(500,'OptimisticLockException');
         } catch (TransactionRequiredException $e) {
             echo $e->getMessage();
-            $response->withStatus(500,'TransactionRequiredException');
+            return $response->withStatus(500,'TransactionRequiredException');
         } catch (ORMException $e) {
             echo $e->getMessage();
             $response->withStatus(500,'ORMException');
         }catch (Exception $e) {
             echo $e->getMessage();
-            $response->withStatus(500,'Exception');
+            return $response->withStatus(500,'Exception');
         }
 
         return $response->withJson( $this->toJson($p));

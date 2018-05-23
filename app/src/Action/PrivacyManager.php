@@ -159,7 +159,10 @@ class PrivacyManager extends AbstractAction
         $pageName = $request->getHeader('Page')[0];
         $domainName = $request->getHeader('Domain')[0];
         $ownerId = $request->getHeader('OwnerId')[0];
-        $ref = $request->getHeader('Ref')[0];
+        $ref = $request->getHeader('Ref');
+        if(isset($ref) && count($ref)>0 )
+            $ref = $ref[0];
+
         $termId = $request->getHeader('TermId')[0];
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 

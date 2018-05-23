@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <!--[if gte mso 9]><xml>
         <o:OfficeDocumentSettings>
@@ -321,8 +320,9 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 45px; padding-left: 50px; padding-top: 20px; padding-bottom: 10px;"><![endif]-->
-                                        <div style="font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 45px; padding-left: 50px; padding-top: 20px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: left"><span style="line-height: 24px; font-size: 16px;">Copia e incolla il codice <strong>NEWSLETTER5%</strong> al momento della prenotazione<br>per avere lo sconto immediato!</span></p></div>
+                                        <div style="font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;color:#555555; padding-right: 45px; padding-left: 50px; padding-top: 20px; padding-bottom: 0;">
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: left"><span style="line-height: 24px; font-size: 16px;">Copia e incolla il codice
+    <strong>NEWSLETTER5%</strong> al momento della prenotazione per avere lo sconto immediato!</span></p><p style="text-align:center;line-height: 24px; font-size: 16px;"><strong>Valido fino al 30/08/2018</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

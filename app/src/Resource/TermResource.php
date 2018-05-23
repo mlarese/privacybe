@@ -4,6 +4,7 @@ namespace App\Resource;
 
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermHistory;
+use App\Entity\Privacy\TermPage;
 use DateTime;
 use Exception;
 
@@ -16,8 +17,48 @@ class TermResource extends AbstractResource
     const SUSPENDED = 'suspended';
     const DRAFT = 'draft';
 
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
     protected function getRepository() {
         return $this->entityManager->getRepository( Term::class);
+    }
+
+    /**
+     * @return array
+     * @throws PublishedTermsException
+     */
+    public function getAllTerms ($groupById=false) {
+        $repo = $this->getRepository();
+        $res = $repo->findBy(['deleted'=>false, 'status'=>'published']);
+
+        if(count($res)===0){
+            throw new PublishedTermsException('No published terms');
+        }
+        if(!$groupById) {
+            return $res;
+        }
+
+        $grp = [];
+        /** @var TermPage $p */
+        foreach ($res as $p) {
+            $grp[$p->getTermUid()] = $p;
+        }
+    }
+
+    /**
+     * @param $termPages
+     * @throws PublishedTermsException
+     */
+    public function getTermFromPages ($termPages) {
+        $allTerms = $this->getAllTerms(true);
+
+        /** @var TermPage $termPage */
+        foreach ($allTerms as $term) {
+            $id = $termPage->getTermUid();
+
+
+        }
     }
 
     public static function emptyParagraph() {
@@ -81,12 +122,14 @@ class TermResource extends AbstractResource
 
         return $log;
     }
+
     /**
      * @param $name
      * @param $options
      * @param $paragraphs
      * @param $status
      * @param $uid
+     * @return Term
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function insert(
@@ -124,17 +167,13 @@ class TermResource extends AbstractResource
      * @param $uid
      * @param $name
      * @param $deleted
-     * @param $modified
-     * @param $published
-     * @param $suspended
      * @param $status
      * @param $paragraphs
      * @param $options
-     *
+     * @return Term
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
-     * @throws Exception
      */
     public function update(
         $uid,

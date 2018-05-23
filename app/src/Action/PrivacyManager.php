@@ -208,7 +208,7 @@ class PrivacyManager extends AbstractAction
             echo $e->getMessage();
             return $response->withStatus(403, 'TransactionRequiredException finding term');
         } catch (ORMException $e) {
-            echo $e->getMessage();
+            echo $e->getMessage().' '.$termId;
             return $response->withStatus(403, 'ORMException finding term');
         } catch (Exception $e) {
             echo $e->getMessage();

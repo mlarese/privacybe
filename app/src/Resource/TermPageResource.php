@@ -20,8 +20,19 @@ class TermPageResource extends AbstractResource {
         return $this->getRepository()->findBy(["deleted"=>false, "termUid" => $termUid]);
     }
 
+    public function findByPage($domain, $page) {
+        $rep = $this->getRepository();
+
+        $res = $rep->findBy(
+            ["deleted"=>false,'domain' => $domain, 'page' => $page]
+        );
+
+        return $res;
+    }
+
     /**
      * @param $domainsPages
+     * @return TermPage
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function merge(

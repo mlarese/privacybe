@@ -28,6 +28,41 @@ class PrivacyResource extends AbstractResource
 
         return $prRec;
     }
+
+/*
+`uid` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
+`created` datetime DEFAULT CURRENT_TIMESTAMP,
+`email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+`name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+`ref` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`surname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+`form` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
+`crypted_form` longtext COLLATE utf8_unicode_ci,
+`privacy` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json_array)',
+`privacy_flags` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
+`term_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+`domain` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+`site` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+`ip` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`telephone` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
+`deleted` tinyint(1) NOT NULL DEFAULT '0',*/
+
+    public function getRepository(){
+        return $this->entityManager->getRepository(Privacy::class);
+    }
+    public function searchPrivacy(){
+        $repo = $this->getRepository();
+
+        $qb = $repo->createQueryBuilder('p');
+        $qb
+            ->select(['uid','created','email','name','ref','surname','domain', 'term_id','site','ip','telephone'])
+            ->where('deleted=0')
+            ->andWhere($qb->expr()->not('p.email IS NULL'))
+            ->andWhere('not p.email IS NULL')
+            ->andWhere("not p.email = ''")
+        ;
+        $results = $qb->getQuery()->getResult();
+    }
     /**
      * @param      $privacyId
      * @param      $jsonPrivacy

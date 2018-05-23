@@ -12,6 +12,8 @@ use App\Resource\PrivacyNotFoundException;
 use App\Resource\PrivacyResource;
 use App\Resource\PropertiesResource;
 use App\Resource\PropertyNotFoundException;
+use App\Resource\TermPageResource;
+use App\Resource\TermResource;
 use function base64_encode;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -57,6 +59,21 @@ class PrivacyManager extends AbstractAction
         }
 
         return $ownerId;
+    }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function searchPrivacy($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        $em = $this->getEmPrivacy($ownerId);
+        $pres = new PrivacyResource($em);
+
     }
     /**
      * @param $request Request
@@ -144,7 +161,7 @@ class PrivacyManager extends AbstractAction
         $ownerId = $request->getHeader('OwnerId')[0];
         $ref = $request->getHeader('Ref')[0];
         $termId = $request->getHeader('TermId')[0];
-
+        $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
 
@@ -155,6 +172,10 @@ class PrivacyManager extends AbstractAction
         $em = $this->getEmPrivacy($ownerId);
 
         if($termId===''){
+            $termRes = new TermResource($em);
+            $termPgRes = new TermPageResource($em);
+            // $pages = $termPgRes->findByPage($domainName, $pageName);
+
             /** @var TermPage $termPage  */
             $termPage = $em
                         ->getRepository(TermPage::class)
@@ -168,26 +189,26 @@ class PrivacyManager extends AbstractAction
         }
 
         $propRes = new PropertiesResource($this->getEmConfig());
-        /** @var Terms $term */
+        /** @var Term $term */
         $term = null;
 
         try {
             $term = $em->find(Term::class, $termId);
             $scrollText = $propRes->widgetScrollText();
         } catch (PropertyNotFoundException $e) {
-            die($ownerId . ' e '.$e->getMessage());
+            echo $e->getMessage();
             return $response->withStatus(403, 'PropertyNotFoundException finding term');
         } catch (OptimisticLockException $e) {
-            die($ownerId . ' e '.$e->getMessage());
+            echo $e->getMessage();
             return $response->withStatus(403, 'OptimisticLockException finding term');
         } catch (TransactionRequiredException $e) {
-            die($ownerId . ' e '.$e->getMessage());
+            echo $e->getMessage();
             return $response->withStatus(403, 'TransactionRequiredException finding term');
         } catch (ORMException $e) {
-            die($ownerId . ' e '.$e->getMessage());
+            echo $e->getMessage();
             return $response->withStatus(403, 'ORMException finding term');
         } catch (Exception $e) {
-            die($ownerId . ' e '.$e->getMessage());
+            echo $e->getMessage();
             return $response->withStatus(403, 'Exception finding term');
         }
 
@@ -206,12 +227,16 @@ class PrivacyManager extends AbstractAction
                 }
             }
 
+            $title = "";
+            if(isset($p['title'][$lang])) {
+                $title = $p['title'][$lang];
+            }
 
             $newP = array(
               "text" => $p['text'][$lang],
               "treatments" => array(),
               "scrolled" => false,
-              "title" => $p['title'][$lang],
+              "title" => $title,
               "scrollText" => $scrollText[$lang]
             );
 
@@ -233,8 +258,10 @@ class PrivacyManager extends AbstractAction
 
         return $response->withJson(
             array(
+                "referrer" => $httpReferer,
                 "ownerId" => $ownerId,
                 "termId" => $termId,
+                "name" => $term->getName(),
                 "paragraphs" => $js
             )
         );

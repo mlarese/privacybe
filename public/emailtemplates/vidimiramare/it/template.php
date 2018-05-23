@@ -288,7 +288,7 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                                         <div style="color:#555555;line-height:150%;font-family:'Open Sans', Helvetica, Arial, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 16px;line-height: 24px"><strong><span style="font-size: 16px; line-height: 24px;">GRAZIE</span></strong><br>Ecco come promesso, il <strong>CODICE SCONTO EXTRA DEL 5%</strong> sulla tua prossima prenotazione nel sito&#160;<strong><span style="color: rgb(106, 150, 206); font-size: 16px; line-height: 24px;"><a style="color:#0068A5;text-decoration: underline; color: rgb(106, 150, 206);" href="https://www.vidimiramare.com/" target="_blank" rel="noopener">vidimiramare.com</a></span></strong><br data-mce-bogus="1"></p></div>
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 16px;line-height: 24px"><strong><span style="font-size: 16px; line-height: 24px;">GRAZIE!</span></strong></p><p style="margin: 0;font-size: 16px;line-height: 24px"><br>Ecco come promesso, il <strong>BUONO SCONTO DEL 5%</strong> <br></p><p style="margin: 0;font-size: 16px;line-height: 24px">&#160;<br></p><p style="margin: 0;font-size: 16px;line-height: 24px"><strong>Presenta questa</strong> <strong>mail quando prenoterai il trattamento</strong> a tua scelta nel nostro Centro Benessere, avrai lo sconto del 5% e riceverai la nostra esclusiva <strong>borsa mare<span style="color: rgb(106, 150, 206); font-size: 16px; line-height: 24px;"></span>.</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -312,7 +312,7 @@
 
                                     <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-                                        <img class="center  autowidth " align="center" border="0" src="https://www.vidimiramare.com/newsletter/2018/005/ita/images/codice-sconto.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 540px" width="540">
+                                        <img class="center  autowidth " align="center" border="0" src="https://www.vidimiramare.com/newsletter/2018/005/ita/images/sconto.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 540px" width="540">
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
 
@@ -335,9 +335,9 @@
 
 
                                     <div class="">
-                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-                                        <div style="color:#555555;line-height:150%;font-family:'Open Sans', Helvetica, Arial, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Copia e incolla il codice <strong>NEWSLETTER5%</strong> al momento della prenotazione<br>per avere lo sconto immediato!</p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center"><br data-mce-bogus="1"></p><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Offerta non cumulabile con altre offerte in corso</p></div>
+                                        <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+                                        <div style="color:#555555;line-height:120%;font-family:'Open Sans', Helvetica, Arial, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
+                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;line-height: 19px;font-size: 16px;text-align: center"><span style="font-size: 16px; line-height: 19px;"><span style="line-height: 19px; font-size: 16px;">Prenota un soggiorno presso il nostro hotel dal sito <a style="color:#0068A5;text-decoration: underline;" href="http://www.vidimiramare.com" target="_blank" rel="noopener">www.vidimiramare.com</a></span><span style="line-height: 19px; font-size: 16px;"></span></span></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -353,10 +353,10 @@
                     <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
                         <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 680px;"><tr class="layout-full-width" style="background-color:transparent;"><![endif]-->
 
-                        <!--[if (mso)|(IE)]><td align="center" width="680" style="background-color:#FFFFFF; width:680px; padding-right: 30px; padding-left: 30px; padding-top:20px; padding-bottom:20px; border-top: 2px solid #E8E8ED; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
+                        <!--[if (mso)|(IE)]><td align="center" width="680" style="background-color:#FFFFFF; width:680px; padding-right: 30px; padding-left: 30px; padding-top:20px; padding-bottom:20px; border-top: 0px solid #E8E8ED; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
                         <div class="col num12" style="min-width: 320px;max-width: 680px;display: table-cell;vertical-align: top;">
                             <div style="background-color: #FFFFFF; width: 100% !important;">
-                                <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0 solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:20px; padding-bottom:20px; padding-right: 30px; padding-left: 30px;"><!--<![endif]-->
+                                <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid #E8E8ED; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:20px; padding-bottom:20px; padding-right: 30px; padding-left: 30px;"><!--<![endif]-->
 
 
 
@@ -389,7 +389,7 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                                         <div style="color:#555555;line-height:120%;font-family:'Open Sans', Helvetica, Arial, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: right">A presto!<br><em><strong>Hotel Vidi Miramare &amp; Delfino</strong></em></p></div>
+                                            <div style="font-size:12px;line-height:14px;color:#555555;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: right">A presto!<br><em>Hotel Vidi Miramare &amp; Delfino</em></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -530,14 +530,20 @@
 
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-                                        <div style="color:#FFFFFF;font-family:'Open Sans', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:14px;text-align:center;color:#FFFFFF;font-family:'Open Sans', Helvetica, Arial, sans-serif;">Se non desideri ricevere ulteriori e-mail da Hotel Vidimiramare e Delfino,
-                                                <a style="color:#FFFFFF;text-decoration: underline;"
-                                                   href="https://privacy.dataone.online/upgrade/disallow/15/15/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener noreferrer">clicca qui</a>
-                                                <br>&copy;2018 Hotel Vidi Miramare e Delfino - P.IVA: 00213230279 -
-                                                <a style="color:#FFFFFF;color:#FFFFFF;color:#FFFFFF;text-decoration: underline;"
-                                                   href="http://www.vidimiramare.com/privacy-policy.html" target="_blank" rel="noopener noreferrer" data-mce-selected="1">Privacy Policy</a>
-                                                <br>
+                                        <div style="color:#FFFFFF;line-height:120%;font-family:'Open Sans', Helvetica, Arial, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
+                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', Helvetica, Arial, sans-serif;text-align:left;">
+                                                <p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center">
+      <span style="font-size: 12px; line-height: 14px;">Se non desideri ricevere ulteriori e-mail da Hotel Vidimiramare e Delfino,
+        <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/15/15/%%email%%?action=%%link_subscriber_info%%"
+           target="_blank" rel="noopener">clicca qui</a>
+      </span>
+                                                </p>
+                                                <p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center">
+      <span style="font-size: 12px; line-height: 14px;">©2018 Hotel Vidi Miramare e Delfino - P.IVA: 00213230279 -
+        <a style="color:#FFFFFF;color:#FFFFFF;text-decoration: underline;" href="https://www.vidimiramare.com/privacy-policy.html"
+           target="_blank" rel="noopener">Privacy Policy</a>
+      </span>
+                                                </p>
                                             </div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->

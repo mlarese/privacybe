@@ -154,7 +154,9 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getWidgetTerm($request, $response, $args) {
-        $params = $request->getHeader('Domain')[0];
+        $_k=$request->getParam('_k');
+        $params=base64_decode(  urldecode($_k) );
+        //$params = $request->getHeader('Domain')[0];
         $params = json_decode($params, true);
 
         $lang = $params['language'];

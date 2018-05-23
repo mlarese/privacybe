@@ -16,14 +16,15 @@ $settings = $app->getContainer()->get('settings');
  */
 
 $app->add( new \App\Manager\ApplicationMiddleware($settings['applications'],$app));
-
 $app->add(new \Adbar\SessionMiddleware($settings['session']));
-
 $app->add(new CorsMiddleware(
     [
         "origin" => ["*"],
         "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         "headers.allow" => [
+            "Ref",
+            "Language",
+            "TermId",
             "Content-Type",
             "Authorization",
             "If-Match",
@@ -31,10 +32,7 @@ $app->add(new CorsMiddleware(
             "Token",
             "OwnerId",
             "Domain",
-            "Page",
-            "Ref",
-            "Language",
-            "TermId"
+            "Page"
         ],
         "headers.expose" => ["Etag"],
         "credentials" => true,

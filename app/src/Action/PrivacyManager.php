@@ -154,18 +154,16 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getWidgetTerm($request, $response, $args) {
-        $lang = $request->getHeader('Language')[0];
-        $pageName = $request->getHeader('Page')[0];
-        $domainName = $request->getHeader('Domain')[0];
-        $ownerId = $request->getHeader('OwnerId')[0];
-        $ref = $request->getHeader('Ref');
+        $params = $request->getHeader('Domain')[0];
+        $params = json_decode($params, true);
 
-        if(isset($ref) && count($ref)>0 )
-            $ref = $ref[0];
+        $lang = $params['language'];
+        $pageName = $params['page'];
+        $domainName = $params['domain'];
+        $ownerId = $params['ownerId'];
+        $ref = $params['ref'];
+        $termId = $params['termId'];
 
-
-
-        $termId = $request->getHeader('TermId')[0];
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");

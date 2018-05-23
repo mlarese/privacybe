@@ -69,6 +69,21 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
+    public function searchPrivacy($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        $em = $this->getEmPrivacy($ownerId);
+        $pres = new PrivacyResource($em);
+
+    }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function getPrivacy($request, $response, $args) {
         $id = $args['id'];
         $uid = substr($id,0, 36);

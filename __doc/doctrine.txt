@@ -1,0 +1,12 @@
+$qb->select('t')
+            ->from($this->getEntityType(), 't')
+            ->where('t.token = :newToken')
+            ->andWhere('t.useDate IS NULL')
+            ->setParameters([
+                'newToken'=> $tokenValue,
+            ]);
+
+->andWhere($qb->expr()->orX(
+                $qb->expr()->gte('t.expireDate', ':expireDate'),
+                $qb->expr()->isNull('t.expireDate')
+            ))

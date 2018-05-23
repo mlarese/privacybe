@@ -22,6 +22,8 @@ $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 
+// privacy
+$app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 

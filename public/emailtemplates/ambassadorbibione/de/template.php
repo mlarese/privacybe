@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
     <!--[if gte mso 9]><xml>
         <o:OfficeDocumentSettings>
@@ -337,7 +336,9 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 25px; padding-left: 25px; padding-top: 15px; padding-bottom: 10px;"><![endif]-->
                                         <div style="font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:150%;color:#555555; padding-right: 25px; padding-left: 25px; padding-top: 15px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Kopieren und f&uuml;gen Sie den Code <strong>NEWSLETTER5%</strong> beim Buchungsvorgang ein, um umgehend den Rabatt zu erhalten!</p></div>
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Kopieren und f&uuml;gen Sie den Code <strong>NEWSLETTER5%</strong> beim Buchungsvorgang ein, um umgehend den Rabatt zu erhalten!<br>
+                                                    <br>
+                                                    <strong>Gültig bis 15/06/2018</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -489,7 +490,7 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;"><![endif]-->
                                         <div style="font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%;color:#FFFFFF; padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;">
-                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">Wenn Sie keine weiteren E-Mails von uns erhalten m&ouml;chten,<br>oder wenn Sie Ihre E-Mail Adresse ge&auml;ndert haben, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener">klicken Sie bitte hier</a></span></p></div>
+                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">Wenn Sie keine weiteren E-Mails von uns erhalten m&ouml;chten,<br>oder wenn Sie Ihre E-Mail Adresse ge&auml;ndert haben, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%% " target="_blank" rel="noopener">klicken Sie bitte hier</a></span></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

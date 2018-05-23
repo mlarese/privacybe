@@ -163,7 +163,6 @@ class PrivacyManager extends AbstractAction
         $ownerId = $params['ownerId'];
         $ref = $params['ref'];
         $termId = $params['termId'];
-
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");

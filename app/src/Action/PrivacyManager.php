@@ -182,7 +182,7 @@ class PrivacyManager extends AbstractAction
             /** @var TermPage $termPage  */
             $termPage = $em
                         ->getRepository(TermPage::class)
-                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
+                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
 
             If(!isset($termPage)) {
                 return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");

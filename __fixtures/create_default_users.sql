@@ -8,6 +8,7 @@ INSERT INTO privacy_config.user (id, user, type, password, active, owner_id, nam
 --  W8H9UK9WpnsHErJ8
 (4, 'giulia.pastrello', 'operators', '1bafc478863fff0c45d428a3bc802dc0', 1, 0, 'Operatore Giulia Pastrello', 0)
 
+-- hambassador.owner VCvZ76D7IfDIzJM7
 
 -- allergosystem UEU3mgHWKkFqr8fN
 

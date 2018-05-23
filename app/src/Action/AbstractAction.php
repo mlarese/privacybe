@@ -10,6 +10,7 @@ use Exception;
 use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
+use Slim\Http\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -22,6 +23,14 @@ class AbstractAction
     protected $session;
 
     protected $context;
+
+    /**
+     * @param $response Response
+     */
+    public function addP3P ($response) {
+        header('P3P: CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
+        // $response->withAddedHeader('P3P','CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
+    }
 
     public function toDateTime($date) {
         if(!isset($date)) {

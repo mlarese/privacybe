@@ -2,6 +2,7 @@
 
 namespace App\Entity\Privacy;
 
+use App\DoctrineEncrypt\Configuration\Encrypted;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +30,8 @@ class PrivacyHistory
     protected $created;
 
     /**
-     * @ORM\Column(name="privacy", type="json", nullable=true)
+     * @ORM\Column(name="privacy", type="text", nullable=true, length=4294967295)
+     * @Encrypted
      */
     protected $privacy;
 

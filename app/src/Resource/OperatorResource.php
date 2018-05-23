@@ -6,6 +6,7 @@ use App\Entity\Config\User;
 use App\Entity\Privacy\Operator;
 use DateTime;
 use Exception;
+use function is_string;
 
 /**
  * Class Resource
@@ -56,7 +57,18 @@ class OperatorResource extends AbstractResource
     ) {
         $newOperator = new Operator();
 
-        if(!isset($periodFrom))  $periodFrom = new DateTime();
+        if(!isset($periodFrom) || $periodFrom==='') {
+            $periodFrom = new DateTime();
+        }
+
+        if(is_string($periodFrom)) {
+            $periodFrom = new DateTime($periodFrom);
+        }
+
+        if(is_string($periodTo)) {
+            $periodTo = new DateTime($periodTo);
+        }
+
         if(!isset($active))  $active = true;
         $newOperator
             ->setEmail($email)

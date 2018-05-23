@@ -56,7 +56,16 @@ class Owners extends AbstractAction
      */
     private function createPrivacyTables($db) {
         $sql = "
-        CREATE TABLE $db.privacy (id INT AUTO_INCREMENT NOT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, privacy LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', privacy_id INT NOT NULL, type VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, INDEX privacy_history_created (created), INDEX privacy_history_privacy_id (privacy_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+        CREATE TABLE $db.privacy (
+            id INT AUTO_INCREMENT NOT NULL, 
+            created DATETIME DEFAULT CURRENT_TIMESTAMP, 
+            privacy LONGTEXT DEFAULT NULL , 
+            privacy_id INT NOT NULL, 
+            type VARCHAR(255) NOT NULL, 
+            description VARCHAR(255) NOT NULL, 
+            INDEX privacy_history_created (created), 
+            INDEX privacy_history_privacy_id (privacy_id), 
+            PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.domain (name VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, active TINYINT(1) DEFAULT '1' NOT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX domain_active (active), PRIMARY KEY(name)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.action_history (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, history LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', user_name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.term (uid VARCHAR(128) NOT NULL, options LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)',name VARCHAR(255) NOT NULL, paragraphs LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', status VARCHAR(30) NOT NULL, published DATETIME DEFAULT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, modified DATETIME DEFAULT CURRENT_TIMESTAMP, suspended DATETIME DEFAULT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX term_created (created), INDEX term_suspended (suspended), INDEX term_published (published), INDEX term_modified (modified), PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

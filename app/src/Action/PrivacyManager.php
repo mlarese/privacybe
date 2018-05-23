@@ -342,7 +342,7 @@ class PrivacyManager extends AbstractAction
         }
 
 
-        return $response->withJson($this->success(["h"=>$this->toJson($ph)])) ;
+        return $response->withJson($this->success()) ;
     }
 
     /**

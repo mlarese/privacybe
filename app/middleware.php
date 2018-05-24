@@ -17,6 +17,7 @@ $settings = $app->getContainer()->get('settings');
 
 $app->add( new \App\Manager\ApplicationMiddleware($settings['applications'],$app));
 $app->add(new \Adbar\SessionMiddleware($settings['session']));
+
 $app->add(new CorsMiddleware(
     [
         "origin" => ["*"],

@@ -73,7 +73,6 @@ class PrivacyManager extends AbstractAction
         $ownerId = $this->getOwnerId($request);
         $em = $this->getEmPrivacy($ownerId);
         $pres = new PrivacyResource($em);
-
     }
     /**
      * @param $request Request
@@ -155,15 +154,20 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getWidgetTerm($request, $response, $args) {
-        $lang = $request->getHeader('Language')[0];
-        $pageName = $request->getHeader('Page')[0];
-        $domainName = $request->getHeader('Domain')[0];
-        $ownerId = $request->getHeader('OwnerId')[0];
-        $ref = $request->getHeader('Ref');
-        if(isset($ref) && count($ref)>0 )
-            $ref = $ref[0];
+        $_k=$request->getParam('_k');
 
-        $termId = $request->getHeader('TermId')[0];
+        $params=base64_decode(  urldecode($_k) );
+        //$params = $request->getHeader('Domain')[0];
+
+        $params = json_decode($params, true);
+
+
+        $lang = $params['language'];
+        $pageName = $params['page'];
+        $domainName = $params['domain'];
+        $ownerId = $params['ownerId'];
+        $ref = $params['ref'];
+        $termId = $params['termId'];
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
@@ -182,7 +186,7 @@ class PrivacyManager extends AbstractAction
             /** @var TermPage $termPage  */
             $termPage = $em
                         ->getRepository(TermPage::class)
-                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName));
+                        ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
 
             If(!isset($termPage)) {
                 return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
@@ -208,8 +212,8 @@ class PrivacyManager extends AbstractAction
             echo $e->getMessage();
             return $response->withStatus(403, 'TransactionRequiredException finding term');
         } catch (ORMException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(403, 'ORMException finding term');
+            echo $e->getMessage().' '.$termId;
+            return $response->withStatus(403, 'ORMException finding term with termids');
         } catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(403, 'Exception finding term');
@@ -258,6 +262,7 @@ class PrivacyManager extends AbstractAction
         }
 
         $js = $this->toJson($termResponse);
+        $this->addP3P($response);
 
         return $response->withJson(
             array(

@@ -155,9 +155,12 @@ class PrivacyManager extends AbstractAction
      */
     public function getWidgetTerm($request, $response, $args) {
         $_k=$request->getParam('_k');
+
         $params=base64_decode(  urldecode($_k) );
         //$params = $request->getHeader('Domain')[0];
+
         $params = json_decode($params, true);
+
 
         $lang = $params['language'];
         $pageName = $params['page'];

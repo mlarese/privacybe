@@ -338,7 +338,7 @@
                                         <div style="font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:150%;color:#555555; padding-right: 25px; padding-left: 25px; padding-top: 15px; padding-bottom: 10px;">
                                             <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px;text-align: center">Copy and paste the code <strong>NEWSLETTER5%</strong> at the moment of booking to get an immediate discount!<br>
                                                     <br>
-                                                    <strong>Valid until 15/06/2018</strong></p></div>
+                                                    <strong>Valid until 31/05/2018</strong></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

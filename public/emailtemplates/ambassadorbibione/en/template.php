@@ -490,7 +490,12 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;"><![endif]-->
                                         <div style="font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%;color:#FFFFFF; padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;">
-                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">If you don't want to receive further e-mails from us, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%% " target="_blank" rel="noopener" data-mce-selected="1">please click here</a></span></p></div>
+                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">If you don't want to receive further e-mails from us, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%% " target="_blank" rel="noopener" data-mce-selected="1">please click here</a></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center">
+      <span style="font-size: 12px; line-height: 14px;">
+        <a style="color:#FFFFFF;text-decoration: underline;" href="https://www.hotelambassadorbibione.it/eng/privacy.html" target="_blank"
+           rel="noopener" data-mce-selected="1">Privacy Policy</a>
+      </span>
+                                                </p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

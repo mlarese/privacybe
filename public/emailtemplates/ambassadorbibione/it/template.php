@@ -287,7 +287,7 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
                                         <div style="color:#555555;line-height:150%;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px"><strong>GRAZIE,</strong></p><p style="margin: 0;font-size: 14px;line-height: 21px"><br>Ecco come promesso il BUONO SCONTO DEL -5%!</p><p style="margin: 0;font-size: 14px;line-height: 21px">sulla tua prossima preenotazione nel nostro sito <a style="color:#bca441;color:#bca441;color:#bca441;text-decoration: underline;" href="https://www.hotelambassadorbibione.it/" target="_blank" rel="noopener">www.hotelambassador.it</a></p></div>
+                                            <div style="font-size:12px;line-height:18px;color:#555555;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 21px"><strong>GRAZIE,</strong></p><p style="margin: 0;font-size: 14px;line-height: 21px"><br>Ecco come promesso il <strong>BUONO SCONTO DEL -5%!</strong></p><p style="margin: 0;font-size: 14px;line-height: 21px">sulla tua prossima prenotazione nel nostro sito <a style="color:#bca441;color:#bca441;color:#bca441;text-decoration: underline;" href="https://www.hotelambassadorbibione.it/" target="_blank" rel="noopener">www.hotelambassador.it</a></p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>
@@ -490,7 +490,12 @@
                                     <div class="">
                                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;"><![endif]-->
                                         <div style="color:#FFFFFF;line-height:120%;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; padding-right: 10px; padding-left: 5px; padding-top: 20px; padding-bottom: 20px;">
-                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">Se non desideri ricevere ulteriori e-mail, o se hai cambiato indirizzo di posta elettronica, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener" data-mce-selected="1">clicca qui</a></span></p></div>
+                                            <div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center"><span style="font-size: 12px; line-height: 14px;">Se non desideri ricevere ulteriori e-mail, o se hai cambiato indirizzo di posta elettronica, <a style="color:#FFFFFF;text-decoration: underline;" href="https://privacy.dataone.online/upgrade/disallow/10/10/%%email%%?action=%%link_subscriber_info%%" target="_blank" rel="noopener" data-mce-selected="1">clicca qui</a></span></p><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: center">
+      <span style="font-size: 12px; line-height: 14px;">
+        <a style="color:#FFFFFF;text-decoration: underline;" href="https://www.hotelambassadorbibione.it/privacy.html" target="_blank"
+           rel="noopener" data-mce-selected="1">Privacy Policy</a>
+      </span>
+                                                </p></div>
                                         </div>
                                         <!--[if mso]></td></tr></table><![endif]-->
                                     </div>

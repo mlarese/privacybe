@@ -17,6 +17,7 @@ use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function print_r;
 use Slim\Http\Request;
@@ -272,6 +273,7 @@ class Owners extends AbstractAction
      */
     public function getOwnerById($request, $response, $args) {
         $currId = $args['id'];
+
         /**
          * @var EntityManager $em
          */
@@ -280,27 +282,43 @@ class Owners extends AbstractAction
         /** @var EntityManager $em */
         $emp = $this->getEmPrivacy($currId);
 
-        /** @var Owner $res */
-        $res = $em->find(Owner::class, $currId);
+        try {
+            /** @var Owner $res */
+            $res = $em->find(Owner::class, $currId);
+            $curp = $res->getProfile();
+        } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'OptimisticLockException adding domains');
+        } catch (TransactionRequiredException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'TransactionRequiredException adding domains');
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException adding domains');
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception adding domains');
+        }
 
-        $curp = $res->getProfile();
         if(!isset($curp)) {
             $res->setProfile( $this->emptyProfile());
         }
 
         if(!$res) {
-            return $response->withStatus(500, 'Not found');
+            return $response->withStatus(500, 'Operator Not found');
         }
 
 
         try {
-            $domainsRes =  new DomainResource($emp);
+            $domainsRes = new DomainResource($emp);
             $domains = $domainsRes->findAll();
             if ($domains)
                 $res->setDomains($domains);
         } catch (Exception $e) {
             echo $e->getMessage();
+            return $response->withStatus(500, 'Error adding domains');
         }
+
 
         $js = $this->toJson($res);
         return $response->withJson( $js);

@@ -11,6 +11,7 @@ use Firebase\JWT\JWT;
 use function md5;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use function strtolower;
 use Tuupola\Base62;
 
 class Auth extends AbstractAction {
@@ -65,14 +66,20 @@ class Auth extends AbstractAction {
 
         $valid = false;
 
-
-
+        $msg='';
         if(isset($userEntity)) {
+            $msg = 'User found';
             if($userEntity->getActive() && !$userEntity->getDeleted()) {
                 $cfp = md5($pwd);
-                if ($userEntity->getPassword() === $cfp) {
+                $cfp = strtolower($cfp);
+
+                $userPwd =  strtolower($userEntity->getPassword());
+
+                if ($userPwd === $cfp) {
                     $valid = true;
                 }
+            } else{
+                $msg = 'User found but not active or deleted';
             }
 
         }
@@ -80,7 +87,7 @@ class Auth extends AbstractAction {
         if ($valid) {
             return $userEntity;
         }
-        throw new UserNotAuthorizedException('User Not Authorized Exception');
+        throw new UserNotAuthorizedException('User Not Authorized Exception ' . $msg);
 
     }
 
@@ -107,7 +114,7 @@ class Auth extends AbstractAction {
             $ue = $this->userHasAuth($user, $password);
             $found = true ;
         } catch (UserNotAuthorizedException $e) {
-            return $response->withStatus(401, 'User not authorized');
+            return $response->withStatus(401, 'User not authorized ' );
         }
 
         $settings = $this->getContainer()->get('settings');

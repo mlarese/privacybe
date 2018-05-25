@@ -259,6 +259,7 @@ class PrivacyManager extends AbstractAction
                 $newP['treatments'][] = $newT;
             }
             $termResponse[] = $newP;
+
         }
 
         $js = $this->toJson($termResponse);

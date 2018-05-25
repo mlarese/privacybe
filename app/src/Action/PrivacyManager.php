@@ -161,7 +161,7 @@ class PrivacyManager extends AbstractAction
 
         $params = json_decode($params, true);
 
-        
+
         $lang = $params['language'];
         $pageName = $params['page'];
         $domainName = $params['domain'];

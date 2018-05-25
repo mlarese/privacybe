@@ -161,7 +161,7 @@ class PrivacyManager extends AbstractAction
 
         $params = json_decode($params, true);
 
-
+        
         $lang = $params['language'];
         $pageName = $params['page'];
         $domainName = $params['domain'];
@@ -283,13 +283,8 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function savePrivacy($request, $response, $args) {
-        $rawbody = $request->getBody();
-        $body = $rawbody->read(111119991);
-
-        $body = json_decode($body,true);
-
-        $ownerId = $body['ownerId'];
-
+        $ownerId = $request->getHeader('OwnerId')[0];
+        $body = $request->getParsedBody();
 
         try {
             $ip = $this->getIp();
@@ -348,7 +343,6 @@ class PrivacyManager extends AbstractAction
             echo $e->getMessage();
             return $response->withStatus(500, 'Orm Exception saving privacy');
         } catch (Exception $e) {
-            echo $e->getMessage();
             return $response->withStatus(500, 'Exception saving privacy');
         }
 

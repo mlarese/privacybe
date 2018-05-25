@@ -348,6 +348,7 @@ class PrivacyManager extends AbstractAction
             echo $e->getMessage();
             return $response->withStatus(500, 'Orm Exception saving privacy');
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Exception saving privacy');
         }
 

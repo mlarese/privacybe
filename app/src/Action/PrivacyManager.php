@@ -283,8 +283,13 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function savePrivacy($request, $response, $args) {
-        $ownerId = $request->getHeader('OwnerId')[0];
-        $body = $request->getParsedBody();
+        $rawbody = $request->getBody();
+        $body = $rawbody->read(111119991);
+
+        $body = json_decode($body,true);
+
+        $ownerId = $body['ownerId'];
+
 
         try {
             $ip = $this->getIp();

@@ -208,7 +208,11 @@ class PrivacyResource extends AbstractResource
     public function privacyList($criteria=null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
         $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
 
@@ -221,6 +225,7 @@ class PrivacyResource extends AbstractResource
             'p.domain',
             'p.site',
             'p.termId',
+            'p.privacy',
             'p.privacyFlags',
             'p.email'
         ];
@@ -247,8 +252,7 @@ class PrivacyResource extends AbstractResource
             $sortField = $criteria['sort']['field'] ;
             $sortDirection = $criteria['sort']['direction'] ;
 
-            // $person="";
-            if($person && $person!=='') {
+            if(isset($person) && $person!=='') {
                 $person="%${person}%";
                 $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
                 $qb
@@ -291,22 +295,53 @@ class PrivacyResource extends AbstractResource
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as &$pr) {
-            $uid = $pr['termId'];
+
             $pr['page'] = $pr['domain'].$pr['site'] ;
+
+
+            $termIdFromPages = '0';
+            if(isset($termPageMap[$pr['domain']][$pr['site']])) {
+                $termIdFromPages = $termPageMap[$pr['domain']][$pr['site']];
+            }
+
+            if($pr['termId']==='0') {
+                if(isset($pr['privacy']['termId'])) {
+                    $pr['termId'] = $pr['privacy']['termId'];
+                } else {
+                    $pr['termId'] = $termIdFromPages;
+                }
+            }
+
+            if($pr['termId']==='0') {
+                $pr['termId']='no-term-id';
+            }
+            $pr['referrer'] = $pr['page'];
+            if(isset($pr['privacy']['referrer']))
+                $pr['referrer'] =  $pr['privacy']['referrer'];
+
             $pr['denomination'] = $pr['surname'].' '.$pr['name'] ;
+            $uid = $pr['termId'];
             if(isset($uid) && "$uid"!="0") {
                 if(isset($termMap[$uid])) {
                     $pr['termName'] = $termMap[$uid]['name'];
+                } else {
+                    $pr['termName'] = 'Normativa non memorizzata';
                 }
             } else {
-                $pr['termName'] = 'standard';
+                $pr['termName'] = 'Normativa non memorizzata';
             }
+            unset($pr['privacy']);
+
         }
 
         return $results;
     }
 
-    public function groupByEmailSite($list) {
+    public function groupByFactory(&$list, $criteria) {
+        return $this->groupByEmailTerm($list);
+    }
+
+    public function groupByEmailSite(&$list) {
         $res = [];
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))
@@ -315,11 +350,31 @@ class PrivacyResource extends AbstractResource
         return $res;
     }
 
-    public function groupByEmailTerm($list) {
+    public function groupByEmailTerm(&$list) {
         $res = [];
         foreach ($list as $r) {
-            if(!isset(     $res      [$r['email']]   [$r['termName']]  [$r['domain'].$r['site']]       ))
-                           $res      [$r['email']]   [$r['termName']]  [$r['domain'].$r['site']] = $r;
+            if(!isset(     $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']]       ))
+                           $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']] = $r;
+        }
+        return $res;
+    }
+
+    public function postSelectfilter(&$list,$criteria) {
+        $res = [];
+        //$res = $list;
+
+        $terms = $criteria['where']['terms'];
+        if(isset($terms) && count($terms)>0) {
+            foreach ($list as $email => $p) {
+                foreach ($terms as $tc) {
+                    if(isset($p[$tc['id']])) {
+                        $res[$email]=$p;
+                        break;
+                    }
+                }
+            }
+        } else {
+            $res = [];
         }
         return $res;
     }

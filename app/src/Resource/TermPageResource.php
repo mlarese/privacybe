@@ -67,4 +67,31 @@ class TermPageResource extends AbstractResource {
         return $d;
     }
 
+    /**
+     * @return array
+     */
+    public function map(){
+        $repo = $this->getRepository();
+
+        $qb = $repo->createQueryBuilder('t');
+        $qb
+            ->select([
+                't.termUid',
+                't.domain',
+                't.page'
+            ])
+            ->where('t.deleted=0')
+
+        ;
+
+        $results = $qb->getQuery()->getResult();
+        $res = [];
+
+        foreach ($results as $t){
+            $res[$t['domain']] [$t['page']] = $t['termUid'];
+        }
+
+        return $res;
+    }
+
 }

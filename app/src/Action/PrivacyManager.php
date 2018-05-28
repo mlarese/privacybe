@@ -468,7 +468,8 @@ class PrivacyManager extends AbstractAction
             $priRes = new PrivacyResource($em);
 
             $list = $priRes->privacyList($criteria);
-            $list = $priRes->groupByEmailTerm($list);
+            $list = $priRes->groupByFactory($list, $criteria);
+            $list = $priRes->postSelectfilter($list,$criteria);
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'ORMException saving privacy');

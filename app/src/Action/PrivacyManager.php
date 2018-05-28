@@ -35,11 +35,16 @@ class PrivacyManager extends AbstractAction
      * @return string
      */
     private function getIp () {
-        $ip = $_SERVER['REMOTE_ADDR'];
         if(isset($_SERVER['HTTP_X_REAL_IP'])) {
-            $ip = $_SERVER['HTTP_X_REAL_IP'];
+            $remoteIp = $_SERVER['HTTP_X_REAL_IP'];
+        } else if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+            $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-        return $ip;
+        else {
+            $remoteIp = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $remoteIp;
     }
 
     /**
@@ -275,6 +280,10 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function savePrivacy($request, $response, $args) {
+
+        // return $this->savePlainPrivacy($request, $response, $args);
+        // return $response->withStatus(500, 'debug breakpoint');
+
         $ownerId = $request->getHeader('OwnerId')[0];
         $body = $request->getParsedBody();
 
@@ -449,12 +458,10 @@ class PrivacyManager extends AbstractAction
      */
     public function savePlainPrivacy($request, $response, $args) {
         $rawbody = $request->getBody();
-        $body = $rawbody->read(111119991);
+        $body = $rawbody->read($rawbody->getSize());
 
         $body = json_decode($body,true);
-
         $ownerId = $body['ownerId'];
-
 
         try {
             $ip = $this->getIp();
@@ -487,7 +494,7 @@ class PrivacyManager extends AbstractAction
              */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
-
+die('----before save');
             $pr=$prRes->savePrivacy(
                 $ip,
                 $form,

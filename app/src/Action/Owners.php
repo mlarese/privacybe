@@ -246,7 +246,6 @@ class Owners extends AbstractAction
         $owR = $this->getEmConfig()->getRepository(Owner::class);
         $owners = [];
 
-
         try{
             $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
 
@@ -316,7 +315,7 @@ class Owners extends AbstractAction
                 $res->setDomains($domains);
         } catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(500, 'Error adding domains');
+            return $response->withStatus(500, 'Error getting domains');
         }
 
 

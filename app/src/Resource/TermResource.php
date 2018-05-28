@@ -25,6 +25,55 @@ class TermResource extends AbstractResource
     }
 
     /**
+     * @param array  $terms
+     * @return array
+     */
+    protected function extractTreatments ($terms){
+        $res = [];
+
+        /** @var Term $term */
+        foreach ($terms as $term) {
+            $parags = $term['paragraphs'];
+
+            $item = [
+              "name" =>$term['name'],
+              "status" => $term['status'],
+              "treatments" => []
+            ];
+
+
+            foreach ($parags as $parag) {
+                $treatments = $parag['treatments'];
+                $item['treatments'][] = $treatments;
+            }
+
+            $res[] = $item;
+        }
+
+        return $res;
+    }
+
+    /**
+     * @return array
+     */
+    public function termAndTreatmentsFlyWeight () {
+
+        $repo = $this->getRepository();
+
+        $qb = $repo->createQueryBuilder('t');
+        $qb
+            ->select(['t.name','t.status', 't.uid','t.paragraphs'])
+            ->where('t.deleted=0')
+
+        ;
+
+        $results = $qb->getQuery()->getResult();
+        $res = $this->extractTreatments($results);
+
+        return $res;
+    }
+
+    /**
      * @return array
      * @throws PublishedTermsException
      */
@@ -210,5 +259,31 @@ class TermResource extends AbstractResource
     }
 
 
+    /**
+     * @return array
+     */
+    public function map(){
+        $repo = $this->getRepository();
+
+        $qb = $repo->createQueryBuilder('t');
+        $qb
+            ->select([
+                't.name',
+                't.status',
+                't.uid'
+            ])
+            ->where('t.deleted=0')
+
+        ;
+
+        $results = $qb->getQuery()->getResult();
+        $res = [];
+
+        foreach ($results as $term){
+            $res[$term['uid']] = $term;
+        }
+
+        return $res;
+    }
 
 }

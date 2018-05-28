@@ -5,6 +5,8 @@ namespace App\Resource;
 
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
+use Doctrine\Common\Collections\Criteria;
+use http\Env\Response;
 use function json_encode;
 
 class PrivacyResource extends AbstractResource
@@ -201,5 +203,63 @@ class PrivacyResource extends AbstractResource
         $this->entityManager->flush();
 
         return $privacyEntry;
+    }
+
+    public function privacyList() {
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termMap = $termRes->map();
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $qb = $repo->createQueryBuilder('p');
+        $qb
+            ->select([
+                'p.name',
+                'p.surname',
+                'p.id',
+                'p.ip',
+                'p.created',
+                'p.domain',
+                'p.site',
+                'p.termId',
+                'p.privacyFlags',
+                'p.email'
+            ])
+            ->where('p.deleted=0')
+            ->andWhere( $ex->not("p.email=''") )
+            ->andWhere( $ex->not("p.email IS NULL") )
+            ->addOrderBy( 'p.email', 'ASC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+
+        ;
+
+        $results = $qb->getQuery()->getResult();
+
+        foreach ($results as &$pr) {
+            $uid = $pr['termId'];
+            $pr['page'] = $pr['domain'].$pr['site'] ;
+            $pr['denomination'] = $pr['surname'].' '.$pr['name'] ;
+            if(isset($uid) && "$uid"!="0") {
+                if(isset($termMap[$uid])) {
+                    $pr['termName'] = $termMap[$uid]['name'];
+                }
+            } else {
+                $pr['termName'] = 'standard';
+            }
+        }
+
+        return $results;
+    }
+
+    public function groupByEmailSite($list) {
+        $res = [];
+        foreach ($list as $r) {
+            if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))
+                           $res      [$r['email']]       [$r['domain'].$r['site']]   = $r;
+        }
+        return $res;
     }
 }

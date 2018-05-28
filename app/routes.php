@@ -13,6 +13,7 @@ $app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');
 $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
+$app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 
 // owners
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
@@ -25,6 +26,7 @@ $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+
 
 // treatments
 $app->put('/api/owner/treatment/{code}', 'App\Action\Treatments:updateTreatment');

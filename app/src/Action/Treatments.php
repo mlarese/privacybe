@@ -3,8 +3,10 @@
 namespace App\Action;
 
 use App\Entity\Privacy\Treatment;
+use App\Resource\TermResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

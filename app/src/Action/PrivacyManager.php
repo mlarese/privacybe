@@ -35,7 +35,11 @@ class PrivacyManager extends AbstractAction
      * @return string
      */
     private function getIp () {
-        return $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if(isset($_SERVER['HTTP_X_REAL_IP'])) {
+            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        }
+        return $ip;
     }
 
     /**
@@ -60,20 +64,7 @@ class PrivacyManager extends AbstractAction
 
         return $ownerId;
     }
-    /**
-     * @param $request Request
-     * @param $response Response
-     * @param $args
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
-     */
-    public function searchPrivacy($request, $response, $args) {
-        $ownerId = $this->getOwnerId($request);
-        $em = $this->getEmPrivacy($ownerId);
-        $pres = new PrivacyResource($em);
-    }
+
     /**
      * @param $request Request
      * @param $response Response
@@ -420,4 +411,32 @@ class PrivacyManager extends AbstractAction
 
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function searchPrivacy($request, $response, $args)
+    {
+        $ownerId = $this->getOwnerId($request);
+        $list = [];
+        try {
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $priRes = new PrivacyResource($em);
+
+            $list = $priRes->privacyList();
+            //$list = $priRes->groupByEmailSite($list);
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+        return $response->withJson($list);
+    }
 }

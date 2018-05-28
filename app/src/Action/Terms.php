@@ -205,4 +205,34 @@ class Terms extends AbstractAction{
         }
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function termsAndTreatsFW($request, $response, $args)
+    {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+
+
+            $termRes = new TermResource($em);
+            $res = $termRes->termAndTreatmentsFlyWeight();
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+        return $response->withJson( $this->toJson($res) );
+    }
+
 }

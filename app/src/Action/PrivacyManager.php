@@ -494,7 +494,7 @@ class PrivacyManager extends AbstractAction
              */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
-die('----before save');
+
             $pr=$prRes->savePrivacy(
                 $ip,
                 $form,

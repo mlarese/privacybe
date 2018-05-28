@@ -7,6 +7,7 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
+$app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
 // terms
 $app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');

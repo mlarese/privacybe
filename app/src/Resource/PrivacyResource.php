@@ -205,36 +205,88 @@ class PrivacyResource extends AbstractResource
         return $privacyEntry;
     }
 
-    public function privacyList() {
+    public function privacyList($criteria=null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termMap = $termRes->map();
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
 
+        $fields = [
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.ip',
+            'p.created',
+            'p.domain',
+            'p.site',
+            'p.termId',
+            'p.privacyFlags',
+            'p.email'
+        ];
+
         $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
         $qb
-            ->select([
-                'p.name',
-                'p.surname',
-                'p.id',
-                'p.ip',
-                'p.created',
-                'p.domain',
-                'p.site',
-                'p.termId',
-                'p.privacyFlags',
-                'p.email'
-            ])
+            ->select($fields)
             ->where('p.deleted=0')
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
-            ->addOrderBy( 'p.email', 'ASC')
-            ->addOrderBy( 'p.domain', 'ASC')
-            ->addOrderBy( 'p.site', 'ASC')
-            ->addOrderBy( 'p.created', 'DESC')
 
         ;
+
+        if($criteria === null) {
+            $qb ->addOrderBy( 'p.email', 'ASC')
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+        } else {
+            $person = $criteria['where']['person'] ;
+            $sortField = $criteria['sort']['field'] ;
+            $sortDirection = $criteria['sort']['direction'] ;
+
+            // $person="";
+            if($person && $person!=='') {
+                $person="%${person}%";
+                $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
+                $qb
+                    ->andWhere( $ex->orX()->addMultiple($persCond))
+                    ->setParameter('person',$person);
+                ;
+            }
+
+            switch ($sortField) {
+                case 'default':
+                    $qb ->addOrderBy( 'p.email', $sortDirection)
+                        ->addOrderBy( 'p.termId', 'ASC')
+                        ->addOrderBy( 'p.created', 'DESC')
+                        ->addOrderBy( 'p.domain', 'ASC')
+                        ->addOrderBy( 'p.site', 'ASC')
+                    ;
+                    break;
+                case 'surname':
+                    $qb ->addOrderBy( 'p.email', $sortDirection)
+                        ->addOrderBy( 'p.termId', 'ASC')
+                        ->addOrderBy( 'p.created', 'DESC')
+                        ->addOrderBy( 'p.domain', 'ASC')
+                        ->addOrderBy( 'p.site', 'ASC')
+                    ;
+                    break;
+
+                case 'date':
+                    $qb ->addOrderBy( 'p.email', $sortDirection)
+                        ->addOrderBy( 'p.termId', 'ASC')
+                        ->addOrderBy( 'p.created', 'DESC')
+                        ->addOrderBy( 'p.domain', 'ASC')
+                        ->addOrderBy( 'p.site', 'ASC')
+                    ;
+                    break;
+            }
+
+        }
+
 
         $results = $qb->getQuery()->getResult();
 
@@ -259,6 +311,15 @@ class PrivacyResource extends AbstractResource
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))
                            $res      [$r['email']]       [$r['domain'].$r['site']]   = $r;
+        }
+        return $res;
+    }
+
+    public function groupByEmailTerm($list) {
+        $res = [];
+        foreach ($list as $r) {
+            if(!isset(     $res      [$r['email']]   [$r['termName']]  [$r['domain'].$r['site']]       ))
+                           $res      [$r['email']]   [$r['termName']]  [$r['domain'].$r['site']] = $r;
         }
         return $res;
     }

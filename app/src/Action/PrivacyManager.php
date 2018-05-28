@@ -439,4 +439,84 @@ class PrivacyManager extends AbstractAction
 
         return $response->withJson($list);
     }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function savePlainPrivacy($request, $response, $args) {
+        $rawbody = $request->getBody();
+        $body = $rawbody->read(111119991);
+
+        $body = json_decode($body,true);
+
+        $ownerId = $body['ownerId'];
+
+
+        try {
+            $ip = $this->getIp();
+            $domain = $body['domain'];
+            $id = $body['id'];
+            $email = $body['record']['email'];
+            $name = $body['record']['name'];
+            $surname = $body['record']['surname'];
+            $telephone = $body['record']['telephone'];
+            $site = $body['page'];
+
+            if(isset($termId)) {
+                $termId = $body['termId'];
+            } else {
+                // nessuna normativa associata
+                $termId = 0 ;
+            }
+
+            $privacyFlags = $body['flags'];
+            $privacy = $body['term'];
+            $form = $body['form'];
+            $cryptedForm = $body['cryptedForm'];
+            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
+            $ref = $body['ref'];
+            if (!isset($ref)) {
+                $ref = '';
+            }
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+            $prRes = new PrivacyResource($em);
+
+            $pr=$prRes->savePrivacy(
+                $ip,
+                $form,
+                $cryptedForm,
+                $name,
+                $surname,
+                $termId,
+                $site,
+                $privacy,
+                $id,
+                $ref,
+                $domain,
+                $email,
+                $privacyFlags,
+                $telephone
+            );
+
+            $jsonPrivacy = $this->toJson($pr);
+            $jsonPrivacy = json_encode($jsonPrivacy);
+            $ph = $prRes->savePrivacyLog($id, $jsonPrivacy, 'save from website');
+
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Orm Exception saving privacy');
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+
+        return $response->withJson($this->success()) ;
+    }
 }

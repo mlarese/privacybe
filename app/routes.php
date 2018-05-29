@@ -25,6 +25,7 @@ $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 
 // privacy
 $app->post('/api/owner/privacygrp', 'App\Action\PrivacyManager:searchPrivacyGrouped');
+$app->post('/api/owner/privacyusers', 'App\Action\PrivacyManager:privacyUsers');
 
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');

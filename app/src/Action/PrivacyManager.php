@@ -19,6 +19,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function json_decode;
@@ -557,5 +558,65 @@ class PrivacyManager extends AbstractAction
 
 
         return $response->withJson($this->success()) ;
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function privacyUsers($request, $response, $args) {
+
+        try {
+            $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+
+
+            $sql = "
+            SELECT privacy_entry.email,
+               privacy_entry.domain,
+               privacy_entry.site,
+               CASE 
+                  WHEN privacy_entry.term_id='0' THEN IFNULL(term_page.term_uid, 'abs-default-term')
+                  ELSE privacy_entry.term_id
+              END as pr_term_id 
+               
+
+              FROM privacy_entry 
+              left join 
+                term_page on 
+                  term_page.domain = privacy_entry.domain and
+                  term_page.page = privacy_entry.site
+                
+              where 
+              privacy_entry.deleted = 0 
+              AND (not email IS NULL AND NOT email = '')
+              
+              group by email
+            ";
+            $rsm = new ResultSetMapping();
+
+
+            $rsm->addScalarResult('email', 'email');
+            $rsm->addScalarResult('domain', 'domain');
+            $rsm->addScalarResult('site', 'site');
+            $rsm->addScalarResult('term_uid', 'term_uid');
+            $rsm->addScalarResult('term_id', 'term_id');
+            $rsm->addScalarResult('pr_term_id', 'pr_term_id');
+
+            $qn = $em->createNativeQuery($sql, $rsm);
+            $users = $qn->getResult();
+
+
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error');
+        }
+
+        return $response->withJson( $users);
     }
 }

@@ -36,6 +36,7 @@ class TermResource extends AbstractResource
             $parags = $term['paragraphs'];
 
             $item = [
+              "uid" =>$term['uid'],
               "name" =>$term['name'],
               "status" => $term['status'],
               "treatments" => []
@@ -44,7 +45,12 @@ class TermResource extends AbstractResource
 
             foreach ($parags as $parag) {
                 $treatments = $parag['treatments'];
-                $item['treatments'][] = $treatments;
+
+                foreach ($treatments as $tr) {
+                    unset($tr['text']);
+                    $item['treatments'][] = $tr;
+                }
+
             }
 
             $res[] = $item;
@@ -62,7 +68,7 @@ class TermResource extends AbstractResource
 
         $qb = $repo->createQueryBuilder('t');
         $qb
-            ->select(['t.name','t.status', 't.uid','t.paragraphs'])
+            ->select(['t.uid','t.name','t.status', 't.uid','t.paragraphs'])
             ->where('t.deleted=0')
 
         ;

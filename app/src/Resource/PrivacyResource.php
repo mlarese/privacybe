@@ -367,7 +367,7 @@ class PrivacyResource extends AbstractResource
         if(isset($terms) && count($terms)>0) {
             foreach ($list as $email => $p) {
                 foreach ($terms as $tc) {
-                    if(isset($p[$tc['id']])) {
+                    if(isset($p[$tc['uid']])) {
                         $res[$email]=$p;
                         break;
                     }

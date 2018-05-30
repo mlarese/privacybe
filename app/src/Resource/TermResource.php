@@ -100,7 +100,30 @@ class TermResource extends AbstractResource
             }
         }
 
-        return $res;
+        $result = [];
+        foreach ($res as $trcontainer) {
+            $tr = $trcontainer['treatment'];
+            $terms = [];
+            $curTr = [
+                "selected"=>true,
+                "mandatory"=>$tr['mandatory'],
+                "code"=>$tr['code'],
+                "name"=>$tr['name'],
+                "terms"=>$terms
+            ];
+            $te = $trcontainer['terms'];
+            foreach($te as $t) {
+                $curt = [
+                    "uid" =>$t['uid'],
+                    "name" =>$t['name'],
+                    'selected'=>true
+                ];
+                $curTr['terms'][] = $curt;
+            }
+            $result[] = $curTr;
+        }
+
+        return $result;
     }
 
     /**

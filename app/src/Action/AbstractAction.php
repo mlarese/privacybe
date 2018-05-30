@@ -229,6 +229,11 @@ class AbstractAction
         return ["success"=>true, "options"=>$options];
     }
 
+
+    protected function error ($options=[]) {
+        return ["success"=>false, "options"=>$options];
+    }
+
     /**
      * @param $sql
      * @return bool

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Resource;
 
 
@@ -12,32 +13,16 @@ class MailOneDirectExportHandler
      * @param $args
      * @return mixed
      */
-    public function handle($adapter,$ownerId,$request,$response,$args){
-/*
-        if (!isset($args['domainid'])) {
-            echo 'error 403 - missing domain parameter';
+    public function handle($adapter, $ownerId, $request, $response, $args)
+    {
+
+
+        $body = $request->getParsedBody();
+
+        if ($body && is_array($body) && count($body) != 4) {
+            echo 'error 403 - missing parameter';
             return $response->withStatus(403, 'missing parameter');
         }
-
-
-        if (!isset($args['pathid'])) {
-            echo 'error 403 - missing path parameter';
-            return $response->withStatus(403, 'missing parameter');
-        }
-
-        if (!isset($args['email'])) {
-            echo 'error 403 - missing email parameter';
-            return $response->withStatus(403, 'missing parameter');
-        }
-*/
-
-
-           $body = $request->getParsedBody();
-
-           if($body && is_array($body) && count($body)!=4){
-               echo 'error 403 - missing parameter';
-               return $response->withStatus(403, 'missing parameter');
-           }
 
         if (!isset($body['contactlistname'])) {
             echo 'error 403 - missing name parameter';
@@ -60,25 +45,24 @@ class MailOneDirectExportHandler
         }
 
 
+        $adapter->setName($body['contactlistname']);
+        $adapter->setAction('create');
+        $adapter->setEmail($body['contactlistemail']);
+        $adapter->setReplyEmail($body['contactlistreplytoemail']);
 
-            $adapter->setName($body['contactlistname']);
-            $adapter->setAction('create');
-            $adapter->setEmail($body['contactlistemail']);
-            $adapter->setReplyEmail($body['contactlistreplytoemail']);
+        $adapter->setSource(function () {
 
-            $adapter->setSource(function (){
+            return
+                array(
+                    array("g1", "d1", "giuseppe.donato1@mm-one.com", "it"),
+                    array("g2", "d2", "giuseppe.donato2@mm-one.com", "de"),
+                    array("g3", "d3", "giuseppe.donato3@mm-one.com", "hu")
+                );
+        });
 
-                return
-                    array(
-                        array("g1","d1","giuseppe.donato1@mm-one.com","it"),
-                        array("g2","d2","giuseppe.donato2@mm-one.com","de"),
-                        array("g3","d3","giuseppe.donato3@mm-one.com","hu")
-                    );
-            });
+        $adapter->export();
 
-            $adapter->export();
-
-        return $response->withJson( ["success"=>true, "options"=>[]]);
+        return $response->withJson(["success" => true, "options" => []]);
     }
 
 }

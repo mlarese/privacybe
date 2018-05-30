@@ -267,6 +267,7 @@ class PrivacyManager extends AbstractAction
                 "referrer" => $httpReferer,
                 "ownerId" => $ownerId,
                 "termId" => $termId,
+                "language" => $lang,
                 "name" => $term->getName(),
                 "paragraphs" => $js
             )
@@ -486,6 +487,40 @@ class PrivacyManager extends AbstractAction
      * @param $request Request
      * @param $response Response
      * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function searchUsersFw($request, $response, $args)
+    {
+        $ownerId = $this->getOwnerId($request);
+        $list = [];
+
+        $criteria = $request->getParsedBody();
+
+        try {
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $priRes = new PrivacyResource($em);
+
+            $list = $priRes->privacyList($criteria);
+            $list = $priRes->groupByFactory($list, $criteria);
+            $list = $priRes->postSelectfilter($list,$criteria);
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+        return $response->withJson($list);
+    }
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
      *
      * @return mixed
      */
@@ -514,7 +549,11 @@ class PrivacyManager extends AbstractAction
             }
 
             $privacyFlags = $body['flags'];
+
+
             $privacy = $body['term'];
+
+
             $form = $body['form'];
             $cryptedForm = $body['cryptedForm'];
             $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;

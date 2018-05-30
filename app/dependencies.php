@@ -95,6 +95,29 @@ $container['couponStoreOne'] = function ($container) {
     return $couponService;
 };
 
+$container['mailone'] = function ($container) {
+    $exportService = new \App\Resource\MailOneCsvExport();
+
+    return $exportService;
+};
+
+$container['direct'] = function ($container) {
+    $exportService = new \App\Resource\MailOneDirectExportAdapter(null);
+
+    return $exportService;
+};
+
+
+$container['direct_handler'] = function ($container) {
+
+    $exportService = new \App\Resource\MailOneDirectExportHandler();
+
+    return $exportService;
+};
+
+
+
+
 $container['actionHandler'] = function ($container) {
     $actionHandler = new \App\Action\ActionHandler($container);
 

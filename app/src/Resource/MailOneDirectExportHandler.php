@@ -80,26 +80,28 @@ class MailOneDirectExportHandler implements IExportAdapter
 
         $privacyRes = new PrivacyResource($this->entityManager);
 
-        $adapter->setSource(function () use($privacyRes) {
-            $list = $privacyRes->privacyList();
-            // print_r($list); die;
+        $criteria = $body['filters'];
+        $adapter->setSource(function () use($privacyRes, $criteria) {
+            $list = $privacyRes->privacyListFw($criteria);
+
+            $list = $privacyRes->groupByEmail($list, $criteria);
+            $list = $privacyRes->postSelectfilter($list,$criteria);
+
+
 
             $export = [];
-            foreach($list as $person){
+            foreach($list as $email => $person){
+
                $export[] = [
                    'name'=>$person['name'],
                    'surname'=>$person['surname'],
-                   'language'=>$person['language'],
-                   'email'=>$person['email']
+                   'email'=>$person['email'],
+                   'language'=>$person['language']
+
                ];
             }
 
-            return
-                array(
-                    array("g1", "d1", "giuseppe.donato1@mm-one.com", "it"),
-                    array("g2", "d2", "giuseppe.donato2@mm-one.com", "de"),
-                    array("g3", "d3", "giuseppe.donato3@mm-one.com", "hu")
-                );
+            return $export;
         });
 
         $adapter->export();

@@ -568,7 +568,7 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function privacyUsers($request, $response, $args) {
-
+        $absTermCode = Terms::ABS_DEFAULT_TERM_CODE;
         try {
             $ownerId = $this->getOwnerId($request);
             /** @var EntityManager $em */
@@ -580,7 +580,7 @@ class PrivacyManager extends AbstractAction
                privacy_entry.domain,
                privacy_entry.site,
                CASE 
-                  WHEN privacy_entry.term_id='0' THEN IFNULL(term_page.term_uid, 'abs-default-term')
+                  WHEN privacy_entry.term_id='0' THEN IFNULL(term_page.term_uid, $absTermCode)
                   ELSE privacy_entry.term_id
               END as pr_term_id 
                

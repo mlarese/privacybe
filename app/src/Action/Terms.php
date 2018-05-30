@@ -6,6 +6,7 @@ use App\Entity\Privacy\Term;
 use App\Resource\MandatoryFieldMissingException;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
+use App\Resource\TreatmentsResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -15,6 +16,8 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 class Terms extends AbstractAction{
+    const ABS_DEFAULT_TERM_CODE = 'abs-default-term';
+    const ABS_DEFAULT_TERM_NAME = 'Informativa da abs';
     /**
      * @param $request Request
      * @param $response Response

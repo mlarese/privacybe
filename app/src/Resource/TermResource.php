@@ -2,6 +2,7 @@
 
 namespace App\Resource;
 
+use App\Action\Terms;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermHistory;
 use App\Entity\Privacy\TermPage;
@@ -59,11 +60,53 @@ class TermResource extends AbstractResource
         return $res;
     }
 
+    protected function groupTermsByTreatments ($terms){
+        $res = [];
+        $treatRes = new TreatmentsResource($this->entityManager);
+        $trMap = $treatRes->map();
+
+        /** @var Term $term */
+        foreach ($terms as $term) {
+            $parags = $term['paragraphs'];
+            foreach ($parags as $parag) {
+                $treatments = $parag['treatments'];
+                $count = 0;
+                foreach ($treatments as $tr) {
+                    unset($tr['text']);
+
+                    $trName = $tr['name'];
+                    if(isset($trMap[$tr['name']]))
+                        $trName = $trMap[$tr['name']]['name'];
+
+                    $tr['code']=$tr['name'];
+                    $tr['name']=$trName;
+                    $tr['selected']=true;
+
+                    if($count===0){
+                        $res [$tr['code']] ['terms'][Terms::ABS_DEFAULT_TERM_CODE]= [
+                            "uid" =>Terms::ABS_DEFAULT_TERM_CODE,
+                            "name" =>Terms::ABS_DEFAULT_TERM_NAME,
+                            'selected'=>true
+                        ];
+                    }
+                    $res [$tr['code']] ['treatment']=$tr;
+                    $res [$tr['code']] ['terms'][$term['uid']]=[
+                        "uid" =>$term['uid'],
+                        "name" =>$term['name'],
+                        'selected'=>true
+                    ];
+                    $count++;
+                }
+            }
+        }
+
+        return $res;
+    }
+
     /**
      * @return array
      */
     public function termAndTreatmentsFlyWeight () {
-
         $repo = $this->getRepository();
 
         $qb = $repo->createQueryBuilder('t');
@@ -74,7 +117,8 @@ class TermResource extends AbstractResource
         ;
 
         $results = $qb->getQuery()->getResult();
-        $res = $this->extractTreatments($results);
+        // $res = $this->extractTreatments($results);
+        $res = $this->groupTermsByTreatments($results);
 
         return $res;
     }

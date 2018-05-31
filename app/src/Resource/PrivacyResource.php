@@ -337,26 +337,7 @@ class PrivacyResource extends AbstractResource
             } else if(isset($pr['form']['reservation_guest_language'] )) {
                 $pr['language'] = $pr['form']['reservation_guest_language'];
             }else {
-
-                /*$dt = 'it';
-                try {
-                  $dt = $this->emailDomainType($pr['email']);
-                } catch (Exception $e) {
-                    echo $dt . ' ' . $pr['email'];
-                }
-
-                if(
-                    $dt==='it' || $dt==='de' || $dt==='uk' || $dt==='fr' || $dt==='es' || $dt==='de' || $dt==='pl' || $dt==='ru' ||
-                    $dt==='al' || $dt==='ar' || $dt==='be' || $dt==='ca' || $dt==='ch' || $dt==='cn' ||  $dt==='at' ||  $dt==='hu' ||
-                    $dt==='lu' || $dt==='dk' || $dt==='ee' || $dt==='fi' ||  $dt==='gr' ||  $dt==='cz'
-                ) {
-                    $pr['language'] =  $dt;
-                } else {
-                    $pr['language'] =  'it';
-                }*/
-
                 $pr['language'] =  'it';
-
             }
             $pr['language'] =  strtolower($pr['language'] );
 
@@ -370,7 +351,7 @@ class PrivacyResource extends AbstractResource
                 if(isset($termMap[$uid])) {
                     $pr['termName'] = $termMap[$uid]['name'];
                 } else {
-                    $pr['termName'] = 'Normativa non memorizzata';
+                    $pr['termName'] =  'Normativa non memorizzata';
                 }
             } else {
                 $pr['termName'] = 'Normativa non memorizzata';
@@ -522,10 +503,10 @@ class PrivacyResource extends AbstractResource
     }
 
     public function groupByFactory(&$list, $criteria) {
-        return $this->groupByEmailTerm($list);
+        return $this->groupByEmailTerm($list, $criteria);
     }
 
-    public function groupByEmailSite(&$list) {
+    public function groupByEmailSite(&$list, $criteria) {
         $res = [];
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))
@@ -534,7 +515,7 @@ class PrivacyResource extends AbstractResource
         return $res;
     }
 
-    public function groupByEmailTerm(&$list) {
+    public function groupByEmailTerm(&$list, $criteria) {
         $res = [];
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']]       ))
@@ -543,26 +524,39 @@ class PrivacyResource extends AbstractResource
         return $res;
     }
 
-    public function groupByEmail(&$list) {
-        $res = [];
-        foreach ($list as $r) {
-            $email = strtolower($r['email']);
+    private function canAddInList($record, $validTratments) {
+        print_r($record);
 
-            if(!isset(      $res      [$email]    ))
-                            $res      [$email]   = $r;
+        return true;
+    }
+    public function groupByEmail(&$list, $criteria) {
+        $res = [];
+
+        $validTratments = [];
+        if(isset($criteria['treatments'])) {
+            $treatments = $criteria['treatments'];
         }
+
+        $hasTreatmentsFilter = count($validTratments) >0;
+
+        foreach ($list as &$r) {
+            if($hasTreatmentsFilter) {
+                if(!$this->canAddInList($r, $validTratments))
+                    continue;
+            }
+            $email = strtolower($r['email']);
+            if(!isset(      $res      [$email]    )) {
+                $res      [$email]   = $r;
+            }
+        }
+
+        echo '<br>can add<pre>';
+        print_r($criteria);
+        die;
         return $res;
     }
 
     public function postSelectfilter(&$list,$criteria) {
-        $res = [];
-        $res = $list;
-
-        if(isset($criteria['treatments'])) {
-
-        }
-
-
-        return $res;
+        return $list;
     }
 }

@@ -4,6 +4,8 @@ namespace App\Resource;
 
 
 use Exception;
+use function explode;
+use function json_decode;
 
 class MailOneDirectExportHandler implements IExportAdapter
 {
@@ -44,15 +46,21 @@ class MailOneDirectExportHandler implements IExportAdapter
             return $response->withStatus(403, 'missing entity manager');
         }
 
-
-        $jsonreq = $request->getParam('json');
-        if($jsonreq !== null) {
-
-            echo $jsonreq;
-
-        }
-
         $body = $request->getParsedBody();
+
+        if(!isset($body) || $body===null) {
+            $body = $request->getBody();
+
+            $body = $body->read($body->getSize());
+            $body=explode('json=',$body);
+
+            if (count($body) <2 ) {
+                echo 'error 403 - malformed json request';
+                return $response->withStatus(403, 'malformed json request');
+            }
+
+            $body = json_decode( $body[1], true );
+        }
 
         if ($body && is_array($body) && count($body) != 4) {
             echo 'error 403 - missing parameter';
@@ -89,13 +97,10 @@ class MailOneDirectExportHandler implements IExportAdapter
         $privacyRes = new PrivacyResource($this->entityManager);
 
         $criteria = $body['filters'];
+
         $adapter->setSource(function () use($privacyRes, $criteria) {
             $list = $privacyRes->privacyListFw($criteria);
-
             $list = $privacyRes->groupByEmail($list, $criteria);
-            $list = $privacyRes->postSelectfilter($list,$criteria);
-
-
 
             $export = [];
             foreach($list as $email => $person){

@@ -25,11 +25,6 @@ class ShareSubscriberList extends AbstractAction
             echo 'error 403 - missing parameter args';
             return $response->withStatus(403, 'missing parameter');
         }
-        $token = $request->getCookieParam('token');
-        $r = $this->decodeToken($token);
-
-        print_r($token);
-        die;
 
         $ownerId = $this->getOwnerId($request);
         $em = $this->getEmPrivacy($ownerId);

@@ -44,6 +44,14 @@ class MailOneDirectExportHandler implements IExportAdapter
             return $response->withStatus(403, 'missing entity manager');
         }
 
+
+        $jsonreq = $request->getParam('json');
+        if($jsonreq !== null) {
+
+            echo $jsonreq;
+
+        }
+
         $body = $request->getParsedBody();
 
         if ($body && is_array($body) && count($body) != 4) {

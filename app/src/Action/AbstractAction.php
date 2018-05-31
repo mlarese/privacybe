@@ -7,6 +7,7 @@ use App\Resource\MandatoryFieldMissingException;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use Firebase\JWT\JWT;
 use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
@@ -30,6 +31,33 @@ class AbstractAction
     public function addP3P ($response) {
         header('P3P: CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
         // $response->withAddedHeader('P3P','CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
+    }
+
+    /**
+     * @param string $token
+     * @param $algorithm
+     * @return array
+     * @throws Exception
+     */
+    protected function decodeToken(string $token)
+    {
+        $settings=$this->container->get('settings');
+        $auth = $settings['auth'];
+        $secret=$auth['secret'];
+
+        $algorithm = ["HS256", "HS512", "HS384"];
+
+        try {
+            $decoded = JWT::decode(
+                $token,
+                $secret,
+                (array) $algorithm
+            );
+            return (array) $decoded;
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+            throw $exception;
+        }
     }
 
     public function toDateTime($date) {

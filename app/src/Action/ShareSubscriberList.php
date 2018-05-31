@@ -5,6 +5,7 @@ namespace App\Action;
 
 use App\Resource\IExportAdapter;
 use Exception;
+use Firebase\JWT\JWT;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -15,6 +16,7 @@ class ShareSubscriberList extends AbstractAction
      * @param $response Response
      * @param $args
      * @return mixed
+     * @throws \Doctrine\ORM\ORMException
      */
     public function create($request, $response, $args)
     {
@@ -23,6 +25,11 @@ class ShareSubscriberList extends AbstractAction
             echo 'error 403 - missing parameter args';
             return $response->withStatus(403, 'missing parameter');
         }
+        $token = $request->getCookieParam('token');
+        $r = $this->decodeToken($token);
+
+        print_r($token);
+        die;
 
         $ownerId = $this->getOwnerId($request);
         $em = $this->getEmPrivacy($ownerId);

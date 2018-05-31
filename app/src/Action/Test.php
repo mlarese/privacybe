@@ -15,7 +15,9 @@ class Test extends AbstractAction
      * @param $args
      */
     public function welcome($request, $response, $args) {
-        return $response->withJson(["result" => "welcome"]);
+
+        $c = $request->getCookieParams();
+        return $response->withJson(["result" => "welcome", 'c'=>$c]);
     }
 
     /**

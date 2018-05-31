@@ -67,4 +67,3 @@ $app->post('/upgrade/allow/{domainid}/{pathid}/{email}', 'App\Action\Subscribers
 
 $app->post('/api/adapters/{connector}/{adapter}/export', 'App\Action\ShareSubscriberList:create');
 
-

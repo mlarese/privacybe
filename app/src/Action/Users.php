@@ -3,6 +3,7 @@
 namespace App\Action;
 
 
+use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
@@ -26,8 +27,23 @@ class Users extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
+            $criteria = null;
 
-            $priRes->privacyListFw();
+            $list = $priRes->privacyListFw($criteria, new GroupByEmail());
+
+            $export = [];
+            foreach($list as $email => $person){
+                $newExport = [
+                    'name'=>$person['name'],
+                    'surname'=>$person['surname'],
+                    'email'=>$person['email'],
+                    'created'=>$person['created'],
+                    'language'=>$person['language']
+                ];
+                $export[] = $newExport;
+            }
+
+            return $response->withJson($this->toJson($export));
 
         } catch (ORMException $e) {
             echo $e->getMessage();

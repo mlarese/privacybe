@@ -26,9 +26,18 @@ class PrivacyRecordIntegrator implements IResultIntegrator {
     }
 
     public function integrate(&$record) {
+        /** @var IResultIntegrator $languageIntegrator */
         $languageIntegrator = new LanguageIntegrator();
+        /** @var IResultIntegrator $generalDataIntegrator */
         $generalDataIntegrator = new GeneralDataIntegrator();
+        /** @var IResultIntegrator $treatmentsIntegrator */
         $treatmentsIntegrator = new TreatmentsIntegrator();
+        /** @var IResultIntegrator $termIntegrator */
         $termIntegrator = new TermIntegrator($this->termPageMap, $this->termMap);
+
+        $languageIntegrator->integrate($record);
+        $generalDataIntegrator->integrate($record);
+        $treatmentsIntegrator->integrate($record);
+        $termIntegrator->integrate($record);
     }
 }

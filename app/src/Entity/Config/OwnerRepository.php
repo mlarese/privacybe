@@ -103,6 +103,7 @@ class OwnerRepository
     }
 
      /**
+      * @ORM\Id
       * @ORM\Column(name="owner_id", type="integer", nullable=false)
       */
      protected $ownerId;

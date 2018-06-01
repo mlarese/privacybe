@@ -8,6 +8,8 @@ use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
 use App\Resource\OwnerExistException;
+use App\Resource\Privacy\GroupByEmailTerm;
+use App\Resource\Privacy\PostFilter;
 use App\Resource\PrivacyNotFoundException;
 use App\Resource\PrivacyResource;
 use App\Resource\PropertiesResource;
@@ -468,10 +470,7 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
-
-            $list = $priRes->privacyList($criteria);
-            $list = $priRes->groupByFactory($list, $criteria);
-            $list = $priRes->postSelectfilter($list,$criteria);
+            $list = $priRes->privacyList($criteria, new GroupByEmailTerm(), new PostFilter());
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'ORMException saving privacy');
@@ -501,10 +500,7 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
-
-            $list = $priRes->privacyList($criteria);
-            $list = $priRes->groupByFactory($list, $criteria);
-            $list = $priRes->postSelectfilter($list,$criteria);
+            $list = $priRes->privacyList($criteria, new GroupByEmailTerm(), new PostFilter());
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'ORMException saving privacy');
@@ -607,7 +603,7 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function privacyUsers($request, $response, $args) {
-        $absTermCode = Terms::ABS_DEFAULT_TERM_CODE;
+
         try {
             $ownerId = $this->getOwnerId($request);
             /** @var EntityManager $em */

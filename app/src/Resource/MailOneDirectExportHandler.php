@@ -3,6 +3,7 @@
 namespace App\Resource;
 
 
+use App\Resource\Privacy\GroupByEmail;
 use Exception;
 use function explode;
 use function json_decode;
@@ -99,8 +100,7 @@ class MailOneDirectExportHandler implements IExportAdapter
         $criteria = $body['filters'];
 
         $adapter->setSource(function () use($privacyRes, $criteria) {
-            $list = $privacyRes->privacyListFw($criteria);
-            $list = $privacyRes->groupByEmail($list, $criteria);
+            $list = $privacyRes->privacyListFw($criteria, new GroupByEmail());
 
             $export = [];
             foreach($list as $email => $person){
@@ -119,7 +119,7 @@ class MailOneDirectExportHandler implements IExportAdapter
 
         $adapter->export();
 
-        return $response->withJson(["success" => true, "options" => []]);
+        return $response->withJson(["success" => true]);
     }
 
 }

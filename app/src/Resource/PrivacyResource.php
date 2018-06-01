@@ -3,11 +3,14 @@
 namespace App\Resource;
 
 
+use App\Action\Terms;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
 use App\Resource\Privacy\LanguageIntegrator;
+use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
+use App\Resource\Privacy\TreatmentsIntegrator;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
@@ -216,7 +219,14 @@ class PrivacyResource extends AbstractResource
         $aEmail = explode('.',$email);
         return strtolower( $aEmail[count($aEmail)-1]);
     }
-    public function privacyListFw($criteria=null) {
+
+    /**
+     * @param null                $criteria
+     * @param IResultGrouper|null $grouper
+     *
+     * @return array
+     */
+    public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -283,167 +293,29 @@ class PrivacyResource extends AbstractResource
         }
 
         $results = $qb->getQuery()->getResult();
-        $languageIntegrator = new LanguageIntegrator();
-        $generalDataIntegrator = new GeneralDataIntegrator();
-        $termIntegrator = new TermIntegrator($termPageMap, $termMap);
+        $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
         foreach ($results as &$pr) {
-
-            $termIntegrator->integrate($pr);
-            $languageIntegrator->integrate($pr);
-            $generalDataIntegrator->integrate($pr);
-
+            $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
-
         }
+
+        if($grouper)  $results = $grouper->group($results,$criteria);
+        if($filter)  $results = $filter->filter($results,$criteria);
 
         return $results;
     }
 
-    public function privacyList($criteria=null) {
-        $repo = $this->getRepository();
-        $termRes = new TermResource($this->entityManager);
-        $termPageRes = new TermPageResource($this->entityManager);
-
-        $termMap = $termRes->map();
-        $termPageMap = $termPageRes->map();
-
-        $ex = $this->entityManager->getExpressionBuilder();
-        $results = [];
-
-        $fields = [
-            'p.name',
-            'p.surname',
-            'p.id',
-            'p.ip',
-            'p.created',
-            'p.domain',
-            'p.site',
-            'p.termId',
-            'p.privacy',
-            'p.privacyFlags',
-            'p.email'
-        ];
-
-        $qb = $repo->createQueryBuilder('p');
-        $ex = $qb->expr();
-        $qb
-            ->select($fields)
-            ->where('p.deleted=0')
-            ->andWhere( $ex->not("p.email=''") )
-            ->andWhere( $ex->not("p.email IS NULL") )
-
-        ;
-
-        if($criteria === null) {
-            $qb ->addOrderBy( 'p.email', 'ASC')
-                ->addOrderBy( 'p.termId', 'ASC')
-                ->addOrderBy( 'p.created', 'DESC')
-                ->addOrderBy( 'p.domain', 'ASC')
-                ->addOrderBy( 'p.site', 'ASC')
-            ;
-        } else {
-            $person = $criteria['where']['person'] ;
-            $sortField = $criteria['sort']['field'] ;
-            $sortDirection = $criteria['sort']['direction'] ;
-
-            if(isset($person) && $person!=='') {
-                $person="%${person}%";
-                $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
-                $qb
-                    ->andWhere( $ex->orX()->addMultiple($persCond))
-                    ->setParameter('person',$person);
-                ;
-            }
-
-
-            $qb ->addOrderBy( 'p.email', $sortDirection)
-                ->addOrderBy( 'p.termId', 'ASC')
-                ->addOrderBy( 'p.created', 'DESC')
-                ->addOrderBy( 'p.domain', 'ASC')
-                ->addOrderBy( 'p.site', 'ASC')
-            ;
-
-
-        }
-
-
-        $results = $qb->getQuery()->getResult();
-        $languageIntegrator = new LanguageIntegrator();
-        $termIntegrator = new TermIntegrator($termPageMap, $termMap);
-        $generalDataIntegrator = new GeneralDataIntegrator();
-
-        foreach ($results as &$pr) {
-            $termIntegrator->integrate($pr);
-            $languageIntegrator->integrate($pr);
-            $generalDataIntegrator->integrate($pr);
-
-            unset($pr['privacy']);
-            unset($pr['form']);
-
-        }
-
-        return $results;
-    }
-
-    public function groupByFactory(&$list, $criteria) {
-        return $this->groupByEmailTerm($list, $criteria);
-    }
-
-    public function groupByEmailSite(&$list, $criteria) {
-        $res = [];
-        foreach ($list as $r) {
-            if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))
-                           $res      [$r['email']]       [$r['domain'].$r['site']]   = $r;
-        }
-        return $res;
-    }
-
-    public function groupByEmailTerm(&$list, $criteria) {
-        $res = [];
-        foreach ($list as $r) {
-            if(!isset(     $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']]       ))
-                           $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']] = $r;
-        }
-        return $res;
-    }
-
-    private function canAddInList($record, $validTratments) {
-        print_r($record);
-
-        return true;
-    }
-    public function groupByEmail(&$list, $criteria) {
-        $res = [];
-
-        $validTratments = [];
-        if(isset($criteria['treatments'])) {
-            $treatments = $criteria['treatments'];
-        }
-
-        $hasTreatmentsFilter = count($validTratments) >0;
-
-        foreach ($list as &$r) {
-            if($hasTreatmentsFilter) {
-                if(!$this->canAddInList($r, $validTratments))
-                    continue;
-            }
-            $email = strtolower($r['email']);
-            if(!isset(      $res      [$email]    )) {
-                $res      [$email]   = $r;
-            }
-        }
-
-        echo '<br>can add<pre>';
-        print_r($criteria);
-        die;
-        return $res;
-    }
-
-    public function postSelectfilter(&$list,$criteria) {
-        return $list;
+    /**
+     * It is a alias for privacyListFw
+     * @param null $criteria
+     *
+     * @return array
+     */
+    public function privacyList($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
+         return $this->privacyListFw($criteria,  $grouper, $filter);
     }
 
 
@@ -452,6 +324,7 @@ class PrivacyResource extends AbstractResource
      * @return mixed
      */
     public function nativeSearchPrivacy ($criteria) {
+        $absTermCode = Terms::ABS_DEFAULT_TERM_CODE;
         $sql = "
             SELECT privacy_entry.email,
                privacy_entry.domain,

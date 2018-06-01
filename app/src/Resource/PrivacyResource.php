@@ -5,7 +5,11 @@ namespace App\Resource;
 
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
+use App\Resource\Privacy\GeneralDataIntegrator;
+use App\Resource\Privacy\LanguageIntegrator;
+use App\Resource\Privacy\TermIntegrator;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
 use http\Env\Response;
 use function json_encode;
@@ -269,93 +273,27 @@ class PrivacyResource extends AbstractResource
                 ;
             }
 
-            switch ($sort) {
-                case 'default':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
-                case 'surname':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
-
-                case 'date':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
-            }
+            $qb ->addOrderBy( 'p.email', $sortDirection)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
 
         }
 
-
         $results = $qb->getQuery()->getResult();
+        $languageIntegrator = new LanguageIntegrator();
+        $generalDataIntegrator = new GeneralDataIntegrator();
+        $termIntegrator = new TermIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
         foreach ($results as &$pr) {
 
-            $pr['page'] = $pr['domain'].$pr['site'] ;
+            $termIntegrator->integrate($pr);
+            $languageIntegrator->integrate($pr);
+            $generalDataIntegrator->integrate($pr);
 
-
-            $termIdFromPages = '0';
-            if(isset($termPageMap[$pr['domain']][$pr['site']])) {
-                $termIdFromPages = $termPageMap[$pr['domain']][$pr['site']];
-            }
-
-            if($pr['termId']==='0') {
-                if(isset($pr['privacy']['termId'])) {
-                    $pr['termId'] = $pr['privacy']['termId'];
-                } else {
-                    $pr['termId'] = $termIdFromPages;
-                }
-            }
-
-            if($pr['termId']==='0') {
-                $pr['termId']='no-term-id';
-            }
-
-            if(isset($pr['privacy']['language'])) {
-                $pr['language'] =  $pr['privacy']['language'];
-            } else if(isset($pr['form']['newsletter[language]'] )) {
-                $pr['language'] = $pr['form']['newsletter[language]'];
-
-            } else if(isset($pr['form']['enquiry[enquiry_guest_language]'] )) {
-                $pr['language'] = $pr['form']['enquiry[enquiry_guest_language]'];
-            } else if(isset($pr['form']['enquiry[enquiry_newsletter_language]'] )) {
-                $pr['language'] = $pr['form']['enquiry[enquiry_newsletter_language]'];
-            } else if(isset($pr['form']['reservation_guest_language'] )) {
-                $pr['language'] = $pr['form']['reservation_guest_language'];
-            }else {
-                $pr['language'] =  'it';
-            }
-            $pr['language'] =  strtolower($pr['language'] );
-
-            $pr['referrer'] = $pr['page'];
-            if(isset($pr['privacy']['referrer']))
-                $pr['referrer'] =  $pr['privacy']['referrer'];
-
-            $pr['denomination'] = $pr['surname'].' '.$pr['name'] ;
-            $uid = $pr['termId'];
-            if(isset($uid) && "$uid"!="0") {
-                if(isset($termMap[$uid])) {
-                    $pr['termName'] = $termMap[$uid]['name'];
-                } else {
-                    $pr['termName'] =  'Normativa non memorizzata';
-                }
-            } else {
-                $pr['termName'] = 'Normativa non memorizzata';
-            }
             unset($pr['privacy']);
             unset($pr['form']);
 
@@ -420,82 +358,30 @@ class PrivacyResource extends AbstractResource
                 ;
             }
 
-            switch ($sortField) {
-                case 'default':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
-                case 'surname':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
 
-                case 'date':
-                    $qb ->addOrderBy( 'p.email', $sortDirection)
-                        ->addOrderBy( 'p.termId', 'ASC')
-                        ->addOrderBy( 'p.created', 'DESC')
-                        ->addOrderBy( 'p.domain', 'ASC')
-                        ->addOrderBy( 'p.site', 'ASC')
-                    ;
-                    break;
-            }
+            $qb ->addOrderBy( 'p.email', $sortDirection)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
 
         }
 
 
         $results = $qb->getQuery()->getResult();
+        $languageIntegrator = new LanguageIntegrator();
+        $termIntegrator = new TermIntegrator($termPageMap, $termMap);
+        $generalDataIntegrator = new GeneralDataIntegrator();
 
         foreach ($results as &$pr) {
+            $termIntegrator->integrate($pr);
+            $languageIntegrator->integrate($pr);
+            $generalDataIntegrator->integrate($pr);
 
-            $pr['page'] = $pr['domain'].$pr['site'] ;
-
-
-            $termIdFromPages = '0';
-            if(isset($termPageMap[$pr['domain']][$pr['site']])) {
-                $termIdFromPages = $termPageMap[$pr['domain']][$pr['site']];
-            }
-
-            if($pr['termId']==='0') {
-                if(isset($pr['privacy']['termId'])) {
-                    $pr['termId'] = $pr['privacy']['termId'];
-                } else {
-                    $pr['termId'] = $termIdFromPages;
-                }
-            }
-
-            if($pr['termId']==='0') {
-                $pr['termId']='no-term-id';
-            }
-
-            if(isset($pr['privacy']['language']))
-                $pr['language'] =  $pr['privacy']['language'];
-            else
-                $pr['language'] =  'it';
-
-            $pr['referrer'] = $pr['page'];
-            if(isset($pr['privacy']['referrer']))
-                $pr['referrer'] =  $pr['privacy']['referrer'];
-
-            $pr['denomination'] = $pr['surname'].' '.$pr['name'] ;
-            $uid = $pr['termId'];
-            if(isset($uid) && "$uid"!="0") {
-                if(isset($termMap[$uid])) {
-                    $pr['termName'] = $termMap[$uid]['name'];
-                } else {
-                    $pr['termName'] = 'Normativa non memorizzata';
-                }
-            } else {
-                $pr['termName'] = 'Normativa non memorizzata';
-            }
             unset($pr['privacy']);
+            unset($pr['form']);
 
         }
 
@@ -558,5 +444,49 @@ class PrivacyResource extends AbstractResource
 
     public function postSelectfilter(&$list,$criteria) {
         return $list;
+    }
+
+
+    /**
+     * @param $criteria
+     * @return mixed
+     */
+    public function nativeSearchPrivacy ($criteria) {
+        $sql = "
+            SELECT privacy_entry.email,
+               privacy_entry.domain,
+               privacy_entry.site,
+               CASE 
+                  WHEN privacy_entry.term_id='0' THEN IFNULL(term_page.term_uid, $absTermCode)
+                  ELSE privacy_entry.term_id
+              END as pr_term_id 
+               
+
+              FROM privacy_entry 
+              left join 
+                term_page on 
+                  term_page.domain = privacy_entry.domain and
+                  term_page.page = privacy_entry.site
+                
+              where 
+              privacy_entry.deleted = 0 
+              AND (not email IS NULL AND NOT email = '')
+              
+              group by email
+            ";
+        $rsm = new ResultSetMapping();
+
+
+        $rsm->addScalarResult('email', 'email');
+        $rsm->addScalarResult('domain', 'domain');
+        $rsm->addScalarResult('site', 'site');
+        $rsm->addScalarResult('term_uid', 'term_uid');
+        $rsm->addScalarResult('term_id', 'term_id');
+        $rsm->addScalarResult('pr_term_id', 'pr_term_id');
+
+        $qn = $this->entityManager->createNativeQuery($sql, $rsm);
+        $users = $this->entityManager->getResult();
+
+        return $users;
     }
 }

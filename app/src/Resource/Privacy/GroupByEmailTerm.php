@@ -11,7 +11,7 @@ class GroupByEmailTerm implements IResultGrouper
         $res = [];
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']]       ))
-                $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']] = $r;
+                           $res      [$r['email']]   [$r['termId']]  [$r['domain'].$r['site']] = $r;
         }
         return $res;
     }

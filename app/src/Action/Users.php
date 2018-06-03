@@ -45,6 +45,7 @@ class Users extends AbstractAction
 
             return $response->withJson($this->toJson($export));
 
+
         } catch (ORMException $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'ORMException saving privacy');
@@ -53,5 +54,34 @@ class Users extends AbstractAction
             return $response->withStatus(500, 'Exception saving privacy');
         }
 
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws ORMException
+     */
+    public function privacyUser($request, $response, $args) {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+
+            $email = $args['email'];
+            $email = urldecode(   base64_decode($email));
+
+
+            $privacyRes = new PrivacyResource($em);
+            $user = $privacyRes->privacyRecord($email);
+
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error');
+        }
+
+        return $response->withJson( $user);
     }
 }

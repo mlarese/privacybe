@@ -7,7 +7,7 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 //user list
 $app->post('/api/owner/usersearch', 'App\Action\Users:search');
-
+$app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
 
 //widget
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
@@ -31,6 +31,7 @@ $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 // privacy
 $app->post('/api/owner/privacygrp', 'App\Action\PrivacyManager:searchPrivacyGrouped');
 $app->post('/api/owner/privacyusers', 'App\Action\PrivacyManager:privacyUsers');
+
 
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');

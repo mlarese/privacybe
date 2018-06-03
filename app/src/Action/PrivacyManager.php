@@ -424,33 +424,7 @@ class PrivacyManager extends AbstractAction
 
     }
 
-    /**
-     * @param $request Request
-     * @param $response Response
-     * @param $args
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
-     */
-    public function searchPrivacy($request, $response, $args)
-    {
-        $ownerId = $this->getOwnerId($request);
-        $list = [];
-        try {
-            /** @var EntityManager $em */
-            $em = $this->getEmPrivacy($ownerId);
-            $priRes = new PrivacyResource($em);
 
-            $list = $priRes->privacyList();
-        } catch (ORMException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'ORMException saving privacy');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Exception saving privacy');
-        }
-
-        return $response->withJson($list);
-    }
 
     /**
      * @param $request Request
@@ -603,7 +577,7 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function privacyUsers($request, $response, $args) {
-
+        return $response->withStatus(500, 'not implemented');
         try {
             $ownerId = $this->getOwnerId($request);
             /** @var EntityManager $em */
@@ -622,4 +596,5 @@ class PrivacyManager extends AbstractAction
 
         return $response->withJson( $users);
     }
+
 }

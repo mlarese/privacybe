@@ -12,7 +12,7 @@ class GroupByEmail implements IResultGrouper
         foreach ($list as &$r) {
             $email = strtolower($r['email']);
             if(!isset(      $res      [$email]    )) {
-                $res      [$email]   = $r;
+                            $res      [$email]   = $r;
             }
         }
 

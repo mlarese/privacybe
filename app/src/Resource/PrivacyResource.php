@@ -7,6 +7,7 @@ use App\Action\Terms;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
+use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\LanguageIntegrator;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
@@ -318,6 +319,69 @@ class PrivacyResource extends AbstractResource
          return $this->privacyListFw($criteria,  $grouper, $filter);
     }
 
+
+    public function privacyRecord($email) {
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.ip',
+            'p.created',
+            'p.telephone',
+            'p.deleted',
+            'p.ref',
+            'p.domain',
+            'p.site',
+            'p.termId',
+            'p.privacy',
+            'p.form',
+            // 'p.cryptedForm',
+            'p.privacyFlags',
+            'p.email'
+        ];
+
+        $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( "p.email=:email")
+            ->setParameter('email', $email)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
+
+        $results = $qb->getQuery()->getResult();
+        $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+
+        // guest[reservation_guest_language]":"en"
+        foreach ($results as &$pr) {
+            $privacyRecordIntegrator->integrate($pr);
+        }
+
+        $groupByEmailTerm = new GroupByEmailTerm();
+        $results=$groupByEmailTerm->group($results,null);
+        $results =$results[$email];
+
+        // $ret =[];
+        // foreach ($results as $term=>$privacy){
+        //     $ret[]=['termId'=>$term, 'privacy'=>$privacy];
+        // }
+        return $results;
+    }
 
     /**
      * @param $criteria

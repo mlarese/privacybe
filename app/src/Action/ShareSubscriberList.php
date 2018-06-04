@@ -41,27 +41,41 @@ class ShareSubscriberList extends AbstractAction
 
             $service = $container->get($args['connector']);
 
-            $adapter = $container->get($args['adapter']);
+            $adapter = $container->get($args['connector'] . '_' . $args['adapter']);
 
 
             $adapter->setEndpoint($service);
 
-            /** @var IExportAdapter $hadapter */
-            $connectors = $container->get($args['adapter'] . "_service");
+        }
+        catch (\Exception $e){
 
-            $hadapter = $container->get($args['adapter'] . "_handler");
+            return $response->withJson($this->error());
+
+        }
+        try {
+            /** @var IExportAdapter $hadapter */
+            $connectors = $container->get($args['connector'] . '_' . $args['adapter'] . "_service");
+        }
+        catch (\Exception $e){
+
+        }
+
+        try {
+
+
+            $hadapter = $container->get( $args['adapter'] . "_handler");
+
 
             $hadapter->setEntityManager($em);
 
             $hadapter->setOwner($ownerId);
 
             return  $hadapter->handle($adapter,$ownerId,$request,$response,$args);
-
-
         }
         catch (\Exception $e){
 
         }
+
 
         return $response->withJson($this->error());
 

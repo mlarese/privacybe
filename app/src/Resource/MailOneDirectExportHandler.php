@@ -70,6 +70,7 @@ class MailOneDirectExportHandler implements IExportAdapter
         }
 
         if ($args['action'] == 'export') {
+
             $body = $request->getParsedBody();
 
             if (!isset($body) || $body === null) {
@@ -93,10 +94,10 @@ class MailOneDirectExportHandler implements IExportAdapter
                 $body = json_decode($body[1], true);
             }
 
-        if ($body && is_array($body) && count($body) != 4) {
-            echo 'error 403 - missing parameter';
-            return $response->withStatus(403, 'missing parameter');
-        }
+            if ($body && is_array($body) && count($body) != 4) {
+                echo 'error 403 - missing parameter';
+                return $response->withStatus(403, 'missing parameter');
+            }
 
             if (!isset($body['contactlistname'])) {
                 echo 'error 403 - missing name parameter';
@@ -119,11 +120,15 @@ class MailOneDirectExportHandler implements IExportAdapter
             }
 
 
+
             $adapter->setName($body['contactlistname']);
 
             $adapter->setEmail($body['contactlistemail']);
+
             $adapter->setReplyEmail($body['contactlistreplytoemail']);
+
         }
+
         $adapter->setAction($args['action']);
         $adapter->setOwner($this->owner);
 
@@ -150,12 +155,7 @@ class MailOneDirectExportHandler implements IExportAdapter
             return $export;
         });
 
-        try {
-            $result = $adapter->export();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'error');
-        }
+        $result = $adapter->export();
 
         return $response->withJson(["success" => true,"data" =>$result ]);
     }

@@ -65,7 +65,7 @@ class MailOneDirectExportHandler implements IExportAdapter
 
         if ($body && is_array($body) && count($body) != 4) {
             echo 'error 403 - missing parameter';
-            return $response->withStatus(403, 'missing parameter');
+            return $response->withStatus(403, 'missing parameter ');
         }
 
         if (!isset($body['contactlistname'])) {

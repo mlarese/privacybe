@@ -35,6 +35,7 @@ class Users extends AbstractAction
             $export = [];
             foreach($list as $email => $person){
                 $newExport = [
+                    'id' => $person['id'],
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],

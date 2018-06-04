@@ -235,6 +235,22 @@ class PrivacyResource extends AbstractResource
         $termMap = $termRes->map();
         $termPageMap = $termPageRes->map();
 
+        $validTreatments = [];
+        if(isset($criteria)) {
+            foreach ($criteria['treatments'] as $tr) {
+                if($tr['selected']) {
+                    foreach($tr['terms'] as $term ) {
+                        if($term['selected']) {
+                            $validTreatments [$tr['code']][$term['uid']] = true;
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        // print_r($validTreatments);die;
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
 
@@ -293,14 +309,32 @@ class PrivacyResource extends AbstractResource
 
         }
 
-        $results = $qb->getQuery()->getResult();
+        $searchResult = $qb->getQuery()->getResult();
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
-        foreach ($results as &$pr) {
+        $results = [];
+
+        foreach ($searchResult as &$pr) {
+
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
+
+            $includeRec = false;
+
+            foreach ($pr['privacyFlags'] as $f) {
+
+                if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
+                    $includeRec = true;
+                    // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
+                    break;
+                }
+            }
+
+            if($includeRec) $results[] = $pr;
+            //print_r($pr);
+            //die;
         }
 
         if($grouper)  $results = $grouper->group($results,$criteria);

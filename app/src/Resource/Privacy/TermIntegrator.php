@@ -4,6 +4,7 @@ namespace App\Resource\Privacy;
 
 
 use App\Resource\IResultIntegrator;
+use App\Action\Terms;
 
 class TermIntegrator implements IResultIntegrator
 {
@@ -24,7 +25,7 @@ class TermIntegrator implements IResultIntegrator
 
     public function integrate(&$record)
     {
-        
+
         $termIdFromPages = '0';
         if(isset($this->termPageMap[$record['domain']][$record['site']])) {
             $termIdFromPages = $this->termPageMap[$record['domain']][$record['site']];
@@ -38,7 +39,7 @@ class TermIntegrator implements IResultIntegrator
             }
         }
         if($record['termId']==='0') {
-            $record['termId']='no-term-id';
+            $record['termId']= Terms::ABS_DEFAULT_TERM_CODE;
         }
 
 
@@ -50,15 +51,15 @@ class TermIntegrator implements IResultIntegrator
             if(isset($termMap[$uid])) {
                 $record['termName'] = $this->termMap[$uid]['name'];
             } else {
-                $record['termName'] =  'Normativa non memorizzata';
+                $record['termName'] =  Terms::ABS_DEFAULT_TERM_NAME;
             }
         } else {
-            $record['termName'] = 'Normativa non memorizzata';
+            $record['termName'] = Terms::ABS_DEFAULT_TERM_NAME;
         }
         /***************** term name *******************/
         /***********************************************/
-        
+
         return $record;
-       
+
     }
 }

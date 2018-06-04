@@ -4,6 +4,7 @@ namespace App\Resource;
 
 use App\Entity\Config\OwnerRepository;
 
+use App\Helpers\MailOneCustomForm;
 use App\Service\MailOneService;
 use Doctrine\ORM\EntityManager;
 
@@ -101,15 +102,20 @@ class MailOneDirectExport  implements IDirectExport
 
                 $list = intval($list);
                 if($list>0){
+
+                     $responsecf = $this->connector->getCustomFields($list);
+                     $objCustomForm = new MailOneCustomForm($list,$responsecf);
+
+
                      foreach ($this->data as $value){
-                         $tmp = array();
+
                          if(isset($value['language']) &&  $value['language']!=''){
-                             $tmp['language'] = $value['language'];
+
+                              $objCustomForm->setFieldValue('language', $value['language']);
                          }
 
+                        $res = $this->connector->addSubscriber($list,$value['email'],1,'html',$objCustomForm->getCustomFields());
 
-                        $res = $this->connector->addSubscriber($list,$value['email'],1,'html',$tmp);
-                         // print_r($res); die;
                     }
                 }
 

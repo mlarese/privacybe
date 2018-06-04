@@ -26,7 +26,10 @@ class ShareSubscriberList extends AbstractAction
             return $response->withStatus(403, 'missing parameter');
         }
 
+
+
         $ownerId = $this->getOwnerId($request);
+
         $em = $this->getEmPrivacy($ownerId);
 
         $container = $this->getContainer();
@@ -34,22 +37,84 @@ class ShareSubscriberList extends AbstractAction
 
         try{
 
+
+
             $service = $container->get($args['connector']);
 
             $adapter = $container->get($args['adapter']);
 
+
             $adapter->setEndpoint($service);
 
             /** @var IExportAdapter $hadapter */
+            $connectors = $container->get($args['adapter'] . "_service");
 
             $hadapter = $container->get($args['adapter'] . "_handler");
+
             $hadapter->setEntityManager($em);
+
+            $hadapter->setOwner($ownerId);
 
             return  $hadapter->handle($adapter,$ownerId,$request,$response,$args);
 
 
         }
         catch (\Exception $e){
+
+        }
+
+        return $response->withJson($this->error());
+
+    }
+
+    public function list($request, $response, $args)
+    {
+
+
+        if (count($args) < 2) {
+            echo 'error 403 - missing parameter args';
+            return $response->withStatus(403, 'missing parameter');
+        }
+
+
+
+        $ownerId = $this->getOwnerId($request);
+
+        $em = $this->getEmPrivacy($ownerId);
+
+        $container = $this->getContainer();
+
+
+        try{
+
+
+
+            $service = $container->get($args['connector']);
+
+            $adapter = $container->get($args['adapter']);
+
+
+            $adapter->setEndpoint($service);
+
+
+
+            /** @var IExportAdapter $hadapter */
+            $connectors = $container->get($args['adapter'] . "_service");
+
+
+            $hadapter = $container->get($args['adapter'] . "_handler");
+
+            $hadapter->setEntityManager($em);
+
+            $hadapter->setOwner($ownerId);
+
+            return  $hadapter->handle($adapter,$ownerId,$request,$response,$args);
+
+
+        }
+        catch (\Exception $e){
+
+
 
         }
 

@@ -333,13 +333,13 @@ class PrivacyResource extends AbstractResource
             }
 
             if($includeRec) $results[] = $pr;
-            //print_r($pr);
-            //die;
+            // print_r($pr);  die;
         }
 
         if($grouper)  $results = $grouper->group($results,$criteria);
         if($filter)  $results = $filter->filter($results,$criteria);
 
+        // print_r($results);  die;
         return $results;
     }
 

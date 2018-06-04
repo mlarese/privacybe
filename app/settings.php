@@ -14,6 +14,11 @@ return [
                 'doctrine_privacy' => function ($path){return true;},
             ]
         ],
+        'MailOne' => [
+            'entrypoint' => 'http://www.mail-one.it/mailone/xml.php',
+            'mmuser' => 'admin',
+            'mmpassword' => '80c90326274099981dc47961023fb56924901085',
+        ],
         // monolog settings
         'logger' => [
             'name' => 'app',

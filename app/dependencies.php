@@ -96,13 +96,15 @@ $container['couponStoreOne'] = function ($container) {
 };
 
 $container['mailone'] = function ($container) {
-    $exportService = new \App\Resource\MailOneCsvExport();
+
+    $exportService = new \App\Resource\MailOneDirectExport($container);
 
     return $exportService;
 };
 
 $container['direct'] = function ($container) {
-    $exportService = new \App\Resource\MailOneDirectExportAdapter(null);
+
+    $exportService = new \App\Resource\MailOneDDirectExportAdapter(null);
 
     return $exportService;
 };
@@ -114,6 +116,20 @@ $container['direct_handler'] = function ($container) {
 
     return $exportService;
 };
+
+
+
+
+
+$container['direct_service'] = function ($container) {
+    $settings = $container->get('settings');
+
+    $exportService = \App\Service\MailOneService::getInstance($settings['MailOne'],true);
+
+    return $exportService;
+};
+
+
 
 
 

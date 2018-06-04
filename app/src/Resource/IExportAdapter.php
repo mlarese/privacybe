@@ -13,6 +13,10 @@ interface IExportAdapter {
      */
     public function setEntityManager(EntityManager $entityManager);
 
+    public function setOwner($value);
+
+
+
     /**
      * @param $adapter IDirectExport
      * @param $ownerId

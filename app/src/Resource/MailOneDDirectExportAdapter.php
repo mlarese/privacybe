@@ -2,33 +2,40 @@
 namespace App\Resource;
 
 
-class MailOneDirectExportAdapter extends  AbstractAdapter implements IDirectExport
+class MailOneDDirectExportAdapter extends  AbstractAdapter implements IDirectExport
 {
 
 
     /**
-     * @var ICsvExport
+     * @var IDirectExport
      */
     protected $controller;
 
-    public function setOwner($value)
+
+
+    public function __construct(IDirectExport $object = null)
     {
-        // TODO: Implement setOwner() method.
+
+        $this->controller = $object;
+
     }
 
-    public function __construct(ICsvExport $object = null)
+    public function setOwner($value)
     {
-        $this->controller = $object;
+
+       $this->controller->setOwner($value);
     }
 
     public function setEndpoint($value)
     {
         $this->controller = $value;
+
     }
+
 
     public function setAction($action)
     {
-        // Non serve
+        $this->controller->setAction($action);
     }
 
     public function setSource($data)
@@ -36,7 +43,7 @@ class MailOneDirectExportAdapter extends  AbstractAdapter implements IDirectExpo
         $contacts = $data();
 
 
-        $this->controller->setData($contacts);
+        $this->controller->setSource($contacts);
     }
 
     public function setName($value)
@@ -47,17 +54,16 @@ class MailOneDirectExportAdapter extends  AbstractAdapter implements IDirectExpo
 
     public function setReplyEmail($email)
     {
-        // Non serve
+        $this->controller->setReplyEmail($email);
     }
 
     public function setEmail($email)
     {
-        // Non serve
+        $this->controller->setEmail($email);
     }
 
     public function export()
     {
-        $this->controller->saveFile();
-        return true;
+       return $this->controller->export();
     }
 }

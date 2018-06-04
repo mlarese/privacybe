@@ -109,6 +109,14 @@ class MailOneDirectExport  implements IDirectExport
 
                      foreach ($this->data as $value){
 
+                         if(isset($value['name']) &&  $value['name']!=''){
+
+                             $objCustomForm->setFieldValue('name', $value['name']);
+                         }
+                         if(isset($value['surname']) &&  $value['surname']!=''){
+
+                             $objCustomForm->setFieldValue('surname', $value['surname']);
+                         }
                          if(isset($value['language']) &&  $value['language']!=''){
 
                               $objCustomForm->setFieldValue('language', $value['language']);

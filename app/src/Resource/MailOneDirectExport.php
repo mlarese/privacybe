@@ -99,8 +99,21 @@ class MailOneDirectExport  implements IDirectExport
                 $list = $this->connector->createContactList($this->user, $this->userpassword, $this->ownername , $this->name, $this->owneremail, $this->ownerreplayemail);
                 if($list===false) throw new \Exception("MailOne account not configured");
 
+                $list = intval($list);
+                if($list>0){
+                     foreach ($this->data as $value){
+                         $tmp = array();
+                         if(isset($value['language']) &&  $value['language']!=''){
+                             $tmp['language'] = $value['language'];
+                         }
+
+                        $this->connector->addSubscriber($list,$value['email'],1,'html',$tmp);
+
+                    }
+                }
+
                 $response = array(
-                    'id' => intval($list)
+                    'id' => $list
                 );
 
 

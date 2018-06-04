@@ -70,6 +70,7 @@ class MailOneDirectExportHandler implements IExportAdapter
         }
 
         if ($args['action'] == 'export') {
+
             $body = $request->getParsedBody();
 
             if (!isset($body) || $body === null) {
@@ -92,7 +93,6 @@ class MailOneDirectExportHandler implements IExportAdapter
 
                 $body = json_decode($body[1], true);
             }
-
 
             if ($body && is_array($body) && count($body) != 4) {
                 echo 'error 403 - missing parameter';
@@ -120,11 +120,15 @@ class MailOneDirectExportHandler implements IExportAdapter
             }
 
 
+
             $adapter->setName($body['contactlistname']);
 
             $adapter->setEmail($body['contactlistemail']);
+
             $adapter->setReplyEmail($body['contactlistreplytoemail']);
+
         }
+
         $adapter->setAction($args['action']);
         $adapter->setOwner($this->owner);
 

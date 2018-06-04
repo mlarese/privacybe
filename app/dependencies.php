@@ -95,12 +95,38 @@ $container['couponStoreOne'] = function ($container) {
     return $couponService;
 };
 
+$container['csv'] = function ($container) {
+
+    $exportService = new \App\Resource\MailOneCsvExport();
+
+    return $exportService;
+};
+
+
 $container['mailone'] = function ($container) {
 
     $exportService = new \App\Resource\MailOneDirectExport($container);
 
     return $exportService;
 };
+
+
+$container['csv_direct'] = function ($container) {
+
+    $exportService = new \App\Resource\MailOneDirectExportAdapter(null);
+
+    return $exportService;
+};
+
+
+
+$container['mailone_direct'] = function ($container) {
+
+    $exportService = new \App\Resource\MailOneDDirectExportAdapter(null);
+
+    return $exportService;
+};
+
 
 $container['direct'] = function ($container) {
 

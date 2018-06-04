@@ -43,23 +43,6 @@ class PrivacyResource extends AbstractResource
         return $prRec;
     }
 
-/*
-`uid` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
-`created` datetime DEFAULT CURRENT_TIMESTAMP,
-`email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`ref` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-`surname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`form` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
-`crypted_form` longtext COLLATE utf8_unicode_ci,
-`privacy` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json_array)',
-`privacy_flags` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
-`term_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`domain` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`site` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`ip` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-`telephone` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
-`deleted` tinyint(1) NOT NULL DEFAULT '0',*/
 
     public function getRepository(){
         return $this->entityManager->getRepository(Privacy::class);
@@ -230,7 +213,6 @@ class PrivacyResource extends AbstractResource
      * @return array
      */
     public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
-
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -265,9 +247,9 @@ class PrivacyResource extends AbstractResource
         $ex = $qb->expr();
         $qb
             ->select($fields)
-            ->where('p.deleted=0')
-            ->andWhere( $ex->not("p.email=''") )
-            ->andWhere( $ex->not("p.email IS NULL") )
+            // ->where('p.deleted=0')
+            // ->andWhere( $ex->not("p.email=''") )
+            // ->andWhere( $ex->not("p.email IS NULL") )
         ;
 
         if($criteria === null) {
@@ -286,6 +268,7 @@ class PrivacyResource extends AbstractResource
             if(isset($person) && $person!=='') {
                 $person="%${person}%";
                 $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
+
                 $qb
                     ->andWhere( $ex->orX()->addMultiple($persCond))
                     ->setParameter('person',$person);
@@ -307,15 +290,16 @@ class PrivacyResource extends AbstractResource
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
-        foreach ($results as &$pr) {
 
+
+        foreach ($results as &$pr) {
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
         }
 
-        if($grouper)  $results = $grouper->group($results,$criteria);
         if($filter)  $results = $filter->filter($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
 
 
         return $results;

@@ -28,8 +28,11 @@ class Users extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
-            $criteria = null;
+            $body  = $request->getParsedBody();
 
+            $criteria = null;
+            if(isset($body['filters']))
+                $criteria = $body['filters'];
 
             $list = $priRes->privacyListFw($criteria, new GroupByEmail());
 
@@ -37,6 +40,8 @@ class Users extends AbstractAction
             foreach($list as $email => $person){
                 $newExport = [
                     'id' => $person['id'],
+                    '_counter_' => isset($person['_counter_'])?$person['_counter_']:0,
+                    '_flags_' => isset($person['_flags_'])?$person['_flags_']:[],
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],

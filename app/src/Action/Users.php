@@ -3,6 +3,7 @@
 namespace App\Action;
 
 
+use App\Entity\Privacy\Privacy;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
@@ -83,5 +84,86 @@ class Users extends AbstractAction
         }
 
         return $response->withJson( $user);
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function updateTerms($request, $response, $args)
+    {
+        $ownerId = $this->getOwnerId($request);
+        $body = $request->getParsedBody();
+
+        try {
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $priRes = new PrivacyResource($em);
+
+            foreach ($body as $privacy) {
+                /** @var Privacy $p */
+                $p = $em->find(Privacy::class, $privacy['id']);
+
+                $p->setPrivacy($privacy['privacy'])
+                    ->setPrivacyFlags($privacy['privacyFlags'])
+                ;
+
+                $em->merge($p);
+            }
+
+            $em->flush();
+
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+        return  $response->withJson($this->success());
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function updateMainData($request, $response, $args)
+    {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $body= $request->getParsedBody();
+            $id = $args['id'];
+
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            /** @var Privacy $pr */
+            $pr = $em->find(Privacy::class, $id);
+
+            $pr
+                ->setName( $body['name'] )
+                ->setSurname( $body['surname'] )
+                ->setEmail( $body['email'] )
+                ->setTelephone( $body['telephone'] )
+            ;
+
+            $em->merge($pr);
+            $em->flush();
+
+            return  $response->withJson($this->success());
+
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
     }
 }

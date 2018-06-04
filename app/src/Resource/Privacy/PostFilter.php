@@ -20,6 +20,39 @@ class PostFilter implements IFilter {
      * @return mixed
      */
     public function filter(&$list, $criteria) {
-        return $list;
+        $ret = [];
+
+        $validTreatments = [];
+        if(isset($criteria)) {
+            foreach ($criteria['treatments'] as $tr) {
+                if($tr['selected']) {
+                    foreach($tr['terms'] as $term ) {
+                        if($term['selected']) {
+                            $validTreatments [$tr['code']][$term['uid']] = true;
+                        }
+                    }
+
+                }
+            }
+
+            foreach ($list as &$pr ) {
+                $includeRec = true;
+
+                foreach ($pr['privacyFlags'] as $f) {
+                    if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
+                        $includeRec = true;
+                        // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
+                        break;
+                    }
+                }
+
+                if($includeRec) $ret[] = $pr;
+            }
+
+        } else {
+            $ret = &$list;
+        }
+
+        return $ret;
     }
 }

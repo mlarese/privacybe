@@ -9,6 +9,7 @@ use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\LanguageIntegrator;
+use App\Resource\Privacy\PostFilter;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
@@ -237,26 +238,10 @@ class PrivacyResource extends AbstractResource
         $termMap = $termRes->map();
         $termPageMap = $termPageRes->map();
 
-        $validTreatments = [];
-        if(isset($criteria)) {
-            foreach ($criteria['treatments'] as $tr) {
-                if($tr['selected']) {
-                    foreach($tr['terms'] as $term ) {
-                        if($term['selected']) {
-                            $validTreatments [$tr['code']][$term['uid']] = true;
-                        }
-                    }
-
-                }
-
-            }
+        if(!isset($filter)) {
+            $filter = new PostFilter();
         }
 
-        // set_time_limit(500);
-        // ignore_user_abort(true);
-        // ini_set('memory_limit','1024GB');
-
-        // print_r($validTreatments);die;
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
 
@@ -327,18 +312,6 @@ class PrivacyResource extends AbstractResource
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
-
-            $includeRec = true;
-
-            // foreach ($pr['privacyFlags'] as $f) {
-            //     if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
-            //         $includeRec = true;
-            //         // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
-            //         break;
-            //     }
-            // }
-
-            // if($includeRec) $results[] = $pr;
         }
 
         if($grouper)  $results = $grouper->group($results,$criteria);

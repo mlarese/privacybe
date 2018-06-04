@@ -144,6 +144,13 @@ $container['direct_handler'] = function ($container) {
 };
 
 
+$container['mailone_direct_service'] = function ($container) {
+    $settings = $container->get('settings');
+
+    $exportService = \App\Service\MailOneService::getInstance($settings['MailOne'],true);
+
+    return $exportService;
+};
 
 
 

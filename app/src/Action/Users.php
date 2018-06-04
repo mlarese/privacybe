@@ -30,6 +30,7 @@ class Users extends AbstractAction
             $priRes = new PrivacyResource($em);
             $criteria = null;
 
+
             $list = $priRes->privacyListFw($criteria, new GroupByEmail());
 
             $export = [];

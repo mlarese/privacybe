@@ -3,7 +3,7 @@
 namespace App\Service;
 use GuzzleHttp;
 /**
- * 
+ *
  * @author giuseppe.donato
  *
  */
@@ -17,20 +17,20 @@ class MailOneService {
 	private $postXmlData = '';
 	private $error = array ();
 	private $serviceStatus = false;
-	
-	
+
+
 	CONST C_TYPE_TEXT = 'Text';
-	
+
 	CONST C_TYPE_TEXTAREA = 'Textarea';
-	
+
 	CONST C_TYPE_NUMBER = 'Number';
-	
+
 	CONST C_TYPE_DROPDOWN = 'Dropdown';
-	
+
 	CONST C_TYPE_CHECKBOX = 'Checkbox';
-	
+
 	CONST C_TYPE_RADIOBUTTON = 'Radiobutton';
-	
+
 	CONST C_TYPE_DATE = 'Date';
 
     /**
@@ -90,8 +90,8 @@ class MailOneService {
 
         return self::$instance;
     }
-	
-	
+
+
 	public function __construct($settigs,$nochek = true) {
 
 
@@ -99,10 +99,10 @@ class MailOneService {
 
 		$this->xmlUser = $settigs['mmuser'];
 		$this->xmlToken = $settigs['mmpassword'];
-		
+
 		if(!$nochek)
 		{
-			$ret = $this->checkToken ();		
+			$ret = $this->checkToken ();
 			$this->serviceStatus = $ret;
 		}
 		else
@@ -113,7 +113,7 @@ class MailOneService {
 	public function getStatus() {
 		return $this->serviceStatus;
 	}
-	
+
 	/**
 	 *
 	 * @return Ambigous <mixed, unknown>
@@ -136,21 +136,21 @@ class MailOneService {
 
 
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
 
 		return $ret;
 	}
-	
+
 	/**
 	 *
-	 * @param unknown $listId        	
-	 * @param unknown $subscriberDomain        	
+	 * @param unknown $listId
+	 * @param unknown $subscriberDomain
 	 * @return Ambigous <mixed, unknown>
 	 */
 	public function getContactListSubscribers($listId, $subscriberDomain) {
 		$listId = intval ( $listId );
-		
+
 		$this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -166,25 +166,25 @@ class MailOneService {
 				</details>
 				</xmlrequest>
 				";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 *
-	 * @param unknown $listId        	
-	 * @param unknown $subscriberDomain        	
+	 * @param unknown $listId
+	 * @param unknown $subscriberDomain
 	 * @return Ambigous <mixed, unknown>
 	 */
 	public function getCustomFields($listId) {
 		$varray = array ();
-		
+
 		if (! is_array ( $listId )) {
 			$listId = intval ( $listId );
 			$varray [] = $listId;
@@ -193,9 +193,9 @@ class MailOneService {
 				$varray [] = intval ( $v_list );
 			}
 		}
-		
+
 		$strLists = implode ( ',', $varray );
-		
+
 		$this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -206,29 +206,29 @@ class MailOneService {
 			</details>
 			</xmlrequest>
 			";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 *
-	 * @param unknown $listId        	
-	 * @param unknown $email        	
-	 * @param number $confirmed        	
-	 * @param string $format        	
-	 * @param unknown $customfields        	
+	 * @param unknown $listId
+	 * @param unknown $email
+	 * @param number $confirmed
+	 * @param string $format
+	 * @param unknown $customfields
 	 * @return boolean
 	 */
 	public function addSubscriber($listId, $email, $confirmed = 1, $format = 'html', $customfields = array()) {
 		$listId = intval ( $listId );
 		$confirmed = intval ( $confirmed );
-		
+
 		$customfieldsData = '';
 		if (! empty ( $customfields )) {
 			foreach ( $customfields as $k_custom => $v_custom ) {
@@ -237,7 +237,7 @@ class MailOneService {
 					$customfieldsData .= '<item><fieldid>' . $k_custom . '</fieldid>';
 					foreach ( $v_custom as $k2_custom => $v2_custom ) {
 						$customfieldsData .= '<value>' . $v2_custom . '</value>';
-					}	
+					}
 					$customfieldsData .= '</item>';
 				}
 				else
@@ -246,11 +246,11 @@ class MailOneService {
 				}
 			}
 		}
-		
+
 		if ($customfieldsData != '') {
 			$customfieldsData = '<customfields>' . $customfieldsData . '</customfields>';
 		}
-		
+
 		$this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -265,23 +265,23 @@ class MailOneService {
 			</details>
 			</xmlrequest>
 			";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public function deleteSubscriber($listId, $email) {
 	    $listId = intval ( $listId );
-	
+
 	    $this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -293,30 +293,30 @@ class MailOneService {
 			</details>
 			</xmlrequest>
 			";
-	
+
 			$ret = $this->callService ();
-	
+
 			$ret = $this->xml2array ( $ret );
-	
+
 			$this->postXmlData = '';
-	
+
 			if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 			return true;
 			}
-	
+
 			return false;
-	}	
-	
+	}
+
 	/**
 	 *
-	 * @param unknown $listId        	
-	 * @param unknown $subscriberEmail        	
+	 * @param unknown $listId
+	 * @param unknown $subscriberEmail
 	 * @return boolean
 	 */
 	public function isSubscriberInList($listId, $subscriberEmail) {
 		$varray = array ();
 		$xmlLists = '';
-		
+
 		if (! is_array ( $listId )) {
 			$listId = intval ( $listId );
 			$varray [] = $listId;
@@ -325,11 +325,11 @@ class MailOneService {
 				$varray [] = intval ( $v_list );
 			}
 		}
-		
+
 		foreach ( $varray as $key_list => $v_list ) {
 			$xmlLists = '<List>' . $v_list . '</List>';
 		}
-		
+
 		$this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -341,23 +341,23 @@ class MailOneService {
 			</details>
 			</xmlrequest>
 			";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 *
-	 * @param unknown $userName        	
+	 * @param unknown $userName
 	 * @return Ambigous <boolean, mixed, unknown>|boolean
 	 */
 	public function checkUser($userName) {
@@ -371,22 +371,22 @@ class MailOneService {
 		</details>
 		</xmlrequest>
 		";
-		
+
 		$ret = $this->callService ();
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret !== false) {
-			
+
 			if (! is_array ( $ret ) && ! (current ( $ret ) instanceof SimpleXMLElement)) {
-				
+
 				$intUser = ( integer ) $ret;
-				
+
 				if ($intUser > 0) {
 					/**
 					 * Leggo I dati utente
 					 */
-					
+
 					$this->postXmlData = "<xmlrequest>
 							<username>" . $this->xmlUser . "</username>
 							<usertoken>" . $this->xmlToken . "</usertoken>
@@ -397,24 +397,24 @@ class MailOneService {
 							</details>
 							</xmlrequest>
 							";
-					
+
 					$ret = $this->callService ();
-					
+
 					if ($ret && is_object ( $ret ) && property_exists ( $ret, 'userid' ) && $ret->userid > 0) {
 						$ret = $this->xml2array ( $ret );
 						return $ret;
 					}
 				}
 			}
-			
+
 			return false;
 		} else {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param unknown $structureUser
 	 * @param unknown $structurePassword
 	 * @param unknown $fullName
@@ -514,14 +514,14 @@ class MailOneService {
 		</details>
 	</xmlrequest>
 				";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 
 		$this->postXmlData = '';
-		
+
 		if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 			return true;
 		}
@@ -530,9 +530,9 @@ class MailOneService {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param unknown $structureUser
 	 * @param unknown $structurePassword
 	 * @param unknown $fullName
@@ -559,27 +559,27 @@ class MailOneService {
 		</details>
 		</xmlrequest>
 				";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 			return  $ret [0];
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	public function createCustomField($structureUser, $structurePassword, $fieldName,$fieldType = self::C_TYPE_TEXT,$fieldLists=array(), $customData= array()) {
-		
+
 		$strLists = implode(',', $fieldLists);
-		
+
 		$customXML = '';
-		
+
 		foreach ($customData as $k_v => $v_data)
 		{
 			foreach ($v_data as $kx_v => $vx_data)
@@ -587,7 +587,7 @@ class MailOneService {
 				$customXML.= '<' . $kx_v . '>' . $vx_data . '</' . $kx_v . '>';
 			}
 		}
-		
+
 		$this->postXmlData = "<xmlrequest>
 		<username>" . $this->xmlUser . "</username>
 		<usertoken>" . $this->xmlToken . "</usertoken>
@@ -603,20 +603,20 @@ class MailOneService {
 		</details>
 		</xmlrequest>
 				";
-		
+
 		$ret = $this->callService ();
-		
+
 		$ret = $this->xml2array ( $ret );
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret && isset ( $ret [0] ) && intval ( $ret [0] ) > 0) {
 		return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 *
 	 * @return boolean
@@ -631,18 +631,18 @@ class MailOneService {
 		</details>
 		</xmlrequest>
 		";
-		
+
 		$ret = $this->callService ();
-		
+
 		$this->postXmlData = '';
-		
+
 		if ($ret !== false) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 *
 	 * @return boolean
@@ -657,6 +657,9 @@ class MailOneService {
 
 
         try{
+
+            //print_r($this->urlEntryPoint);
+            //print_r($this->postXmlData);
 
         $res = $client->request('POST', '',
             [
@@ -689,11 +692,11 @@ class MailOneService {
 
 		if ($file !== false) {
 			$xml_doc = simplexml_load_string ( $file );
-			
+
 			if ($xml_doc->status == 'SUCCESS') {
 				return $xml_doc->data;
 			} else {
-				
+
 				if (is_array ( $xml_doc->errormessage )) {
 					foreach ( $xml_doc->errormessage as $child ) {
 						$this->error [] = trim ( ( string ) $child );
@@ -707,7 +710,7 @@ class MailOneService {
 
 		return false;
 	}
-	
+
 	/**
 	 *
 	 * @return multitype:
@@ -715,11 +718,11 @@ class MailOneService {
 	public function getLastError() {
 		return $this->error;
 	}
-	
+
 	/**
 	 *
-	 * @param unknown $xmlObject        	
-	 * @param unknown $out        	
+	 * @param unknown $xmlObject
+	 * @param unknown $out
 	 * @return Ambigous <mixed, unknown>
 	 */
 	private function xml2array($xmlObject, $out = array ()) {

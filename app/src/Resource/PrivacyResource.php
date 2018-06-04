@@ -18,6 +18,7 @@ use Exception;
 use http\Env\Response;
 use function json_encode;
 use function strtolower;
+use function var_dump;
 
 class PrivacyResource extends AbstractResource
 {
@@ -228,6 +229,7 @@ class PrivacyResource extends AbstractResource
      * @return array
      */
     public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
+
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -250,6 +252,10 @@ class PrivacyResource extends AbstractResource
             }
         }
 
+        // set_time_limit(500);
+        // ignore_user_abort(true);
+        // ini_set('memory_limit','1024GB');
+
         // print_r($validTreatments);die;
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
@@ -268,6 +274,7 @@ class PrivacyResource extends AbstractResource
             'p.privacyFlags',
             'p.email'
         ];
+
 
         $qb = $repo->createQueryBuilder('p');
         $ex = $qb->expr();
@@ -309,37 +316,35 @@ class PrivacyResource extends AbstractResource
 
         }
 
-        $searchResult = $qb->getQuery()->getResult();
+        $results = $qb->getQuery()->getResult();
+
+
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
-        $results = [];
-
-        foreach ($searchResult as &$pr) {
+        foreach ($results as &$pr) {
 
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
 
-            $includeRec = false;
+            $includeRec = true;
 
-            foreach ($pr['privacyFlags'] as $f) {
+            // foreach ($pr['privacyFlags'] as $f) {
+            //     if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
+            //         $includeRec = true;
+            //         // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
+            //         break;
+            //     }
+            // }
 
-                if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
-                    $includeRec = true;
-                    // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
-                    break;
-                }
-            }
-
-            if($includeRec) $results[] = $pr;
-            // print_r($pr);  die;
+            // if($includeRec) $results[] = $pr;
         }
 
         if($grouper)  $results = $grouper->group($results,$criteria);
         if($filter)  $results = $filter->filter($results,$criteria);
 
-        // print_r($results);  die;
+
         return $results;
     }
 

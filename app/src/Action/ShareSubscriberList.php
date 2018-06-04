@@ -3,9 +3,13 @@
 namespace App\Action;
 
 
+use Adbar\Session;
 use App\Resource\IExportAdapter;
 use Exception;
 use Firebase\JWT\JWT;
+use function ignore_user_abort;
+use function session_commit;
+use function set_time_limit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -20,6 +24,10 @@ class ShareSubscriberList extends AbstractAction
      */
     public function create($request, $response, $args)
     {
+        session_commit();
+        set_time_limit(500);
+        ignore_user_abort(true);
+        ini_set('memory_limit','-1');
 
         if (count($args) < 2) {
             echo 'error 403 - missing parameter args';

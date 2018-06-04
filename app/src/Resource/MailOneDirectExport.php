@@ -107,8 +107,9 @@ class MailOneDirectExport  implements IDirectExport
                              $tmp['language'] = $value['language'];
                          }
 
-                        $this->connector->addSubscriber($list,$value['email'],1,'html',$tmp);
 
+                        $res = $this->connector->addSubscriber($list,$value['email'],1,'html',$tmp);
+                         // print_r($res); die;
                     }
                 }
 

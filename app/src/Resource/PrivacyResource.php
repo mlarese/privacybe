@@ -14,6 +14,7 @@ use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
 use http\Env\Response;
@@ -43,6 +44,30 @@ class PrivacyResource extends AbstractResource
         return $prRec;
     }
 
+    /**
+     * @param $email
+     * @throws OptimisticLockException
+     */
+    public function deletePrivacyByEmail ($email) {
+
+            $r = $this->getRepository();
+            $records = $r->findBy(["email" => $email]);
+            /** @var Privacy $record */
+            foreach ($records as $record) {
+                $id = $record->getId();
+                $this->entityManager->remove($record);
+
+                $logs = $r->findBy(["privacyId" => $id]);
+
+                /** @var PrivacyHistory $log */
+                foreach ($logs as $log) {
+                    $this->entityManager->remove($log);
+                }
+
+            }
+            $this->entityManager->flush();
+
+    }
 
     public function getRepository(){
         return $this->entityManager->getRepository(Privacy::class);
@@ -69,7 +94,7 @@ class PrivacyResource extends AbstractResource
      * @return PrivacyHistory
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function savePrivacyLog($privacyId, $jsonPrivacy, $type, $description=null)
+    public function savePrivacyLog($privacyId, $jsonPrivacy, $type, $description=null, $flush=true)
     {
         if(!isset($description)) {
             $description = 'privacy '. $type;
@@ -85,7 +110,9 @@ class PrivacyResource extends AbstractResource
        ;
 
        $this->entityManager->persist($ph);
-       $this->entityManager->flush();
+
+       if($flush)
+        $this->entityManager->flush();
 
        return $ph;
     }

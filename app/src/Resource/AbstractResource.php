@@ -4,6 +4,10 @@ namespace App\Resource;
 use App\Resource\MandatoryFieldMissingException;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 abstract class AbstractResource
 {
@@ -12,11 +16,26 @@ abstract class AbstractResource
      */
     protected $entityManager = null;
 
+    public function toJson($obj) {
+        $on = new ObjectNormalizer();
+        $on->setCircularReferenceLimit(1);
+        $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+
+        $dtn = new DateTimeNormalizer('Y-m-d');
+        $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
+
+        return $s->normalize($obj,'json');
+    }
+
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     */
     public static function guidv4()
     {
         $data = random_bytes(16);

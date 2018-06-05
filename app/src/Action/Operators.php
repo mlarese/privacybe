@@ -9,6 +9,7 @@ use App\Resource\OperatorResource;
 use App\Resource\UserExistException;
 use App\Resource\UserResource;
 use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -26,18 +27,17 @@ class Operators extends AbstractAction
      * @param $response Response
      * @param $args
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
      */
     public function getAllOperators($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
 
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getEmPrivacy($ownerId);
 
         $term = null;
         try {
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
             $term =  $em->getRepository( Operator::class)->findAll();
         } catch(\Exception $e) {
             echo $e->getMessage();
@@ -52,23 +52,23 @@ class Operators extends AbstractAction
      * @param $response Response
      * @param $args
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getOperator($request, $response, $args) {
-        $ownerId = $this->getOwnerId($request);
-        $id = $args['id'];
 
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getEmPrivacy($ownerId);
-
-        $term = $em->find(Operator::class, $id);
-
-        $js = $this->toJson($term);
-        return $response->withJson( $js);
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $id = $args['id'];
+            /**
+             * @var EntityManager $em
+             */
+            $em = $this->getEmPrivacy($ownerId);
+            $term = $em->find(Operator::class, $id);
+            $js = $this->toJson($term);
+            return $response->withJson($js);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading operators');
+        }
     }
 
     /**

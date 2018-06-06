@@ -122,6 +122,58 @@ class PrivacyManager extends AbstractAction
 
         return $response->withJson( $this->toJson($p));
     }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getPrivacyByEmail($request, $response, $args) {
+        $email = $args['id'];
+        $email = urldecode(base64_decode(email));
+        
+        $ownerHash = substr($id,37, strlen ($id));
+
+        try {
+            $ownerId = $this->findOwnerIdFromHash($ownerHash);
+        } catch (OwnerExistException $e) {
+            return $response->withStatus(500,$e->getMessage());
+        }
+        $em = $this->getEmPrivacy($ownerId);
+        $pres = new PrivacyResource($em);
+
+        try {
+            /** @var Privacy $p */
+            $p = $pres->getPrivacy($uid);
+
+            $cForm = $p->getCryptedForm();
+            $cForm = json_decode($cForm, true);
+
+            $p->setCryptedForm($cForm);
+        } catch (PrivacyNotFoundException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500,'PrivacyNotFoundException');
+        } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500,'OptimisticLockException');
+        } catch (TransactionRequiredException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500,'TransactionRequiredException');
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            $response->withStatus(500,'ORMException');
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500,'Exception');
+        }
+
+        return $response->withJson( $this->toJson($p));
+    }
+
     /**
      * @param $request Request
      * @param $response Response

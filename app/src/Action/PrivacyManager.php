@@ -225,6 +225,7 @@ class PrivacyManager extends AbstractAction
         $paragraphs = $term->getParagraphs();
         $termResponse = array();
 
+        $requestLanguage = $lang;
         foreach($paragraphs as $p) {
             if(!isset($p['text'][$lang])) {
                 $lang = 'en';
@@ -269,8 +270,156 @@ class PrivacyManager extends AbstractAction
                 "referrer" => $httpReferer,
                 "ownerId" => $ownerId,
                 "termId" => $termId,
-                "language" => $lang,
+                "language" => $requestLanguage,
                 "name" => $term->getName(),
+                "paragraphs" => $js
+            )
+        );
+    }
+
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getWidgetRequest($request, $response, $args) {
+        $_k=$request->getParam('_k');
+
+        $params=base64_decode(  urldecode($_k) );
+        //$params = $request->getHeader('Domain')[0];
+
+        $params = json_decode($params, true);
+
+
+        $lang = $params['language'];
+        $pageName = $params['page'];
+        $domainName = $params['domain'];
+        $ownerId = $params['ownerId'];
+        $ref = $params['ref'];
+        $termId = $params['termId'];
+        $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+
+        // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
+
+        /** @var EntityManager $em */
+        $cem = $this->getEmConfig();
+
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+
+        if($termId===''){
+            $termRes = new TermResource($em);
+            $termPgRes = new TermPageResource($em);
+            // $pages = $termPgRes->findByPage($domainName, $pageName);
+
+            /** @var TermPage $termPage  */
+            $termPage = $em
+                ->getRepository(TermPage::class)
+                ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
+
+            If(!isset($termPage)) {
+                return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            }
+
+            $termId = $termPage->getTermUid();
+        }
+
+        $propRes = new PropertiesResource($this->getEmConfig());
+        /** @var Term $term */
+        $term = null;
+
+        try {
+            $term = $em->find(Term::class, $termId);
+            $reqText = $propRes->widgetSendRequestText();
+            $capText = $propRes->widgetSendCaptionText();
+        } catch (PropertyNotFoundException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'PropertyNotFoundException finding term');
+        } catch (OptimisticLockException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'OptimisticLockException finding term');
+        } catch (TransactionRequiredException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'TransactionRequiredException finding term');
+        } catch (ORMException $e) {
+            echo $e->getMessage().' '.$termId;
+            return $response->withStatus(403, 'ORMException finding term with termids');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'Exception finding term');
+        }
+
+
+        If(!isset($term)) {
+            return $response->withStatus(403, "Term not found [$termId]");
+        }
+        $paragraphs = $term->getParagraphs();
+        $termResponse = array();
+
+        $requestLanguage = $lang;
+        foreach($paragraphs as $p) {
+            if(!isset($p['text'][$lang])) {
+                $lang = 'en';
+                if(!isset($p['text'][$lang])) {
+                    $lang = 'it';
+                }
+            }
+
+            $title = "";
+            if(isset($p['title'][$lang])) {
+                $title = $p['title'][$lang];
+            }
+
+            if(!isset($reqText[$lang])) {
+                $requestText = $reqText['it'];
+            }else {
+                $requestText = $reqText[$lang];
+            }
+
+            $newP = array(
+                "text" => $p['text'][$lang],
+                "treatments" => array(),
+                "scrolled" => false,
+                "title" => $title
+            );
+
+            foreach($p['treatments'] as $t) {
+                $newT = array(
+                    "code" => $t['name'],
+                    "restrictive" => $t['restrictive'],
+                    "mandatory" => $t['mandatory'],
+                    "text" => $t['text'][$lang],
+                    "selected" => false
+                );
+
+                $newP['treatments'][] = $newT;
+            }
+            $termResponse[] = $newP;
+
+        }
+
+        $js = $this->toJson($termResponse);
+        $this->addP3P($response);
+
+        $captionText = 'Send';
+        if( isset($capText[$requestLanguage]) ) {
+            $captionText = $capText[$requestLanguage];
+        }
+        return $response->withJson(
+            array(
+                "referrer" => $httpReferer,
+                "ownerId" => $ownerId,
+                "termId" => $termId,
+                "language" => $requestLanguage,
+                "name" => $term->getName(),
+                "requestText" => $requestText,
+                "captionText" => $captionText,
                 "paragraphs" => $js
             )
         );

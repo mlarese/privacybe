@@ -35,6 +35,27 @@ class PropertiesResource extends AbstractResource {
     }
 
     /**
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function widgetSendRequestText () {
+        return $this->findBy('widget_send_request_text');
+    }
+
+    /**
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function widgetSendCaptionText () {
+        return $this->findBy('widget_send_caption_text');
+    }
+    /**
      * @param $propertyName
      *
      * @return mixed

@@ -10,6 +10,7 @@ $app->post('/api/owner/usersearch', 'App\Action\Users:search');
 $app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
 
 //widget
+$app->get('/api/widgetreq', 'App\Action\PrivacyManager:getWidgetRequest');
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');

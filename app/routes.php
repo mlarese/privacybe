@@ -21,6 +21,8 @@ $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
+$app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
+$app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
 
 // owners
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');

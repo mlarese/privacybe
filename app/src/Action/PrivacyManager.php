@@ -135,7 +135,7 @@ class PrivacyManager extends AbstractAction
     public function getPrivacyByEmail($request, $response, $args) {
         $email = $args['id'];
         $email = urldecode(base64_decode(email));
-        
+
         $ownerHash = substr($id,37, strlen ($id));
 
         try {

@@ -48,7 +48,7 @@ class Terms extends AbstractAction{
                 return  $response->withStatus(500, 'Term not found');
             }
 
-            $newUid = Uuid::uuid1();
+            $newUid = Uuid::uuid4();
 
             /** @var Term $newTerm */
             $newTerm = clone $oldT;

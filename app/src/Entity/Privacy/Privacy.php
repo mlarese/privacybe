@@ -12,12 +12,18 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_name_surname", columns={"name","surname"}),
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
  *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
+ *          @ORM\Index(name="privacy_termId", columns={"term_id"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
  *     }
  * )
  * @ORM\Entity
  */
 class Privacy {
+    /**
+     * @return mixed
+     */
+
+
     /**
      * @ORM\Id
      * @ORM\Column(name="uid", type="string", nullable=false, length=120)
@@ -34,6 +40,7 @@ class Privacy {
      * @ORM\Column(name="email", type="string", nullable=false, length=100)
      */
     protected $email;
+
 
     /**
      * @ORM\Column(name="name", type="string", nullable=false, length=100)

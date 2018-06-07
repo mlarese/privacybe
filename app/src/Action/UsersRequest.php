@@ -26,7 +26,7 @@ class UsersRequest  extends AbstractAction{
         try {
             $body = $request->getParsedBody();
 
-            rese
+
 
         } catch (Exception $e) {
             echo $e->getMessage();

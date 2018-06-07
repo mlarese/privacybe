@@ -142,7 +142,7 @@ class Terms extends AbstractAction{
 
             /** @var Term $t */
             foreach ($terms as &$t) {
-                $p = $em->getRepository(Privacy::class)->findOneBy(["termId" => $t->getUid()]);
+                $p = $em->getRepository(Privacy::class)->findOneBy(["deleted"=>0,"termId" => $t->getUid()]);
                 if(isset($p)) {
                     $t->setDeletable(false);
                 }

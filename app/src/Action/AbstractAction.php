@@ -4,6 +4,7 @@ namespace App\Action;
 
 
 use App\Resource\MandatoryFieldMissingException;
+use App\Resource\OwnerExistException;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -85,6 +86,30 @@ class AbstractAction
         $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
 
         return $s->normalize($obj,'json');
+    }
+
+
+    /**
+     * @param $hash
+     *
+     * @return int
+     * @throws OwnerExistException
+     */
+    public function findOwnerIdFromHash($hash) {
+        $ownerId = 0;
+        for($i=0;$i<900000;$i++) {
+            $m = md5($i);
+            if($hash === $m) {
+                $ownerId = $i;
+                break;
+            }
+        }
+
+        if($ownerId === 0) {
+            throw new OwnerExistException('Owner not found');
+        }
+
+        return $ownerId;
     }
 
     /**

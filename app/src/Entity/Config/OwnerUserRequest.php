@@ -21,6 +21,41 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OwnerUserRequest {
     /**
+     * @return mixed
+     */
+    public function getOwnerId()
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param mixed $ownerId
+     * @return OwnerUserRequest
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRequestId()
+    {
+        return $this->userRequestId;
+    }
+
+    /**
+     * @param mixed $userRequestId
+     * @return OwnerUserRequest
+     */
+    public function setUserRequestId($userRequestId)
+    {
+        $this->userRequestId = $userRequestId;
+        return $this;
+    }
+    /**
      * @ORM\Id()
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

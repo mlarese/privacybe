@@ -50,28 +50,6 @@ class PrivacyManager extends AbstractAction
         return $remoteIp;
     }
 
-    /**
-     * @param $hash
-     *
-     * @return int
-     * @throws OwnerExistException
-     */
-    private function findOwnerIdFromHash($hash) {
-        $ownerId = 0;
-        for($i=0;$i<900000;$i++) {
-            $m = md5($i);
-            if($hash === $m) {
-                $ownerId = $i;
-                break;
-            }
-        }
-
-        if($ownerId === 0) {
-            throw new OwnerExistException('Owner not found');
-        }
-
-        return $ownerId;
-    }
 
     /**
      * @param $request Request

@@ -5,7 +5,7 @@ namespace App\Entity\Config;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  * @ORM\Table(
  *     name="action_history",
  *     indexes={

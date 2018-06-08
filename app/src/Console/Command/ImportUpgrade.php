@@ -179,8 +179,8 @@ class ImportUpgrade extends Base
                         $detail['ip'],
                         $detail,
                         '',
-                        $detail['name']===null?'':$detail['name'],
-                        $detail['surname']===null?'':$detail['surname'],
+                        $detail['name']===null?'':is_array($detail['name'])?'':$detail['name'],
+                        $detail['surname']===null?'':is_array($detail['surname'])?'':$detail['surname'],
                         $termId,
                         $url['path'],
                         $privacydata,
@@ -188,7 +188,7 @@ class ImportUpgrade extends Base
                         'import-console-' . $date->format('YMDHm'),
                         $url['host'],
                         $detail['email'],
-                        json_encode($flags)
+                        $flags
                         ,
                         isset($detail['mobile']) ? $detail['mobile'] : isset($detail['phone']) ? $detail['phone'] : ''
                     );

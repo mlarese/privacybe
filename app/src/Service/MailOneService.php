@@ -148,7 +148,7 @@ class MailOneService {
 	 * @param unknown $subscriberDomain
 	 * @return Ambigous <mixed, unknown>
 	 */
-	public function getContactListSubscribers($listId, $subscriberDomain) {
+	public function getContactListSubscribersEx($listId, $subscriberDomain) {
 		$listId = intval ( $listId );
 
 		$this->postXmlData = "<xmlrequest>
@@ -176,6 +176,74 @@ class MailOneService {
 		return $ret;
 	}
 
+    public function getSubscriber($id,$listId){
+        $this->postXmlData = "<xmlrequest>
+		<username>" . $this->xmlUser . "</username>
+		<usertoken>" . $this->xmlToken . "</usertoken>
+				<requesttype>subscribers</requesttype>
+				<requestmethod>LoadSubscriberList</requestmethod>
+				<details>
+					<subscriberid>$id</subscriberid>
+					<listid>$id</listid>
+				</details>
+				</xmlrequest>
+				";
+
+
+        $ret = $this->callService ();
+
+
+        $ret = $this->xml2array ( $ret );
+
+        $this->postXmlData = '';
+
+        return $ret;
+	}
+    /**
+     *
+     * @param unknown $listId
+     * @param unknown $subscriberDomain
+     * @return Ambigous <mixed, unknown>
+     */
+    public function getContactListSubscribers($listId, $subscriberDomain='') {
+
+
+        if($listId &&  intval($listId)>0){
+        	$listId = intval($listId);
+            $strListId = "<List>$listId</List>";
+        }
+        else{
+            $strListId = "<List>any</List>";
+		}
+        if($subscriberDomain!=''){
+            $subscriberDomain =  '<Email>@'.$subscriberDomain. '</Email>';
+		}
+        $this->postXmlData = "<xmlrequest>
+		<username>" . $this->xmlUser . "</username>
+		<usertoken>" . $this->xmlToken . "</usertoken>
+				<requesttype>subscribers</requesttype>
+				<requestmethod>GetSubscribers</requestmethod>
+				<details>
+					<searchinfo>
+						<Status>a</Status>
+						<Confirmed>1</Confirmed>
+						$strListId
+						$subscriberDomain
+					</searchinfo>
+				</details>
+				</xmlrequest>
+				";
+
+
+        $ret = $this->callService ();
+
+
+        $ret = $this->xml2array ( $ret );
+
+        $this->postXmlData = '';
+
+        return $ret;
+    }
 	/**
 	 *
 	 * @param unknown $listId
@@ -659,7 +727,7 @@ class MailOneService {
         try{
 
             //print_r($this->urlEntryPoint);
-            //print_r($this->postXmlData);
+			 //print_r($this->postXmlData);
 
         $res = $client->request('POST', '',
             [
@@ -678,6 +746,7 @@ class MailOneService {
 
             if($res->getBody()){
                 $file = $res->getBody()->getContents();
+
 
             }
 

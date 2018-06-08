@@ -77,6 +77,10 @@ $app->post('/upgrade/allow/{domainid}/{pathid}/{email}', 'App\Action\Subscribers
 $app->post('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:create');
 
 $app->get('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:list');
+
+//$app->get('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:import');
+
+
 //$app->post('/adapters/{connector}/{adapter}/export', 'App\Action\ShareSubscriberList:create');
 
 

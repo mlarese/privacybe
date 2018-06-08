@@ -24,6 +24,7 @@ class MailOneDirectExport  implements IDirectExport
     protected $ownername;
     protected $owneremail;
     protected $ownerreplayemail;
+    protected $em;
     /**
      * @var MailOneService|null
      */
@@ -146,10 +147,104 @@ class MailOneDirectExport  implements IDirectExport
                     }
 
                 break;
+            case 'dump':
+                $response = array();
+
+                $argv = func_get_args();
+
+                if(isset($argv[0])) {
+                    if(intval($argv[0])>0){
+                        $lists = array($argv[0]);
+                    }
+                    else{
+                        $list = $this->connector->getAllContactLists($this->mailOneId);
+                        $response = array();
+                        if($list && isset($list['item'])){
+                            foreach ($list['item'] as $value){
+                                $lists[] = $value['listid'];
+
+                            }
+                        }
+                    }
+                    $response = array();
+                    foreach ($lists as $valuelist) {
+
+                        $list = $this->connector->getContactListSubscribers($valuelist, '');
+
+
+                        if ($list && isset($list['count']) && $list['count'] > 0 && isset($list['subscriberlist'])) {
+                            foreach ($list['subscriberlist']['item'] as $value) {
+
+                                if ( isset($value['confirmed']) &&  isset($value['unsubscribed']) && $value['unsubscribed'] == 0 && $value['confirmed'] == 1 && isset($value['emailaddress'])) {
+                                    $response[$value['emailaddress']] = array(
+                                        'id' => $value['subscriberid'],
+                                        'email' => $value['emailaddress'],
+                                        'list' => $valuelist,
+                                    );
+                                }
+                            }
+                        }
+
+                    }
+                }
+                break;
+            case 'subscriber':
+                $response = array();
+
+                $argv = func_get_args();
+
+                if(isset($argv[0]) && intval($argv[0])>0 &&  intval($argv[1])>0) {
+                    $resp = $this->connector->getSubscriber( intval($argv[0]),intval($argv[1]));
+                    if($resp && is_array($resp) && isset($resp['subscriberid'])){
+                        $objCustomForm = new MailOneCustomForm(intval($argv[1]),null);
+                        $response = array(
+                            'id' => $resp['subscriberid'],
+                            'email' => $resp['emailaddress'],
+                            'original_ip' =>  isset($resp['requestip'])?$resp['requestip']:''
+                        );
+
+                        if(isset($resp['CustomFields']) && isset($resp['CustomFields']['item'])){
+                            foreach ($resp['CustomFields']['item'] as $field) {
+                                $response[$objCustomForm->getNormalizedName($field['fieldname'])] = $field['data'];
+                            }
+                        }
+
+                    }
+                }
+
+
+                break;
+            case 'subscriberlist':
+                $response = array();
+
+                $argv = func_get_args();
+
+                if(isset($argv[0]) && intval($argv[0])>0) {
+
+
+                    $list = $this->connector->getContactListSubscribers(intval($argv[0]),'');
+
+
+                    if ($list && isset($list['count']) && $list['count']>0 && isset($list['subscriberlist'])) {
+                        foreach ($list['subscriberlist']['item'] as $value) {
+                            if($value['unsubscribed']==0){
+                                $response[] = array(
+                                    'id' => $value['subscriberid'],
+                                    'email' => $value['emailaddress']
+                                );
+                            }
+                        }
+                    }
+                }
+                break;
             default:
         }
 
         return $response;
+    }
+
+    public function setEntityManager($value){
+        $this->em = $value;
     }
 
     private function checkConfig(){
@@ -157,7 +252,12 @@ class MailOneDirectExport  implements IDirectExport
          * @var $db EntityManager
          */
 
-        $db = $this->container->get('em-config');
+        if(!$this->em){
+            $db = $this->container->get('em-config');
+        }
+        else{
+            $db = $this->em;
+        }
 
         $this->mailOneId = false;
 

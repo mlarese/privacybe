@@ -109,6 +109,60 @@ class UserRequest {
     /**
      * @return mixed
      */
+    public function getHistory()
+    {
+        return $this->history;
+    }
+
+    /**
+     * @param mixed $history
+     * @return UserRequest
+     */
+    public function setHistory($history)
+    {
+        $this->history = $history;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFlow()
+    {
+        return $this->flow;
+    }
+
+    /**
+     * @param mixed $flow
+     * @return UserRequest
+     */
+    public function setFlow($flow)
+    {
+        $this->flow = $flow;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastAccess()
+    {
+        return $this->lastAccess;
+    }
+
+    /**
+     * @param mixed $lastAccess
+     * @return UserRequest
+     */
+    public function setLastAccess($lastAccess)
+    {
+        $this->lastAccess = $lastAccess;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMail() {
         return $this->mail;
     }

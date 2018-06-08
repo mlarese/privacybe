@@ -3,7 +3,9 @@
 namespace App\Action;
 
 use App\Entity\Privacy\Treatment;
+use App\Entity\Privacy\TreatmentHistory;
 use App\Resource\TermResource;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -15,8 +17,10 @@ class Treatments extends AbstractAction{
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function getAllTreatments($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
@@ -91,6 +95,21 @@ class Treatments extends AbstractAction{
 
             try {
                 $em->persist($nt);
+
+                $u = $this->getUserData($request);
+                $tlog = new TreatmentHistory();
+                $tlog
+                    ->setCreated(new DateTime())
+                    ->setType('treatment_created')
+                    ->setTreatment( $this->toJson($nt))
+                    ->setTreatmentCode( $nt->getCode())
+                    ->setModifier(  $u->userId)
+                    ->setDescription('Created treatment ' . $nt->getCode())
+                ;
+                $em->persist($tlog);
+
+
+
                 $em->flush();
             } catch (OptimisticLockException $e) {
                 echo ($e->getMessage());
@@ -121,16 +140,30 @@ class Treatments extends AbstractAction{
 
         try {
             $nt = $em->find(Treatment::class, $code);
-
+            /** @var Treatment $oldNt */
+            $oldNt = clone $nt;
             $nt
                 ->setName($this->getAttribute('name',$body, true))
                 ->setNote($this->getAttribute('note',$body))
             ;
 
             $em->merge($nt);
+
+            $u = $this->getUserData($request);
+            $tlog = new TreatmentHistory();
+            $tlog
+                ->setCreated(new DateTime())
+                ->setType('treatment_update')
+                ->setTreatment( $this->toJson($oldNt))
+                ->setTreatmentCode( $oldNt->getCode())
+                ->setModifier(  $u->userId)
+                ->setDescription('Modified treatment ' . $oldNt->getCode())
+            ;
+            $em->persist($tlog);
+
             $em->flush();
 
-            return $response->withJson($this->success( $this->toJson( $body )));
+            return $response->withJson($this->success( ));
         } catch (\Exception $e) {
             $response->withStatus(500, 'Error saving treatment');
         }

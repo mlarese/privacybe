@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use App\Entity\Config\UserLogin;
 use App\Entity\Privacy\Privacy;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -86,6 +87,7 @@ class Auth extends AbstractAction {
 
         if ($valid) {
             return $userEntity;
+
         }
         throw new UserNotAuthorizedException('User Not Authorized Exception ' . $msg);
 
@@ -129,6 +131,16 @@ class Auth extends AbstractAction {
                 "source" => ($host==='127.0.0.1' )?'local': 'remote'
             ];
             $data = $this->defineJwtToken($request, $userSpec);
+
+
+            $log = new UserLogin();
+            $log->setIpAddress( $this->getIp() )
+                ->setLoginDate(new DateTime())
+                ->setUserId($ue->getId());
+
+            $this->getEmConfig()->persist($log);
+            $this->getEmConfig()->flush();
+
             return $response->withStatus(201)
                 ->withHeader("Content-Type", "application/json")
                 ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));

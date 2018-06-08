@@ -34,21 +34,7 @@ use function substr;
 class PrivacyManager extends AbstractAction
 {
 
-    /**
-     * @return string
-     */
-    private function getIp () {
-        if(isset($_SERVER['HTTP_X_REAL_IP'])) {
-            $remoteIp = $_SERVER['HTTP_X_REAL_IP'];
-        } else if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-            $remoteIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-        else {
-            $remoteIp = $_SERVER['REMOTE_ADDR'];
-        }
 
-        return $remoteIp;
-    }
 
     /**
      * @param $hash

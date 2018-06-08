@@ -3,8 +3,11 @@
 namespace App\Action;
 
 
+use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
 use App\Resource\Privacy\GroupByEmail;
+use App\Resource\PrivacyLogger;
+use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
@@ -28,8 +31,11 @@ class Users extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
-            $criteria = null;
+            $body  = $request->getParsedBody();
 
+            $criteria = null;
+            if(isset($body['filters']))
+                $criteria = $body['filters'];
 
             $list = $priRes->privacyListFw($criteria, new GroupByEmail());
 
@@ -37,6 +43,8 @@ class Users extends AbstractAction
             foreach($list as $email => $person){
                 $newExport = [
                     'id' => $person['id'],
+                    '_counter_' => isset($person['_counter_'])?$person['_counter_']:0,
+                    '_flags_' => isset($person['_flags_'])?$person['_flags_']:[],
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],
@@ -88,22 +96,117 @@ class Users extends AbstractAction
         return $response->withJson( $user);
     }
 
+
     /**
      * @param $request Request
      * @param $response Response
      * @param $args
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
      */
-    public function updateTerms($request, $response, $args)
+    public function changePassword($request, $response, $args)
     {
-        $ownerId = $this->getOwnerId($request);
-        $body = $request->getParsedBody();
 
         try {
+
+            $body = $request->getParsedBody();
+
+
+            if(
+                !isset($body['userId']) ||
+                !isset($body['password']) ||
+                !isset($body['oldPassword']) ||
+                !isset($body['repeatPassword'])
+            ) {
+                return $response->withStatus(401, 'Wrong request');
+            }
+
+            if(   strlen($body['password'])<8 ) {
+                return $response->withStatus(401, 'At least 8 characters');
+            }
+
+
+            /** @var User $user */
+            $user = $this->getEmConfig()->find(User::class, $body['userId']);
+
+            if(  !isset($user)) {
+                return $response->withStatus(401, 'User not found');
+            }
+
+
+            $oldPwdMd5 = md5($body['oldPassword']);
+            if( $oldPwdMd5!==$user->getPassword()  ) {
+                return $response->withStatus(401, 'Wrong old password');
+            }
+
+
+            $user->setPassword(      md5($body['password'])    );
+            $this->getEmConfig()->merge($user);
+            $this->getEmConfig()->flush();
+
+            return $response->withJson($this->success());
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException changing password');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception changing password');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function deleteUserSubscriptions($request, $response, $args)
+    {
+
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $email = $args['email'];
+            $email = urldecode(   base64_decode($email));
+
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $priRes = new PrivacyResource($em);
+
+            $priRes->deletePrivacyByEmail($email);
+
+
+            return $response->withJson($this->success());
+
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function updateTerms($request, $response, $args)
+    {
+
+
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $body = $request->getParsedBody();
+            $userData = $this->getUserData($request);
+
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $priRes = new PrivacyResource($em);
+            $prilogRes = new PrivacyLoggerResource($em);
 
             foreach ($body as $privacy) {
                 /** @var Privacy $p */
@@ -114,6 +217,9 @@ class Users extends AbstractAction
                 ;
 
                 $em->merge($p);
+                $prilogRes->operatorPrivacyLog($p,$userData,false);
+
+
             }
 
             $em->flush();
@@ -133,7 +239,7 @@ class Users extends AbstractAction
      * @param $response Response
      * @param $args
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function updateMainData($request, $response, $args)
     {
@@ -142,8 +248,11 @@ class Users extends AbstractAction
             $body= $request->getParsedBody();
             $id = $args['id'];
 
+
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
+            $plhr = new PrivacyLoggerResource($em);
+
             /** @var Privacy $pr */
             $pr = $em->find(Privacy::class, $id);
 
@@ -155,6 +264,9 @@ class Users extends AbstractAction
             ;
 
             $em->merge($pr);
+
+            $userObj = $this->getUserData($request);
+            $plhr->operatorPrivacyLog($pr,$userObj,false);
             $em->flush();
 
             return  $response->withJson($this->success());

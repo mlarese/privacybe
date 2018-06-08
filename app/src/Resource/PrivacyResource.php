@@ -9,10 +9,12 @@ use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\LanguageIntegrator;
+use App\Resource\Privacy\PostFilter;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
 use http\Env\Response;
@@ -42,23 +44,30 @@ class PrivacyResource extends AbstractResource
         return $prRec;
     }
 
-/*
-`uid` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
-`created` datetime DEFAULT CURRENT_TIMESTAMP,
-`email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`ref` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-`surname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-`form` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
-`crypted_form` longtext COLLATE utf8_unicode_ci,
-`privacy` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json_array)',
-`privacy_flags` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
-`term_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`domain` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`site` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`ip` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-`telephone` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
-`deleted` tinyint(1) NOT NULL DEFAULT '0',*/
+    /**
+     * @param $email
+     * @throws OptimisticLockException
+     */
+    public function deletePrivacyByEmail ($email) {
+
+            $r = $this->getRepository();
+            $records = $r->findBy(["email" => $email]);
+            /** @var Privacy $record */
+            foreach ($records as $record) {
+                $id = $record->getId();
+                $this->entityManager->remove($record);
+
+                $logs = $r->findBy(["privacyId" => $id]);
+
+                /** @var PrivacyHistory $log */
+                foreach ($logs as $log) {
+                    $this->entityManager->remove($log);
+                }
+
+            }
+            $this->entityManager->flush();
+
+    }
 
     public function getRepository(){
         return $this->entityManager->getRepository(Privacy::class);
@@ -85,7 +94,7 @@ class PrivacyResource extends AbstractResource
      * @return PrivacyHistory
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function savePrivacyLog($privacyId, $jsonPrivacy, $type, $description=null)
+    public function savePrivacyLog($privacyId, $jsonPrivacy, $type, $description=null, $flush=true)
     {
         if(!isset($description)) {
             $description = 'privacy '. $type;
@@ -101,7 +110,9 @@ class PrivacyResource extends AbstractResource
        ;
 
        $this->entityManager->persist($ph);
-       $this->entityManager->flush();
+
+       if($flush)
+        $this->entityManager->flush();
 
        return $ph;
     }
@@ -229,7 +240,6 @@ class PrivacyResource extends AbstractResource
      * @return array
      */
     public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
-
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -237,26 +247,10 @@ class PrivacyResource extends AbstractResource
         $termMap = $termRes->map();
         $termPageMap = $termPageRes->map();
 
-        $validTreatments = [];
-        if(isset($criteria)) {
-            foreach ($criteria['treatments'] as $tr) {
-                if($tr['selected']) {
-                    foreach($tr['terms'] as $term ) {
-                        if($term['selected']) {
-                            $validTreatments [$tr['code']][$term['uid']] = true;
-                        }
-                    }
-
-                }
-
-            }
+        if(!isset($filter)) {
+            $filter = new PostFilter();
         }
 
-        // set_time_limit(500);
-        // ignore_user_abort(true);
-        // ini_set('memory_limit','1024GB');
-
-        // print_r($validTreatments);die;
         $ex = $this->entityManager->getExpressionBuilder();
         $results = [];
 
@@ -280,9 +274,9 @@ class PrivacyResource extends AbstractResource
         $ex = $qb->expr();
         $qb
             ->select($fields)
-            ->where('p.deleted=0')
-            ->andWhere( $ex->not("p.email=''") )
-            ->andWhere( $ex->not("p.email IS NULL") )
+            // ->where('p.deleted=0')
+            // ->andWhere( $ex->not("p.email=''") )
+            // ->andWhere( $ex->not("p.email IS NULL") )
         ;
 
         if($criteria === null) {
@@ -301,6 +295,7 @@ class PrivacyResource extends AbstractResource
             if(isset($person) && $person!=='') {
                 $person="%${person}%";
                 $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
+
                 $qb
                     ->andWhere( $ex->orX()->addMultiple($persCond))
                     ->setParameter('person',$person);
@@ -322,27 +317,16 @@ class PrivacyResource extends AbstractResource
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
-        foreach ($results as &$pr) {
 
+
+        foreach ($results as &$pr) {
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
             unset($pr['form']);
-
-            $includeRec = true;
-
-            // foreach ($pr['privacyFlags'] as $f) {
-            //     if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
-            //         $includeRec = true;
-            //         // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
-            //         break;
-            //     }
-            // }
-
-            // if($includeRec) $results[] = $pr;
         }
 
-        if($grouper)  $results = $grouper->group($results,$criteria);
         if($filter)  $results = $filter->filter($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
 
 
         return $results;

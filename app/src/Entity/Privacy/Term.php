@@ -269,5 +269,25 @@ class Term
         return $this;
     }
 
+    protected $deletable=true;
+
+    /**
+     * @return bool
+     */
+    public function isDeletable(): bool
+    {
+        return $this->deletable;
+    }
+
+    /**
+     * @param bool $deletable
+     * @return Term
+     */
+    public function setDeletable(bool $deletable): Term
+    {
+        $this->deletable = $deletable;
+        return $this;
+    }
+
 
 }

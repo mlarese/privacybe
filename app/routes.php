@@ -10,6 +10,7 @@ $app->post('/api/owner/usersearch', 'App\Action\Users:search');
 $app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
 
 //widget
+$app->get('/api/widgetreq', 'App\Action\PrivacyManager:getWidgetRequest');
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
@@ -20,6 +21,8 @@ $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
+$app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
+$app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
 
 // owners
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
@@ -38,6 +41,7 @@ $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+$app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
 
 
 // treatments
@@ -55,8 +59,19 @@ $app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');
 $app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 
 
+//CustomerCare users
+$app->get('/api/customercare/operator', 'App\Action\CustomerCares:getOperators');
+$app->get('/api/customercare/operator/{id}', 'App\Action\CustomerCares:getOperator');
+$app->post('/api/customercare/operator', 'App\Action\CustomerCares:newOperator');
+$app->put('/api/customercare/operator/{id}', 'App\Action\CustomerCares:updateOperator');
+
+
+$app->get('/api/customercare/user', 'App\Action\CustomerCare:getUsers');
+$app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
+
 // auth
 $app->post('/api/auth/login', 'App\Action\Auth:login');
+$app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
 

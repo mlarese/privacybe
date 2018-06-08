@@ -64,12 +64,12 @@ $emUpgrade = EntityManager::create($settingsUpgrade['connection'], $doctrinUpgra
 /***********************
  *  Config
  */
- return ConsoleRunner::createHelperSet($emConfig);
+// return ConsoleRunner::createHelperSet($emConfig);
 
  /***********************
  *  Privacy
  */
- //return ConsoleRunner::createHelperSet($emPrivacy);
+return ConsoleRunner::createHelperSet($emPrivacy);
 
 
 

@@ -160,7 +160,10 @@ class AbstractAction
 
     /**
      * @param $ownerId
+     * @param null $user
+     * @param null $pwd
      * @return EntityManager
+     * @throws \Doctrine\Common\Annotations\AnnotationException
      * @throws \Doctrine\ORM\ORMException
      */
     public function getEmPrivacy($ownerId, $user=null, $pwd=null)

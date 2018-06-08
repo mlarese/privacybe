@@ -61,7 +61,7 @@ return [
                     'app/src/Entity/Config'
                 ],
                 'auto_generate_proxies' => true,
-                'proxy_dir' =>  __DIR__.'/../cache/proxies',
+                'proxy_dir' =>  __DIR__.'/../cache/dconfig/proxies',
                 'cache' => null,
             ],
             'connection' => [
@@ -79,7 +79,7 @@ return [
                     'app/src/Entity/Privacy'
                 ],
                 'auto_generate_proxies' => true,
-                'proxy_dir' =>  __DIR__.'/../cache/proxies',
+                'proxy_dir' =>  __DIR__.'/../cache/dprivacy/proxies',
                 'cache' => null,
             ],
             'dynamic_db' => [
@@ -101,7 +101,7 @@ return [
                     'app/src/Entity/Upgrade'
                 ],
                 'auto_generate_proxies' => true,
-                'proxy_dir' =>  __DIR__.'/../cache/proxies',
+                'proxy_dir' =>  __DIR__.'/../cache/dup/proxies',
                 'cache' => null,
             ],
             'connection' => [

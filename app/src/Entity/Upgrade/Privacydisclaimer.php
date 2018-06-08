@@ -43,6 +43,13 @@ class Privacydisclaimer
     private $crdate;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="privacytext", type="text", length=65535, nullable=false)
+     */
+    private $privacytext;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -88,5 +95,17 @@ class Privacydisclaimer
     public function setVersion(int $version): void
     {
         $this->version = $version;
+    }
+
+
+    public function getPrivacy()
+    {
+        return $this->privacytext;
+    }
+
+
+    public function setPrivacy( $text)
+    {
+        $this->privacytext = $text;
     }
 }

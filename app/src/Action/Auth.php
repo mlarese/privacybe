@@ -106,6 +106,8 @@ class Auth extends AbstractAction {
         $user = $request->getParam('username');
         $password = $request->getParam('password');
 
+
+        // echo 'here' ; die;
         /**
          * @var User $ue
          */

@@ -5,6 +5,7 @@ namespace App\Action;
 
 use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
+use App\Resource\Privacy\EmptyFilter;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyLogger;
 use App\Resource\PrivacyLoggerResource;
@@ -45,6 +46,54 @@ class Users extends AbstractAction
                     'id' => $person['id'],
                     '_counter_' => isset($person['_counter_'])?$person['_counter_']:0,
                     '_flags_' => isset($person['_flags_'])?$person['_flags_']:[],
+                    'name'=>$person['name'],
+                    'surname'=>$person['surname'],
+                    'email'=>$person['email'],
+                    'created'=>$person['created'],
+                    'language'=>$person['language']
+                ];
+                $export[] = $newExport;
+            }
+
+            return $response->withJson($this->toJson($export));
+
+
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException saving privacy');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function searchToday($request, $response, $args)
+    {
+        $ownerId = $this->getOwnerId($request);
+
+        try {
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $priRes = new PrivacyResource($em);
+
+            $criteria = [
+                'created' => date('Y-m-d')
+            ];
+
+            $list = $priRes->privacyListFw($criteria, new GroupByEmail(), new EmptyFilter());
+
+            $export = [];
+            foreach($list as $email => $person){
+                $newExport = [
+                    'id' => $person['id'],
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],

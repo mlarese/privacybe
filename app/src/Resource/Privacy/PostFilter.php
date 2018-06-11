@@ -25,7 +25,7 @@ class PostFilter implements IFilter {
         $debug = [];
 
         $validTreatments = [];
-        if(isset($criteria)) {
+        if(isset($criteria) && count($criteria['treatments'])>0) {
             foreach ($criteria['treatments'] as $tr) {
                 if($tr['selected']) {
                     foreach($tr['terms'] as $term ) {

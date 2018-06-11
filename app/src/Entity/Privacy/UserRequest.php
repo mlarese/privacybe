@@ -6,7 +6,7 @@
  * Time: 11:36
  */
 
-namespace App\Entity\Config;
+namespace App\Entity\Privacy;
 
 use Doctrine\ORM\Mapping as ORM;
 /**

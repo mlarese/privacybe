@@ -58,6 +58,10 @@ $app->post('/api/owner/operator', 'App\Action\Operators:newOperator');
 $app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');
 $app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 
+// owners userrequests
+$app->get('/api/owner/userrequest', 'App\Action\UsersRequests:retrieve');
+$app->get('/api/owner/userrequesto', 'App\Action\UsersRequests:retrieveOpen');
+$app->put('/api/owner/userrequestc/{id}', 'App\Action\UsersRequests:closeRequest');
 
 //CustomerCare users
 $app->get('/api/customercare/operator', 'App\Action\CustomerCares:getOperators');

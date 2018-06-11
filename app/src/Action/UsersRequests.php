@@ -10,7 +10,7 @@ namespace App\Action;
 
 
 use App\Entity\Config\OwnerUserRequest;
-use App\Entity\Config\UserRequest;
+use App\Entity\Privacy\UserRequest;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -24,6 +24,7 @@ use Slim\Http\Response;
 class UsersRequests  extends AbstractAction{
 
     const STATUS_OPEN = 'open';
+    const STATUS_COMPLETED = 'completed';
 
     const TYPE_SUBSCRIPTIONS_REQUEST = 'subscriptions_request';
 
@@ -115,9 +116,44 @@ class UsersRequests  extends AbstractAction{
      * @throws \Doctrine\ORM\ORMException
      */
 
+    public function closeRequest($request, $response, $args){
+
+        try {
+            $owid = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($owid);
+
+            /** @var UserRequest $ur */
+            $ur = $em->find(UserRequest::class, $args['id']);
+            if (!isset($ur)) {
+                return $response->withStatus(500, 'UserRequest not found');
+            }
+
+
+            $ur->setStatus(self::STATUS_COMPLETED);
+            $ur->setLastAccess(new \DateTime());
+            $em->merge($ur);
+            $em->flush();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return  $response->withStatus(500, 'Error');
+        }
+
+        return $response->withJson($this->success());
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+
     public function retrieve($request, $response, $args){
 
         try {
+
             $owid = $this->getOwnerId($request);
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($owid);
@@ -133,6 +169,34 @@ class UsersRequests  extends AbstractAction{
 
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+
+    public function retrieveOpen($request, $response, $args){
+
+        try {
+
+            $owid = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($owid);
+
+            $r = $em->getRepository(UserRequest::class)->findBy(
+                ["status"=>"open"]
+            );
+
+            return $response->withJson($this->toJson($r));
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return  $response->withStatus(500, 'Error');
+        }
+
+    }
 
     /**
      * @param $request Request

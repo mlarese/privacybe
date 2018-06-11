@@ -236,8 +236,10 @@ class PrivacyResource extends AbstractResource
     /**
      * @param null                $criteria
      * @param IResultGrouper|null $grouper
+     * @param IFilter|null        $filter
      *
-     * @return array
+     * @return array|mixed
+     * @throws \Doctrine\ORM\ORMException
      */
     public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
         $repo = $this->getRepository();
@@ -269,6 +271,7 @@ class PrivacyResource extends AbstractResource
             'p.email'
         ];
 
+        $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
 
         $qb = $repo->createQueryBuilder('p');
         $ex = $qb->expr();
@@ -288,17 +291,33 @@ class PrivacyResource extends AbstractResource
             ;
         } else {
 
-            $person = $criteria['person'] ;
+            $person = null ;
             $sort = 'default' ;
             $sortDirection = 'ASC';
 
-            if(isset($person) && $person!=='') {
+
+            if(isset($criteria['person']) && $criteria['person']!=='') {
+                $person = $criteria['person'] ;
                 $person="%${person}%";
                 $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
 
                 $qb
                     ->andWhere( $ex->orX()->addMultiple($persCond))
                     ->setParameter('person',$person);
+                ;
+
+            }
+
+
+            if(isset($criteria['created']) && $criteria['created']!=='') {
+                $created = $criteria['created'] ;
+                $dt = date($created);
+                $ndt = date('Y-m-d', strtotime($dt. ' + 1 days'));
+
+
+                $qb->andWhere( "p.created BETWEEN :firstdate AND :secondDate")
+                    ->setParameter('firstdate',$dt)
+                    ->setParameter('secondDate',$ndt)
                 ;
             }
 

@@ -12,7 +12,6 @@ namespace App\Resource\Privacy;
 use App\Resource\IFilter;
 
 class PostFilter implements IFilter {
-
     /**
      * @param $list
      * @param $criteria

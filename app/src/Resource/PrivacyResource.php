@@ -277,9 +277,9 @@ class PrivacyResource extends AbstractResource
         $ex = $qb->expr();
         $qb
             ->select($fields)
-            // ->where('p.deleted=0')
-            // ->andWhere( $ex->not("p.email=''") )
-            // ->andWhere( $ex->not("p.email IS NULL") )
+            ->where('p.deleted=0')
+            ->andWhere( $ex->not("p.email=''") )
+            ->andWhere( $ex->not("p.email IS NULL") )
         ;
 
         if($criteria === null) {

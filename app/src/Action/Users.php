@@ -49,6 +49,8 @@ class Users extends AbstractAction
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],
+                    'domain'=>$person['domain'],
+                    'site'=>$person['site'],
                     'created'=>$person['created'],
                     'language'=>$person['language']
                 ];

@@ -10,3 +10,9 @@ $qb->select('t')
                 $qb->expr()->gte('t.expireDate', ':expireDate'),
                 $qb->expr()->isNull('t.expireDate')
             ))
+
+
+->andWhere($qb->expr()->orX(
+                $qb->expr()->gte('t.expireDate', ':expireDate'),
+                $qb->expr()->isNull('t.expireDate')
+            ))

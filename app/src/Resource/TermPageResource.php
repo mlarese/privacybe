@@ -16,8 +16,13 @@ class TermPageResource extends AbstractResource {
      * @param $termUid
      * @return array
      */
-    public function findAll($termUid) {
-        return $this->getRepository()->findBy(["deleted"=>false, "termUid" => $termUid]);
+    public function findAll($termUid=null) {
+
+        if(isset($termUid))
+            return $this->getRepository()->findBy(["deleted"=>false, "termUid" => $termUid]);
+        else
+            return $this->getRepository()->findBy(["deleted"=>false]);
+
     }
 
     public function findByPage($domain, $page) {

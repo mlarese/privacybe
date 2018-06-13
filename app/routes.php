@@ -24,6 +24,9 @@ $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
 
+// terms oages
+$app->get('/api/owner/termsoages', 'App\Action\Terms:getTermsPages');
+
 // owners
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
 $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');

@@ -5,9 +5,14 @@ $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
+$app->post('/api/test/upload', 'App\Action\Test:upload');
+$app->post('/api/test/import', 'App\Action\PrivacyManager:import');
+
 //user list
 $app->post('/api/owner/usersearch', 'App\Action\Users:search');
 $app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
+
+$app->post('/api/import/users', 'App\Action\PrivacyManager:import');
 
 //widget
 $app->get('/api/widgetreq', 'App\Action\PrivacyManager:getWidgetRequest');
@@ -15,6 +20,7 @@ $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
+
 // terms
 $app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');
 $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');

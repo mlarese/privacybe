@@ -7,6 +7,8 @@ use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use App\Helpers\UploadsManager;
+use App\InternalImporters\PrivacyImporter;
 use App\Resource\OwnerExistException;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\PostFilter;
@@ -27,6 +29,7 @@ use Exception;
 use function json_decode;
 use function json_encode;
 use function print_r;
+use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use function substr;
@@ -653,6 +656,156 @@ class PrivacyManager extends AbstractAction
 
 
     /**
+     * @param PrivacyResource       $privacyResource
+     * @param array                 $data
+     * @param integer               $ownerId
+     * @param string                $ip
+     * @throws Exception
+     * @return Privacy
+     */
+    public static function savePlainPrivacyByAssoc($privacyResource,$data,$ownerId, $ip='') {
+
+        $domain = $data['domain'];
+
+        $email = "";
+        if(isset($data['record']['email']))
+            $email = $data['record']['email'];
+        else if(isset($data['email']))
+            $email = $data['email'];
+
+        $name = '';
+        if(isset($data['record']['name']))
+            $name = $data['record']['name'];
+        else if(isset($data['name']))
+            $name = $data['name'];
+
+        $surname = '';
+        if(isset($data['record']['surname']))
+            $surname = $data['record']['surname'];
+        else if(isset($data['surname']))
+            $surname = $data['surname'];
+
+        $telephone = '';
+        if(isset($data['record']['telephone']))
+            $telephone = $data['record']['telephone'];
+        else if(isset($data['telephone']))
+            $telephone = $data['telephone'];
+
+        $site = $data['page'];
+
+        if(isset($data['id'])) {
+            $id = $data['id'];
+        } else {
+            $id = Uuid::uuid4() ;
+        }
+
+        if(isset($data['termId'])) {
+            $termId = $data['termId'];
+        } else {
+            // nessuna normativa associata
+            $termId = 0 ;
+        }
+
+
+
+        if(isset($data['flags']))
+            if($data['flags']!=='')
+                $privacyFlags = $data['flags'];
+            else
+                $privacyFlags = [];
+        else
+            $privacyFlags = [];
+
+        if(isset($data['term']))
+            if($data['term']!=='')
+                $privacy = $data['term'];
+            else
+                $privacy = [];
+        else
+            $privacy = [];
+
+
+        if(isset($data['form']))
+            if($data['form']!=='')
+                $form = $data['form'];
+            else
+                $form = [];
+        else
+            $form = [];
+
+
+
+        if(isset($data['cryptedForm'])) {
+            if($data['cryptedForm']!=='')
+                $cryptedForm = $data['cryptedForm'];
+            else
+                $cryptedForm = [];
+;
+        } else {
+            $cryptedForm = $form;
+        }
+
+        $cryptedForm = json_encode($cryptedForm);
+
+        $ref = "";
+
+        if(isset($data['ref'])) {
+            $ref = $data['ref'];
+        }
+
+        /** @var Privacy $pr */
+        $pr=$privacyResource->savePrivacy(
+            $ip,
+            $form,
+            $cryptedForm,
+            $name,
+            $surname,
+            $termId,
+            $site,
+            $privacy,
+            $id,
+            $ref,
+            $domain,
+            $email,
+            $privacyFlags,
+            $telephone
+        );
+
+
+        // print_r(self::toJsonStatic($pr));
+        return $pr ;
+    }
+
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function import($request, $response, $args) {
+
+        try {
+            $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $prRes = new PrivacyResource($em);
+
+            /** @var UploadedFile $f */
+            $f = ($request->getUploadedFiles())['upload'];
+            $fi = new UploadsManager($f->file);
+            $pi = new PrivacyImporter($fi,$prRes,$ownerId);
+
+            $res = $pi->fromCsv($fi->getCsv());
+
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+        return $response->withJson($this->success(["errors"=>$res])) ;
+    }
+    /**
      * @param $request Request
      * @param $response Response
      * @param $args
@@ -660,72 +813,30 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function savePlainPrivacy($request, $response, $args) {
-        $rawbody = $request->getBody();
-        $body = $rawbody->read($rawbody->getSize());
-
-        $body = json_decode($body,true);
-        $ownerId = $body['ownerId'];
 
         try {
-            $ip = $this->getIp();
-            $domain = $body['domain'];
-            $id = $body['id'];
-            $email = $body['record']['email'];
-            $name = $body['record']['name'];
-            $surname = $body['record']['surname'];
-            $telephone = $body['record']['telephone'];
-            $site = $body['page'];
+            $rawbody = $request->getBody();
+            $body = $rawbody->read($rawbody->getSize());
 
-            if(isset($termId)) {
-                $termId = $body['termId'];
-            } else {
-                // nessuna normativa associata
-                $termId = 0 ;
-            }
+            $body = json_decode($body,true);
+            $ownerId = $body['ownerId'];
 
-            $privacyFlags = $body['flags'];
-
-
-            $privacy = $body['term'];
-
-
-            $form = $body['form'];
-            $cryptedForm = $body['cryptedForm'];
-            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
-            $ref = $body['ref'];
-            if (!isset($ref)) {
-                $ref = '';
-            }
-            /**
-             * @var EntityManager $em
-             */
+            /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $ip = $this->getIp();
 
-            $pr=$prRes->savePrivacy(
-                $ip,
-                $form,
-                $cryptedForm,
-                $name,
-                $surname,
-                $termId,
-                $site,
-                $privacy,
-                $id,
-                $ref,
-                $domain,
-                $email,
-                $privacyFlags,
-                $telephone
+            $pr = self::savePlainPrivacyByAssoc(
+                $prRes,
+                $body,
+                $ownerId,
+                $ip
             );
 
             $jsonPrivacy = $this->toJson($pr);
             $jsonPrivacy = json_encode($jsonPrivacy);
-            $ph = $prRes->savePrivacyLog($id, $jsonPrivacy, 'save from website');
+            $ph = $prRes->savePrivacyLog($pr->getId(), $jsonPrivacy, 'save from website');
 
-        } catch (ORMException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Orm Exception saving privacy');
         } catch (Exception $e) {
             return $response->withStatus(500, 'Exception saving privacy');
         }

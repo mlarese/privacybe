@@ -4,8 +4,12 @@ namespace App\Action;
 
 
 use App\Entity\Config\Enc;
+use App\Helpers\UploadsManager;
+use Exception;
+use Psr\Http\Message\StreamInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\UploadedFile;
 
 class Test extends AbstractAction
 {
@@ -61,5 +65,27 @@ class Test extends AbstractAction
 
 
         return $response->withJson(["result" => "encrypted ", "cl"=>  $this->toJson($r) ]);
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     */
+    public function upload($request, $response, $args) {
+
+        try {
+            /** @var UploadedFile $f */
+
+            $f = ($request->getUploadedFiles())['upload'];
+
+            $fi = new UploadsManager( $f->file) ;
+
+            return $response->withJson($this->success());
+        } catch (Exception $e) {
+            echo $e->getMessage()     ;
+            return $response->withStatus(500, 'Error');
+        }
+
     }
 }

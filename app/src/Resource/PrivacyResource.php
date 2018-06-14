@@ -171,8 +171,13 @@ class PrivacyResource extends AbstractResource
             ->setPrivacyFlags($privacyFlags)
             ->setTelephone($telephone);
 
-        $this->entityManager->merge($privacyEntry);
-        $this->entityManager->flush();
+
+        try {
+            $this->entityManager->merge($privacyEntry);
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            echo $e;
+        }
 
         return $privacyEntry;
     }

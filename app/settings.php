@@ -90,7 +90,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy_36',
+                'dbname'   => 'privacy',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

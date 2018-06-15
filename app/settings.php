@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Abilitare per update in database locale
+ *  Decommentare per update del database  locale
  */
 // return require 'settings_local.php';
 
@@ -90,7 +90,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy',
+                'dbname'   => 'privacy_36',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

@@ -260,6 +260,28 @@ class Operator
       */
      protected $profile;
 
+    /**
+     * @return mixed
+     */
+    public function getAcl() {
+        return $this->acl;
+    }
+
+    /**
+     * @param mixed $acl
+     *
+     * @return Operator
+     */
+    public function setAcl($acl) {
+        $this->acl = $acl;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(name="acl", type="json", nullable=true)
+     */
+    protected $acl;
+
      /**
       * @ORM\Column(name="period_from", type="datetime")
       */

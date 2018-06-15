@@ -145,9 +145,11 @@ class Operators extends AbstractAction
 
         // create operator
         try {
+
+            $pass = $this->getAttribute('password', $body, true);
             $user = $userRes->insert(
                  $this->getAttribute('user', $body, true),
-                 $this->getAttribute('password', $body, true),
+                md5($pass),
                  'operators',
                 $ownerId,
                 $this->getAttribute('name', $body, true) . ' ' . $this->getAttribute('surname', $body, true)

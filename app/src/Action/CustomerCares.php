@@ -140,7 +140,7 @@ class CustomerCares extends AbstractAction
 
             $histField ['before']=$cc;
             $cc->setDeleted($body['deleted']);
-            $cc->setName($body['user']);
+            // $cc->setName($body['user']);
             $cc->setEmail($body['email']);
             $cc->setFirstName($body['firstName']);
             $cc->setLastName($body['lastName']);

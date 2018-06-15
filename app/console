@@ -17,6 +17,7 @@ require_once('vendor/autoload.php');
 require_once('bootstrap.php');
 
 
+use App\Console\Command\ImportNewsletter;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;
@@ -24,6 +25,7 @@ use Console\Helper\Log as LogHelper;
 try {
     $application = new Application();
     $application->add(new ImportUpgrade());
+    $application->add(new ImportNewsletter());
     $application->run();
 
 } catch (\Exception $e) {

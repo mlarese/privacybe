@@ -20,6 +20,7 @@ use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use function base64_encode;
 use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -162,6 +163,110 @@ class PrivacyManager extends AbstractAction
         print_r($pr);die;
 
     }
+
+    /**
+     * @param $ownerId
+     * @param $lang
+     * @param $pageName
+     * @param $domainName
+     * @param $ref
+     * @param $termId
+     *
+     * @return array
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws PropertyNotFoundException
+     * @throws TermNotFoundException
+     * @throws TransactionRequiredException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function extractTermToSign ($ownerId, $lang, $termId, $pageName=null, $domainName=null ) {
+
+        $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+
+        /** @var EntityManager $em */
+        $cem = $this->getEmConfig();
+
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+
+        if($termId===''){
+            $termRes = new TermResource($em);
+            $termPgRes = new TermPageResource($em);
+            // $pages = $termPgRes->findByPage($domainName, $pageName);
+
+            /** @var TermPage $termPage  */
+            $termPage = $em
+                ->getRepository(TermPage::class)
+                ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
+
+            If(!isset($termPage)) {
+                return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            }
+
+            $termId = $termPage->getTermUid();
+        }
+
+        $propRes = new PropertiesResource($this->getEmConfig());
+        /** @var Term $term */
+        $term = null;
+
+        $term = $em->find(Term::class, $termId);
+        $scrollText = $propRes->widgetScrollText();
+
+        if(!isset($term)) {
+            throw new TermNotFoundException("Term not found");
+        }
+        $paragraphs = $term->getParagraphs();
+        $termResponse = array();
+
+        $requestLanguage = $lang;
+        foreach($paragraphs as $p) {
+            if(!isset($p['text'][$lang])) {
+                $lang = 'en';
+                if(!isset($p['text'][$lang])) {
+                    $lang = 'it';
+                }
+            }
+
+            $title = "";
+            if(isset($p['title'][$lang])) {
+                $title = $p['title'][$lang];
+            }
+
+            $newP = array(
+                "text" => $p['text'][$lang],
+                "treatments" => array(),
+                "scrolled" => false,
+                "title" => $title,
+                "scrollText" => $scrollText[$lang]
+            );
+
+            foreach($p['treatments'] as $t) {
+                $newT = array(
+                    "code" => $t['name'],
+                    "restrictive" => $t['restrictive'],
+                    "mandatory" => $t['mandatory'],
+                    "text" => $t['text'][$lang],
+                    "selected" => false
+                );
+
+                $newP['treatments'][] = $newT;
+            }
+            $termResponse[] = $newP;
+        }
+
+        return $termResponse;
+    }
+
+
+    public function toSuscribeTerm($request, $response, $args) {
+
+        $termResponse = $this->extractTermToSign($ownerId, $lang, $pageName, $domainName, $ref, $termId);
+
+
+    }
+
     /**
      * @param $request Request
      * @param $response Response
@@ -170,6 +275,51 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function selectWidgetTerm($request, $response, $args) {
+
+        try {
+            $_k = $request->getParam('_k');
+            $params = base64_decode(urldecode($_k));
+            $params = json_decode($params, true);
+            $lang = $params['language'];
+            $pageName = $params['page'];
+            $domainName = $params['domain'];
+            $ownerId = $params['ownerId'];
+            $ref = $params['ref'];
+            $termId = $params['termId'];
+            $termResponse = $this->extractTermToSign($ownerId, $lang, $pageName, $domainName, $ref, $termId);
+            $js = $this->toJson($termResponse);
+            $this->addP3P($response);
+            return $response->withJson(
+                array(
+                    "referrer" => $httpReferer,
+                    "ownerId" => $ownerId,
+                    "termId" => $termId,
+                    "language" => $requestLanguage,
+                    "name" => $term->getName(),
+                    "paragraphs" => $js
+                )
+            );
+        } catch (TermNotFoundException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'Term not found');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error');
+        }
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     *
+     * @deprecated   No longer used  use selectWidgetTerm
      */
     public function getWidgetTerm($request, $response, $args) {
         $_k=$request->getParam('_k');

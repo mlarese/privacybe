@@ -17,6 +17,8 @@ class GeneralDataIntegrator
 
         $record['denomination'] = $record['surname'].' '.$record['name'] ;
 
+        $record['_flags_'] = $record['privacyFlags'];
+
         return $record;
     }
 }

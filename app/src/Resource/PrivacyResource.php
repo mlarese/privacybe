@@ -287,6 +287,14 @@ class PrivacyResource extends AbstractResource
             ->andWhere( $ex->not("p.email IS NULL") )
         ;
 
+
+        $qb ->addOrderBy( 'p.email', 'ASC')
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
+
         if($criteria === null) {
             $qb ->addOrderBy( 'p.email', 'ASC')
                 ->addOrderBy( 'p.termId', 'ASC')
@@ -350,7 +358,7 @@ class PrivacyResource extends AbstractResource
         }
 
         if($filter)  $results = $filter->filter($results,$criteria);
-        if($grouper)  $results = $grouper->group($results,$criteria);
+        // if($grouper)  $results = $grouper->group($results,$criteria);
 
 
         return $results;

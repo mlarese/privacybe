@@ -43,24 +43,19 @@ class PostFilter implements IFilter {
                 }
             }
 
+
             // print_r($debug);die;
             // print_r($validTreatments); die;
             $counter = 0;
 
             foreach ($list as &$pr ) {
                 $includeRec = false;
-                $pr['_flags_'] = [];
-                // $pr['_flags_'] [] =  $validTreatments;
-
                 foreach ($pr['privacyFlags'] as $f) {
-                    $pr['_flags_'] [] = $f['code'] . ' # ' . $pr['termId'];
-                    //$debug [] = $f['code'] . ' # ' . $pr['termId'];
-
                     if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
-                        $includeRec = true;
-                        // echo $f['code'] . '#--' . $pr['termId'].' ';
-                        // echo $f['code'] . ' # ' . $pr['termId'] . ' - ' . $pr['email'];
-                        break;
+                        if(  $f['selected']) {
+                            $includeRec = true;
+                            break;
+                        }
                     }
 
                 }

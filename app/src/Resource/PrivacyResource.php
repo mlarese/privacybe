@@ -334,6 +334,13 @@ class PrivacyResource extends AbstractResource
 
             }
 
+            if(isset($criteria['domain']) && $criteria['domain']!=='' && $criteria['domain']!=='all' ) {
+                $crDomain = $criteria['domain'];
+                $qb->andWhere( "p.domain=:domain")
+                    ->setParameter('domain',$crDomain)
+                ;
+            }
+
             $qb ->addOrderBy( 'p.email', $sortDirection)
                 ->addOrderBy( 'p.termId', 'ASC')
                 ->addOrderBy( 'p.created', 'DESC')
@@ -345,7 +352,6 @@ class PrivacyResource extends AbstractResource
         }
 
         $results = $qb->getQuery()->getResult();
-
 
 
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);

@@ -34,6 +34,7 @@ use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use function substr;
+use function toJson;
 
 class PrivacyManager extends AbstractAction
 {
@@ -190,7 +191,8 @@ class PrivacyManager extends AbstractAction
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
 
-        if($termId===''){
+
+        if(!isset($termId) || $termId===''){
             $termRes = new TermResource($em);
             $termPgRes = new TermPageResource($em);
             // $pages = $termPgRes->findByPage($domainName, $pageName);
@@ -211,60 +213,95 @@ class PrivacyManager extends AbstractAction
         /** @var Term $term */
         $term = null;
 
+
         $term = $em->find(Term::class, $termId);
-        $scrollText = $propRes->widgetScrollText();
+
 
         if(!isset($term)) {
             throw new TermNotFoundException("Term not found");
         }
+
+        $scrollText = '';
+
         $paragraphs = $term->getParagraphs();
-        $termResponse = array();
-
+        $termResponse = [];
         $requestLanguage = $lang;
+
+
         foreach($paragraphs as $p) {
-            if(!isset($p['text'][$lang])) {
-                $lang = 'en';
-                if(!isset($p['text'][$lang])) {
-                    $lang = 'it';
+
+            try {
+                if (!isset($p['text'][$lang])) {
+                    $lang = 'en';
+                    if (!isset($p['text'][$lang])) {
+                        $lang = 'it';
+                    }
                 }
-            }
-
-            $title = "";
-            if(isset($p['title'][$lang])) {
-                $title = $p['title'][$lang];
-            }
-
-            $newP = array(
-                "text" => $p['text'][$lang],
-                "treatments" => array(),
-                "scrolled" => false,
-                "title" => $title,
-                "scrollText" => $scrollText[$lang]
-            );
-
-            foreach($p['treatments'] as $t) {
-                $newT = array(
-                    "code" => $t['name'],
-                    "restrictive" => $t['restrictive'],
-                    "mandatory" => $t['mandatory'],
-                    "text" => $t['text'][$lang],
-                    "selected" => false
+                $title = "";
+                if (isset($p['title'][$lang])) {
+                    $title = $p['title'][$lang];
+                }
+                $text = $p['text'][$lang];
+                $newP = array(
+                    "text" => $text,
+                    "treatments" => array(),
+                    "scrolled" => false,
+                    "title" => $title,
+                    "scrollText" => ''
                 );
+                foreach ($p['treatments'] as $t) {
+                    $tlang = '';
+                    if (isset($t['text'][$lang])) {
+                        $tlang = $t['text'][$lang];
+                    }
+                    $newT = array(
+                        "code" => $t['name'],
+                        "restrictive" => $t['restrictive'],
+                        "mandatory" => $t['mandatory'],
+                        "text" => $tlang,
+                        "selected" => false
+                    );
 
-                $newP['treatments'][] = $newT;
+
+                    $newP['treatments'][] = $newT;
+                }
+                $termResponse[] = $newP;
+            } catch (Exception $e) {
             }
-            $termResponse[] = $newP;
         }
 
         return $termResponse;
     }
 
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function toSuscribeTerm($request, $response, $args) {
 
-        $termResponse = $this->extractTermToSign($ownerId, $lang, $pageName, $domainName, $ref, $termId);
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $language = $args['language'];
+            $termId = $args['termId'];
 
 
+            $termResponse = $this->extractTermToSign(
+                $ownerId,
+                $language,
+                $termId);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error');
+        }
+
+        return $response->withJson( $this->toJson($termResponse) );
     }
 
     /**

@@ -60,6 +60,14 @@ class PostFilter implements IFilter {
 
                 }
 
+                if($includeRec && isset($criteria['language']) && $criteria['language']!=='' && $criteria['language']!=='all') {
+                    $language = $criteria['language'] ;
+
+                     if($pr['language']!== $criteria['language']) {
+                         $includeRec = false;
+                     }
+                }
+
                 if($includeRec) {
                     $counter++;
                     $pr['_counter_'] = $counter;

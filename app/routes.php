@@ -120,7 +120,7 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *                  OWNER ADD USER
  *********************************************************/
 //retrieve term
-$app->get('/api/owner/termtosign/{termId}', 'App\Action\PrivacyManager:getWidgetTerm');
+$app->get('/api/owner/termtosign/{language}/{termId}', 'App\Action\PrivacyManager:toSuscribeTerm');
 
 /*********************************************************
  *                  AUTH

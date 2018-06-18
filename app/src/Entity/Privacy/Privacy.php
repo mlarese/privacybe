@@ -12,6 +12,9 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_name_surname", columns={"name","surname"}),
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
  *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
+ *          @ORM\Index(name="privacy_page", columns={"page"}),
+ *          @ORM\Index(name="privacy_term_id", columns={"domain","term_id"}),
+ *          @ORM\Index(name="privacy_language", columns={"domain","language"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
  *     }
  * )
@@ -19,8 +22,24 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  */
 class Privacy {
     /**
+     * @return mixed
+     */
+    public function getLanguage() {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     *
+     * @return Privacy
+     */
+    public function setLanguage($language) {
+        $this->language = $language;
+        return $this;
+    }
+    /**
      * @ORM\Id
-     * @ORM\Column(name="uid", type="string", nullable=false, length=120)
+     * @ORM\Column(name="uid", type="string", nullable=false, length=128)
      * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
@@ -44,6 +63,11 @@ class Privacy {
      * @ORM\Column(name="surname", type="string", nullable=false, length=100)
      */
     protected $surname;
+
+    /**
+     * @ORM\Column(name="language", type="string", nullable=true, length=20)
+     */
+    protected $language;
 
     /**
      * @ORM\Column(name="form", type="json", nullable=true)
@@ -93,9 +117,31 @@ class Privacy {
     protected $domain;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $page;
+
+    /**
      * @ORM\Column(name="site", type="string", nullable=false, length=255)
      */
     protected $site;
+
+    /**
+     * @return mixed
+     */
+    public function getPage() {
+        return $this->page;
+    }
+
+    /**
+     * @param mixed $page
+     *
+     * @return Privacy
+     */
+    public function setPage($page) {
+        $this->page = $page;
+        return $this;
+    }
 
     /**
      * @return mixed

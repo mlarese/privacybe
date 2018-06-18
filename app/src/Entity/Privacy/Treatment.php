@@ -139,6 +139,75 @@ class Treatment
          return $this->deleted;
      }
 
+    /**
+     * @return mixed
+     */
+    public function getOptions() {
+        return $this->options;
+    }
+
+    /**
+     * @param mixed $options
+     *
+     * @return Treatment
+     */
+    public function setOptions($options) {
+        $this->options = $options;
+        return $this;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getHistory() {
+        return $this->history;
+    }
+
+    /**
+     * @param mixed $history
+     *
+     * @return Treatment
+     */
+    public function setHistory($history) {
+        $this->history = $history;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupCode() {
+        return $this->groupCode;
+    }
+
+    /**
+     * @param mixed $groupCode
+     *
+     * @return Treatment
+     */
+    public function setGroupCode($groupCode) {
+        $this->groupCode = $groupCode;
+        return $this;
+    }
+
+
+    /**
+     * @ORM\Column(name="options", type="json", nullable=true)
+     */
+     protected $options;
+
+    /**
+     * @ORM\Column(name="group_code", type="string", nullable=true, length=60)
+     */
+    protected $groupCode;
+
+    /**
+     * @ORM\Column(name="history", type="json", nullable=true)
+     */
+    protected $history;
+
      /**
       * @param mixed $deleted
       * @return Treatment

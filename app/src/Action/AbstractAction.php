@@ -104,6 +104,16 @@ class AbstractAction
         return $s->normalize($obj,'json');
     }
 
+    public static function toJsonStatic($obj) {
+        $on = new ObjectNormalizer();
+        $on->setCircularReferenceLimit(1);
+        $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+
+        $dtn = new DateTimeNormalizer('Y-m-d');
+        $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
+
+        return $s->normalize($obj,'json');
+    }
 
     /**
      * @param $hash

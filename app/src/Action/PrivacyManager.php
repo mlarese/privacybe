@@ -7,6 +7,8 @@ use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
+use App\Helpers\UploadsManager;
+use App\InternalImporters\PrivacyImporter;
 use App\Resource\OwnerExistException;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\PostFilter;
@@ -18,6 +20,7 @@ use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use function base64_encode;
 use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -27,6 +30,7 @@ use Exception;
 use function json_decode;
 use function json_encode;
 use function print_r;
+use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use function substr;
@@ -159,6 +163,110 @@ class PrivacyManager extends AbstractAction
         print_r($pr);die;
 
     }
+
+    /**
+     * @param $ownerId
+     * @param $lang
+     * @param $pageName
+     * @param $domainName
+     * @param $ref
+     * @param $termId
+     *
+     * @return array
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws PropertyNotFoundException
+     * @throws TermNotFoundException
+     * @throws TransactionRequiredException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function extractTermToSign ($ownerId, $lang, $termId, $pageName=null, $domainName=null ) {
+
+        $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+
+        /** @var EntityManager $em */
+        $cem = $this->getEmConfig();
+
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+
+        if($termId===''){
+            $termRes = new TermResource($em);
+            $termPgRes = new TermPageResource($em);
+            // $pages = $termPgRes->findByPage($domainName, $pageName);
+
+            /** @var TermPage $termPage  */
+            $termPage = $em
+                ->getRepository(TermPage::class)
+                ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
+
+            If(!isset($termPage)) {
+                return $response->withStatus(403, "Page $domainName$pageName not found (owner $ownerId)");
+            }
+
+            $termId = $termPage->getTermUid();
+        }
+
+        $propRes = new PropertiesResource($this->getEmConfig());
+        /** @var Term $term */
+        $term = null;
+
+        $term = $em->find(Term::class, $termId);
+        $scrollText = $propRes->widgetScrollText();
+
+        if(!isset($term)) {
+            throw new TermNotFoundException("Term not found");
+        }
+        $paragraphs = $term->getParagraphs();
+        $termResponse = array();
+
+        $requestLanguage = $lang;
+        foreach($paragraphs as $p) {
+            if(!isset($p['text'][$lang])) {
+                $lang = 'en';
+                if(!isset($p['text'][$lang])) {
+                    $lang = 'it';
+                }
+            }
+
+            $title = "";
+            if(isset($p['title'][$lang])) {
+                $title = $p['title'][$lang];
+            }
+
+            $newP = array(
+                "text" => $p['text'][$lang],
+                "treatments" => array(),
+                "scrolled" => false,
+                "title" => $title,
+                "scrollText" => $scrollText[$lang]
+            );
+
+            foreach($p['treatments'] as $t) {
+                $newT = array(
+                    "code" => $t['name'],
+                    "restrictive" => $t['restrictive'],
+                    "mandatory" => $t['mandatory'],
+                    "text" => $t['text'][$lang],
+                    "selected" => false
+                );
+
+                $newP['treatments'][] = $newT;
+            }
+            $termResponse[] = $newP;
+        }
+
+        return $termResponse;
+    }
+
+
+    public function toSuscribeTerm($request, $response, $args) {
+
+        $termResponse = $this->extractTermToSign($ownerId, $lang, $pageName, $domainName, $ref, $termId);
+
+
+    }
+
     /**
      * @param $request Request
      * @param $response Response
@@ -167,6 +275,51 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function selectWidgetTerm($request, $response, $args) {
+
+        try {
+            $_k = $request->getParam('_k');
+            $params = base64_decode(urldecode($_k));
+            $params = json_decode($params, true);
+            $lang = $params['language'];
+            $pageName = $params['page'];
+            $domainName = $params['domain'];
+            $ownerId = $params['ownerId'];
+            $ref = $params['ref'];
+            $termId = $params['termId'];
+            $termResponse = $this->extractTermToSign($ownerId, $lang, $pageName, $domainName, $ref, $termId);
+            $js = $this->toJson($termResponse);
+            $this->addP3P($response);
+            return $response->withJson(
+                array(
+                    "referrer" => $httpReferer,
+                    "ownerId" => $ownerId,
+                    "termId" => $termId,
+                    "language" => $requestLanguage,
+                    "name" => $term->getName(),
+                    "paragraphs" => $js
+                )
+            );
+        } catch (TermNotFoundException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, 'Term not found');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error');
+        }
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     *
+     * @deprecated   No longer used  use selectWidgetTerm
      */
     public function getWidgetTerm($request, $response, $args) {
         $_k=$request->getParam('_k');
@@ -653,6 +806,156 @@ class PrivacyManager extends AbstractAction
 
 
     /**
+     * @param PrivacyResource       $privacyResource
+     * @param array                 $data
+     * @param integer               $ownerId
+     * @param string                $ip
+     * @throws Exception
+     * @return Privacy
+     */
+    public static function savePlainPrivacyByAssoc($privacyResource,$data,$ownerId, $ip='') {
+
+        $domain = $data['domain'];
+
+        $email = "";
+        if(isset($data['record']['email']))
+            $email = $data['record']['email'];
+        else if(isset($data['email']))
+            $email = $data['email'];
+
+        $name = '';
+        if(isset($data['record']['name']))
+            $name = $data['record']['name'];
+        else if(isset($data['name']))
+            $name = $data['name'];
+
+        $surname = '';
+        if(isset($data['record']['surname']))
+            $surname = $data['record']['surname'];
+        else if(isset($data['surname']))
+            $surname = $data['surname'];
+
+        $telephone = '';
+        if(isset($data['record']['telephone']))
+            $telephone = $data['record']['telephone'];
+        else if(isset($data['telephone']))
+            $telephone = $data['telephone'];
+
+        $site = $data['page'];
+
+        if(isset($data['id'])) {
+            $id = $data['id'];
+        } else {
+            $id = Uuid::uuid4() ;
+        }
+
+        if(isset($data['termId'])) {
+            $termId = $data['termId'];
+        } else {
+            // nessuna normativa associata
+            $termId = 0 ;
+        }
+
+
+
+        if(isset($data['flags']))
+            if($data['flags']!=='')
+                $privacyFlags = $data['flags'];
+            else
+                $privacyFlags = [];
+        else
+            $privacyFlags = [];
+
+        if(isset($data['term']))
+            if($data['term']!=='')
+                $privacy = $data['term'];
+            else
+                $privacy = [];
+        else
+            $privacy = [];
+
+
+        if(isset($data['form']))
+            if($data['form']!=='')
+                $form = $data['form'];
+            else
+                $form = [];
+        else
+            $form = [];
+
+
+
+        if(isset($data['cryptedForm'])) {
+            if($data['cryptedForm']!=='')
+                $cryptedForm = $data['cryptedForm'];
+            else
+                $cryptedForm = [];
+;
+        } else {
+            $cryptedForm = $form;
+        }
+
+        $cryptedForm = json_encode($cryptedForm);
+
+        $ref = "";
+
+        if(isset($data['ref'])) {
+            $ref = $data['ref'];
+        }
+
+        /** @var Privacy $pr */
+        $pr=$privacyResource->savePrivacy(
+            $ip,
+            $form,
+            $cryptedForm,
+            $name,
+            $surname,
+            $termId,
+            $site,
+            $privacy,
+            $id,
+            $ref,
+            $domain,
+            $email,
+            $privacyFlags,
+            $telephone
+        );
+
+
+        // print_r(self::toJsonStatic($pr));
+        return $pr ;
+    }
+
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function import($request, $response, $args) {
+
+        try {
+            $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $prRes = new PrivacyResource($em);
+
+            /** @var UploadedFile $f */
+            $f = ($request->getUploadedFiles())['upload'];
+            $fi = new UploadsManager($f->file);
+            $pi = new PrivacyImporter($fi,$prRes,$ownerId);
+
+            $res = $pi->fromCsv($fi->getCsv());
+
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+        return $response->withJson($this->success(["errors"=>$res])) ;
+    }
+    /**
      * @param $request Request
      * @param $response Response
      * @param $args
@@ -660,72 +963,30 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function savePlainPrivacy($request, $response, $args) {
-        $rawbody = $request->getBody();
-        $body = $rawbody->read($rawbody->getSize());
-
-        $body = json_decode($body,true);
-        $ownerId = $body['ownerId'];
 
         try {
-            $ip = $this->getIp();
-            $domain = $body['domain'];
-            $id = $body['id'];
-            $email = $body['record']['email'];
-            $name = $body['record']['name'];
-            $surname = $body['record']['surname'];
-            $telephone = $body['record']['telephone'];
-            $site = $body['page'];
+            $rawbody = $request->getBody();
+            $body = $rawbody->read($rawbody->getSize());
 
-            if(isset($termId)) {
-                $termId = $body['termId'];
-            } else {
-                // nessuna normativa associata
-                $termId = 0 ;
-            }
+            $body = json_decode($body,true);
+            $ownerId = $body['ownerId'];
 
-            $privacyFlags = $body['flags'];
-
-
-            $privacy = $body['term'];
-
-
-            $form = $body['form'];
-            $cryptedForm = $body['cryptedForm'];
-            $cryptedForm = json_encode($cryptedForm);// print_r($privacy); die;
-            $ref = $body['ref'];
-            if (!isset($ref)) {
-                $ref = '';
-            }
-            /**
-             * @var EntityManager $em
-             */
+            /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $ip = $this->getIp();
 
-            $pr=$prRes->savePrivacy(
-                $ip,
-                $form,
-                $cryptedForm,
-                $name,
-                $surname,
-                $termId,
-                $site,
-                $privacy,
-                $id,
-                $ref,
-                $domain,
-                $email,
-                $privacyFlags,
-                $telephone
+            $pr = self::savePlainPrivacyByAssoc(
+                $prRes,
+                $body,
+                $ownerId,
+                $ip
             );
 
             $jsonPrivacy = $this->toJson($pr);
             $jsonPrivacy = json_encode($jsonPrivacy);
-            $ph = $prRes->savePrivacyLog($id, $jsonPrivacy, 'save from website');
+            $ph = $prRes->savePrivacyLog($pr->getId(), $jsonPrivacy, 'save from website');
 
-        } catch (ORMException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Orm Exception saving privacy');
         } catch (Exception $e) {
             return $response->withStatus(500, 'Exception saving privacy');
         }

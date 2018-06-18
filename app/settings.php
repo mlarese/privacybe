@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Abilitare per update in database locale
+ *  Decommentare per update del database  locale
  */
 // return require 'settings_local.php';
 

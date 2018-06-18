@@ -318,7 +318,6 @@ class PrivacyResource extends AbstractResource
                     ->andWhere( $ex->orX()->addMultiple($persCond))
                     ->setParameter('person',$person);
                 ;
-
             }
 
 
@@ -332,6 +331,7 @@ class PrivacyResource extends AbstractResource
                     ->setParameter('firstdate',$dt)
                     ->setParameter('secondDate',$ndt)
                 ;
+
             }
 
             $qb ->addOrderBy( 'p.email', $sortDirection)
@@ -341,14 +341,17 @@ class PrivacyResource extends AbstractResource
                 ->addOrderBy( 'p.site', 'ASC')
             ;
 
+
         }
 
         $results = $qb->getQuery()->getResult();
 
 
+
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
 
         // guest[reservation_guest_language]":"en"
+
 
 
         foreach ($results as &$pr) {
@@ -358,7 +361,7 @@ class PrivacyResource extends AbstractResource
         }
 
         if($filter)  $results = $filter->filter($results,$criteria);
-        // if($grouper)  $results = $grouper->group($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
 
 
         return $results;

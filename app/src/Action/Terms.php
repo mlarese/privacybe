@@ -352,24 +352,4 @@ class Terms extends AbstractAction{
         return $response->withJson( $this->toJson($res) );
     }
 
-
-    /**
-     * @param $request Request
-     * @param $response Response
-     * @param $args
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\TransactionRequiredException
-     */
-    public function getTermsPages($request, $response, $args) {
-        $ownerId = $this->getOwnerId($request);
-        /** @var EntityManager $em */
-        $em = $this->getEmPrivacy($ownerId);
-        $pagesRes = new TermPageResource($em);
-
-        $res = $pagesRes->findAll();
-        return $response->withJson( $this->toJson($res));
-    }
-
 }

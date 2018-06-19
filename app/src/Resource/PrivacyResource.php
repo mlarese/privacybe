@@ -149,7 +149,9 @@ class PrivacyResource extends AbstractResource
         $domain,
         $email,
         $privacyFlags,
-        $telephone
+        $telephone,
+        $language=null,
+        $page=null
 
     ) {
         $privacyEntry = new Privacy();
@@ -171,6 +173,8 @@ class PrivacyResource extends AbstractResource
             ->setPrivacyFlags($privacyFlags)
             ->setTelephone($telephone);
 
+        if(isset($language)) $privacyEntry->setLanguage($language);
+        if(isset($page)) $privacyEntry->setPage($page);
 
         try {
             $this->entityManager->merge($privacyEntry);

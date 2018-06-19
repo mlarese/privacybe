@@ -25,6 +25,12 @@ class TermPageResource extends AbstractResource {
 
     }
 
+    /**
+     * @param $domain
+     * @param $page
+     *
+     * @return array
+     */
     public function findByPage($domain, $page) {
         $rep = $this->getRepository();
 
@@ -35,6 +41,15 @@ class TermPageResource extends AbstractResource {
         return $res;
     }
 
+    public function findByTerm($termId) {
+        $rep = $this->getRepository();
+
+        $res = $rep->findBy(
+            ["deleted"=>false,'termUid' => $termId]
+        );
+
+        return $res;
+    }
     /**
      * @param $domainsPages
      * @return TermPage

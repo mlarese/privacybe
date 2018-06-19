@@ -39,9 +39,6 @@ use function toJson;
 class PrivacyManager extends AbstractAction
 {
 
-
-
-
     /**
      * @param $request Request
      * @param $response Response
@@ -197,7 +194,7 @@ class PrivacyManager extends AbstractAction
             $termPgRes = new TermPageResource($em);
             // $pages = $termPgRes->findByPage($domainName, $pageName);
 
-            /** @var TermPage $termPage  */
+            /** @var TermPages $termPage  */
             $termPage = $em
                 ->getRepository(TermPage::class)
                 ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
@@ -272,7 +269,6 @@ class PrivacyManager extends AbstractAction
 
         return $termResponse;
     }
-
 
     /**
      * @param $request Request
@@ -388,7 +384,7 @@ class PrivacyManager extends AbstractAction
             $termPgRes = new TermPageResource($em);
             // $pages = $termPgRes->findByPage($domainName, $pageName);
 
-            /** @var TermPage $termPage  */
+            /** @var TermPages $termPage  */
             $termPage = $em
                         ->getRepository(TermPage::class)
                         ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
@@ -484,7 +480,6 @@ class PrivacyManager extends AbstractAction
     }
 
 
-
     /**
      * @param $request Request
      * @param $response Response
@@ -524,7 +519,7 @@ class PrivacyManager extends AbstractAction
             $termPgRes = new TermPageResource($em);
             // $pages = $termPgRes->findByPage($domainName, $pageName);
 
-            /** @var TermPage $termPage  */
+            /** @var TermPages $termPage  */
             $termPage = $em
                 ->getRepository(TermPage::class)
                 ->findOneBy(array('domain' => $domainName, 'page' => $pageName, 'deleted'=>0));
@@ -880,6 +875,11 @@ class PrivacyManager extends AbstractAction
 
         $site = $data['page'];
 
+        $page = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+
+        $language=null;
+        if(isset($data['language']))   $language = $data['language'];
+
         if(isset($data['id'])) {
             $id = $data['id'];
         } else {
@@ -911,6 +911,9 @@ class PrivacyManager extends AbstractAction
         else
             $privacy = [];
 
+        if(isset($page)) {
+            $privacy['referrer'] = $page;
+        }
 
         if(isset($data['form']))
             if($data['form']!=='')
@@ -955,15 +958,15 @@ class PrivacyManager extends AbstractAction
             $domain,
             $email,
             $privacyFlags,
-            $telephone
+            $telephone,
+            $language,
+            $page
         );
 
 
         // print_r(self::toJsonStatic($pr));
         return $pr ;
     }
-
-
 
     /**
      * @param $request Request
@@ -1007,6 +1010,43 @@ class PrivacyManager extends AbstractAction
 
             $body = json_decode($body,true);
             $ownerId = $body['ownerId'];
+
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $prRes = new PrivacyResource($em);
+            $ip = $this->getIp();
+
+            $pr = self::savePlainPrivacyByAssoc(
+                $prRes,
+                $body,
+                $ownerId,
+                $ip
+            );
+
+            $jsonPrivacy = $this->toJson($pr);
+            $jsonPrivacy = json_encode($jsonPrivacy);
+            $ph = $prRes->savePrivacyLog($pr->getId(), $jsonPrivacy, 'save from website');
+
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Exception saving privacy');
+        }
+
+
+        return $response->withJson($this->success()) ;
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function savePrivacyJwt($request, $response, $args) {
+
+        try {
+            $body = $request->getParsedBody();
+            $ownerId = $this->getOwnerId($request);
 
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);

@@ -33,9 +33,10 @@ $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
 
 /*********************************************************
- *                  TERMS OAGES
+ *                  TERMS PAGES
  *********************************************************/
-$app->get('/api/owner/termsoages', 'App\Action\Terms:getTermsPages');
+$app->get('/api/owner/termspages', 'App\Action\TermPages:getTermsPages');
+$app->get('/api/owner/termspages/{termId}', 'App\Action\TermPages:getTermPages');
 
 /*********************************************************
  *                  OWNERS
@@ -121,7 +122,7 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *********************************************************/
 //retrieve term
 $app->get('/api/owner/termtosign/{language}/{termId}', 'App\Action\PrivacyManager:toSuscribeTerm');
-
+$app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
 /*********************************************************
  *                  AUTH
  *********************************************************/

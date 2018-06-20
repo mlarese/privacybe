@@ -1,21 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 07/06/2018
- * Time: 12:51
- */
-
 namespace App\Action;
-
 
 use App\Entity\Config\OwnerUserRequest;
 use App\Entity\Privacy\UserRequest;
-use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
@@ -39,18 +27,29 @@ class UsersRequests  extends AbstractAction{
         try {
             $body = $request->getParsedBody();
 
-            $mail = $request->getParam('email');
-            $ownerId = $request->getParam('ownerId');
+            $mail = $body ['email'];
+            $ownerId = $body ['ref'];
+
             $ownerId = $this->findOwnerIdFromHash($ownerId);
 
             $em = $this->getEmPrivacy($ownerId);
+
+
+            /** @var UserRequest $r */
             $r = new UserRequest();
-            $r->setUid( Uuid::uuid4())
+
+            $uid = Uuid::uuid4();
+
+            // die('--'.$uid);
+
+            $r->setUid($uid )
                 ->setCreated(new \DateTime())
                 ->setStatus(self::STATUS_OPEN)
                 ->setType(self::TYPE_SUBSCRIPTIONS_REQUEST)
                 ->setMail($mail)
+                ->setNote('')
                 ;
+
 
             $or = new OwnerUserRequest();
             $or->setUserRequestId( $r->getUid())

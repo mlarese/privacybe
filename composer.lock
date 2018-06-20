@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9ce9bf67a1c2edb32fe4ef922135823",
+    "content-hash": "d0ccfb518ca7c862d2d33e8b83b96f8f",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -138,6 +138,36 @@
                 "slim"
             ],
             "time": "2016-04-18T07:52:43+00:00"
+        },
+        {
+            "name": "apache/log4php",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git-wip-us.apache.org/repos/asf/logging-log4php.git",
+                "reference": "cac428b6f67d2035af39784da1d1a299ef42fcf2"
+            },
+            "require": {
+                "php": ">=5.2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/main/php/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A versatile logging framework for PHP",
+            "homepage": "http://logging.apache.org/log4php/",
+            "keywords": [
+                "log",
+                "logging",
+                "php"
+            ],
+            "time": "2012-10-26T09:13:25+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -1412,16 +1442,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.12",
+            "version": "v2.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb"
+                "reference": "10bcb46e8f3d365170f6de9d05245aa066b81f09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
-                "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/10bcb46e8f3d365170f6de9d05245aa066b81f09",
+                "reference": "10bcb46e8f3d365170f6de9d05245aa066b81f09",
                 "shasum": ""
             },
             "require": {
@@ -1453,27 +1483,28 @@
             "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
             "keywords": [
                 "csprng",
+                "polyfill",
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-04-04T21:24:14+00:00"
+            "time": "2018-06-08T15:26:40+00:00"
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "22f564d068c093c3775552c700553209f9af60f8"
+                "reference": "7d0549c3947eaea620f4e523f42ab236cf7fd304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/22f564d068c093c3775552c700553209f9af60f8",
-                "reference": "22f564d068c093c3775552c700553209f9af60f8",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/7d0549c3947eaea620f4e523f42ab236cf7fd304",
+                "reference": "7d0549c3947eaea620f4e523f42ab236cf7fd304",
                 "shasum": ""
             },
             "require": {
-                "paragonie/random_compat": "^1|^2",
+                "paragonie/random_compat": ">=1",
                 "php": "^5.2.4|^5.3|^5.4|^5.5|^5.6|^7"
             },
             "require-dev": {
@@ -1538,7 +1569,7 @@
                 "secret-key cryptography",
                 "side-channel resistant"
             ],
-            "time": "2018-05-22T20:15:01+00:00"
+            "time": "2018-06-06T17:30:29+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -2387,12 +2418,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "d245f3275c7da4705d85d009c6461d6e4b5beeec"
+                "reference": "f983c178d6fa40e3bd60933e5ff0377d1cf37f2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/d245f3275c7da4705d85d009c6461d6e4b5beeec",
-                "reference": "d245f3275c7da4705d85d009c6461d6e4b5beeec",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/f983c178d6fa40e3bd60933e5ff0377d1cf37f2d",
+                "reference": "f983c178d6fa40e3bd60933e5ff0377d1cf37f2d",
                 "shasum": ""
             },
             "require": {
@@ -2458,7 +2489,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2018-05-31T10:16:04+00:00"
+            "time": "2018-06-11T13:58:06+00:00"
         },
         {
             "name": "symfony/yaml",

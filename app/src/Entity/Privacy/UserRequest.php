@@ -28,7 +28,7 @@ class UserRequest {
     /**
      * @ORM\Id()
      * @ORM\Column(name="uid", type="string", length=128)
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $uid;
 

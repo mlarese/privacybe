@@ -20,6 +20,7 @@ $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
+$app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insert');
 
 /*********************************************************
  *                  TERM

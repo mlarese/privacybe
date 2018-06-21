@@ -441,12 +441,17 @@ class PrivacyManager extends AbstractAction
                 $title = $p['title'][$lang];
             }
 
+            if(isset($scrollText[$lang]))
+                $curScrollText = $scrollText[$lang];
+            else
+                $curScrollText = $scrollText['en'];
+
             $newP = array(
               "text" => $p['text'][$lang],
               "treatments" => array(),
               "scrolled" => false,
               "title" => $title,
-              "scrollText" => $scrollText[$lang]
+              "scrollText" => $curScrollText
             );
 
             foreach($p['treatments'] as $t) {

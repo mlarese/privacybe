@@ -645,6 +645,18 @@ class PrivacyManager extends AbstractAction
      *
      * @return mixed
      */
+    public function uploadUserPrivacy($request, $response, $args) {
+
+
+        return $response->withJson($this->success());
+    }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
     public function savePrivacy($request, $response, $args) {
 
         // return $this->savePlainPrivacy($request, $response, $args);

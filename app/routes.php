@@ -89,6 +89,8 @@ $app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 $app->post('/api/owner/usersearch', 'App\Action\Users:search');
 $app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
 
+$app->get('/api/owners/usersupfile', 'App\Action\PrivacyManager:uploadUserPrivacy');
+
 
 /*********************************************************
  *                  OWNERS USERREQUESTS

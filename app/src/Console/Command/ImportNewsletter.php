@@ -117,6 +117,10 @@ class ImportNewsletter extends Base
 
                 $date = new \DateTime();
 
+                $importEmailList = array();
+                $alredyExistsEmail = array();
+                $errorImport = array();
+
                 foreach ($listId as $singleId)
                 {
                     $prRes = new PrivacyResource($privacy);
@@ -131,126 +135,198 @@ class ImportNewsletter extends Base
 
                     if($result && !empty($result))
                     {
+                        $countImport = 0;
+                        $countExists = 0;
+                        $countError = 0;
+                        $tmpError = array();
+
                         foreach ($result as $newsletteretails)
                         {
-                            $name = '';
-                            $surname = '';
-                            $userLang = $lang;
+                            $email = $newsletteretails['emailaddress'];
+                            $checkEmailExists = $privacy->getRepository('App\Entity\Privacy\Privacy')->findByEmail($email);
 
-                            $queryData = "SELECT esd.*, ec.name as fieldName FROM mailone.email_subscribers_data as esd
-                                            inner join mailone.email_list_subscribers as els on esd.subscriberid = els.subscriberid 
-                                            inner join mailone.email_customfields as ec on ec.fieldid = esd.fieldid
+                            // Se non è già presente la mail nel DB aggiungo il record
+                            if(empty($checkEmailExists))
+                            {
+                                $name = '';
+                                $surname = '';
+                                $userLang = $lang;
+                                $phone = '';
+                                $mobile = '';
+
+                                $queryData = "SELECT esd.*, ec.name as fieldName FROM email_subscribers_data as esd
+                                            inner join email_list_subscribers as els on esd.subscriberid = els.subscriberid 
+                                            inner join email_customfields as ec on ec.fieldid = esd.fieldid
                                             where els.subscriberid = ".$newsletteretails['subscriberid']." 
                                             and esd.data != '' 
-                                            and ec.name in ('lingua', 'language', 'lang', 'nome', 'name', 'cognome', 'surname'); ";
+                                            and ec.name in ('lingua', 'language', 'lang', 'nome', 'name', 'cognome', 'surname', 'telefono', 'mobile', 'phone', 'telephone', 'cell phone'); ";
 
-                            $stateData = $conn->executeQuery($queryData);
-                            $resultData = $stateData->fetchAll();
+                                $stateData = $conn->executeQuery($queryData);
+                                $resultData = $stateData->fetchAll();
 
-                            if($resultData && !empty($resultData))
-                            {
-                                foreach ($resultData as $subsciberData)
+                                if($resultData && !empty($resultData))
                                 {
-                                    $subsciberData['fieldName'] = strtolower($subsciberData['fieldName']);
-                                    if($subsciberData['fieldName'] == 'lingua' || $subsciberData['fieldName'] == 'language' || $subsciberData['fieldName'] == 'lang')
+                                    foreach ($resultData as $subsciberData)
                                     {
-                                        $userLang = $subsciberData['data'];
-                                    }
-                                    elseif($subsciberData['fieldName'] == 'nome' || $subsciberData['fieldName'] == 'name')
-                                    {
-                                        $name = $subsciberData['data'];
-                                    }
-                                    elseif($subsciberData['fieldName'] == 'cognome' || $subsciberData['fieldName'] == 'surname')
-                                    {
-                                        $surname = $subsciberData['data'];
+                                        $subsciberData['fieldName'] = strtolower($subsciberData['fieldName']);
+                                        if($subsciberData['fieldName'] == 'lingua' || $subsciberData['fieldName'] == 'language' || $subsciberData['fieldName'] == 'lang')
+                                        {
+                                            $userLang = strtolower($subsciberData['data']);
+                                        }
+                                        elseif($subsciberData['fieldName'] == 'nome' || $subsciberData['fieldName'] == 'name')
+                                        {
+                                            $name = $subsciberData['data'];
+                                        }
+                                        elseif($subsciberData['fieldName'] == 'cognome' || $subsciberData['fieldName'] == 'surname')
+                                        {
+                                            $surname = $subsciberData['data'];
+                                        }
+                                        elseif ($subsciberData['fieldName'] == 'telefono' || $subsciberData['fieldName'] == 'phone' || $subsciberData['fieldName'] == 'telephone')
+                                        {
+                                            $phone = $subsciberData['data'];
+                                        }
+                                        elseif ($subsciberData['fieldName'] == 'mobile' || $subsciberData['fieldName'] == 'cell phone')
+                                        {
+                                            $mobile = $subsciberData['data'];
+                                        }
                                     }
                                 }
-                            }
 
-                            $uid = $newsletteretails['subscriberid'].'-'.microtime(true);
-                            $email = $newsletteretails['emailaddress'];
-                            $ref = 'import-nl-console-' . $date->format('YMDHm');
-                            $ip = ($newsletteretails['requestip'] != '' && !is_null($newsletteretails['requestip'])) ? $newsletteretails['requestip'] : '';
-                            $form = [
-                                'id' => $newsletteretails['subscriberid'],
-                                'email' => $email,
-                                'original_ip' => [],
-                                'title' => [],
-                                'name' => [],
-                                'surname' => [],
-                                'phone' => [],
-                                'mobile' => [],
-                                'fax' => [],
-                                'city' => [],
-                                'language' => [],
-                                'zipcode' => [],
-                                'nation' => [],
-                                'birth date' => [],
-                                'ip' => $ip,
-                                'iso2language' => $userLang,
-                                'subscribeurl' => $domain,
-                                'privacy' => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en'])
-                            ];
-                            $flags = array(
-                                array(
-                                    'code' => 'dati_personali',
-                                    'selected' => true,
-                                    'mandatory' => true,
-                                    'text' => 'acconsento'
-                                ),
-                                array(
-                                    'code' => 'newsletter',
-                                    'selected' => true,
-                                    'mandatory' => false,
-                                    'text' => 'acconsento'
-                                )
-                            );
-                            $privacydata = array(
-                                "referrer" => $domain,
-                                "ownerId" =>$ownerId,
-                                "termId" => $termId,
-                                "language" => $lang,
-                                "name" => $term->getName(),
-                                "paragraphs" => array(
+                                if(strlen($userLang) > 2)
+                                {
+                                    switch ($userLang) {
+                                        case 'ita':
+                                            $userLang = 'it';
+                                            break;
+                                        case 'eng':
+                                            $userLang = 'en';
+                                            break;
+                                        case 'deu':
+                                            $userLang = 'de';
+                                            break;
+                                        case 'fra':
+                                            $userLang = 'fr';
+                                            break;
+                                        case 'rus':
+                                            $userLang = 'ru';
+                                            break;
+                                        default:
+                                            $userLang = 'en';
+                                    }
+                                }
+
+                                $uid = $newsletteretails['subscriberid'].'-'.microtime(true);
+                                $ref = 'import-nl-mailone-console-' . $date->format('YMDHm');
+                                $ip = ($newsletteretails['requestip'] != '' && !is_null($newsletteretails['requestip'])) ? $newsletteretails['requestip'] : '';
+                                $form = [
+                                    'id' => $newsletteretails['subscriberid'],
+                                    'email' => $email,
+                                    'original_ip' => [],
+                                    'title' => [],
+                                    'name' => $name,
+                                    'surname' => $surname,
+                                    'phone' => $mobile,
+                                    'mobile' => $phone,
+                                    'fax' => [],
+                                    'city' => [],
+                                    'language' => $userLang,
+                                    'zipcode' => [],
+                                    'nation' => [],
+                                    'birth date' => [],
+                                    'ip' => $ip,
+                                    'iso2language' => $userLang,
+                                    'subscribeurl' => $domain,
+                                    'privacy' => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en'])
+                                ];
+
+                                $flags = array(
                                     array(
-                                        "text" => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en']),
-                                        "title" => ($termParagraphs[0]['title'][$userLang] ? $termParagraphs[0]['title'][$userLang] : $termParagraphs[0]['title']['en']),
-                                        "treatments" => $flags
-                                    )/*,
+                                        'code' => 'dati_personali',
+                                        'selected' => false,
+                                        'mandatory' => false,
+                                        'text' => 'acconsento'
+                                    ),
+                                    array(
+                                        'code' => 'newsletter',
+                                        'selected' => false,
+                                        'mandatory' => false,
+                                        'text' => 'acconsento'
+                                    )
+                                );
+
+                                if(isset($termParagraphs[0]['treatments']) && !empty($termParagraphs[0]['treatments']))
+                                {
+                                    $flags = array(
+                                        array(
+                                            'code' => $termParagraphs[0]['treatments'][0]['name'],
+                                            'selected' => $termParagraphs[0]['treatments'][0]['restrictive'],
+                                            'mandatory' => $termParagraphs[0]['treatments'][0]['mandatory'],
+                                            'text' => (!empty($termParagraphs[0]['treatments'][0]['text'][$userLang]) ? $termParagraphs[0]['treatments'][0]['text'][$userLang] : $termParagraphs[0]['treatments'][0]['text']['en'])
+                                        ),
+                                        array(
+                                            'code' => $termParagraphs[0]['treatments'][1]['name'],
+                                            'selected' => $termParagraphs[0]['treatments'][1]['restrictive'],
+                                            'mandatory' => $termParagraphs[0]['treatments'][1]['mandatory'],
+                                            'text' => (!empty($termParagraphs[0]['treatments'][1]['text'][$userLang]) ? $termParagraphs[0]['treatments'][1]['text'][$userLang] : $termParagraphs[0]['treatments'][1]['text']['en'])
+                                        )
+                                    );
+                                }
+
+                                $privacydata = array(
+                                    "referrer" => $domain,
+                                    "ownerId" =>$ownerId,
+                                    "termId" => $termId,
+                                    "language" => $lang,
+                                    "name" => $term->getName(),
+                                    "paragraphs" => array(
+                                        array(
+                                            "text" => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en']),
+                                            "title" => ($termParagraphs[0]['title'][$userLang] ? $termParagraphs[0]['title'][$userLang] : $termParagraphs[0]['title']['en']),
+                                            "treatments" => $flags
+                                        )/*,
                                     array(
                                         "text" => ($termParagraphs[1]['text'][$userLang] ? $termParagraphs[1]['text'][$userLang] : $termParagraphs[1]['text']['en']),
                                         "title" => ($termParagraphs[1]['title'][$userLang] ? $termParagraphs[1]['title'][$userLang] : $termParagraphs[1]['title']['en']),
                                         "treatments" => $flags
                                     )*/ // NOTA: da scommentare nel caso si voglia mettere il paragrafo sia per la privacy sia per la newsletter
-                                ),
-                            );
-                            $site = '';
-                            $phone = '';
-
-                            try{
-                                $pr = $prRes->savePrivacy(
-                                    $ip,
-                                    $form,
-                                    '',
-                                    $name,
-                                    $surname,
-                                    $termId,
-                                    $site,
-                                    $privacydata,
-                                    $uid,
-                                    $ref,
-                                    str_replace(array('https://', 'http://'), '', $domain),
-                                    $email,
-                                    $flags,
-                                    $phone
+                                    ),
                                 );
+                                $site = '';
 
-                                if($pr)
-                                {
-                                    echo '.';
+                                try{
+                                    $pr = $prRes->savePrivacy(
+                                        $ip,
+                                        $form,
+                                        '',
+                                        $name,
+                                        $surname,
+                                        $termId,
+                                        $site,
+                                        $privacydata,
+                                        $uid,
+                                        $ref,
+                                        str_replace(array('https://', 'http://'), '', $domain),
+                                        $email,
+                                        $flags,
+                                        ($phone != '' ? $phone : ($mobile != '' ? $mobile : '')),
+                                        $userLang
+                                    );
+
+                                    if($pr)
+                                    {
+                                        echo '.';
+                                        $countImport++;
+                                    }
+                                } catch (\Exception $e) {
+                                    echo "!";
+                                    $countError++;
+                                    $tmpError[] = $e->getMessage();
                                 }
-                            } catch (\Exception $e) {
-                                echo " - ".$e->getMessage()." - ";
+                            }
+                            else
+                            {
+                                echo ':';
+                                $countExists++;
                             }
                         }
                     }
@@ -274,6 +350,28 @@ class ImportNewsletter extends Base
 
                         echo " ** ".$message." ** ";
                     }
+
+                    $importEmailList[] = " - ".$countImport." contacts imported for list ID ".$singleId." - ";
+                    if($countExists > 0)
+                    {
+                        $alredyExistsEmail[] = " - ".$countExists." existing contacts in dataone for list ID ".$singleId." - ";
+                    }
+                    if(!empty($tmpError))
+                    {
+                        $errorImport[] = " - ".$countError." errors during contacts importation for list ID ".$singleId.": ".implode(", ", $tmpError)." - ";
+                    }
+                }
+
+                echo implode(";<br>", $importEmailList);
+
+                if(!empty($alredyExistsEmail))
+                {
+                    echo implode(";<br>", $alredyExistsEmail);
+                }
+
+                if(!empty($errorImport))
+                {
+                    echo implode(";<br>", $errorImport);
                 }
             }
             else

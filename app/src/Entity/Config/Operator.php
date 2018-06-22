@@ -25,4 +25,8 @@ class Operator
      * @ORM\Column(name="wind_mt_carrier", type="string", length=100)
      */
     protected $windMtCarrier;
+    /**
+     * @ORM\OneToMany(targetEntity="countryId",)
+     */
+    protected $countryId;
 }

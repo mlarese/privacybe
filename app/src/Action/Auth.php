@@ -10,6 +10,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
 use function md5;
+use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use function strtolower;
@@ -101,7 +102,7 @@ class Auth extends AbstractAction {
      * @return mixed
      */
     public function login($request, $response, $args) {
-
+        session_commit();
         $found = false;
         $user = $request->getParam('username');
         $password = $request->getParam('password');
@@ -157,6 +158,7 @@ class Auth extends AbstractAction {
      * @return mixed
      */
     public function logout($request, $response, $args) {
+        session_commit();
         return $response->withJson( array("logout"=>"ok"));
     }
 
@@ -167,6 +169,7 @@ class Auth extends AbstractAction {
      * @return mixed
      */
     public function user($request, $response, $args) {
+        session_commit();
         $token = $request->getAttribute("token");
         $ud = $this->getUserData($request);
 

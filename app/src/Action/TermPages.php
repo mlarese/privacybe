@@ -14,6 +14,7 @@ use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Exception;
+use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -55,6 +56,7 @@ class TermPages extends AbstractAction {
     public function getTermPages($request, $response, $args) {
 
         try {
+            session_commit();
             $ownerId = $this->getOwnerId($request);
             $termId = $args['termId'];
 

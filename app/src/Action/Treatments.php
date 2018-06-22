@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -23,6 +24,7 @@ class Treatments extends AbstractAction{
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function getAllTreatments($request, $response, $args) {
+        session_commit();
         $ownerId = $this->getOwnerId($request);
 
         /**
@@ -51,6 +53,7 @@ class Treatments extends AbstractAction{
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getTreatment($request, $response, $args) {
+        session_commit();
         $ownerId = $this->getOwnerId($request);
         $treatmentCode = $args['code'];
 

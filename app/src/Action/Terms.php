@@ -16,6 +16,7 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -127,6 +128,7 @@ class Terms extends AbstractAction{
      * @return mixed
      */
     public function getAllTerms($request, $response, $args) {
+        session_commit();
         $ownerId = $this->getOwnerId($request);
 
         /**

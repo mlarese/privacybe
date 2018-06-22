@@ -52,6 +52,17 @@ class PropertiesResource extends AbstractResource {
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
+    public function widgetSendRequestSuccessText () {
+        return $this->findBy('widget_send_request_success_text');
+    }
+
+    /**
+     * @return mixed
+     * @throws PropertyNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function widgetSendCaptionText () {
         return $this->findBy('widget_send_caption_text');
     }

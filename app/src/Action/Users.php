@@ -12,6 +12,7 @@ use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
+use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -27,7 +28,7 @@ class Users extends AbstractAction
     public function search($request, $response, $args)
     {
         $ownerId = $this->getOwnerId($request);
-
+        session_commit();
         try {
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
@@ -79,6 +80,7 @@ class Users extends AbstractAction
      */
     public function searchToday($request, $response, $args)
     {
+        session_commit();
         $ownerId = $this->getOwnerId($request);
 
         try {
@@ -127,6 +129,7 @@ class Users extends AbstractAction
      */
     public function privacyUser($request, $response, $args) {
         try {
+            session_commit();
             $ownerId = $this->getOwnerId($request);
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);

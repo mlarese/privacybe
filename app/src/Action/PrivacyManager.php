@@ -502,7 +502,6 @@ class PrivacyManager extends AbstractAction
 
         $params = json_decode($params, true);
 
-
         $lang = $params['language'];
         $pageName = $params['page'];
         $domainName = $params['domain'];
@@ -544,6 +543,8 @@ class PrivacyManager extends AbstractAction
             $term = $em->find(Term::class, $termId);
             $reqText = $propRes->widgetSendRequestText();
             $capText = $propRes->widgetSendCaptionText();
+            $successText = $propRes->widgetSendRequestSuccessText();
+
         } catch (PropertyNotFoundException $e) {
             echo $e->getMessage();
             return $response->withStatus(403, 'PropertyNotFoundException finding term');
@@ -583,10 +584,15 @@ class PrivacyManager extends AbstractAction
             }
 
             if(!isset($reqText[$lang])) {
-                $requestText = $reqText['it'];
-            }else {
-                $requestText = $reqText[$lang];
-            }
+                if(isset($reqText['en'])) $requestText = $reqText['en'];
+                else $requestText = $reqText['it'];
+            }else  $requestText = $reqText[$lang];
+
+            if(!isset($successText[$lang])) {
+                if(isset($successText['en'])) $successText= $successText['en'];
+                else $successText= $successText['it'];
+            }else  $successText= $successText[$lang];
+
 
             $newP = array(
                 "text" => $p['text'][$lang],
@@ -625,6 +631,7 @@ class PrivacyManager extends AbstractAction
                 "language" => $requestLanguage,
                 "name" => $term->getName(),
                 "requestText" => $requestText,
+                "successText" => $successText,
                 "captionText" => $captionText,
                 "paragraphs" => $js
             )

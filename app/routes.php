@@ -9,6 +9,9 @@ $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
+
+$app->get('/api/test/email', 'App\Action\Test:email');
+
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
 
 

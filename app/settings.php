@@ -14,6 +14,10 @@ return [
                 'doctrine_privacy' => function ($path){return true;},
             ]
         ],
+        'mailservice' => [
+            'base_uri' => 'https://servicehub.abs-one.com/ecommerce/send-email',
+            'timeout' => 3,
+        ],
         'MailOne' => [
             'entrypoint' => 'http://www.mail-one.it/mailone/xml.php',
             'mmuser' => 'admin',

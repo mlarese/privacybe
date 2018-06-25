@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use Firebase\JWT\JWT;
+use GuzzleHttp\Client;
 use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
@@ -209,6 +210,13 @@ class AbstractAction
         return $this->container['em-config'];
     }
 
+    /**
+     * @return Client
+     */
+    public function getEmailClient(): Client
+    {
+        return $this->container['email_client'];
+    }
     /**
      * @param $ownerId
      * @param null $user

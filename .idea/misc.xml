@@ -4,6 +4,7 @@
     <session id="2129231585">
       <usages-collector id="statistics.php.composer.actions">
         <counts>
+          <entry key="addDependencyDialog_from_ProjectViewPopup" value="1" />
           <entry key="install_from_ProjectViewPopup" value="1" />
         </counts>
       </usages-collector>

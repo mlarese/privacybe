@@ -7,6 +7,8 @@ namespace  App\Helpers;
  * Time: 17.34
  */
 
+use GuzzleHttp\Client;
+
 Class EmailUtils {
 
     public static function makeGlobalReplace($replaceString,$message) {
@@ -16,6 +18,4 @@ Class EmailUtils {
 
         return $message;
     }
-
-
 }

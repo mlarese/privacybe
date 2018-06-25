@@ -1,5 +1,6 @@
 <?php
 // DIC configuration
+use GuzzleHttp\Client;
 
 $container = $app->getContainer();
 
@@ -104,11 +105,20 @@ $container['csv'] = function ($container) {
 
 
 $container['mailone'] = function ($container) {
-
+    $settings = $container->get('settings');
     $exportService = new \App\Resource\MailOneDirectExport($container);
 
     return $exportService;
 };
+
+$container['email_client'] = function ($container) {
+    $settings = $container->get('settings');
+    $options = $settings['mailservice'];
+    $exportService = new Client($options);
+
+    return $exportService;
+};
+
 
 
 $container['csv_direct'] = function ($container) {

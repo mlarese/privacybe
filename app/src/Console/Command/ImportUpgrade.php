@@ -82,7 +82,7 @@ class ImportUpgrade extends Base
                         $jsonprivacy = $value->getPrivacydisclaimer()->getPrivacy();
                     } else {
                         $lg = $value->getLanguage();
-                        $jsonprivacy = $json[$lg];
+                        $jsonprivacy = $jsonprivacy[$lg];
                     }
                 } catch (\Exception $e) {
                     $jsonprivacy = $value->getPrivacydisclaimer()->getPrivacy();
@@ -138,8 +138,12 @@ class ImportUpgrade extends Base
                  */
                 $privacy = $this->getPrivacyDb($settings['settings'], $ownerdomain);
 
+                $term = $privacy->getRepository('App\Entity\Privacy\Term')->findOneByUid($termId);
+                $termParagraphs = $term->getParagraphs();
+
                 $date = new \DateTime();
                 foreach ($users as $detail) {
+                    $userLang = strtolower($detail['iso2language']);
                     $prRes = new PrivacyResource($privacy);
 
                     $url = parse_url(  $detail['subscribeurl']);
@@ -160,16 +164,34 @@ class ImportUpgrade extends Base
                         )
                     );
 
+                    if(isset($termParagraphs[0]['treatments']) && !empty($termParagraphs[0]['treatments']))
+                    {
+                        $flags = array(
+                            array(
+                                'code' => $termParagraphs[0]['treatments'][0]['name'],
+                                'selected' => true,
+                                'mandatory' => $termParagraphs[0]['treatments'][0]['mandatory'],
+                                'text' => (!empty($termParagraphs[0]['treatments'][0]['text'][$userLang]) ? $termParagraphs[0]['treatments'][0]['text'][$userLang] : $termParagraphs[0]['treatments'][0]['text']['en'])
+                            ),
+                            array(
+                                'code' => $termParagraphs[0]['treatments'][1]['name'],
+                                'selected' => true,
+                                'mandatory' => $termParagraphs[0]['treatments'][1]['mandatory'],
+                                'text' => (!empty($termParagraphs[0]['treatments'][1]['text'][$userLang]) ? $termParagraphs[0]['treatments'][1]['text'][$userLang] : $termParagraphs[0]['treatments'][1]['text']['en'])
+                            )
+                        );
+                    }
+
                     $privacydata = array(
                         "referrer" => $detail['subscribeurl'],
                         "ownerId" =>$ownerdomain,
                         "termId" => $termId,
-                        "language" => $detail['iso2language'],
-                        "name" => 'Informativa DEM',
+                        "language" => $userLang,
+                        "name" => $term->getName(),
                         "paragraphs" => array(
                             array(
-                                "text" => $detail['privacy'],
-                                "title" => 'Informativa DEM',
+                                "text" => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en']),
+                                "title" => ($termParagraphs[0]['title'][$userLang] ? $termParagraphs[0]['title'][$userLang] : $termParagraphs[0]['title']['en']),
                                 "treatments" => $flags
                             )),
 

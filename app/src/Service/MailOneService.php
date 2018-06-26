@@ -226,7 +226,6 @@ class MailOneService {
 				<details>
 					<searchinfo>
 						<Status>a</Status>
-						<Confirmed>1</Confirmed>
 						$strListId
 						$subscriberDomain
 					</searchinfo>

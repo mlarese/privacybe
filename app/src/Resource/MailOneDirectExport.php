@@ -175,7 +175,8 @@ class MailOneDirectExport  implements IDirectExport
                         if ($list && isset($list['count']) && $list['count'] > 0 && isset($list['subscriberlist'])) {
                             foreach ($list['subscriberlist']['item'] as $value) {
 
-                                if ( isset($value['confirmed']) &&  isset($value['unsubscribed']) && $value['unsubscribed'] == 0 && $value['confirmed'] == 1 && isset($value['emailaddress'])) {
+                                if ( isset($value['confirmed']) &&  isset($value['unsubscribed']) &&
+                                    $value['unsubscribed'] == 0 && isset($value['emailaddress'])) {
                                     $response[$value['emailaddress']] = array(
                                         'id' => $value['subscriberid'],
                                         'email' => $value['emailaddress'],

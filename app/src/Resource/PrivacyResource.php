@@ -151,7 +151,8 @@ class PrivacyResource extends AbstractResource
         $privacyFlags,
         $telephone,
         $language=null,
-        $page=null
+        $page=null,
+        $raiseException = false
 
     ) {
         $privacyEntry = new Privacy();
@@ -176,14 +177,48 @@ class PrivacyResource extends AbstractResource
         if(isset($language)) $privacyEntry->setLanguage($language);
         if(isset($page)) $privacyEntry->setPage($page);
 
-        try {
-            $this->entityManager->merge($privacyEntry);
-            $this->entityManager->flush();
-        } catch (Exception $e) {
-            echo $e;
+        if (!$this->entityManager->isOpen()) {
+            $this->getRepository();
         }
 
-        return $privacyEntry;
+        if($raiseException)
+        {
+            if($this->entityManager->isOpen())
+            {
+                try {
+                    $this->entityManager->merge($privacyEntry);
+                    $this->entityManager->flush();
+                } catch (Exception $e) {
+                    echo $e;
+                    if($raiseException)
+                    {
+                        $msg = '**Data not imported: email '.$privacyEntry->getEmail().(($privacyEntry->getName() != '' && $privacyEntry->getSurname() != '') ? ', user '.$privacyEntry->getName().' '.$privacyEntry->getSurname() : '').' **';
+                        Throw new Exception($msg);
+                    }
+                }
+
+                return $privacyEntry;
+            }
+
+            return false;
+        }
+        else
+        {
+            try {
+                $this->entityManager->merge($privacyEntry);
+                $this->entityManager->flush();
+            } catch (Exception $e) {
+                echo $e;
+            }
+
+            return $privacyEntry;
+        }
+
+    }
+
+    public function EMClear()
+    {
+        $this->entityManager->clear();
     }
 
     /**

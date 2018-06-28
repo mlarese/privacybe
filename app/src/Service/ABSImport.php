@@ -119,15 +119,28 @@ class ABSImport {
                 ]);
                 $privacyEntity->setCryptedForm(json_encode($privacyEntity->getForm()));
 
+                $codeDatiPersonali = 'dati_personali';
+                $codeNewsletter = 'newsletters';
+
+                if(isset($termParagraphs[0]['treatments'][0]['name']) && !empty($termParagraphs[0]['treatments'][0]['name']))
+                {
+                    $codeDatiPersonali = $termParagraphs[0]['treatments'][0]['name'];
+                }
+
+                if(isset($termParagraphs[0]['treatments'][1]['name']) && !empty($termParagraphs[0]['treatments'][1]['name']))
+                {
+                    $codeNewsletter = $termParagraphs[0]['treatments'][1]['name'];
+                }
+
                 // Set privacy
                 $privacyEntity->setPrivacyFlags([
                     [
-                        'code' => 'dati_personali',
+                        'code' => $codeDatiPersonali,
                         'selected' => $privacyTerm,
                         'mandatory' => true,
                         'text' => (isset($termParagraphs[0]['treatments'][0]['text'][$lang])) ? $termParagraphs[0]['treatments'][0]['text'][$lang] : $termParagraphs[0]['treatments'][0]['text']['en']
                     ], [
-                        'code' => 'newsletter',
+                        'code' => $codeNewsletter,
                         'selected' => $newsletterTerm,
                         'mandatory' => false,
                         'text' => (isset($termParagraphs[0]['treatments'][1]['text'][$lang])) ? $termParagraphs[0]['treatments'][1]['text'][$lang] : $termParagraphs[0]['treatments'][1]['text']['en']
@@ -191,13 +204,33 @@ class ABSImport {
         $email
     ) {
         $uid = new \DateTime($openDate);
-        return sprintf(
+        if (strpos($openDate, '00:00:00') === false) {
+            return sprintf(
+                "%s-%s-%s-%s",
+                $portalId,
+                $structureId,
+                md5($email),
+                $uid->format('U')
+            );
+        }
+        else {
+            return sprintf(
+                "%s-%s-%s-%s-%s",
+                $portalId,
+                $structureId,
+                md5($email),
+                $uid->format('U'),
+                rand(10000, 99999)
+            );
+        }
+
+        /*return sprintf(
             "%s-%s-%s-%s",
             $portalId,
             $structureId,
             md5($email),
             $uid->format('U')
-        );
+        );*/
     }
 
     /**

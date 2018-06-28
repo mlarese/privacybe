@@ -74,6 +74,7 @@ class ImportNewsletter extends Base
         $listId = explode(',', $input->getArgument('listid'));
         $domain = $input->getArgument('domain');
         $lang = $input->getArgument('language');
+        $configFile = realpath(__DIR__ . '/../../../settings.php');
 
         $validate = false;
 
@@ -85,8 +86,6 @@ class ImportNewsletter extends Base
 
         if($validate)
         {
-            $configFile = realpath(__DIR__ . '/../../../settings.php');
-
             $settings = require $configFile;
 
             $config = new \Doctrine\DBAL\Configuration();
@@ -135,6 +134,7 @@ class ImportNewsletter extends Base
 
                     if($result && !empty($result))
                     {
+                        $i = 0;
                         $countImport = 0;
                         $countExists = 0;
                         $countError = 0;
@@ -144,6 +144,11 @@ class ImportNewsletter extends Base
                         {
                             $email = $newsletteretails['emailaddress'];
                             $checkEmailExists = $privacy->getRepository('App\Entity\Privacy\Privacy')->findByEmail($email);
+
+                            if($i == 1000)
+                            {
+                                $prRes->EMClear();
+                            }
 
                             // Se non è già presente la mail nel DB aggiungo il record
                             if(empty($checkEmailExists))
@@ -175,19 +180,19 @@ class ImportNewsletter extends Base
                                         }
                                         elseif($subsciberData['fieldName'] == 'nome' || $subsciberData['fieldName'] == 'name')
                                         {
-                                            $name = $subsciberData['data'];
+                                            $name = utf8_encode($subsciberData['data']);
                                         }
                                         elseif($subsciberData['fieldName'] == 'cognome' || $subsciberData['fieldName'] == 'surname')
                                         {
-                                            $surname = $subsciberData['data'];
+                                            $surname = utf8_encode($subsciberData['data']);
                                         }
                                         elseif ($subsciberData['fieldName'] == 'telefono' || $subsciberData['fieldName'] == 'phone' || $subsciberData['fieldName'] == 'telephone')
                                         {
-                                            $phone = $subsciberData['data'];
+                                            $phone = utf8_encode($subsciberData['data']);
                                         }
                                         elseif ($subsciberData['fieldName'] == 'mobile' || $subsciberData['fieldName'] == 'cell phone')
                                         {
-                                            $mobile = $subsciberData['data'];
+                                            $mobile = utf8_encode($subsciberData['data']);
                                         }
                                     }
                                 }
@@ -292,7 +297,6 @@ class ImportNewsletter extends Base
                                     ),
                                 );
                                 $site = '';
-
                                 try{
                                     $pr = $prRes->savePrivacy(
                                         $ip,
@@ -309,7 +313,9 @@ class ImportNewsletter extends Base
                                         $email,
                                         $flags,
                                         ($phone != '' ? $phone : ($mobile != '' ? $mobile : '')),
-                                        $userLang
+                                        $userLang,
+                                        null,
+                                        true
                                     );
 
                                     if($pr)
@@ -317,10 +323,16 @@ class ImportNewsletter extends Base
                                         echo '.';
                                         $countImport++;
                                     }
+                                    else
+                                    {
+                                        echo 'Entity manager connection close!!<br>';
+                                        break;
+                                    }
                                 } catch (\Exception $e) {
-                                    echo "!";
+                                    echo "!(".$e->getMessage().")";
                                     $countError++;
                                     $tmpError[] = $e->getMessage();
+                                    //echo $e->getMessage(); die;
                                 }
                             }
                             else
@@ -328,6 +340,8 @@ class ImportNewsletter extends Base
                                 echo ':';
                                 $countExists++;
                             }
+
+                            $i++;
                         }
                     }
                     else

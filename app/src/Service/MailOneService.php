@@ -759,6 +759,8 @@ class MailOneService {
 
 
 		if ($file !== false) {
+		    $file = utf8_encode($file);
+
 			$xml_doc = simplexml_load_string ( $file );
 
 			if ($xml_doc->status == 'SUCCESS') {

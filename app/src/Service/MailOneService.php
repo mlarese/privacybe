@@ -226,7 +226,6 @@ class MailOneService {
 				<details>
 					<searchinfo>
 						<Status>a</Status>
-						<Confirmed>1</Confirmed>
 						$strListId
 						$subscriberDomain
 					</searchinfo>
@@ -760,6 +759,8 @@ class MailOneService {
 
 
 		if ($file !== false) {
+		    $file = utf8_encode($file);
+
 			$xml_doc = simplexml_load_string ( $file );
 
 			if ($xml_doc->status == 'SUCCESS') {

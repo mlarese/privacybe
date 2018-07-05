@@ -6,6 +6,7 @@ use App\Entity\Upgrade\SubscriberDomainPath;
 use App\Resource\MailOneDirectExport;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
+use Console\Command\Base;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,6 +36,22 @@ class ImportUpgrade extends Base
                 'termId',
                 InputArgument::REQUIRED,
                 'Term Id'
+            )->addArgument(
+                'hostname',
+                InputArgument::REQUIRED,
+                'Db Hostname'
+            )->addArgument(
+                'username',
+                InputArgument::REQUIRED,
+                'Db Username'
+            )->addArgument(
+                'password',
+                InputArgument::REQUIRED,
+                'Db Password'
+            )->addArgument(
+                'dbname',
+                InputArgument::REQUIRED,
+                'Db Name'
             );;
     }
 
@@ -51,6 +68,11 @@ class ImportUpgrade extends Base
         $ownerdomain = $input->getArgument('owner');
 
         $termId = $input->getArgument('termId');
+
+        $hostName = $input->getArgument('hostname');
+        $userName = $input->getArgument('username');
+        $password = $input->getArgument('password');
+        $dbName = $input->getArgument('dbname');
 
         if ($ownerdomain > 0 && $upgradedomain > 0 && $termId != '') {
             /**
@@ -82,7 +104,7 @@ class ImportUpgrade extends Base
                         $jsonprivacy = $value->getPrivacydisclaimer()->getPrivacy();
                     } else {
                         $lg = $value->getLanguage();
-                        $jsonprivacy = $json[$lg];
+                        $jsonprivacy = $jsonprivacy[$lg];
                     }
                 } catch (\Exception $e) {
                     $jsonprivacy = $value->getPrivacydisclaimer()->getPrivacy();
@@ -110,15 +132,109 @@ class ImportUpgrade extends Base
                 $objMailOne = new MailOneDirectExport();
                 $objMailOne->setEntityManager($config);
                 $objMailOne->setOwner($ownerdomain);
-                $objMailOne->setAction("dump");
 
+                $objMailOne->setAction("list");
+
+                $config = new \Doctrine\DBAL\Configuration();
+
+                $connectionParams = array(
+                    'dbname' => $dbName,
+                    'user' => $userName,
+                    'password' => $password,
+                    'host' => $hostName,
+                    'driver' => 'pdo_mysql',
+                );
+
+                $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+                $conn->connect();
 
                 $response = $objMailOne->export(-1);
                 if ($response && is_array($response)) {
                     foreach ($emailList as $contact) {
+                        $name = '';
+                        $surname = '';
+                        $phone = '';
+                        $mobile = '';
+                        $subscriberId = '';
+                        $detail = array();
+
+                        if($name == '' && $surname == '')
+                        {
+                            foreach ($response as $listVal) {
+                                $query = 'SELECT * FROM email_list_subscribers 
+                                          WHERE listid = '.$listVal['id'].' 
+                                          AND emailaddress = \''.$contact['email'].'\' 
+                                          AND unsubscribeconfirmed = 0';
+
+                                $state = $conn->executeQuery($query);
+                                $result = $state->fetchAll();
+                                if(!empty($result)) {
+                                    $subscriberId = $result[0]['subscriberid'];
+                                    $queryData = "SELECT esd.*, ec.name as fieldName FROM email_subscribers_data as esd
+                                            inner join email_list_subscribers as els on esd.subscriberid = els.subscriberid 
+                                            inner join email_customfields as ec on ec.fieldid = esd.fieldid
+                                            where els.subscriberid = ".$subscriberId." 
+                                            and esd.data != '' 
+                                            and ec.name in ('nome', 'name', 'cognome', 'surname', 'telefono', 'mobile', 'phone', 'telephone', 'cell phone'); ";
+
+                                    $stateData = $conn->executeQuery($queryData);
+                                    $resultData = $stateData->fetchAll();
+
+                                    if($resultData && !empty($resultData))
+                                    {
+                                        foreach ($resultData as $subsciberData)
+                                        {
+                                            $subsciberData['fieldName'] = strtolower($subsciberData['fieldName']);
+                                            if($subsciberData['fieldName'] == 'nome' || $subsciberData['fieldName'] == 'name')
+                                            {
+                                                $name = utf8_encode($subsciberData['data']);
+                                            }
+                                            elseif($subsciberData['fieldName'] == 'cognome' || $subsciberData['fieldName'] == 'surname')
+                                            {
+                                                $surname = utf8_encode($subsciberData['data']);
+                                            }
+                                            elseif ($subsciberData['fieldName'] == 'telefono' || $subsciberData['fieldName'] == 'phone' || $subsciberData['fieldName'] == 'telephone')
+                                            {
+                                                $phone = utf8_encode($subsciberData['data']);
+                                            }
+                                            elseif ($subsciberData['fieldName'] == 'mobile' || $subsciberData['fieldName'] == 'cell phone')
+                                            {
+                                                $mobile = utf8_encode($subsciberData['data']);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if($name != '' && $surname != '')
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        $detail['id'] = $subscriberId;
+                        $detail['email'] = $contact['email'];
+                        $detail['name'] = $name;
+                        $detail['surname'] = $surname;
+                        $detail['phone'] = $phone;
+                        $detail['mobile'] = $mobile;
+                        $detail['ip'] = $contact['ip'];
+                        $detail['iso2language'] = $contact['language'];
+                        $detail['subscribeurl'] = $contact['url'];
+                        $detail['privacy'] = $contact['privacy'];
+                        $users[$contact['email']] = $detail;
+                    }
+                }
+
+               /* if ($response && is_array($response)) {
+                    foreach ($emailList as $contact) {
                         if (isset($response[$contact['email']])) {
                             $objMailOne->setAction("subscriber");
+                            echo 1;
                             $detail = $objMailOne->export($response[$contact['email']]['id'], $response[$contact['email']]['list']);
+
+                            print_r($detail);
+                            die;
                             if ($detail && isset($detail['id'])) {
                                 $detail['ip'] = $contact['ip'];
                                 $detail['iso2language'] = $contact['language'];
@@ -130,20 +246,49 @@ class ImportUpgrade extends Base
                             }
                         }
                     }
-                }
-
+                }*/
 
                 /**
                  * @var $privacy EntityManager
                  */
                 $privacy = $this->getPrivacyDb($settings['settings'], $ownerdomain);
 
+                $term = $privacy->getRepository('App\Entity\Privacy\Term')->findOneByUid($termId);
+                $termParagraphs = $term->getParagraphs();
                 $date = new \DateTime();
+                $i = 0;
                 foreach ($users as $detail) {
+                    $userLang = strtolower($detail['iso2language']);
                     $prRes = new PrivacyResource($privacy);
+
+                    if($i == 1000)
+                    {
+                        $prRes->EMClear();
+                    }
 
                     $url = parse_url(  $detail['subscribeurl']);
                     if(!$url || !isset( $url['host'])) continue;
+
+                    $form = [
+                        'id' => $detail['id'],
+                        'email' => $detail['email'],
+                        'original_ip' => [],
+                        'title' => [],
+                        'name' => $detail['name'],
+                        'surname' => $detail['surname'],
+                        'phone' => $detail['mobile'],
+                        'mobile' => $detail['phone'],
+                        'fax' => [],
+                        'city' => [],
+                        'language' => $detail['iso2language'],
+                        'zipcode' => [],
+                        'nation' => [],
+                        'birth date' => [],
+                        'ip' => $detail['ip'],
+                        'iso2language' => $detail['iso2language'],
+                        'subscribeurl' => $detail['subscribeurl'],
+                        'privacy' => $detail['privacy']
+                    ];
 
                     $flags = array(
                         array(
@@ -160,45 +305,76 @@ class ImportUpgrade extends Base
                         )
                     );
 
+                    if(isset($termParagraphs[0]['treatments']) && !empty($termParagraphs[0]['treatments']))
+                    {
+                        $flags = array(
+                            array(
+                                'code' => $termParagraphs[0]['treatments'][0]['name'],
+                                'selected' => true,
+                                'mandatory' => $termParagraphs[0]['treatments'][0]['mandatory'],
+                                'text' => (!empty($termParagraphs[0]['treatments'][0]['text'][$userLang]) ? $termParagraphs[0]['treatments'][0]['text'][$userLang] : $termParagraphs[0]['treatments'][0]['text']['en'])
+                            ),
+                            array(
+                                'code' => $termParagraphs[0]['treatments'][1]['name'],
+                                'selected' => true,
+                                'mandatory' => $termParagraphs[0]['treatments'][1]['mandatory'],
+                                'text' => (!empty($termParagraphs[0]['treatments'][1]['text'][$userLang]) ? $termParagraphs[0]['treatments'][1]['text'][$userLang] : $termParagraphs[0]['treatments'][1]['text']['en'])
+                            )
+                        );
+                    }
+
                     $privacydata = array(
                         "referrer" => $detail['subscribeurl'],
                         "ownerId" =>$ownerdomain,
                         "termId" => $termId,
-                        "language" => $detail['iso2language'],
-                        "name" => 'Informativa DEM',
+                        "language" => $userLang,
+                        "name" => $term->getName(),
                         "paragraphs" => array(
                             array(
-                                "text" => $detail['privacy'],
-                                "title" => 'Informativa DEM',
+                                "text" => ($termParagraphs[0]['text'][$userLang] ? $termParagraphs[0]['text'][$userLang] : $termParagraphs[0]['text']['en']),
+                                "title" => ($termParagraphs[0]['title'][$userLang] ? $termParagraphs[0]['title'][$userLang] : $termParagraphs[0]['title']['en']),
                                 "treatments" => $flags
                             )),
 
                     );
 
-                    $pr = $prRes->savePrivacy(
-                        $detail['ip'],
-                        $detail,
-                        '',
-                        $detail['name']===null?'':(is_array($detail['name'])?'':$detail['name']),
-                        $detail['surname']===null?'':(is_array($detail['surname'])?'':$detail['surname']),
-                        $termId,
-                        $url['path'],
-                        $privacydata,
-                        $detail['id'],
-                        'import-console-' . $date->format('YMDHm'),
-                        $url['host'],
-                        $detail['email'],
-                        $flags
-                        ,
-                        isset($detail['mobile']) ? $detail['mobile'] : isset($detail['phone']) ? $detail['phone'] : ''
-                    );
+                    try{
+                        $pr = $prRes->savePrivacy(
+                            $detail['ip'],
+                            $form,
+                            '',
+                            $detail['name']===null?'':(is_array($detail['name'])?'':$detail['name']),
+                            $detail['surname']===null?'':(is_array($detail['surname'])?'':$detail['surname']),
+                            $termId,
+                            $url['path'],
+                            $privacydata,
+                            $detail['id'].'-'.microtime(true),
+                            'import-console-' . $date->format('YMDHm'),
+                            $url['host'],
+                            $detail['email'],
+                            $flags,
+                            isset($detail['mobile']) ? $detail['mobile'] : isset($detail['phone']) ? $detail['phone'] : '',
+                            $detail['iso2language'],
+                            null,
+                            true
+                        );
 
+                        if($pr)
+                        {
+                            echo '.';
+                        }
+                        else
+                        {
+                            echo 'Entity manager connection close!!<br>';
+                            break;
+                        }
+                    } catch (\Exception $e) {
+                        echo "!";
+                    }
+
+                    $i++;
                 }
             }
-
-
-
-
         }
 
 

@@ -20,6 +20,7 @@ require_once('bootstrap.php');
 use App\Console\Command\ImportNewsletter;
 use App\Console\Command\ImportPortalReservation;
 use App\Console\Command\ImportABSEnquiry;
+use App\Console\Command\ImportStructureReservation;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;
@@ -30,6 +31,7 @@ try {
     $application->add(new ImportNewsletter());
     $application->add(new ImportPortalReservation());
     $application->add(new ImportABSEnquiry());
+    $application->add(new ImportStructureReservation());
     $application->run();
 
 } catch (\Exception $e) {

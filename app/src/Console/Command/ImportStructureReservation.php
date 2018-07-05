@@ -9,12 +9,17 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportPortalReservation extends Base
+class ImportStructureReservation extends Base
 {
     protected function configure()
     {
-        $this->setName('import:abs:reservation')
+        $this->setName('import:abs:structurereservation')
             ->setDescription('Import reservation from ABS BI reservations export')
+            ->addArgument(
+                'structureId',
+                InputArgument::REQUIRED,
+                'Structure ID'
+            )
             ->addArgument(
                 'owner',
                 InputArgument::REQUIRED,
@@ -36,10 +41,12 @@ class ImportPortalReservation extends Base
     {
 
         // validate arguments
+        $structureId = $input->getArgument('structureId');
         $ownerId = $input->getArgument('owner');
         $termId = $input->getArgument('termId');
         $file = realpath($input->getArgument('file'));
         $this->validateArguments(
+            $structureId,
             $ownerId,
             $termId,
             $file
@@ -91,6 +98,11 @@ class ImportPortalReservation extends Base
                 // Set email
                 $privacyEntity->setEmail(trim($row[$header['Email']]));
 
+                if(empty($privacyEntity->getEmail()))
+                {
+                    continue;
+                }
+
                 // Set IP address
                 $privacyEntity->setIp(trim($row[$header['Ip Address']]));
 
@@ -100,7 +112,7 @@ class ImportPortalReservation extends Base
                 if (strpos($row[$header['Data apertura']], '00:00:00') === false) {
                     $uid = sprintf(
                         "%s-%s-%s-%s",
-                        trim($row[$header['IdStruttura']]),
+                        trim($structureId),
                         md5($privacyEntity->getEmail()),
                         $uid->format('U'),
                         str_replace('.', '', $privacyEntity->getIp())
@@ -108,7 +120,7 @@ class ImportPortalReservation extends Base
                 } else {
                     $uid = sprintf(
                         "%s-%s-%s-%s-%s",
-                        trim($row[$header['IdStruttura']]),
+                        trim($structureId),
                         md5($privacyEntity->getEmail()),
                         $uid->format('U'),
                         rand(10000, 99999),
@@ -156,24 +168,38 @@ class ImportPortalReservation extends Base
                     'ip' => $privacyEntity->getIp(),
                     'iso2language' => $lang,
                     'subscribeurl' => $referer,
-                    'privacy' => ($termParagraphs[0]['text'][$lang] ? $termParagraphs[0]['text'][$lang] : $termParagraphs[0]['text']['en'])
+                    'privacy' => (!empty($termParagraphs[0]['text'][$lang]) ? $termParagraphs[0]['text'][$lang] : $termParagraphs[0]['text']['en'])
                 ]);
                 $privacyEntity->setCryptedForm(json_encode($privacyEntity->getForm()));
+
+                $codeDatiPersonali = 'dati_personali';
+                $codeNewsletter = 'newsletters';
+
+                if(isset($termParagraphs[0]['treatments'][0]['name']) && !empty($termParagraphs[0]['treatments'][0]['name']))
+                {
+                    $codeDatiPersonali = $termParagraphs[0]['treatments'][0]['name'];
+                }
+
+                if(isset($termParagraphs[0]['treatments'][1]['name']) && !empty($termParagraphs[0]['treatments'][1]['name']))
+                {
+                    $codeNewsletter = $termParagraphs[0]['treatments'][1]['name'];
+                }
 
                 // Set privacy
                 $privacyEntity->setPrivacyFlags([
                     [
-                        'code' => 'dati_personali',
+                        'code' => $codeDatiPersonali,
                         'selected' => $privacyTerm,
                         'mandatory' => true,
-                        'text' => $termParagraphs[0]['treatments'][0]['text'][$lang]
+                        'text' => (!empty($termParagraphs[0]['treatments'][0]['text'][$lang]) ? $termParagraphs[0]['treatments'][0]['text'][$lang] : $termParagraphs[0]['treatments'][0]['text']['en'])
                     ], [
-                        'code' => 'newsletter',
+                        'code' => $codeNewsletter,
                         'selected' => $newsletterTerm,
                         'mandatory' => false,
-                        'text' => $termParagraphs[0]['treatments'][1]['text'][$lang]
+                        'text' => (!empty($termParagraphs[0]['treatments'][1]['text'][$lang]) ? $termParagraphs[0]['treatments'][1]['text'][$lang] : $termParagraphs[0]['treatments'][1]['text']['en'])
                     ]
                 ]);
+
                 $privacyEntity->setPrivacy([
                     "referrer" => $referer,
                     "ownerId" => $ownerId,
@@ -182,8 +208,8 @@ class ImportPortalReservation extends Base
                     "name" => $term->getName(),
                     "paragraphs" => [
                         [
-                            "text" => ($termParagraphs[0]['text'][$lang] ? $termParagraphs[0]['text'][$lang] : $termParagraphs[0]['text']['en']),
-                            "title" => ($termParagraphs[0]['title'][$lang] ? $termParagraphs[0]['title'][$lang] : $termParagraphs[0]['title']['en']),
+                            "text" => (!empty($termParagraphs[0]['text'][$lang]) ? $termParagraphs[0]['text'][$lang] : $termParagraphs[0]['text']['en']),
+                            "title" => (!empty($termParagraphs[0]['title'][$lang]) ? $termParagraphs[0]['title'][$lang] : $termParagraphs[0]['title']['en']),
                             "treatments" => $privacyEntity->getPrivacyFlags()
                         ]
                     ],
@@ -216,8 +242,19 @@ class ImportPortalReservation extends Base
         }
     }
 
-    private function validateArguments($ownerId, $termId, $file)
+    private function validateArguments($structureId, $ownerId, $termId, $file)
     {
+        if(!is_integer($structureId))
+        {
+            $structureId = intval($structureId);
+            if($structureId < 1)
+            {
+                throw new \Exception(sprintf(
+                    "Wrong structure ID. the structure ID must be grater than 0"
+                ));
+            }
+        }
+
         if(!is_integer($ownerId))
         {
             $ownerId = intval($ownerId);

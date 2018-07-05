@@ -48,14 +48,18 @@ class TermIntegrator implements IResultIntegrator
 
         $uid = $record['termId'];
         if(isset($uid) && "$uid"!="0") {
-            if(isset($termMap[$uid])) {
-                $record['termName'] = $this->termMap[$uid]['name'];
+            if(isset($this->termMap[$uid])) {
+                //$record['termName'] = $this->termMap[$uid]['name'];
+
+                $record['termName'] =$this->termMap[$uid]['name'];
+
             } else {
                 $record['termName'] =  Terms::ABS_DEFAULT_TERM_NAME;
             }
         } else {
             $record['termName'] = Terms::ABS_DEFAULT_TERM_NAME;
         }
+
         /***************** term name *******************/
         /***********************************************/
 

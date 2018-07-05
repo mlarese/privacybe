@@ -50,10 +50,12 @@ class Users extends AbstractAction
                     'name'=>$person['name'],
                     'surname'=>$person['surname'],
                     'email'=>$person['email'],
+                    'termId'=>$person['termId'],
                     'domain'=>$person['domain'],
                     'site'=>$person['site'],
                     'created'=>$person['created'],
-                    'language'=>$person['language']
+                    'language'=>$person['language'],
+                    'termName'=> $person['termName']
                 ];
                 $export[] = $newExport;
             }

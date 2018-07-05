@@ -29,10 +29,13 @@ use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function json_decode;
 use function json_encode;
+use function move_uploaded_file;
+use function pathinfo;
 use function print_r;
 use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\UploadedFile;
 use function substr;
 use function toJson;
 
@@ -647,8 +650,21 @@ class PrivacyManager extends AbstractAction
      */
     public function uploadUserPrivacy($request, $response, $args) {
 
+        $files = $request->getUploadedFiles();
+        $privacyId = $args['uid'];
+        /** @var UploadedFile $file */
+        $file = $files['file'];
 
-        return $response->withJson($this->success());
+        // print_r($file);
+
+        $tmpFileName = $file->file;
+        $fileName = $file->getClientFilename();
+        $pinfo = pathinfo($fileName);
+        $ext = $pinfo['extension'];
+
+        $newFileName = 'prv_'.$privacyId.'.'.$ext;
+
+        return $response->withJson($this->success( ["fn"=>$newFileName] ));
     }
     /**
      * @param $request Request

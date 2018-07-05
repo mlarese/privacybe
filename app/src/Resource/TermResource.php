@@ -103,6 +103,7 @@ class TermResource extends AbstractResource
         $result = [];
         foreach ($res as $trcontainer) {
             $tr = $trcontainer['treatment'];
+            if(!isset($tr['code']) || $tr['code'] === '') continue;
             $terms = [];
             $curTr = [
                 "selected"=>true,

@@ -373,6 +373,7 @@ class PrivacyResource extends AbstractResource
         if($filter)  $results = $filter->filter($results,$criteria);
         if($grouper)  $results = $grouper->group($results,$criteria);
 
+        //print_r($results); die('end');
 
         return $results;
     }

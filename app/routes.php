@@ -160,5 +160,26 @@ $app->get('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubsc
 
 //$app->post('/adapters/{connector}/{adapter}/export', 'App\Action\ShareSubscriberList:create');
 
-
-
+/*********************************************************
+ *                        IMPORT
+ *********************************************************/
+$app->post(
+    '/api/import/dataone/upgrade',
+    'App\Action\Import\DataONEUpgrade:import'
+);
+$app->post(
+    '/api/import/mailone/newsletter',
+    'App\Action\Import\MailONENewsletter:import'
+);
+$app->post(
+    '/api/import/abs/structure/reservation',
+    'App\Action\Import\ABSReservation:importStructure'
+);
+$app->post(
+    '/api/import/abs/portal/reservation',
+    'App\Action\Import\ABSReservation:importPortal'
+);
+$app->post(
+    '/api/import/abs/enquiry',
+    'App\Action\Import\ABSEnquiry:import'
+);

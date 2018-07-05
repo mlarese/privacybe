@@ -1,86 +1,68 @@
 <?php
 
-namespace Console\Command;
+namespace App\Service;
 
+use App\Entity\Privacy\Privacy as PrivacyEntity;
+use App\Exception\ImportException;
 use App\Entity\Upgrade\SubscriberDomainPath;
 use App\Resource\MailOneDirectExport;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
-use Console\Command\Base;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Console\Helper\Log as LogHelper;
-use App\DoctrineEncrypt\Configuration\Encrypted;
 
+class DataOneUpgrade {
 
-require realpath(__DIR__.'/../../DoctrineEncrypt/Configuration/Encrypted.php');
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em = null;
 
-class ImportUpgrade extends Base
-{
-    protected function configure()
-    {
-        $this->setName('import:privacy')
-            ->setDescription('Import data from a domain')
-            ->addArgument(
-                'domain',
-                InputArgument::REQUIRED,
-                'select the domain'
-            )->addArgument(
-                'owner',
-                InputArgument::REQUIRED,
-                'select the destination owner'
-            )->addArgument(
-                'termId',
-                InputArgument::REQUIRED,
-                'Term Id'
-            )->addArgument(
-                'hostname',
-                InputArgument::REQUIRED,
-                'Db Hostname'
-            )->addArgument(
-                'username',
-                InputArgument::REQUIRED,
-                'Db Username'
-            )->addArgument(
-                'password',
-                InputArgument::REQUIRED,
-                'Db Password'
-            )->addArgument(
-                'dbname',
-                InputArgument::REQUIRED,
-                'Db Name'
-            );
-    }
+    /**
+     * Import from pre-DataONE service
+     *
+     * @param $ownerId
+     * @param $termId
+     * @param $hostName
+     * @param $dbName
+     * @param $userName
+     * @param $password
+     * @param $domain
+     * @throws ImportException
+     * @throws \Doctrine\DBAL\DBALException
+     *
+     * Questo è solo un wrapper per il codice scritto a livello di controller del comando della console.
+     * Dovrebbe essere tutto refattorizzato
+     */
+    public function import (
+        $ownerId,
+        $termId,
+        $hostName,
+        $dbName,
+        $userName,
+        $password,
+        $domain
+    ) {
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+        // Filter input values
+        if (empty($ownerId) ||
+            $ownerId <= 0
+        ) {
+            throw new ImportException(sprintf(
+                'Owner ID must be an integer greater than zero'
+            ));
+        }
+        $ownerId = (int)$ownerId;
 
-        $configFile = realpath(__DIR__ . '/../../../settings.php');
-
+        // @todo creare helper con autoloader per prender il file di configurazione
+        $configFile = realpath(__DIR__ . '/../../settings.php');
         $settings = require $configFile;
 
-
-        $upgradedomain = $input->getArgument('domain');
-
-        $ownerdomain = $input->getArgument('owner');
-
-        $termId = $input->getArgument('termId');
-
-        $hostName = $input->getArgument('hostname');
-        $userName = $input->getArgument('username');
-        $password = $input->getArgument('password');
-        $dbName = $input->getArgument('dbname');
-
-        if ($ownerdomain > 0 && $upgradedomain > 0 && $termId != '') {
+        if ($ownerId > 0 && $domain > 0 && $termId != '') {
             /**
              * @var $upgrade EntityManager
              */
             $upgrade = $this->getUpgradeDb($settings['settings']);
 
-            $repository = $upgrade->getRepository(SubscriberDomainPath::class)->findBy(array('domainpath' => $upgradedomain, 'status' => 1));
+            $repository = $upgrade->getRepository(SubscriberDomainPath::class)->findBy(array('domainpath' => $domain, 'status' => 1));
 
             $emailList = array();
             /**
@@ -131,7 +113,7 @@ class ImportUpgrade extends Base
 
                 $objMailOne = new MailOneDirectExport();
                 $objMailOne->setEntityManager($config);
-                $objMailOne->setOwner($ownerdomain);
+                $objMailOne->setOwner($ownerId);
 
                 $objMailOne->setAction("list");
 
@@ -148,7 +130,7 @@ class ImportUpgrade extends Base
                 $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                 $conn->connect();
 
-                $response = $objMailOne->export(-1);
+                $response = $objMailOne->export();
                 if ($response && is_array($response)) {
                     foreach ($emailList as $contact) {
                         $name = '';
@@ -226,32 +208,32 @@ class ImportUpgrade extends Base
                     }
                 }
 
-               /* if ($response && is_array($response)) {
-                    foreach ($emailList as $contact) {
-                        if (isset($response[$contact['email']])) {
-                            $objMailOne->setAction("subscriber");
-                            echo 1;
-                            $detail = $objMailOne->export($response[$contact['email']]['id'], $response[$contact['email']]['list']);
+                /* if ($response && is_array($response)) {
+                     foreach ($emailList as $contact) {
+                         if (isset($response[$contact['email']])) {
+                             $objMailOne->setAction("subscriber");
+                             echo 1;
+                             $detail = $objMailOne->export($response[$contact['email']]['id'], $response[$contact['email']]['list']);
 
-                            print_r($detail);
-                            die;
-                            if ($detail && isset($detail['id'])) {
-                                $detail['ip'] = $contact['ip'];
-                                $detail['iso2language'] = $contact['language'];
-                                $detail['subscribeurl'] = $contact['url'];
-                                $detail['privacy'] = $contact['privacy'];
+                             print_r($detail);
+                             die;
+                             if ($detail && isset($detail['id'])) {
+                                 $detail['ip'] = $contact['ip'];
+                                 $detail['iso2language'] = $contact['language'];
+                                 $detail['subscribeurl'] = $contact['url'];
+                                 $detail['privacy'] = $contact['privacy'];
 
-                                $users[$contact['email']] = $detail;
+                                 $users[$contact['email']] = $detail;
 
-                            }
-                        }
-                    }
-                }*/
+                             }
+                         }
+                     }
+                 }*/
 
                 /**
                  * @var $privacy EntityManager
                  */
-                $privacy = $this->getPrivacyDb($settings['settings'], $ownerdomain);
+                $privacy = $this->getPrivacyDb($settings['settings'], $ownerId);
 
                 $term = $privacy->getRepository('App\Entity\Privacy\Term')->findOneByUid($termId);
                 $termParagraphs = $term->getParagraphs();
@@ -292,10 +274,10 @@ class ImportUpgrade extends Base
 
                     $flags = array(
                         array(
-                                'code' => 'dati_personali',
-                                'selected' => true,
-                                'mandatory' => true,
-                                'text' => 'acconsento'
+                            'code' => 'dati_personali',
+                            'selected' => true,
+                            'mandatory' => true,
+                            'text' => 'acconsento'
                         ),
                         array(
                             'code' => 'newsletter',
@@ -325,7 +307,7 @@ class ImportUpgrade extends Base
 
                     $privacydata = array(
                         "referrer" => $detail['subscribeurl'],
-                        "ownerId" =>$ownerdomain,
+                        "ownerId" =>$ownerId,
                         "termId" => $termId,
                         "language" => $userLang,
                         "name" => $term->getName(),
@@ -376,8 +358,6 @@ class ImportUpgrade extends Base
                 }
             }
         }
-
-
     }
 
     private function getConfigDb($settings)

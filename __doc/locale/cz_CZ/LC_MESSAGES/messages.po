@@ -1,0 +1,2107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Giuseppe\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs_CZ\n"
+"X-Generator: Poedit 1.5.5\n"
+
+msgid "Login"
+msgstr "LOGIN"
+
+msgid "Logout"
+msgstr "LOGOUT"
+
+msgid "Lost password"
+msgstr "OBNOVIT HESLO"
+
+msgid "Verify availability"
+msgstr "PROVER DOSTUPNOST MOZNOSTI A CENY"
+
+msgid "Check in date"
+msgstr "DATUM PRIJEZDU"
+
+msgid "January"
+msgstr "LEDEN"
+
+msgid "February"
+msgstr "UNOR"
+
+msgid "March"
+msgstr "BREZEN"
+
+msgid "April"
+msgstr "DUBEN"
+
+msgid "May"
+msgstr "KVETEN"
+
+msgid "June"
+msgstr "CERVEN"
+
+msgid "July"
+msgstr "CERVENEC"
+
+msgid "August"
+msgstr "SRPEN"
+
+msgid "September"
+msgstr "ZARI"
+
+msgid "October"
+msgstr "RIJEN"
+
+msgid "November"
+msgstr "LISTOPAD"
+
+msgid "December"
+msgstr "PROSINEC"
+
+msgid "Monday"
+msgstr "PONDELI"
+
+msgid "Tuesday"
+msgstr "UTERY"
+
+msgid "Wednesday"
+msgstr "STREDA"
+
+msgid "Thursday"
+msgstr "CTVRTEK"
+
+msgid "Friday"
+msgstr "PATEK"
+
+msgid "Saturday"
+msgstr "SOBOTA"
+
+msgid "Sunday"
+msgstr "NEDELE"
+
+msgid "Check out date"
+msgstr "DATUM ODJEZDU"
+
+msgid "Num. rooms"
+msgstr "POCET POKOJU"
+
+msgid "Num. %s"
+msgstr "POCET %s"
+
+msgid "Guests and rooms"
+msgstr "POKOJE A HOSTE"
+
+msgid "Room number"
+msgstr "CISLO POKOJE"
+
+msgid "N. Adults"
+msgstr "POCET DOSPELYCH"
+
+msgid "N. Children"
+msgstr "POCET DETI"
+
+msgid "N. persons"
+msgstr "POCET OSOB"
+
+msgid "Children Age"
+msgstr "VEK DETI"
+
+msgid "Verify"
+msgstr "PROVER"
+
+msgid "Reservation start note"
+msgstr "POZNAMKY K ZACATKU REZERVACE"
+
+msgid "Rooms"
+msgstr "POKOJE"
+
+msgid "Rooms manager"
+msgstr "SPRAVA POKOJU"
+
+msgid "room available"
+msgstr "POKOJ K DISPOZICI"
+
+msgid "There are no available accommodations"
+msgstr ""
+"LITUJEME, TOHLE ZARIZENI PRO ZVOLENE OBDOBI NEMA ZADNE VOLNA UBYTOVACI "
+"MOZNOSTI"
+
+msgid "No availability solution"
+msgstr "ZADNE VOLNA UBYTOVACI MOZNOSTI"
+
+msgid "alternative_case_1"
+msgstr "LITUJEME, VE ZVOLENEM OBDOBI JSME ZAVRENI"
+
+msgid "alternative_case_2"
+msgstr ""
+"LITUJEME, ALE PRO ZADANE OBDOBI A POCET OSOB NEJSOU K DISPOZICI ZADNA "
+"UBYTOVACI MOZNOSTI"
+
+msgid "Availability not found"
+msgstr "NENALEZENY ZADNE UBYTOVACI MOZNOSTI"
+
+msgid "To send a request for information you can click here"
+msgstr "PRO ZASLANI POZADAVKU O INFORMACE KLIKNETE ZDE"
+
+msgid "More info"
+msgstr "VICE INFORMACI"
+
+msgid "Change period"
+msgstr "ZMEN OBDOBI"
+
+msgid "Reservation data"
+msgstr "DATUMY POBYTU"
+
+msgid "Choose your accommodation"
+msgstr "VYBERTE SI UBYTOVANI"
+
+msgid "nights"
+msgstr "NOCI"
+
+msgid "# Rooms"
+msgstr "POCET POKOJU"
+
+msgid "N. Persons"
+msgstr "POCET OSOB"
+
+msgid "Last chance"
+msgstr "POSLEDNI MOZNOST"
+
+msgid "rooms left"
+msgstr "POKOJE, KTERE ZUSTALI"
+
+msgid "Latest"
+msgstr "POSLEDNI"
+
+msgid "Image not available"
+msgstr "OBRAZEK NENI K DISPOZICI"
+
+msgid "From"
+msgstr "OD"
+
+msgid "Total stay"
+msgstr "CELKOVA OBYTNA"
+
+msgid "Boarding"
+msgstr "ROZSAH SLUZEB"
+
+msgid "Bed and breakfast"
+msgstr "NOCLEH A SNIDANE"
+
+msgid "Half board"
+msgstr "POLOPENZE"
+
+msgid "Full board"
+msgstr "PLNA PENZE"
+
+msgid "Select"
+msgstr "VYBER"
+
+msgid "Accessory services"
+msgstr "SPECIALNI SLUZBY"
+
+msgid "see and select"
+msgstr "PODIVEJ SE A VYBER"
+
+msgid "Single price"
+msgstr "JEDNOTKOVA CENA"
+
+msgid "To pay a part"
+msgstr "SLUZBY MIMO, NA VYZADANI (UHRADA PRI PRIJEZDU)"
+
+msgid "Total €"
+msgstr "CELKEM EUR"
+
+msgid "Add/remove"
+msgstr "PRIDEJ/ODEBER"
+
+msgid "Add a special service"
+msgstr "PRIDEJ SPECIALNI SLUZBU"
+
+msgid "Confirm accessories"
+msgstr "POTVRD PRIDANE SLUZBY"
+
+msgid "Accessories"
+msgstr "SPECIALNI SLUZBY"
+
+msgid "Accessories list"
+msgstr "SEZNAM SPECIALNICH SLUZEB"
+
+msgid "Total accessories"
+msgstr "CELKEM SPECIALNICH SLUZEB"
+
+msgid "Add accessories"
+msgstr "ADD SPECIALNICH SLUZEB"
+
+msgid "Price"
+msgstr "CENA"
+
+msgid "Search alternative arrival date"
+msgstr "VYHLEDEJ ALTERNATIVNE OBDOBI"
+
+msgid "We're processing your request"
+msgstr "ZPRACOVAVAME VAS POZADAVEK"
+
+msgid "Guests"
+msgstr "HOSTE"
+
+msgid "Insert your data"
+msgstr "VLOZTE VASE UDAJE"
+
+msgid "Rooms summary"
+msgstr "ZAVERECNE SHRNUTI POKOJU"
+
+msgid "Step reached"
+msgstr "Step reached"
+
+msgid "Step reached with availability"
+msgstr "Step reached with availability"
+
+msgid "Reservation conditions"
+msgstr "PODMINKY REZERVACE"
+
+msgid "Room Price"
+msgstr "CENA ZA POKOJ"
+
+msgid "Room Total"
+msgstr "CELKEM ZA POKOJ"
+
+msgid "%s Total"
+msgstr "Celkem za %s"
+
+msgid "%s %d of %d"
+msgstr "%s %d of %d"
+
+msgid "Total reservation"
+msgstr "CELKEM ZA POBYT"
+
+msgid "Reservation end note"
+msgstr "POZNAMKY K UKONCENI REZERVACE"
+
+msgid "Checkin/out policy"
+msgstr "CHECKIN/CHECKOUT"
+
+msgid "Reservation policy"
+msgstr "REZERVACNI POLITIKA"
+
+msgid "Booking data"
+msgstr "Booking data"
+
+msgid "Payment policy"
+msgstr "PLATEBNI POLITIKA"
+
+msgid "Cancellation policy"
+msgstr "STORNO POLITIKA"
+
+msgid "Rates policy"
+msgstr "CENOVA POLITKA"
+
+msgid "Modify"
+msgstr "ZMEN"
+
+msgid "modification"
+msgstr "ZMENA"
+
+msgid "Insert your Email and password"
+msgstr "VLOZ TVUJ MAIL A PASSWORD"
+
+msgid "Have you a discount code?"
+msgstr "MAS SLEVOVY KOD?"
+
+msgid "Do you have a Discount Code?"
+msgstr "MAS SLEVOVY KOD?"
+
+msgid "Discount code"
+msgstr "SLEVOVY KOD"
+
+msgid "Add a discount"
+msgstr "PRIDEJ SLEVOVY KOD"
+
+msgid "Gift Card used"
+msgstr "Gift Card used"
+
+msgid "Discount code used"
+msgstr "POUZITY SLEVOVY KOD"
+
+msgid "Send"
+msgstr "POSLI"
+
+msgid "Guest records"
+msgstr "UDAJE KLIENTA"
+
+msgid "Guest data"
+msgstr "UDAJE KLIENTA"
+
+msgid "Name"
+msgstr "JMENO"
+
+msgid "Surname"
+msgstr "PRIJMENI"
+
+msgid "E-mail"
+msgstr "E-MAIL"
+
+msgid "Repeat e-mail"
+msgstr "OPAKOVANE ZADANI E-MAILU"
+
+msgid "Repeat E-mail"
+msgstr "opakovane zadani E-mailu"
+
+msgid "Same fields are required or not correct"
+msgstr "NEKTERE POLE JE CHYBNE VYPLNENO NEBO CHYBI"
+
+msgid "Mandatory Field"
+msgstr "POVINE POLE"
+
+msgid "Mandatory Fields"
+msgstr "POVINA POLE"
+
+msgid "Mandatory fields"
+msgstr "POVINA POLE"
+
+msgid "Payment mode"
+msgstr "ZPUSOB PLATBY"
+
+msgid "guarantee"
+msgstr "guarantee"
+
+msgid "with gateway"
+msgstr "with gateway"
+
+msgid "Credit card"
+msgstr "KREDITNI KARTA"
+
+msgid "Credit card data"
+msgstr "KREDITNI KARTA"
+
+# --- step3 booking
+msgid "Credit card invalid. Please check number"
+msgstr "KARTA JE NEPLATNE. SKONTOLUJTE JEJI CISLO"
+
+msgid "Customer area"
+msgstr "PROSTOR PRO ZAKAZNIKY"
+
+msgid "Date not valid"
+msgstr "NEPLATNE DATUM"
+
+msgid "Delete"
+msgstr "SMAZ"
+
+msgid "Pay with credit card"
+msgstr "ZAPLAT KREDITNI KARTOU"
+
+msgid "Pay with money transfer"
+msgstr "ZAPLAT BANKOVNIM PREVODEM"
+
+msgid "Payment"
+msgstr "PLATBA"
+
+msgid "Phone"
+msgstr "TELEFON"
+
+# --- step3 booking e enquiry
+msgid "Phone can not be empty"
+msgstr "POLE S TELEFONNIM CISLEM NESNI BYT PRAZDNE"
+
+msgid "Please check your card details"
+msgstr "zKONTROLUJTE UDAJE O VASI KREDITNI KARTE"
+
+msgid "Please check your card number digits"
+msgstr "zKONTROLUJTE POCET CISLIC VASI KREDITNI KARTY"
+
+msgid "Please select a day"
+msgstr "Please select a day"
+
+msgid "Please select an item from the list"
+msgstr "VYBER SI ALESPON JEDEN PRVEK SE SEZNAMU"
+
+# --- step2 booking ---
+msgid "Please select number of children"
+msgstr "VLOZTE UDAJ O POCTU DETI"
+
+# --- step2 booking ---
+msgid "Please set chilldren's age"
+msgstr "VLOZTE UDAJ O VEKU DETI"
+
+msgid "Prev"
+msgstr "PREDCHAZEJICI"
+
+msgid "Prev month"
+msgstr "PREDCHAZEJICI MESIC"
+
+msgid "Prev year"
+msgstr "PREDCHAZEJICI ROK"
+
+msgid "Prev. day"
+msgstr "PREDHAZEJICI DEN"
+
+msgid "Price not valid"
+msgstr "NEPLATNA CENA"
+
+msgid "Pricelist"
+msgstr "CENIK"
+
+msgid "Prices"
+msgstr "CENY"
+
+msgid "Print"
+msgstr "TISK"
+
+msgid "What is the security code?"
+msgstr "CO JE TO BEZPECNOSTNI KOD?"
+
+msgid "Where is the security code?"
+msgstr "KDE SE NACHAZI?"
+
+# --- step3 booking e enquiry ---
+msgid "You may only proceed if you accept the privacy policy"
+msgstr "MUZETE POKRACOVAT JENOM KDYZ DATE SOUHLAS K ZPRACOVANI OSOBNICH UDAJU"
+
+# --- step3 booking ---
+msgid "You may only proceed if you accept the terms and conditions"
+msgstr "MUZETE POKRACOVAT JEN KDYZ SOUHLASITE S PODMINKAMI"
+
+# --- step3 booking ---
+msgid "You must select a payment method"
+msgstr "VYBERTE SI ZPUSOB PLATBY"
+
+msgid "ZIP"
+msgstr "PSC"
+
+msgid "Zoom"
+msgstr "ZOOM"
+
+msgid "Zoom size"
+msgstr "VELIKOST ZOOMU"
+
+msgid "as it is written on the card"
+msgstr "JAK JE NAPSANO NA KARTE"
+
+msgid "cancelled"
+msgstr "ZRUSENA"
+
+msgid "cc_notes"
+msgstr ""
+"ZADNA FINANCI OPERACA NEBYLA PROVEDENA. UDAJE O KREDITNI KARTE SLOUZI JENO"
+
+msgid "account_title"
+msgstr "AUTORIZACE K FINANCNI OPERACI PROSTREDNICTVIM KREDITNI KARTY"
+
+msgid "OLDaccount_notes %s"
+msgstr ""
+"JA DOLEPODEPSANY DRZITEL A MAJITEL KREDITNI KARTY SOUHLASIM, ABY JEJIM "
+"PROSTREDNICTVI"
+
+msgid "account_notes %s"
+msgstr "AUTORIZUJI ZATIZIT MUJ UCET DEBETNI POLOZKOU VE VYSI %S"
+
+msgid "click on an alternative arrival date"
+msgstr "KLIKNI NA JINY DATUM PRIJEZDU"
+
+msgid "confirmed"
+msgstr "POTVRZENA"
+
+msgid "eg. arrival time"
+msgstr "UDAT CAS PRIJEZDU"
+
+msgid "for minimum stays"
+msgstr "for minimum stays"
+
+msgid "no spaces or dashes"
+msgstr "BEZ MEZER A LOMITEK"
+
+msgid "opened"
+msgstr "OTEVRENA"
+
+msgid "save up to"
+msgstr "USETRI AZ"
+
+msgid "sec_code_desc"
+msgstr ""
+"KOD CVV, CVC A CID JE BEZPECNOSTNI KOD ZABRANUJICI PRIPADNEMU ZNEUZITI KARTY "
+"BEHEM JEJ POUZITI PRES INTERNET"
+
+msgid "within"
+msgstr "DO"
+
+msgid "Payments"
+msgstr "PLATBY"
+
+msgid "Terms & conditions"
+msgstr "PRAVIDLA A PODMINKY"
+
+msgid "How to reach"
+msgstr "JAK SE K NAM DOSTAT"
+
+msgid "Payment request type"
+msgstr "TYP PLATBY"
+
+msgid "Payment result"
+msgstr "VYSLEDEK PLATBY"
+
+msgid "Terms and conditions"
+msgstr "PRAVIDLA A PODMINKY"
+
+msgid "Total account"
+msgstr "ZALOHA CELKEM"
+
+msgid "Total to settle"
+msgstr "Total to settle"
+
+msgid "To pay"
+msgstr "K UHRADE"
+
+msgid "Reversal"
+msgstr "STORNO"
+
+msgid "Payment ok"
+msgstr "PLATBA OK"
+
+msgid "Payment failed"
+msgstr "PLATBA NEUSKUTECNENA"
+
+msgid "In payment"
+msgstr "FAZE PLATBY"
+
+msgid "Credit card guarantee. Payment in hotel"
+msgstr ""
+"UDAJE O KREDITNI KARTE SLOUZI JENOM JAKO GARANCE REZERVACE. PLATBA NA HOTELU."
+
+msgid "Allow reservation if available"
+msgstr "V PRIPADE, ZE RESENI JE K DISPOZICI, REZERVUJ"
+
+msgid "Protocol"
+msgstr "PROTOKOL"
+
+msgid "Total reservation price"
+msgstr "CELKOVA CENA REZERVACE"
+
+msgid "Credit card accepted"
+msgstr " KREDITNI KARTA AKCEPTOVANA"
+
+msgid "Accepts"
+msgstr "PRIJMI, AKCEPTUJ"
+
+msgid "Yes"
+msgstr "ANO"
+
+msgid "No"
+msgstr "NIE"
+
+msgid "Structure"
+msgstr "UBYTOVACI ZARIZENI"
+
+msgid "Waiting to be confirmed"
+msgstr "V OCEKAVANI POTVRZENI"
+
+msgid "Confirmed"
+msgstr "POTVRZENA"
+
+msgid "Cancelled by the structure"
+msgstr "ZRUSENA UBYTOVACIM ZARIZENIM"
+
+msgid "Cancelled by the guest"
+msgstr "ZRUSENA ZE STRANY KLIENTA"
+
+msgid "Cancelled for NO-SHOW"
+msgstr " ZRUSENA Z DUVODU NO-SHOW"
+
+msgid "Cancelled due to wrong CC data"
+msgstr "ZRUSENA Z DUVODU NEPLATNYCH UDAJU O KREDITNI KARTE"
+
+msgid "Structure data"
+msgstr "UDAJE O UBYTOVACIM ZARIZENI"
+
+msgid "Reservation inserted"
+msgstr "REZERVACE BYLA ZADANA"
+
+msgid "Request inserted"
+msgstr " POZADAVEK BYL ZADANY"
+
+msgid "Authorization"
+msgstr "AUTORIZACE"
+
+msgid "Interested to"
+msgstr "Interested to"
+
+# --- step3 booking
+msgid "Security code invalid"
+msgstr "NEPLATNY BEZPECNOSTNI KOD"
+
+msgid "Payment methods"
+msgstr "PLATBA"
+
+#: ------------------ release 1.4.0
+msgid "cancellation"
+msgstr "ZRUSENI"
+
+msgid "Cancelled by the administrator"
+msgstr "ZRUSENA ADMINISTRATOREM"
+
+msgid "Cancelled on guest request"
+msgstr "ZRUSENA NA NAZKLADE POZADAVKU KLIENTA"
+
+msgid "Request to be cancelled by guest"
+msgstr "POZADAVEK O ZRUSENI ZE STRANY KLIENTA"
+
+msgid "Request to be modified by guest"
+msgstr "POZADAVEK O ZMENU ZE STRANY KLIENTA"
+
+msgid "Expires"
+msgstr "PLATNOST"
+
+msgid "Expiry date"
+msgstr "DEN PLATNOSTI DO"
+
+# --- step3 booking ---
+msgid "Expiry date date is invalid"
+msgstr "NEPLATNE DATUM PLATNOSTI"
+
+msgid "Fax"
+msgstr "FAX"
+
+msgid "Type"
+msgstr "TYP"
+
+msgid "Type of credit card"
+msgstr "TYP KREDITNI KARTY"
+
+msgid "Holder"
+msgstr "DRZITEL A MAJITEL"
+
+msgid "Bank Account Holder"
+msgstr "MAJITEL BANKOVNIHO UCTU"
+
+msgid "Use credit card"
+msgstr "Use credit card"
+
+msgid "All fields are mandatory"
+msgstr "VSECHNA POLE JSOU POVINA"
+
+msgid "I Subscribe for the newsletter in"
+msgstr "ZAREGISTRUJ ME K ODBERU NEWSLETTER DO"
+
+msgid "I agree to the personal data's treatment policy"
+msgstr "SOUHLASIM SE ZPRACOVANIM OSOBNICH UDAJU"
+
+msgid "I have read and agreed with the terms and conditions"
+msgstr "PROCETL JSEM SI A SOUHLASIM S PODMINKAMI"
+
+msgid "Book now"
+msgstr "REZERVUJ TED"
+
+msgid "Reserve now!"
+msgstr "REZERVUJ TED!"
+
+msgid "Room"
+msgstr "POKOJ"
+
+msgid "Room > numpax"
+msgstr "POCET POKOJU JE VETSI JAK POCET OSOB"
+
+msgid "Room code"
+msgstr "KOD POKOJE"
+
+msgid "Room description"
+msgstr "POPIS POKOJE"
+
+msgid "Room type"
+msgstr "TYP POKOJE"
+
+msgid "Room type and board"
+msgstr "TYP POKOJE A ROZSAH SLUZEB"
+
+msgid "Room/App. per night"
+msgstr "POKOJ NEBO APARTMAN ZA NOC"
+
+msgid "Room/App. per week"
+msgstr "POKOJ NEBO APRTMAN ZA TYDEN"
+
+msgid "S.C."
+msgstr "S.C."
+
+msgid "Save"
+msgstr "ULOZ"
+
+msgid "Search another option"
+msgstr "HLEDEJ JINE ALTERNATIVY"
+
+msgid "Reservation"
+msgstr "REZERVACE"
+
+msgid "Request"
+msgstr "POZADAVEK"
+
+#: ------------------ release 1.4.0 RC 3
+msgid "Reservation sent"
+msgstr "REZERVACE ODESLANA"
+
+msgid "Request sended"
+msgstr "POZADAVEK ODESLAN"
+
+msgid "Select type and boarding desired"
+msgstr "ZVOL TYPOLOGII A ROZSAH SLUZEB"
+
+msgid "Select period and rooms"
+msgstr "ZVOL OBDOBI A POKOJE"
+
+msgid "Continue"
+msgstr "POKRACUJ"
+
+msgid "Send request"
+msgstr "ODESLI POZADAVEK"
+
+msgid "from"
+msgstr "OD"
+
+msgid "to"
+msgstr "DO"
+
+msgid "Selected date"
+msgstr "ZVOLENE DATUM"
+
+msgid "Alternative date"
+msgstr "ALTERNATIVNI DATUMY"
+
+msgid "Wait the confirmation of disponibility"
+msgstr "VYCKEJTE NA POTVRZENI UBYTOVACICH MOZNOSTI"
+
+msgid "Transaction failed"
+msgstr "NEUSKUTECNENA TRANSAKCE"
+
+msgid "Successful cancellation"
+msgstr "USPESNE ZRUSENI"
+
+msgid "Successful editation"
+msgstr "USPESNA MODIFIKACE"
+
+msgid "Reservation delivery successfully"
+msgstr "REZERVACE USPESNE ODESLANA"
+
+msgid "Number"
+msgstr "CISLO"
+
+# --- step2 booking ---
+msgid "Insufficient number of nights"
+msgstr "NEDOSTATECNY POCET NOCLEHU"
+
+msgid "MM/YY"
+msgstr "MM/RR"
+
+msgid "City"
+msgstr "MESTO"
+
+# --- step3 booking e enquiry ---
+msgid "City can not be empty"
+msgstr "POLE MESTO NESMI BYT PRAZDNE"
+
+msgid "Close"
+msgstr "ZAVRI"
+
+msgid "Close the popup"
+msgstr "ZAVRI POPUP"
+
+msgid "Code"
+msgstr "KOD"
+
+msgid "Company"
+msgstr "SPOLECNOST, FIRMA"
+
+msgid "Conditions"
+msgstr "PODMINKY"
+
+msgid "Confirm"
+msgstr "POTVRZENI"
+
+msgid "Confirmed date"
+msgstr "DATUM POTVRZENO"
+
+msgid "Consent to privacy"
+msgstr "SOUHLAS K OCHRANE SOUKROMI"
+
+msgid "Consent to use personal data"
+msgstr "SOUHLAS KE SPRACOVANI OSOBNICH UDAJU"
+
+msgid "Copy"
+msgstr "KOPIROVAT"
+
+msgid "Country"
+msgstr "KRAJINA"
+
+msgid "Address"
+msgstr "ADRESA"
+
+# --- step3 booking e enquiry
+msgid "Address can not be empty"
+msgstr "POLE ADRESA NESMI BYT PRAZDNE"
+
+msgid "The phone field must be 8 digits in length,with an optional 2 or 3 digi"
+msgstr "NEPLATNE TELEFONNI CISLO"
+
+msgid "The zipcode must be 4 or 5 digits in length"
+msgstr "PSC JE SLOZENO ZE 4 NEBO 5 CISLIC"
+
+# --- step3 booking e enquiry
+msgid "Mobile phone number can not be empty"
+msgstr "POLE MOBIL NESMI BYT PRAZDNE"
+
+msgid "Mobile"
+msgstr "MOBIL"
+
+# --- step3 booking ---
+msgid "Email can not be empty"
+msgstr "POLE E-MAIL NESMI BYT PRAZDNE"
+
+# --- step3 booking ---
+msgid "Email is not the same"
+msgstr "MAILOVE ADRESY SE NESHODUJI"
+
+msgid "The email must be in the name@domain format."
+msgstr "MAIL MUSI BYT VE TVARU JMENO@DOMENA"
+
+msgid "The expiry date is not a valid date in the format MM/YY"
+msgstr "DATUM PLATNOSTI MUSI BYT VE TVARE MM/RR"
+
+msgid "The month is invalid"
+msgstr "NEPLATNY MESIC"
+
+msgid ""
+"If you have forgotten your password, insert you email address in the fiel"
+msgstr ""
+"JESTLI JSI ZAPOMEL TVE HESLO, ZADEJ TVUJ MAIL DO URCENEHO POLE A OBRATEM TI "
+"ZASLEME NOVE HESLO"
+
+msgid "Your new password has been sent to the registered email address."
+msgstr "NOVE HESLO BYLO ZASLANO NA ZAREGISTROVANOU MAILOVOU ADRESU"
+
+msgid "Sorry, the email is not associated to any user."
+msgstr "LITUJEME, ZADANY MAIL SE NEVZTAHUJE K ZADNEMU UZIVATELI"
+
+msgid "Rooms list"
+msgstr "SEZNAM POKOJU"
+
+msgid "Saving"
+msgstr "USPORA"
+
+msgid "Costs and prices"
+msgstr " NAKLADAY A CENY"
+
+msgid "Apartments"
+msgstr "APARTMANY"
+
+msgid "Apartment"
+msgstr "APARTMAN"
+
+msgid "Province of"
+msgstr "PROVINCIE"
+
+msgid "Company can not be empty"
+msgstr "POLE SPOLECNOST/ FIRMA NESMI BYT PRAZDNE"
+
+msgid "Zip cope can not be empty"
+msgstr "POLE PSC NESMI BYT PRAZDNE"
+
+msgid "State can not be empty"
+msgstr "PROVINCIE can not be empty"
+
+msgid "Country can not be empty"
+msgstr "POLE KRAJINA NESMI BYT PRAZDNE"
+
+msgid "Fax can not be empty"
+msgstr "POLE FAX NESMI BYT PRAZDNE"
+
+msgid "Guest language can not be empty"
+msgstr "POLE JAZYK, KTERYM MLUVITE NESMI BYT PRAZDNE"
+
+msgid "Note can not be empty"
+msgstr "POLE POZNAMKY NESMI BYT PRAZDNE"
+
+# --- step3 e enquiry ---
+msgid "Name can not be empty"
+msgstr "POLE JMENO MESMI BYT PRAZDNE"
+
+# --- step3 booking e enquiry
+msgid "Surname can not be empty"
+msgstr "POLE PRIJMENI NESMI BYT PRAZDNE"
+
+msgid "Telephone"
+msgstr "TELEFON"
+
+msgid "at phone number"
+msgstr "NA TELEFONNI CISLO"
+
+msgid "Mobile can not be empty"
+msgstr "POLE MOBIL NESMI BYT PRAZDNE"
+
+msgid "Summary data"
+msgstr "SUMARIZACE UDAJU"
+
+msgid "Unknown payment type"
+msgstr "ZPUSOB PLATBY NEZNAMY"
+
+msgid "Email address is not valid"
+msgstr "NEPLATNY MAIL"
+
+msgid "You will soon receive an e-mail for a confirmation."
+msgstr "V DOHLEDNE DOBE OBDRZIS POTVRZUJICI MAIL"
+
+msgid "Go back to Your Reservation"
+msgstr "VRAT SE K TVYM REZERVACIM"
+
+msgid "Booking total price"
+msgstr "CELKOVA CENA REZERVACE"
+
+msgid "Booking deposit"
+msgstr "Booking deposit"
+
+msgid "Details Policy Stay"
+msgstr "DETAILY POBYTOVE POLITIKY"
+
+msgid "Check your reservation"
+msgstr "ZKONTROLUJ SI TVOU REZERVACI"
+
+msgid "Reservation number"
+msgstr "REZERVACNI CISLO"
+
+msgid "View reservations"
+msgstr "ZOBRAZ VSECHNY REZERVACE"
+
+msgid "Edit profile"
+msgstr "UPRAV PROFIL"
+
+msgid "Your services"
+msgstr "Your services"
+
+msgid "Your reservation"
+msgstr "TVA REZERVACE"
+
+msgid "View"
+msgstr "ZOBRAZ"
+
+msgid "Tot reservation price"
+msgstr "CELKOVA CENA REZERVACE"
+
+msgid "Star/Key"
+msgstr "HVEZDICKA/KLIC"
+
+msgid "Stars/Keys"
+msgstr "HVIEZDICKY/KLICE"
+
+msgid "accomodations"
+msgstr "UBYTOVACI ZARIZENI"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "feepaying"
+msgstr "feepaying"
+
+msgid "Book online"
+msgstr "REZERVUJ ONLINE"
+
+msgid "Total price"
+msgstr "CELKOVA CENA"
+
+msgid "Total room price"
+msgstr "CELKOVA CENA ZA POKOJ"
+
+msgid "Thanks for choosing our hotel"
+msgstr "Thanks for choosing our hotel"
+
+msgid "Supplements and Reductions"
+msgstr "PRIPLATKY A SLEVY"
+
+msgid "Supplements and reductions"
+msgstr "PRIPLATKY A SLEVY"
+
+msgid "Special rate"
+msgstr "SPECIALNI TARIFA"
+
+msgid "Select all"
+msgstr "VYBER VSECHNY"
+
+msgid "Selected days"
+msgstr "ZVOLENE OBDOBI"
+
+msgid "Selection completed"
+msgstr "VYBER USKUTECNEN"
+
+msgid "Rates and conditions"
+msgstr "TARIFY A PODMINKY"
+
+msgid "Reservation ID"
+msgstr "REZERVACNI ID KOD"
+
+msgid "Reservation confirmed"
+msgstr "REZERVACE POTVRZENA"
+
+msgid "Reservation detail"
+msgstr "DETAILY REZERBVACE"
+
+msgid "Product"
+msgstr "PRODUKT"
+
+# --- step2 booking ---
+msgid "Intro text"
+msgstr "UVODNI TEXT"
+
+msgid "Insert"
+msgstr "VLOZ"
+
+msgid "Insert children's age if present"
+msgstr "VLOZ UDAJE O VEKU DETI JESTLI BUDOU PRITOMNE"
+
+# --- step2 booking ---
+msgid "From date less than current date"
+msgstr "DATUM ODJEZDU SE JEVI DRIVEJSI JAKO DNESNI"
+
+# --- step2 booking ---
+msgid "From date less to date"
+msgstr "DATUM ODJEZDU SE JEVI JAKO DRIVEJSI NEBO STEJNY JAKO DATUM PRIJEZDU"
+
+msgid "Enter"
+msgstr "VEJDI"
+
+msgid "Enquiry data"
+msgstr "Datum dotazu"
+
+msgid "Enquiry date"
+msgstr "DATUM POZADAVKU"
+
+msgid "Enquiry delivered"
+msgstr " POZADAVEK ODESLAN"
+
+msgid "Enquiry request delivery successfully"
+msgstr "POZADAVEK S DOTAZEM NA MOZNOSTI UBYTOVANI USPESNE ODESLAN"
+
+msgid "Are you sure that you want to delete this elemet?"
+msgstr "SES JSI JIST, ZE CHCES POTVRDIT TENHLE PRVEK??"
+
+msgid "Amount"
+msgstr "CASTKA"
+
+msgid "Amount paid"
+msgstr "ZAPLACENA CASTKA"
+
+msgid "Amount to pay"
+msgstr "CASTKA K UHRADE"
+
+msgid "Apply"
+msgstr "APLIKUJ"
+
+msgid "All days"
+msgstr "VSECHNY DNY"
+
+msgid "Num nights"
+msgstr "POCET NOCI"
+
+msgid "Select a city"
+msgstr "ZVOL SI LOKALITU"
+
+msgid "Best Price"
+msgstr "NEJLEPSI CENA"
+
+msgid "Validity from"
+msgstr "PLATNOST OD"
+
+msgid "Special offers from"
+msgstr "SPECIALNI NABIDKY OD"
+
+msgid "Account to pay"
+msgstr "ZALOHA K UHRADE"
+
+msgid "Impossible to delete a mandatory element"
+msgstr "NENI MOZNE ZMAZAT POVINNY PRVEK"
+
+msgid "Delete category"
+msgstr "SMAZ KATEGORII"
+
+msgid "Delete product"
+msgstr "SMAZ PRODUKT"
+
+msgid "Operation cancelled"
+msgstr "OPERACE ZRUSENA"
+
+msgid "% amount on total"
+msgstr "PERCENTO Z CASTKY"
+
+msgid "for reservation carried out within"
+msgstr "NA REZERVACE USKUTECNENY DO"
+
+msgid "for reservation carried out beyond"
+msgstr "NA REZERVACE USUTECNENY PO"
+
+msgid "Acceptable minimum amount"
+msgstr "Acceptable minimum amount"
+
+msgid "Payment within day"
+msgstr "Payment within day"
+
+msgid "Protocol/ID"
+msgstr "PROTOKOL/ID"
+
+msgid "No offer present"
+msgstr "NENI ZADNA NABIDKA"
+
+msgid "No rooms or boarding info available"
+msgstr "NENI K DISPOZICI ZADNY POKOJ NEBO INFORMACE O REZERVACI"
+
+msgid "No solutions found"
+msgstr "ZADNE RESENI NEBYLO NALEZENO"
+
+msgid "No account"
+msgstr "No account"
+
+msgid "No result"
+msgstr "ZADNE RESENI"
+
+msgid "No available room"
+msgstr "ZADNY POKOJ NENI K DISPOZICI"
+
+msgid "Structure amenity"
+msgstr "SLUZBY UBYTOVACI HO ZARIZENI"
+
+msgid "Structure description"
+msgstr "POPIS UBYTOVACIHO ZARIZENI"
+
+msgid "Structure services"
+msgstr "SLUZBY UBYTOVACI HO ZARIZENI"
+
+msgid "Structure position"
+msgstr "POZICE UBYTOVACIHO ZARAIZENI"
+
+msgid "Structure tipology"
+msgstr "TYPOLOGIE UBYTOVACIHO ZARIZENI"
+
+msgid "Structure type"
+msgstr "TYP UBYTOVACIHO ZARIZENI"
+
+msgid "Structure treatment"
+msgstr "ROZSAH SLUZEB"
+
+msgid "Structures"
+msgstr "UBYTOVACI ZARIZENI"
+
+msgid "Completed structures list"
+msgstr "SEZNAM UBYTOVACICH ZARIZENI"
+
+msgid "structures found"
+msgstr "NALEZENA UBYTOVACI ZARIZENI"
+
+msgid "Complete list structures"
+msgstr " SEZNAM UBYTOVACICH ZARIZENI"
+
+msgid "There are structures with this amenity associated"
+msgstr "There are structures with this amenity associated"
+
+msgid "No structures selected"
+msgstr "NEBYLO VYBRANO ZADNE UBYTOVACI ZARIZENI"
+
+msgid "Cancelled date"
+msgstr "DATUM ZRUSENI"
+
+msgid "Request the cancellation of this reservation"
+msgstr "POZADEJ O ZRUSENI TEHLE REZERVACE"
+
+msgid "We remind you that IT is not possible to nullify the cancellation!"
+msgstr "PRIPOMINAME, ZE NENI MOZNE ZRUSIT ZRUSENI"
+
+msgid "Please select the reason for the cancellation"
+msgstr "PROSIME O UDANI DUVODU ZRUSENI"
+
+msgid "Days before cancellation"
+msgstr "DNY PRED ZRUSENIM"
+
+msgid "Holder name is invalid"
+msgstr "JMENO DRZITELE A MAJITELE KARTY NENI PLATNE"
+
+msgid "Book"
+msgstr "REZERVUJ"
+
+msgid "Book safely"
+msgstr "BEZPECNA REZERVACE"
+
+msgid "Room/week"
+msgstr "POKOJ NA TYDEN"
+
+msgid "Room/night"
+msgstr "POKOJ NA NOC"
+
+msgid "Room services"
+msgstr "ROZSAH SLUZEB POKOJE"
+
+msgid "Room not available for this board"
+msgstr "PRO TENHLE ROZSAH SLUZEB NENI K DISPOZICI ZADNY VOLNY POKOJ"
+
+msgid "Reservation status"
+msgstr "STATUS"
+
+msgid "Reservation request inserted successfully"
+msgstr "ZADOST O REZERVACI USPESNE ZADANA"
+
+msgid "Info Request"
+msgstr " POZADAVEK O INFORMACE"
+
+msgid "Request availability"
+msgstr "POZADAVEK O VOLNE UBYTOVACI MOZNOSTI"
+
+msgid "Show Reservation Conditions"
+msgstr "ZOBRAZ PODMINKY REZERVACE"
+
+msgid "View Terms and Conditions for this facility"
+msgstr "ZOBRAZ PODMINKY UBYTOVACIHO ZARIZENI"
+
+msgid "View other periods"
+msgstr "ZOBRAZ JINA ALTERNATIVNI OBDOBI"
+
+msgid "Search only available"
+msgstr "HLEDEJ JEN DOSTUPNA MOZNOSTI"
+
+msgid "Search result"
+msgstr "VYSLEDEK HLEDANI"
+
+msgid "Search results"
+msgstr "VYSLEDEK HLEDANI"
+
+msgid "Go to Search"
+msgstr "VRAT SE K VYHLEDAVANI"
+
+msgid "Search by name"
+msgstr "VYHLEDAVANI PODLE JMENA"
+
+msgid "Search near to"
+msgstr "HLEDEJ V BLIZKOSTI"
+
+msgid "Insert name"
+msgstr "NAPIS JMENO"
+
+msgid "Accepting terms and conditions"
+msgstr "AKCEPTOVANI PODMINEK"
+
+msgid "Access"
+msgstr "VSTUP"
+
+msgid "Account"
+msgstr "Account"
+
+msgid "Accounts"
+msgstr "Accounts"
+
+msgid "Adults"
+msgstr "DOSPELI"
+
+msgid "Age"
+msgstr "VEK"
+
+msgid "All categories"
+msgstr "VSECHNY KATEGORIE"
+
+msgid "All offers"
+msgstr "VSECHNY NABIDKY"
+
+msgid "All typologies"
+msgstr "VSECHNY TYPOLOGIE"
+
+msgid "Allotment manager"
+msgstr " ALLOTMENT MANAGER"
+
+msgid "alt_detail_guide"
+msgstr "KLIKNI KDYZ CHCES ZOBRAZIT NEBO UPRAVIT nove reseni"
+
+msgid "Amenities"
+msgstr "KOMFORT"
+
+msgid "Amenity type"
+msgstr "DRUH SLUZEB"
+
+msgid "and"
+msgstr "A"
+
+msgid "and neighbourhood"
+msgstr "A POBLIZ"
+
+msgid "Arrival"
+msgstr "PRIJEZD"
+
+msgid "at"
+msgstr "O"
+
+msgid "Automatic"
+msgstr "AUTOMATICKY"
+
+msgid "Availability"
+msgstr "NABIDKA VOLNYCH MOZNOSTI"
+
+msgid "Availability not valid"
+msgstr "NEPLATNA NABIDKA VOLNYCH MOZNOSTI"
+
+msgid "Available solutions"
+msgstr "NABIZENE VOLNE MOZNOSTI"
+
+msgid "Average price per night"
+msgstr "PRUMERNI CENA NA NOC"
+
+msgid "Back"
+msgstr "ZPATKY"
+
+msgid "Bank account holder"
+msgstr "MAJITEL BANKOVNIHO UCTU"
+
+msgid "Bank name"
+msgstr "NAZEV BANKY"
+
+msgid "Bank transfer"
+msgstr "BANKOVNI PREVOD"
+
+msgid "Beaches"
+msgstr "PLAZE"
+
+msgid "Bed"
+msgstr "LUZKO"
+
+msgid "best price from"
+msgstr "NEJLEPSI CENA OD"
+
+msgid "Booking board"
+msgstr "Ve board"
+
+msgid "BookIng complete"
+msgstr "REZERVACE UKONCENA"
+
+msgid "Booking discounts manager"
+msgstr "SPRAVA SLEV"
+
+msgid "Booking enquiry"
+msgstr "POZADAVEK O VOLNYCH MISTECH"
+
+msgid "Booking manager"
+msgstr "BOOKING MANAGER"
+
+msgid "Booking Online"
+msgstr "REZERVACE ONLINE"
+
+msgid "Booking pricelist manager"
+msgstr "MENEZER CEN"
+
+msgid "Booking rates and conditions manager"
+msgstr "PODMINKY A TARIFY"
+
+msgid "Booking request"
+msgstr "POZADAVEK O REZERVACI"
+
+msgid "Calendar functions"
+msgstr "FUNKCE KLALENDARE"
+
+msgid "Cancel"
+msgstr "ZRUS"
+
+msgid "Card number must contain only digits and spaces"
+msgstr "KREDITNI KARTA MUSI OBSAHOVAT JENOM CISLICE A MEZERY"
+
+msgid "Check availability"
+msgstr "OVER DOSTUPNOST"
+
+msgid "Checkin/checkout day not allowed"
+msgstr "DEN PRIJEZDU/ ODJEZDU NENI POVOLEN"
+
+msgid "Child"
+msgstr "DITE"
+
+msgid "Children"
+msgstr "DETI"
+
+msgid "Children age"
+msgstr "VEK DETI"
+
+msgid "Click for more info"
+msgstr "KLIKNI PRO VICE INFORMACI"
+
+msgid "Compile questionnaire"
+msgstr "VYPLN DOTAZNIK"
+
+msgid "Date"
+msgstr "DATUM"
+
+msgid "Currency manager"
+msgstr "PENEZNY MENY A JEJICH SPRAVA"
+
+msgid "days before"
+msgstr "DNY PRED"
+
+msgid "days after"
+msgstr "DNI PO"
+
+msgid "Departure"
+msgstr "ODJEZD"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Description"
+msgstr "POPIS"
+
+msgid "Destination"
+msgstr "CILOVE MISTO"
+
+msgid "Detail"
+msgstr "DETAIL"
+
+msgid "Details"
+msgstr "DETAILY"
+
+msgid "Discount"
+msgstr "SLEVA"
+
+msgid "Discount not valid"
+msgstr "SLEVA NENI PLATNA"
+
+msgid "Discounts"
+msgstr "SLEVY"
+
+msgid "distance"
+msgstr "VZDALENOST"
+
+msgid "District"
+msgstr "MESTO"
+
+msgid "Edit"
+msgstr "UPRAV"
+
+msgid "End address"
+msgstr "ADRESA PRIJEZDU"
+
+msgid "Enlarge the map"
+msgstr "ZVETSI MAPOU"
+
+msgid "Enquiries"
+msgstr "POZADAVKY"
+
+msgid "Error"
+msgstr "CHYBA"
+
+msgid "Estimate"
+msgstr "UDELEJ ODHAD"
+
+msgid "Feepaying services"
+msgstr "SLUZBY ZA PRIPALTEK"
+
+msgid "Fields manager"
+msgstr "FIELDS MANAGER"
+
+msgid "File"
+msgstr "SOUBOR"
+
+msgid "File categories"
+msgstr "KATEGORIE SOUBORU"
+
+msgid "File data"
+msgstr "UDAJE SOUBORU"
+
+msgid "File manager"
+msgstr "FILE MANAGER"
+
+msgid "File size"
+msgstr "VELIKOST PRILOHY"
+
+msgid "Filename"
+msgstr "NAZEV SOUBORU"
+
+msgid "Files"
+msgstr "SOUBORY"
+
+msgid "Files list"
+msgstr "SEZNAM SOUBORU"
+
+msgid "Finish publishing"
+msgstr "KONEC PUBLIKOVANI"
+
+msgid "Forward"
+msgstr "DALE"
+
+msgid "found"
+msgstr "NALEZEN"
+
+msgid "founds"
+msgstr "NALEZEN"
+
+msgid "Free services"
+msgstr "SLUZBY ZDARMA"
+
+msgid "from airport"
+msgstr "Z LETISTE"
+
+msgid "From date"
+msgstr "OD"
+
+msgid "From here"
+msgstr "ODSUD"
+
+msgid "from nearest centre"
+msgstr "Z NEJBLIZSIHO CENTRA"
+
+msgid "from Portoferraio harbour"
+msgstr "Z PRISTAVU Portoferraio"
+
+msgid "from sea"
+msgstr "from sea"
+
+msgid "Full text"
+msgstr "PLNE ZNENI TEXTU"
+
+msgid "Fullname"
+msgstr "CELE JMENO"
+
+msgid "Gallery categories"
+msgstr "Gallery categories"
+
+msgid "Gallery manager"
+msgstr "Gallery manager"
+
+msgid "General"
+msgstr "General"
+
+msgid "General conditions"
+msgstr "OBECNI PODMINKY"
+
+msgid "General data"
+msgstr "OBECNE INFORMACE"
+
+msgid "Get directions"
+msgstr "ZISKEJ CESTNI UKAZOVATELE"
+
+msgid "Get route"
+msgstr "PREPOCITEJ TRASU"
+
+msgid "Go back"
+msgstr "VRAT SE"
+
+msgid "Header"
+msgstr "HEADER"
+
+msgid "Headers"
+msgstr "HEADERS"
+
+msgid "Home page"
+msgstr "HOME PAGE"
+
+msgid "Hotels and apartments"
+msgstr "HOTELY A APARTMANY"
+
+msgid "Images"
+msgstr "OBRAZKY"
+
+msgid "Images list"
+msgstr "SEZNAM OBRAZKU"
+
+msgid "in"
+msgstr "NA"
+
+msgid "In the neighbourhood"
+msgstr "POBLIZ"
+
+msgid "Infants"
+msgstr "NOVOROZENCI"
+
+msgid "Info request"
+msgstr "POZADAVEK O INFORMACE"
+
+msgid "Info type"
+msgstr ""
+"KATEGORIE RESIDENCE/ APPARTAMENTI ZAHRNUJE NASLEDOVNE TYPY UBYTOVANI: "
+"AGROTURISTIKA,APARTMANY, C.A.V., KEMPINGY, R.T.A, REZIDENCE"
+
+msgid "Invalid dates!"
+msgstr "NEPLATNE UDAJE"
+
+msgid "Language"
+msgstr "JAZYK"
+
+msgid "Legend"
+msgstr "VYSVETLIVKY"
+
+msgid "Less info"
+msgstr "MENE INFORMACI"
+
+msgid "Less photos"
+msgstr "MENE FOTOGRAFII"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Link to"
+msgstr "Link to"
+
+msgid "List"
+msgstr "SEZNAM"
+
+msgid "Make an estimate"
+msgstr "ODHADNI CENU"
+
+msgid "Manual"
+msgstr "MANUAL"
+
+msgid "Map"
+msgstr "MAP"
+
+msgid "Message"
+msgstr "ZPRAVA"
+
+msgid "Methods of payment"
+msgstr "METODY PLATBY"
+
+msgid "Minimum stay"
+msgstr "MINIMALNI POBYT"
+
+msgid "Minimum stay not valid"
+msgstr "NEPLATNY MINIMALNI POBYT"
+
+msgid "Month"
+msgstr "MESIC"
+
+msgid "More photos"
+msgstr "VICE FOTOGRAFII"
+
+msgid "Most visited"
+msgstr "Most visited"
+
+msgid "Multirate"
+msgstr "MULTICENIK"
+
+msgid "N. rooms"
+msgstr "POCET POKOJU"
+
+msgid "Nationality"
+msgstr "NARODNOST"
+
+msgid "near to"
+msgstr "POBLIZ"
+
+msgid "New"
+msgstr "PRIDAT"
+
+msgid "New search"
+msgstr "NOVE VYHLEDAVANI"
+
+msgid "Next"
+msgstr "NASLEDUJICI"
+
+msgid "Next day"
+msgstr "NASLEDUJICI DEN"
+
+msgid "Next month"
+msgstr "NASLEDUJICI MESIC"
+
+msgid "Next year"
+msgstr "NASLEDUJICI ROK"
+
+msgid "None"
+msgstr "NIKDO"
+
+msgid "Norm"
+msgstr "Norm"
+
+msgid "Normal rate"
+msgstr "NORMALNI TARIFA"
+
+msgid "Not paid"
+msgstr "NEZAPLACENO"
+
+msgid "Nothing"
+msgstr "Nessuno"
+
+msgid "Num. persons"
+msgstr "POCET OSOB"
+
+msgid "Offer"
+msgstr "NABIDKA"
+
+msgid "Offer packages"
+msgstr "NABIDKOVE BALICKY"
+
+msgid "Offer info"
+msgstr "INFO O NABIDCE"
+
+msgid "Offers"
+msgstr "NABIDKY"
+
+msgid "On the map"
+msgstr "NA MAPE"
+
+msgid "Only board"
+msgstr "JENOM NOCLEH"
+
+msgid "Room Only"
+msgstr "JENOM NOCLEH"
+
+msgid "Only with online availability"
+msgstr "JENOM S ONLINE DOSTUPNOSTI"
+
+msgid "Only online availability"
+msgstr "Only online availability"
+
+msgid "Opened date"
+msgstr "DATUM OTEVRENI"
+
+msgid "Opening date"
+msgstr "DATUM OTEVRENI"
+
+msgid "Operation completed"
+msgstr "Operation completed"
+
+msgid "Ordering"
+msgstr "OBJEDNANI"
+
+msgid "Other"
+msgstr "JINE"
+
+msgid "Other typologies"
+msgstr "JINE TYPOLOGIE"
+
+msgid "Other solutions"
+msgstr "JINA RESENI"
+
+msgid "Other offers"
+msgstr "JINE NABIDKY"
+
+msgid "Paid"
+msgstr "ZAPLACENO"
+
+msgid "Pax/night"
+msgstr "OSABA NA NOC"
+
+msgid "Pax/week"
+msgstr "OSOBA NA TYDEN"
+
+msgid "pending confirm"
+msgstr "POTVRZENI VE FAZE CEKANI"
+
+msgid "pending cancel"
+msgstr "ZRUSENI VE FAZE CEKANI"
+
+msgid "pending modify"
+msgstr "ZMENA VE FAZE CEKANI"
+
+msgid "Period"
+msgstr "OBDOBI"
+
+msgid "Person per night"
+msgstr "OSOBA NA DEN"
+
+msgid "Person per week"
+msgstr "OSOBA NA TYDEN"
+
+msgid "Person"
+msgstr "OSOBA"
+
+msgid "Personal information"
+msgstr "OSOBNI UDAJE"
+
+msgid "Persons"
+msgstr "OSOBY"
+
+msgid "Persons per room"
+msgstr "Persons per room"
+
+msgid "Pincode"
+msgstr "PIN KOD"
+
+msgid "Place"
+msgstr "LOKALITA"
+
+msgid "Popularity"
+msgstr "POPULARNOST"
+
+msgid "Previous"
+msgstr "PREDSLY"
+
+msgid "Properties"
+msgstr "Properties"
+
+msgid "Published"
+msgstr "PUBLIKOVAL"
+
+msgid "Publishing"
+msgstr "PUBLIKOVANI"
+
+msgid "Qty"
+msgstr "Qty"
+
+msgid "Rapid search"
+msgstr "RYCHLE VYHLEDAVANI"
+
+msgid "Rapid search hotels and lodgings"
+msgstr "Rapid search hotels and lodgings"
+
+msgid "Read More"
+msgstr "PRECTI SI VSECHNO"
+
+msgid "Reductions - Supplements"
+msgstr "SLEVY - PRIPLATKY"
+
+msgid "Refine the search"
+msgstr "Refine the search"
+
+msgid "Requests"
+msgstr "POZADAVKY"
+
+msgid "Reservations"
+msgstr "REZERVACE"
+
+msgid "Resort"
+msgstr "UMISTENI"
+
+msgid "Return"
+msgstr "NAVRAT"
+
+msgid "Roads distance"
+msgstr "CESTNI VZDALENOSTI"
+
+msgid "room"
+msgstr "POKOJ"
+
+msgid "rooms"
+msgstr "POKOJE"
+
+msgid "SecureDataTransferSSL"
+msgstr ""
+"VASE OSOBNI UDAJE BUDOU ZPRACOVANE S MAXIMALNI DISKRETNOSTI KRYPTOGRAFICKYM "
+"PROTOKOLEM SS"
+
+msgid "Security code"
+msgstr "BEZPECNOSTNI KOD"
+
+msgid "Services"
+msgstr "SLUZBY"
+
+msgid "Show conditions"
+msgstr "ZOBRAZ PODMINKY"
+
+msgid "Show map"
+msgstr "UKAZ MAPU"
+
+msgid "Show on homepage"
+msgstr "ZOBRAZ NA HLAVNI STRANCE"
+
+msgid "Site manager"
+msgstr "SPRAVA WEBOVYCH STRANEK"
+
+msgid "Site name"
+msgstr "NAZEV WEBOVYCH STRANEK"
+
+msgid "Site selected"
+msgstr "VYBRANE WEBOVE STRANKY"
+
+msgid "Special Offers"
+msgstr "SPECIALNI NABIDKY"
+
+msgid "Special offers"
+msgstr "SPECIALNI NABIDKY"
+
+msgid "Star"
+msgstr "HVEZDICKA"
+
+msgid "Stars"
+msgstr "HVEZDICKY"
+
+msgid "Start address"
+msgstr "ADRESA MISTA ODJEZDU"
+
+msgid "Start publishing"
+msgstr "ZACATEK PUBLIKOVANI"
+
+msgid "State"
+msgstr "STAT"
+
+msgid "Status"
+msgstr "STATUS"
+
+msgid "Stay"
+msgstr "POBYT"
+
+msgid "Subcategories"
+msgstr "PODKATEGORIE"
+
+msgid "Subdir"
+msgstr "PODARESAR"
+
+msgid "Subject"
+msgstr "PREDMET"
+
+msgid "Submit"
+msgstr "ODESLI"
+
+msgid "Summary"
+msgstr "SUMARIZACE"
+
+msgid "Surroundings"
+msgstr "Surroundings"
+
+msgid "The fields marked in red are required"
+msgstr "POLE OZNACENA CERVENOU JSOU POVINNA"
+
+msgid "Thumbnail"
+msgstr "MINIATURA"
+
+msgid "Thumbnails"
+msgstr "MINIATURY"
+
+msgid "Tipology"
+msgstr "TYPOLOGIE"
+
+msgid "Title"
+msgstr "TITULEK"
+
+msgid "To date"
+msgstr "NA"
+
+msgid "To here"
+msgstr "SEM"
+
+msgid "Total"
+msgstr "CELKOVY"
+
+msgid "Transaction"
+msgstr "TRANSAKCE"
+
+msgid "Typology"
+msgstr "Tipologia"
+
+msgid "Upload"
+msgstr "UPLOAD"
+
+msgid "URL name"
+msgstr "URL NAME"
+
+msgid "Warning"
+msgstr "POZOR"
+
+msgid "Weather/Sea"
+msgstr "POCASI/ MORE"
+
+msgid "Weather"
+msgstr "POCASI"
+
+msgid "Welcome"
+msgstr "VITEJTE"
+
+msgid "Transaction list"
+msgstr "SEZNAM TRANSAKCI"
+
+msgid "Open all year round"
+msgstr "OTEVRENO CELY ROK"
+
+msgid "All Inclusive"
+msgstr "ALL INCLUSIVE"
+
+msgid "Hotel"
+msgstr "HOTEL"
+
+msgid "Please be patient"
+msgstr "PROSIM CEKEJTE"
+
+msgid "Go on"
+msgstr "POKRACUJ"
+
+msgid "You can find more hotels by changing your search criteria"
+msgstr "MUZES NAJIT JINE HOTELY KDZYZ ROZSIRIS  KRITERIA VYHLEDAVANI"
+
+msgid "Wrong reservation data"
+msgstr "CHYBNE REZERVACNI UDAJE"
+
+msgid "with online availability"
+msgstr "S ONLINE DOSTUPNOSTI"
+
+msgid "Where to stay"
+msgstr "Where to stay"
+
+msgid "Descending distance"
+msgstr "Sestupně vzdálenost"
+
+msgid "Ascending distance"
+msgstr "Vzestupně vzdálenost"
+
+msgid "Descending category"
+msgstr "Sestupně kategorii"
+
+msgid "Ascending category"
+msgstr "Vzestupně kategorii"
+
+msgid "Descending price"
+msgstr "Klesající ceny"
+
+msgid "Ascending price"
+msgstr "Stoupající ceny"
+
+msgid "Descending price "
+msgstr "Klesající ceny "
+
+msgid "Ascending price "
+msgstr "NStoupající ceny "
+
+msgid "Name Z-A"
+msgstr "Název Z-A"
+
+msgid "Name A-Z"
+msgstr "Název A-Z"
+
+msgid "Order by"
+msgstr "Seřadit podle"
+
+msgid "Quantity"
+msgstr "množství"
+
+msgid "Add options to your stay"
+msgstr "Přidat možností pobytu"
+
+msgid "Added accessories"
+msgstr "Přidáno příslušenství"
+
+msgid "Gift packages"
+msgstr "Dárkové balíčky"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "from2"
+msgstr "OD"
+
+msgid "Booking conditions"
+msgstr "Podmínky rezervace"
+
+msgid "Credit card guarantee"
+msgstr "Garance kreditní kartou"
+
+msgid ""
+"Your request has been successfully sent, you will soon receive a confirm"
+msgstr "Vaše žádost byla úspěšně odeslána, obdržíte zpětnou vazbu co nejdříve"
+
+msgid "Descending code"
+msgstr "Sestupně kód"
+
+msgid "Ascending code"
+msgstr "Vzestupně kód"
+
+msgid "Photo indicative sample"
+msgstr "Indikační foto"
+
+msgid "Shopping Bag"
+msgstr "Nákupní taška"
+
+msgid "Standard rate"
+msgstr "Normální ceny"
+
+msgid "alternative"
+msgstr "alternativní"
+
+msgid "Alternative check in date"
+msgstr "Řídký datum checkin"
+
+msgid "Alternative check out date"
+msgstr "Řídký datum Pokladna"
+
+msgid	"Adults - SHORT"
+msgstr	"Dospeli"

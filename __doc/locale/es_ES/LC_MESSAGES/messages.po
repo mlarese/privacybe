@@ -1,0 +1,2165 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ABS 2008\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2018-01-24 09:08+0100\n"
+"Last-Translator: Giuseppe\n"
+"Language-Team: ABS <andrea.davanzo@mm-one.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: es_ES\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid "See offer"
+msgstr "Consulte oferta"
+
+msgid "Access"
+msgstr "Accès"
+
+msgid "Accessories"
+msgstr "Servicios especiales"
+
+msgid "Account"
+msgstr "Anticipo"
+
+msgid "Account to pay"
+msgstr "Arrhes à payer"
+
+msgid "Add/remove"
+msgstr "Ajoutes/ôter DFSDF"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Address can not be empty"
+msgstr "El campo dirección no puede estar vacío"
+
+msgid "Adults"
+msgstr "Adultos"
+
+msgid "Age"
+msgstr "Edad"
+
+msgid "All days"
+msgstr "Tous les jours"
+
+msgid "Allotment manager"
+msgstr "Gestion attribution"
+
+msgid "Amount"
+msgstr "Importe"
+
+msgid "Amount paid"
+msgstr "Importe pagado"
+
+msgid "Amount to pay"
+msgstr "Importe a pagar"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Are you sure that you want to delete this elemet?"
+msgstr "Êtes-vous certain de vouloir éliminer cet élément?"
+
+msgid "Availability"
+msgstr "Disponibilidad"
+
+msgid "Availability not valid"
+msgstr "Disponibilidad no es válida"
+
+msgid "Available solutions"
+msgstr "Soluciones disponibles"
+
+msgid "Average price per night"
+msgstr "Precio medio por noche"
+
+msgid "Bank account holder"
+msgstr "Titular"
+
+msgid "Bank name"
+msgstr "Nombre banco"
+
+msgid "Bank transfer"
+msgstr "Transferencia bancaria"
+
+msgid "Bed"
+msgstr "Cama"
+
+msgid "Bed and breakfast"
+msgstr "Habitación y desayuno"
+
+msgid "Boarding"
+msgstr "Solution"
+
+msgid "Booking conditions"
+msgstr "Condiciones de reserva"
+
+msgid "Book now"
+msgstr "Reserva enseguida"
+
+msgid "Booking board"
+msgstr "Reserva confirmada"
+
+msgid "Booking complete"
+msgstr "Réservation complétée"
+
+msgid "Booking discounts manager"
+msgstr "Gestion réductions"
+
+msgid "Booking enquiry"
+msgstr "Demande de disponibilité"
+
+msgid "Booking manager"
+msgstr "Gestion réservation"
+
+msgid "Booking pricelist manager"
+msgstr "Reserva de precios gerente"
+
+msgid "Booking rates and conditions manager"
+msgstr "Tarifas y condiciones"
+
+msgid "CMS manager"
+msgstr "CMS gestor"
+
+msgid "CMS user fullname"
+msgstr "CMS usuario FullName"
+
+msgid "CMS user manager"
+msgstr "CMS Administrador de usuarios"
+
+msgid "CMS user type"
+msgstr "CMS tipo de usuario"
+
+msgid "CSS required"
+msgstr "CSS necesario"
+
+msgid "Calendar functions"
+msgstr "Calendario de funciones"
+
+msgid "Cancel"
+msgstr "CancelarAnnuler"
+
+msgid "Cancellation policy"
+msgstr "Política de anulación"
+
+msgid "Cancelled date"
+msgstr "Fecha de anulación"
+
+msgid "Card number must contain only digits and spaces"
+msgstr "El número de la tarjeta debe contener sólo números y espacios"
+
+msgid "Catalog manager"
+msgstr "Catálogo de administrador"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Category data"
+msgstr "Categoría de datos"
+
+msgid "Category list"
+msgstr "Categoría lista"
+
+msgid "Category manager"
+msgstr "Categoría gerente"
+
+msgid "Change period"
+msgstr "Cambio período"
+
+msgid "Check in date"
+msgstr "Fecha llegada"
+
+msgid "Check out date"
+msgstr "Fecha salida"
+
+msgid "Checkin/checkout day not allowed"
+msgstr "Día de salida/llegada no permitido"
+
+msgid "Checkin/out policy"
+msgstr "Entrada / Salida"
+
+msgid "Child"
+msgstr "Niños"
+
+msgid "Children"
+msgstr "Niños"
+
+msgid "Choose your accommodation"
+msgstr "Soluciones disponibles"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "City can not be empty"
+msgstr "El campo ciudad no puede estar vacío"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Close the popup"
+msgstr "Cerrar el popup"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Conditions"
+msgstr "Conditions"
+
+msgid "Confirm"
+msgstr "Confirmación"
+
+msgid "Confirmed date"
+msgstr "Confirmado fecha"
+
+msgid "Consent to privacy"
+msgstr "Consentimiento a la intimidad"
+
+msgid "Consent to use personal data"
+msgstr "Aceptación tratamiento de los datos de carácter personal"
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Created date"
+msgstr "Creado fecha"
+
+msgid "Credit card"
+msgstr "Tarjeta de crédito"
+
+msgid "Credit card data"
+msgstr "Tarjeta de crédito"
+
+msgid "Credit card invalid. Please check number"
+msgstr "Tarjeta no válida. Por favor, compruebe el número"
+
+msgid "Customer area"
+msgstr "Area de clientes"
+
+msgid "Date not valid"
+msgstr "Fecha no válida"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Delete category"
+msgstr "Eliminar categoría"
+
+msgid "Delete product"
+msgstr "Eliminar producto"
+
+msgid "Deposit"
+msgstr "Depósito"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Detail"
+msgstr "Detalle"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Discount"
+msgstr "Descuento"
+
+msgid "Discount not valid"
+msgstr "Descuento no válido"
+
+msgid "Discounts"
+msgstr "Promociones"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Email can not be empty"
+msgstr "El campo email no puede estar vacío"
+
+msgid "Email is not the same"
+msgstr "Las direcciones de correo electrónico no coinciden"
+
+msgid "Enquiry data"
+msgstr "Fecha solicitud"
+
+msgid "Enquiry date"
+msgstr "Fecha solicitud"
+
+msgid "Enquiry delivered"
+msgstr "Solicitud enviada"
+
+msgid "Enquiry request delivery successfully"
+msgstr "Solicitud disponibilidad enviada con éxito"
+
+msgid "Enter"
+msgstr "Entrer"
+
+msgid "Expires"
+msgstr "Fecha de caducidad"
+
+msgid "Expiry date"
+msgstr "Fecha de caducidad"
+
+msgid "Expiry date date is invalid"
+msgstr "Fecha de caducidad de la tarjeta no válida"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Fields manager"
+msgstr "Campos administrador"
+
+msgid "File"
+msgstr "Archivo"
+
+msgid "File categories"
+msgstr "Archivo categorías"
+
+msgid "File data"
+msgstr "Archivo de datos"
+
+msgid "File manager"
+msgstr "Gestor de archivos"
+
+msgid "File size"
+msgstr "Tamaño del archivo"
+
+msgid "Filename"
+msgstr "Nombre de archivo"
+
+msgid "Files"
+msgstr "Archivos"
+
+msgid "Files list"
+msgstr "Archivos de la lista"
+
+msgid "Finish publishing"
+msgstr "Finalizar la publicación"
+
+msgid "From date"
+msgstr "A partir de la fecha"
+
+msgid "From date less than current date"
+msgstr "La fecha de salida es antecedente a la fecha de hoy"
+
+msgid "From date less to date"
+msgstr "La fecha de salida es antecedente o igual a la fecha de llegada"
+
+msgid "Full board"
+msgstr "Pensión completa"
+
+msgid "Full text"
+msgstr "Texto completo"
+
+msgid "Fullname"
+msgstr "Nombre completo"
+
+msgid "Gallery categories"
+msgstr "Galería de categorías"
+
+msgid "Gallery manager"
+msgstr "Galería de administrador"
+
+msgid "Guest data"
+msgstr "Huéspedes datos"
+
+msgid "Guests"
+msgstr "Los huéspedes"
+
+msgid "Guests and rooms"
+msgstr "Habitaciones y Huéspedes"
+
+msgid "Half board"
+msgstr "Media pensión"
+
+msgid "Header"
+msgstr "Encabezado"
+
+msgid "Headers"
+msgstr "Encabezados"
+
+msgid "Holder"
+msgstr "Titular"
+
+msgid "Home page"
+msgstr "Página de inicio"
+
+msgid "I Subscribe for the newsletter in"
+msgstr "Regístrame en el boletín de información en"
+
+msgid "I agree to the personal data's treatment policy"
+msgstr "Aceptación tratamiento de los datos de carácter personal"
+
+msgid "I have read and agreed with the terms and conditions"
+msgstr "He leído y acepto los términos y las condiciones"
+
+msgid "Image categories"
+msgstr "Imagen categorías"
+
+msgid "Image data"
+msgstr "Los datos de la imagen"
+
+msgid "Image manager"
+msgstr "Administrador de Imágenes"
+
+msgid "Image not available"
+msgstr "Imagen no disponible"
+
+msgid "Image sheet"
+msgstr "Imagen hoja"
+
+msgid "Images"
+msgstr "Imagen"
+
+msgid "Images list"
+msgstr "Imágenes lista"
+
+msgid "Impossible to delete a mandatory element"
+msgstr "Imposible eliminar un elemento obligatorio"
+
+msgid "Insert"
+msgstr "Insertar"
+
+msgid "Insert children's age if present"
+msgstr "Insertar la edad de los niños si está presente"
+
+msgid "Insert your data"
+msgstr "Inserte sus datos"
+
+msgid "Insufficient number of nights"
+msgstr "Número de noches insuficiente"
+
+msgid "Intro text"
+msgstr "Introducción de texto"
+
+msgid "Item"
+msgstr "Artículo"
+
+msgid "Keys/desc"
+msgstr "Teclas y desc"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Last login date"
+msgstr "Fecha de la última"
+
+msgid "Last modified"
+msgstr "Última modificación"
+
+msgid "Link"
+msgstr "Enlace"
+
+msgid "Link to"
+msgstr "Enlace a"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "MM/YY"
+msgstr "MM/AA"
+
+msgid "MObile"
+msgstr "Móvil"
+
+msgid "Make resize"
+msgstr "Redimensionar"
+
+msgid "Mandatary Field"
+msgstr "Campo obligatorio"
+
+msgid "Mandatary Fields"
+msgstr "Campos obligatorios"
+
+msgid "Mandatary fields"
+msgstr "Campos obligatorios"
+
+msgid "Menu item name"
+msgstr "Nombre del elemento de menú"
+
+msgid "Menu items"
+msgstr "Elementos de menú"
+
+msgid "Menu manager"
+msgstr "Menú administrador"
+
+msgid "Menu type"
+msgstr "Menú tipo"
+
+msgid "Menu type name"
+msgstr "Menú tipo nombre"
+
+msgid "Meta description"
+msgstr "Meta descripción"
+
+msgid "Meta keywords"
+msgstr "Meta palabras clave"
+
+msgid "Method"
+msgstr "Método"
+
+msgid "Minimum stay"
+msgstr "Estancia mínima"
+
+msgid "Minimum stay not valid"
+msgstr "Estancia mínima no es válida"
+
+msgid "Mobile"
+msgstr "Móvil"
+
+msgid "Modify"
+msgstr "Modificar"
+
+msgid "Modify category"
+msgstr "Modificar la categoría"
+
+msgid "Modify product"
+msgstr "Modificar producto"
+
+msgid "Modules"
+msgstr "Módulos"
+
+msgid "Month"
+msgstr "Mes"
+
+msgid "Move"
+msgstr "Mover"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Name can not be empty"
+msgstr "El campo nombre no puede estar vacío"
+
+msgid "New"
+msgstr "Nuevo"
+
+msgid "New category"
+msgstr "Nueva categoría"
+
+msgid "New password"
+msgstr "Nueva contraseña"
+
+msgid "New product"
+msgstr "Nuevo producto"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Next day"
+msgstr "Al día siguiente"
+
+msgid "Next month"
+msgstr "El mes que viene"
+
+msgid "Next year"
+msgstr "El año que viene"
+
+msgid "No File"
+msgstr "No Archivo"
+
+msgid "No availability solution"
+msgstr "No disponibilidad de la solución"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Norm"
+msgstr "Norma"
+
+msgid "Normal rate"
+msgstr "Tarifa normal"
+
+msgid "Normal size"
+msgstr "Tamaño normal"
+
+msgid "Not paid"
+msgstr "No paided"
+
+msgid "Nothing"
+msgstr "Ninguno"
+
+msgid "Num. nights"
+msgstr "Num. noches"
+
+msgid "Num. persons"
+msgstr "N. personas"
+
+msgid "Num. rooms"
+msgstr "N. habitaciones"
+
+msgid "Num. %s"
+msgstr "N. %s"
+
+msgid "Insert your email address"
+msgstr "Introduzca su dirección de correo electrónico"
+
+msgid "N guests"
+msgstr "N huéspedes"
+
+msgid "Departure date"
+msgstr "fecha de salida"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Offer"
+msgstr "Oferta"
+
+msgid "Offer packages"
+msgstr "Paquetes de ofertas"
+
+msgid "Only board"
+msgstr "Sólo alojamiento"
+
+msgid "Room Only"
+msgstr "Sólo alojamiento"
+
+msgid "Opened date"
+msgstr "Fecha apertura"
+
+msgid "Opening date"
+msgstr "Fechas de apertura"
+
+msgid "Operation cancelled"
+msgstr "Operación cancelada"
+
+msgid "Operation completed"
+msgstr "Operación terminado"
+
+msgid "Ordering"
+msgstr "Pedidos"
+
+msgid "Other"
+msgstr "OtroAutre"
+
+msgid "Override created date"
+msgstr "Anular fecha de creación"
+
+msgid "Page manager"
+msgstr "Administrador de la página"
+
+msgid "Paid"
+msgstr "Pagado"
+
+msgid "Panel language"
+msgstr "Grupo de idiomas"
+
+msgid "Parent category"
+msgstr "Padres categoría"
+
+msgid "Parent item"
+msgstr "Padres tema"
+
+msgid "Paste"
+msgstr "Pegar"
+
+msgid "Pay with credit card"
+msgstr "Pago con tarjeta de crédito"
+
+msgid "Pay with money transfer"
+msgstr "Pagar con transferencia de dinero"
+
+msgid "Payment"
+msgstr "Pago"
+
+msgid "Person per night"
+msgstr "Persona por noche"
+
+msgid "Person per week"
+msgstr "Persona por semana"
+
+msgid "Persons per room"
+msgstr "Personas por habitación"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Phone can not be empty"
+msgstr "Teléfono no puede estar vacío"
+
+msgid "Please check your card details"
+msgstr "Compruebe los datos de su tarjeta"
+
+msgid "Please check your card number digits"
+msgstr "Compruebe su número de tarjeta de dígitos"
+
+msgid "Please select a day"
+msgstr "Seleccione un día"
+
+msgid "Please select an item from the list"
+msgstr "Sélectionner au moins un élément de la liste"
+
+msgid "Please select number of children"
+msgstr "Introducir el número de niños"
+
+msgid "Please set chilldren's age"
+msgstr "Introducir la edad de los niños"
+
+msgid "Prev"
+msgstr "Ant"
+
+msgid "Prev month"
+msgstr "Mes ant"
+
+msgid "Prev year"
+msgstr "Año ant"
+
+msgid "Prev. day"
+msgstr "Día ant"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Discounted price"
+msgstr "Precio con descuento"
+
+msgid "Price not valid"
+msgstr "Precio no válido"
+
+msgid "Pricelist"
+msgstr "Lista de precios"
+
+msgid "Prices"
+msgstr "Precios"
+
+msgid "Print"
+msgstr "Imprimer"
+
+msgid "Product"
+msgstr "Producto"
+
+msgid "Products List"
+msgstr "Listado de Productos"
+
+msgid "Products manager"
+msgstr "Productos gerente"
+
+msgid "Properties"
+msgstr "Propiedades"
+
+msgid "Publish state"
+msgstr "Publicar estado"
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "Publishing"
+msgstr "Editorial"
+
+msgid "Qty"
+msgstr "Cant"
+
+msgid "ROOT"
+msgstr "Principal"
+
+msgid "Rates and conditions"
+msgstr "Tarifas y condiciones"
+
+msgid "Read More"
+msgstr "Más información…"
+
+msgid "Repeat e-mail"
+msgstr "Repita e-mail"
+
+msgid "Reservation ID"
+msgstr "Reserva ID"
+
+msgid "Reservation confirmed"
+msgstr "Reserva confirmada"
+
+msgid "Reservation data"
+msgstr "Datos estancia"
+
+msgid "Reservation detail"
+msgstr "Detalle reserva"
+
+msgid "Reservation policy"
+msgstr "Política de reserva"
+
+msgid "Reservation request inserted successfully"
+msgstr "Solicitud de reserva insertarse con éxito"
+
+msgid "Reservation status"
+msgstr "Estado de la reserva"
+
+msgid "Reservations manager"
+msgstr "Administrador de las reservas"
+
+msgid "Reserve now!"
+msgstr "Reserve ahora!"
+
+msgid "Room"
+msgstr "Habitación"
+
+msgid "Room > numpax"
+msgstr "Número de habitaciones superior al número de personas"
+
+msgid "Room Price"
+msgstr "Precio habitación"
+
+msgid "Room Total"
+msgstr "Total habitación"
+
+msgid "%s Total"
+msgstr "Total %s"
+
+msgid "Room code"
+msgstr "Código habitación"
+
+msgid "Room description"
+msgstr "Descripción habitación"
+
+msgid "Room number"
+msgstr "Nombre chambre"
+
+msgid "Room type"
+msgstr "Tipo de habitación"
+
+msgid "Room type and board"
+msgstr "Tipo de habitación y pensión"
+
+msgid "Room/App. per night"
+msgstr "Habitación o apartamento por noche"
+
+msgid "Room/App. per week"
+msgstr "Habitación o apartamento por semana"
+
+msgid "Rooms"
+msgstr "Habitaciones"
+
+msgid "Rooms manager"
+msgstr "Habitaciones gerente"
+
+msgid "Rooms summary"
+msgstr "Resumen habitaciones"
+
+msgid "S.C."
+msgstr "S.C."
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Search another option"
+msgstr ""
+"Ver  periodos alternativos, haga clic en la tabla de al lado para fechas "
+"alternativas."
+
+msgid "Section manager"
+msgstr "Gerente de sección"
+
+msgid "Security code"
+msgstr "Código de seguridad"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Select all"
+msgstr "Seleccionar todos"
+
+msgid "Selected days"
+msgstr "Ciertos días"
+
+msgid "Selection completed"
+msgstr "Selección terminado"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Show on homepage"
+msgstr "Mostrar en la página principal"
+
+msgid "Site manager"
+msgstr "Gerente del sitio"
+
+msgid "Site name"
+msgstr "Nombre del sitio"
+
+msgid "Site selected"
+msgstr "Sitio seleccionado"
+
+msgid "Special rate"
+msgstr "Tarifa especial"
+
+msgid "Start publishing"
+msgstr "Empezar a publicar"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Subcategories"
+msgstr "Subcategoría"
+
+msgid "Subdir"
+msgstr "Subdir"
+
+msgid "Supplements and Reductions"
+msgstr "Suppléments et réductions"
+
+msgid "Supplements and reductions"
+msgstr "Suplementos y reducciones"
+
+msgid "Surname"
+msgstr "Apellidos"
+
+msgid "Surname can not be empty"
+msgstr "El campo apellidos no puede estar vacío"
+
+msgid "Telephone"
+msgstr "Teléfono"
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Template manager"
+msgstr "Plantilla de administrador"
+
+msgid "Template manager (pages)"
+msgstr "Plantilla de administrador (páginas)"
+
+msgid "Template manager (sections)"
+msgstr "Plantilla de administrador (secciones)"
+
+msgid "Template manager (sites)"
+msgstr "Plantilla de administrador (sitios)"
+
+msgid "Thanks for choosing our hotel"
+msgstr "Gracias por elegir nuestro hotel"
+
+msgid "The email must be in the name@domain format."
+msgstr "El correo electrónico debe estar en el nombre @ dominio formato."
+
+msgid "The expiry date is not a valid date in the format MM/YY"
+msgstr "La fecha de caducidad no es una fecha válida en el formato MM / AA"
+
+msgid "The month is invalid"
+msgstr "El mes no es válido"
+
+msgid ""
+"The phone field must be 8 digits in length,with an optional 2 or 3 digit "
+"area code"
+msgstr ""
+"El campo de teléfono deben ser 8 dígitos de longitud, con un opcional de 2 ó "
+"3 dígitos código de área"
+
+msgid "The zipcode must be 4 or 5 digits in length"
+msgstr "El código postal debe ser de 4 o 5 dígitos de longitud"
+
+msgid "There are no available accommodations"
+msgstr "Ninguna solución disponible"
+
+msgid "Thumb"
+msgstr "Mini"
+
+msgid "Thumb size"
+msgstr "El tamaño de las miniaturas"
+
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgid "Thumbnails"
+msgstr "Miniaturas"
+
+msgid "Tipology"
+msgstr "Tipología"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "To date"
+msgstr "Hasta la fecha"
+
+msgid "Total price"
+msgstr "Precio total"
+
+msgid "Total room price"
+msgstr "Precio total de la habitación"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Type of credit card"
+msgstr "Tipo de tarjeta de crédito"
+
+msgid "URL name"
+msgstr "URL nombre"
+
+msgid "Unable to crate zoom image"
+msgstr "No se puede cajón de zoom de imagen"
+
+msgid "Unable to create directory"
+msgstr "No se puede crear el directorio"
+
+msgid "Unable to create the thumbnail"
+msgstr "No se puede crear la imagen en miniatura"
+
+msgid "Unable to resize the image"
+msgstr "No se puede cambiar el tamaño de la imagen"
+
+msgid "Unable to upload file"
+msgstr "No se puede cargar el archivo"
+
+msgid "Unknown payment type"
+msgstr "Tipo de pago desconocido"
+
+msgid "Upload"
+msgstr "Subir"
+
+msgid "Upload date"
+msgstr "Fecha de subida"
+
+msgid "Username"
+msgstr "Nombre"
+
+msgid "Verify"
+msgstr "Comprobación"
+
+msgid "Verify availability"
+msgstr "Comprobación disponibilidad y precios"
+
+msgid "Verify password"
+msgstr "Verificar contraseña"
+
+msgid "Webuser language"
+msgstr "Webuser idioma"
+
+msgid "Webuser manager"
+msgstr "Webuser gerente"
+
+msgid "Webuser type"
+msgstr "Webuser tipo"
+
+msgid "What is the security code?"
+msgstr "¿Qué es el código de seguridad?"
+
+msgid "Where is the security code?"
+msgstr "¿Dónde se encuentra?"
+
+msgid "You may only proceed if you accept the privacy policy"
+msgstr ""
+"Puede continuar sólo si acepta el tratamiento de los datos de carácter "
+"personal"
+
+msgid "You may only proceed if you accept the terms and conditions"
+msgstr "Puede continuar sólo si acepta los términos y las condiciones"
+
+msgid "You must select a payment method"
+msgstr "Escoja un método de pago"
+
+msgid "ZIP"
+msgstr "CP"
+
+msgid "Zoom"
+msgstr "Zoom"
+
+msgid "Zoom size"
+msgstr "Zoom tamaño"
+
+msgid "as it is written on the card"
+msgstr "como está escrito en la tarjeta"
+
+msgid "cancelled"
+msgstr "Annuléecancelado"
+
+msgid "click on an alternative arrival date"
+msgstr "Hacer clic en una fecha de llegada alternativa"
+
+msgid "confirmed"
+msgstr "Confirmado"
+
+msgid "eg. arrival time"
+msgstr "por ejemplo, indicar la hora de llegada"
+
+msgid "for minimum stays"
+msgstr "Para estancias de"
+
+msgid "nights"
+msgstr "noches"
+
+msgid "no spaces or dashes"
+msgstr "sin espacios ni guiones"
+
+msgid "opened"
+msgstr "abierto"
+
+msgid "save up to"
+msgstr "Salvar"
+
+msgid "sec_code_desc"
+msgstr ""
+"El código CVV, CVC o CID es una ulterior seguridad para prevenir el uso "
+"impropio de la tarjeta de crédito durante las transacciones vía Internet. En "
+"las tarjetas de crédito Mastercard, Visa y Diners Club está formado por los "
+"últimos tres números que aparecen en la parte trasera de la tarjeta encima "
+"de la banda de la firma. En la Tarjeta American Express está formado por los "
+"cuatro números que aparecen en la parte superior derecha sobre el número de "
+"la tarjeta."
+
+msgid "within"
+msgstr "dentro de"
+
+msgid "Payments"
+msgstr "Pagos"
+
+msgid "How to reach"
+msgstr "Cómo llegar"
+
+msgid "Payment request type"
+msgstr "Tipo de pago"
+
+msgid "Payment result"
+msgstr "Resultado"
+
+msgid "Terms and conditions"
+msgstr "Términos y condiciones"
+
+msgid "Total reservation"
+msgstr "Total estancia"
+
+msgid "Total account"
+msgstr "Total anticipo"
+
+msgid "Total to settle"
+msgstr "Total a pagar"
+
+msgid "To pay"
+msgstr "Para pagar"
+
+msgid "Reversal"
+msgstr "Reversión"
+
+msgid "Payment ok"
+msgstr "Pago ok"
+
+msgid "Payment failed"
+msgstr "El pago no"
+
+msgid "In payment"
+msgstr "En el pago"
+
+msgid "Credit card guarantee. Payment in hotel"
+msgstr "Tarjeta de crédito como garantía. Pago en el hotel"
+
+msgid "Allow reservation if available"
+msgstr "Permitir que si se dispone de reserva"
+
+msgid "Protocol"
+msgstr "Protocolo"
+
+msgid "Total reservation price"
+msgstr "Precio total de la reserva"
+
+msgid "Credit card accepted"
+msgstr "Aceptamos tarjeta de crédito"
+
+msgid "Subject"
+msgstr "Objeto  "
+
+msgid "Accepts"
+msgstr "Aceptar"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "No"
+msgstr "No"
+
+msgid "Structure"
+msgstr "Estructura"
+
+msgid "Waiting to be confirmed"
+msgstr "A la espera de ser confirmado"
+
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgid "Cancelled by the structure"
+msgstr "Cancelado por la estructura"
+
+msgid "Cancelled by the guest"
+msgstr "Cancelado por el huésped"
+
+msgid "Cancelled for NO-SHOW"
+msgstr "Cancelado para el NO-SHOW"
+
+msgid "Cancelled due to wrong CC data"
+msgstr "Cancelado debido a datos mal CC"
+
+msgid "Structure data"
+msgstr "Informaciones sobre la estructura"
+
+msgid "Reservation inserted"
+msgstr "Reserva insertadoinserita"
+
+msgid "Request inserted"
+msgstr "Solicitud registrada"
+
+msgid "Authorization"
+msgstr "Autorización"
+
+msgid "Interested to"
+msgstr "Interesado en"
+
+msgid "Security code invalid"
+msgstr "Código de seguridad no válido"
+
+msgid "Payment methods"
+msgstr "Pago"
+
+#: ------------------ release 1.4.0
+msgid "cancellation"
+msgstr "cancelación"
+
+msgid "modification"
+msgstr "modificación"
+
+msgid "Cancelled by the administrator"
+msgstr "Cancelado por el administrador"
+
+msgid "Cancelled on guest request"
+msgstr "Cancelado en la solicitud guest"
+
+msgid "Request to be cancelled by guest"
+msgstr "Solicitud de ser cancelada por guest"
+
+msgid "Request to be modified by guest"
+msgstr "Solicitud de ser modificado por guest"
+
+msgid "Set to manual"
+msgstr "Ajuste manual"
+
+msgid "Set to reservation"
+msgstr "Ajuste a la reserva"
+
+msgid "pending confirm"
+msgstr "en espera de confirmar"
+
+msgid "pending cancel"
+msgstr "en espera de cancelar"
+
+msgid "pending modify"
+msgstr "pending modify"
+
+msgid "Automatic"
+msgstr "Automático "
+
+msgid "Manual"
+msgstr "Manual "
+
+msgid "Reservation"
+msgstr "Reserva"
+
+msgid "Request"
+msgstr "Solicitar"
+
+#: ------------------ release 1.4.0 RC 3
+msgid "Reservation sent"
+msgstr "Reserva enviada"
+
+msgid "Request sended"
+msgstr "Solicitud enviada"
+
+msgid "Select type and boarding desired"
+msgstr "Seleccionar la tipología y el tratamiento deseado"
+
+msgid "Select period and rooms"
+msgstr "Seleccionar periodo y habitaciones"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Send request"
+msgstr "Enviar solicitud"
+
+msgid "from"
+msgstr "desde"
+
+msgid "to"
+msgstr "hasta"
+
+msgid "alt_detail_guide"
+msgstr "haga clic aquí para ver y editar la nueva solución"
+
+msgid "Selected date"
+msgstr "Selección de fecha"
+
+msgid "Alternative date"
+msgstr "Fecha alternativa"
+
+msgid "Wait the confirmation of disponibility"
+msgstr "Atención! Espera la confirmación de disponibilidad"
+
+msgid "Transaction failed"
+msgstr "Transacción error"
+
+# ## release 1.4.0
+msgid "Star"
+msgstr "Estrella"
+
+msgid "Stars"
+msgstr "Estrellas"
+
+msgid "Structures"
+msgstr "Alojamientos"
+
+msgid "Pax/night"
+msgstr "Persona / noche"
+
+msgid "Pax/week"
+msgstr "Persona / semana"
+
+msgid "Room/night"
+msgstr "Habitación / noche"
+
+msgid "Room/week"
+msgstr "Habitación / semana"
+
+msgid "Book"
+msgstr "Reserva"
+
+msgid "found"
+msgstr "encontrado"
+
+msgid "founds"
+msgstr "encontrados"
+
+msgid "Order by"
+msgstr "Ordenar por"
+
+msgid "Search by name"
+msgstr "Búsqueda por nombre"
+
+msgid "Structure tipology"
+msgstr "Tipo de alojamiento"
+
+msgid "From"
+msgstr "Desde"
+
+msgid "To"
+msgstr "Hasta"
+
+msgid "Person"
+msgstr "Persona"
+
+msgid "Persons"
+msgstr "Personas"
+
+msgid "accomodations"
+msgstr "accomodations"
+
+msgid "Rapid search"
+msgstr "Búsqueda rápida"
+
+msgid "Hotels and apartments"
+msgstr "Hoteles y apartamentos"
+
+msgid "N. rooms"
+msgstr "N. habitaciones"
+
+msgid "N. persons"
+msgstr "N. personas"
+
+msgid "Search on the map"
+msgstr "Buscar en el mapa"
+
+msgid "Hotels near to"
+msgstr "Hoteles cerca de"
+
+msgid "Estimate"
+msgstr "Calcular estimaciones"
+
+msgid "Resort"
+msgstr "Ubicación"
+
+msgid "Typology"
+msgstr "Tipo"
+
+msgid "Enlarge the map"
+msgstr "Mapa más grande"
+
+msgid "Refine the search"
+msgstr "Refine su búsqueda"
+
+msgid "with online availability"
+msgstr "disponible"
+
+msgid "best price from"
+msgstr "mejor precio de"
+
+msgid "Book online"
+msgstr "Libro en línea"
+
+msgid "Offers"
+msgstr "Ofertas"
+
+msgid "Check availability"
+msgstr "Disponibilidad"
+
+msgid "Info request"
+msgstr "Solicitar info"
+
+msgid "General conditions"
+msgstr "Condiciones generales"
+
+msgid "In the neighbourhood"
+msgstr "En el barrio"
+
+msgid "Structure description"
+msgstr "Descripción estructura"
+
+msgid "Structure services"
+msgstr "Servicios"
+
+msgid "City nature"
+msgstr "ciudad-arte"
+
+msgid "Mountain nature"
+msgstr "montaña"
+
+msgid "Sea nature"
+msgstr "mar"
+
+msgid "Request availability"
+msgstr "Solicitud disponibilidad"
+
+msgid "Map"
+msgstr "Mapa"
+
+msgid "Room services"
+msgstr "Servicios de habitación"
+
+msgid "Booking request"
+msgstr "Solicitud de reserva"
+
+msgid "After login on customer area, you will be able to:"
+msgstr "Después de entrar en la zona de clientes, usted será capaz de:"
+
+msgid "Book with exclusive promotions:"
+msgstr "Libro con promociones exclusivas:"
+
+msgid "you can access to discounts and promotions reserved to you."
+msgstr "se puede acceder a descuentos y promociones reservadas para usted."
+
+msgid "Insert your feedbacks regarding Victoria Prestige:"
+msgstr "Introducir sus comentarios Victoria del Prestige.:"
+
+msgid "Insert your feedbacks regarding"
+msgstr "Introducir sus comentarios"
+
+msgid ""
+"you could fill a questionnaire to get your feedback regarding your stay."
+msgstr ""
+"usted podría llenar un cuestionario para obtener sus comentarios sobre su "
+"estancia."
+
+msgid "View your reservations:"
+msgstr "Ver todas tus reservas:"
+
+msgid "you could send a request to modify your reservations."
+msgstr "usted puede enviar una solicitud para modificar sus reservas."
+
+msgid "Send a message to Victoria Prestige to request the desired changes"
+msgstr ""
+"Enviar un mensaje a Victoria Prestige para solicitar los cambios deseados"
+
+msgid ""
+"Send a message to Apogia Sirio Venice Hotel to request the desired changes"
+msgstr ""
+"Enviar un mensaje a Apogia Sirio Venecia Hotel para solicitar los cambios "
+"deseados"
+
+msgid "Send a message to Apogia Paris Hotel to request the desired changes"
+msgstr ""
+"Enviar un mensaje a Apogia Paris Hotel para solicitar los cambios deseados"
+
+msgid "Send a message to Apogia Nice Hotel to request the desired changes"
+msgstr ""
+"Enviar un mensaje a Apogia Nice Hotel para solicitar los cambios deseados"
+
+msgid ""
+"If you have forgotten your password, insert you email address in the field "
+"below. Your new password will be sent to the registered email address."
+msgstr ""
+"Si usted ha olvidado su contraseña, introduzca su dirección de correo "
+"electrónico en el campo de abajo. Su nueva contraseña será enviada a la "
+"dirección de correo electrónico registrada."
+
+msgid "Your new password has been sent to the registered email address."
+msgstr ""
+"La nueva contraseña ha sido enviada a la dirección de correo electrónico "
+"registrada."
+
+msgid "Sorry, the email is not associated to any user."
+msgstr ""
+"Lo sentimos, el correo electrónico no está asociada a cualquier usuario."
+
+msgid "Apartments"
+msgstr "Apartamentos "
+
+msgid "Apartment"
+msgstr "Apartamento "
+
+msgid "Invalid dates!"
+msgstr "Invalid dates!"
+
+msgid "room available"
+msgstr "habitación disponible"
+
+msgid "available"
+msgstr "disponible"
+
+msgid "Booking Online"
+msgstr "Reservas Online"
+
+msgid "View map"
+msgstr "Ver mapa"
+
+msgid "More info"
+msgstr "Más información"
+
+msgid "room"
+msgstr "habitación"
+
+msgid "rooms"
+msgstr "habitaciones"
+
+msgid "Show all rooms"
+msgstr "Mostrar todas las habitaciones"
+
+msgid "Go on"
+msgstr "Seguir"
+
+msgid "Comfort"
+msgstr "Confort"
+
+msgid "Info Request"
+msgstr "Solicitud de información"
+
+msgid "Search only available"
+msgstr "Buscar sólo disponibles"
+
+msgid "Latest"
+msgstr "Últimas"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Update search"
+msgstr "Actualizar búsqueda"
+
+msgid "Proceed without logging in"
+msgstr "Continuar sin iniciar sesión"
+
+msgid "Reservation conditions"
+msgstr "Condiciones de reserva"
+
+msgid "All zones"
+msgstr "Todas las zonas"
+
+msgid "All typologies"
+msgstr "Todos los tipos"
+
+msgid "Children Age"
+msgstr "Edad de los niños"
+
+msgid "Children age"
+msgstr "Edad de los niños"
+
+msgid "We're processing your request"
+msgstr "Estamos procesando su solicitud"
+
+msgid "Please be patient"
+msgstr "Por favor, sea paciente"
+
+msgid "Sea"
+msgstr "Mar"
+
+msgid "Mountain and lakes"
+msgstr "Montaña y Lagos"
+
+msgid "Art cities"
+msgstr "Ciudades Artistícas"
+
+msgid "Contact us"
+msgstr "Contactos"
+
+msgid "Insert name"
+msgstr "Introducir el nombre"
+
+msgid "Solution"
+msgstr "Solucion"
+
+msgid "Checkin"
+msgstr "Entrada"
+
+msgid "Checkout"
+msgstr "Salida"
+
+msgid "Opinions about the hotel"
+msgstr "Opiniones sobre el hotel"
+
+msgid "How do you judge the hotel following these parameters?"
+msgstr "Cómo valora el hotel siguiendo estos parámetros?"
+
+msgid "Perfect"
+msgstr "Perfecto"
+
+msgid "Good"
+msgstr "Bueno"
+
+msgid "Sufficient"
+msgstr "Suficiente"
+
+msgid "Poor"
+msgstr "Pobre"
+
+msgid "How do you judge the hotel?"
+msgstr "Cómo valora el hotel?"
+
+msgid "Positive comment"
+msgstr "Comentarios positivos"
+
+msgid "Negative comment"
+msgstr "Comentario negativo"
+
+msgid "Submit"
+msgstr "Entregar"
+
+msgid "Already a guest?"
+msgstr "¿ Ya nuestro cliente?"
+
+msgid "Insert your Email and password"
+msgstr "Introduce tu e-mail y contraseña"
+
+msgid "Lost password"
+msgstr "Contraseña olvidada"
+
+msgid "Personal information"
+msgstr "La información personal"
+
+msgid "Privacy"
+msgstr "Privacidad"
+
+msgid "Guest type"
+msgstr "Tipo de usuario"
+
+msgid "Anonymous"
+msgstr "Anónimo"
+
+msgid "Show my name"
+msgstr "Mostrar mi nombre"
+
+msgid "Send your opinion"
+msgstr "Envía tu opinión"
+
+msgid "Thank you for your collaboration"
+msgstr "Gracias por su colaboración"
+
+msgid "alternative_case_1"
+msgstr "Lo sentimos pero para el periodo seleccionado estamos cerrados."
+
+msgid "alternative_case_2"
+msgstr ""
+"Lo sentimos pero no tenemos disponibilidad para las fechas y el número de "
+"personas que ha introducido."
+
+msgid "alternative_case_3"
+msgstr ""
+"Lo sentimos pero no tenemos disponibilidad en línea para las fechas y el "
+"número de personas que ha introducido."
+
+msgid "read more"
+msgstr "leer más"
+
+msgid "Rooms list"
+msgstr "Habitaciones lista"
+
+msgid "Last chance"
+msgstr "Última oportunidad"
+
+msgid "Reservations"
+msgstr "Reservas"
+
+msgid "Enquiries"
+msgstr "Investigaciones"
+
+msgid "rooms remain"
+msgstr "habitaciones permanecen"
+
+msgid "appartments remain"
+msgstr "apartamentos siguen siendo"
+
+msgid "see and select"
+msgstr "ver y seleccionar"
+
+msgid "Choose the giftcard's amount"
+msgstr "Elije el monto de la Tarjeta Regalo"
+
+msgid "Gift card amount"
+msgstr "Cantidad de la Tarjeta Regalo"
+
+msgid "Free amount"
+msgstr "Cantidad libre"
+
+msgid "insert the desired amount"
+msgstr "Inserte la cantidad deseada"
+
+msgid "Customize the gift card"
+msgstr "Personaliza la Tarjeta Regalo"
+
+msgid "Select the theme"
+msgstr "Selecciona el tema"
+
+msgid "Select a message"
+msgstr "Selecciona el mensaje"
+
+msgid "available characters"
+msgstr "caracteres disponibles"
+
+msgid "name"
+msgstr "Nombre"
+
+msgid "email"
+msgstr "Correo electrónico"
+
+msgid "Giftcard configuration"
+msgstr "Configuración de la Tarjeta Regalo"
+
+msgid "Complete the purchase"
+msgstr "Completar la compra"
+
+msgid "Check data"
+msgstr "Comprobar los datos"
+
+msgid "Vat"
+msgstr "C.I.F"
+
+msgid "I have read and agreed with"
+msgstr "He leído y estoy de acuerdo con"
+
+msgid "Usage terms"
+msgstr "Términos de uso"
+
+msgid "Giftcard purchase"
+msgstr "Compra de la Tarjeta Regalo"
+
+msgid "Operation successfully completed"
+msgstr "Operación realizada con éxito"
+
+msgid "email giftcard message"
+msgstr ""
+"El correo electrónico en el cual será enviado el vale. Verifica que los "
+"datos insertados son correctos."
+
+msgid "email giftcard message2"
+msgstr ""
+"El Bono compra será enviado solo en formato electrónico y vía correo "
+"electrónico"
+
+msgid "from giftcard message"
+msgstr "es: Mama"
+
+msgid "to giftcard message"
+msgstr "es: Mario o a mi querido sobrino"
+
+msgid "giftcard confirm message"
+msgstr ""
+"Pulsando el botón 'Confirmar' el pedido será registrado y se podrá proceder "
+"al pago seguro mediante el servidor del banco. Una vez completado el "
+"proceso, será enviado el 'Bono Vacaciones"
+
+msgid "Edit"
+msgstr "Modificar"
+
+msgid "Forward"
+msgstr "Reenviar"
+
+msgid "From2"
+msgstr "De"
+
+msgid "To2"
+msgstr "A"
+
+msgid "times"
+msgstr "veces"
+
+msgid "To send a request for information you can click here"
+msgstr "Para enviarnos una solicitud de información puede clicar aquí"
+
+msgid "Repeat E-mail"
+msgstr "Repita E-mail"
+
+msgid "Period not available"
+msgstr "Perido no disponible"
+
+msgid "Period available to click"
+msgstr "Periodo disponible para hacer clic"
+
+msgid "Deposit1"
+msgstr "Depósito"
+
+msgid "Total deposit"
+msgstr "Total de depósitos"
+
+msgid "To pay a part"
+msgstr "Servicios adicionales a petición (se paga en destino)"
+
+msgid "to pay a part"
+msgstr "servicios adicionales a petición (se paga en destino)"
+
+msgid "OLDaccount_notes %s"
+msgstr ""
+"The undersigned authorizes the administrator(s) of the credit card "
+"indicated, or of other card(s) in substitution of this, to debit to his/her "
+"account and to credit to %s the deposit and quittance amounts shown in the "
+"present booking."
+
+msgid "account_notes %s"
+msgstr ""
+"El abajo firmante autoriza el adeudo del importe indicado en dicha reserva "
+"en la tarjeta de crédito registrada."
+
+msgid "account_title"
+msgstr "Credit card charge authorization"
+
+msgid "of"
+msgstr "del"
+
+msgid ""
+"Your request has been successfully sent, you will soon receive a confirm"
+msgstr ""
+"Tu pedido ha sido enviado con éxito, recibirás información tan pronto como "
+"sea posible"
+
+msgid "logged_guest_info"
+msgstr "Utente registrato"
+
+msgid ""
+"It is compulsory to enter at least one room, the default services in the "
+"multilist details and the names in the respective languages."
+msgstr ""
+"Se requiere entrar al menos una habitación, un tratamiento por defecto en "
+"los detalles del multilistino y los nombres en los idiomas pertinentes."
+
+msgid "It is compulsory to enter the dates in the period details."
+msgstr "It is compulsory to enter the dates in the period details."
+
+msgid "I agree to the following %sconditions%s"
+msgstr ""
+"Acepto el tratamiento de datos personales como descrito en la %sinformación"
+"%s."
+
+msgid "I accept the %sreservation policy%s"
+msgstr "Acepto a %spolítica de reserva%s"
+
+msgid "Book your stay"
+msgstr "Reserva tu estancia"
+
+msgid "with Secure Mobile Booking One"
+msgstr "con Secure Mobile Booking One"
+
+msgid "at %s"
+msgstr "en %s"
+
+msgid "Select an arrival date"
+msgstr "Selecciona fecha de llegada"
+
+msgid "Login to your account"
+msgstr "Accede a tu cuenta"
+
+msgid "to book you stay"
+msgstr "para resevar a tu estancia"
+
+msgid "Insert your password"
+msgstr "Escribe tu contraseña"
+
+msgid "Forgotten password?"
+msgstr "Contraseña perdida"
+
+msgid "Confirm your stay"
+msgstr "Confirma la estancia"
+
+msgid "User data"
+msgstr "Datos Usuario"
+
+msgid "Expiration (MM/YY)"
+msgstr "Expiración (MM/AA)"
+
+msgid "Booked stay"
+msgstr "Estancia reservada"
+
+msgid "Your stay has been booked successfully!"
+msgstr "La tu Estancia ha sido reservada con éxito!"
+
+msgid ""
+"You will receive shortly a summary email with the confirmation of payment."
+msgstr "Luego, recibirás un e-mail de resumen con la confirmación del pago."
+
+msgid "Back to the site"
+msgstr "Vuelve a el sitio web"
+
+msgid "Extrabed"
+msgstr "Cama adicional"
+
+msgid "Selected period"
+msgstr "periodo seleccionado"
+
+msgid "Confirm accessories"
+msgstr "Confirmación de los servicios suplementarios"
+
+msgid "Single price"
+msgstr "Precio por unidad"
+
+msgid "Add accessory"
+msgstr "Añadir"
+
+msgid "Total accessories"
+msgstr "Total servicios especiales"
+
+msgid ""
+"To see the availability and prices please enter your check-in and check-out "
+"dates"
+msgstr ""
+"Para ver disponibilidad y precios, introduce las fechas de entrada y salida"
+
+msgid "View other periods"
+msgstr "Ver periodos alternativos"
+
+msgid "No information available"
+msgstr "No hay información disponible"
+
+msgid "Confirm the additions"
+msgstr "Confirma las adiciones"
+
+msgid "Descending distance"
+msgstr "Distancia Descendente"
+
+msgid "Ascending distance"
+msgstr "Distancia Ascendente"
+
+msgid "Descending category"
+msgstr "Categoría Descendente"
+
+msgid "Ascending category"
+msgstr "Categoría Ascendente"
+
+msgid "Shopping Bag"
+msgstr "Personaliza tus vacaciones: añade tus servicios"
+
+msgid "Total stay"
+msgstr "Precio total"
+
+msgid "Rate"
+msgstr "Precio"
+
+msgid "from2"
+msgstr "desde"
+
+msgid "Save %.0f%%"
+msgstr "Consigue %.0f%%"
+
+msgid "%d rooms available"
+msgstr "%d habitaciones disponibles"
+
+msgid "Room %d of %d"
+msgstr "Sala %d de %d"
+
+msgid "%s %d of %d"
+msgstr "%s %d de %d"
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Add options to your stay"
+msgstr "Añadir opciones para su estancia"
+
+msgid "Added accessories"
+msgstr "accesorios Añadido"
+
+msgid "Gift packages"
+msgstr "paquetes de Regalos"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "Standard rate"
+msgstr "La tarifa estándar"
+
+msgid "Base rate"
+msgstr "Tarif de base"
+
+msgid "Descending price"
+msgstr "Precio descendente"
+
+msgid "Ascending price"
+msgstr "Precio creciente"
+
+msgid "Descending price "
+msgstr "Precio descendente "
+
+msgid "Ascending price "
+msgstr "Precio creciente "
+
+msgid "Name Z-A"
+msgstr "Nombre de Z-A"
+
+msgid "Name A-Z"
+msgstr "Nombre de A-Z"
+
+msgid "Mostra tutte le camere"
+msgstr "Mostrar todas las habitaciones"
+
+msgid "Credit card guarantee"
+msgstr "Tarjeta de crédito guarante"
+
+msgid "Discount code"
+msgstr "Código de descuento"
+
+msgid "Insure your trip is recommended"
+msgstr "Te recomendamos asegurar tus vacaciones"
+
+msgid "No thanks"
+msgstr "No Gracias"
+
+msgid "All inclusive insurance"
+msgstr "Booking Protection Plus"
+
+msgid "Cancellation of stay"
+msgstr "Anulación estancia"
+
+msgid "24h support"
+msgstr "Asistencia 24H"
+
+msgid "medical expenses"
+msgstr "Gastos médicos"
+
+msgid "interruption of stay"
+msgstr "Interrupción de la estancia"
+
+msgid "refund of penalties"
+msgstr "Reembolso cantidad pagada"
+
+msgid "Insure"
+msgstr "Asegurar"
+
+msgid "from only"
+msgstr "con sólo"
+
+msgid "Add Insurance"
+msgstr "Agregar"
+
+msgid "Account/Deposit"
+msgstr "Adelanto/Señal"
+
+msgid "Full stay"
+msgstr "Toda la estancia"
+
+msgid "Terms & conditions"
+msgstr "Términos y Condiciones"
+
+msgid ""
+"nb The insurance policy payment is separate from the reservation process: "
+"Allianz will send an e-mail with all payment information (only by credit "
+"card)."
+msgstr ""
+"Nota: el pago de la póliza de seguros se lleva a cabo en modalidad separada: "
+"Allianz enviará un email con las informaciones necesarias para el pago (que "
+"se podrá efectuar sólo con tarjeta de crédito en un plazo de 24 horas)"
+
+msgid "Total Insurance price"
+msgstr "Total seguro"
+
+msgid "Proceed with the insurance payment"
+msgstr "Efectuar el pago de la Póliza"
+
+msgid "Customer %s:"
+msgstr "Cliente %s:"
+
+msgid "Adult, main contact"
+msgstr "Adultos, contacto principal"
+
+msgid "Prices from"
+msgstr "Precios desde"
+
+msgid ""
+"Select your arrival and leaving dates and check the availability by clicking "
+"the 'Book' button."
+msgstr ""
+"Consulte la disponibilidad y las tarifas seleccionando las fechas de tu "
+"estancia y clique en el botón 'Book'"
+
+msgid "cc_notes"
+msgstr ""
+"¡Ningún gasto de reserva! Tarjeta de crédito como garantía de la reserva. Se "
+"realizarán eventuales adeudos sólo si se solicita un depósito como "
+"confirmación o en caso de cancelación que no respete los plazos que aparecen "
+"en las condiciones y términos de reserva."
+
+msgid ""
+"Choose between the Insurances that Allianz Global Assistance has created for "
+"the tranquility of its travelers"
+msgstr ""
+"Seleccionar una de las pólizas che Allianz Global Assistance ha creado para "
+"darle tranquilidad"
+
+msgid "Insure your holiday"
+msgstr "Te recomendamos activar la PÓLIZA"
+
+msgid "Cancellation of stay and refund of penalties"
+msgstr "<ul><li>Cancellation of stay</li><li>Refund of penalties</li></ul>"
+
+msgid ""
+"Cancellation of stay, 24h support, medical expenses, interruption of stay, "
+"refund of penalties"
+msgstr ""
+"<ul><li>Cancellation of stay</li><li>24h support</li><li>Medical expenses</"
+"li><li>Interruption of stay</li><li>Refund of penalties</li></ul>"
+
+msgid ""
+"Remember that, in order to be activated, the insurance policy must be paid "
+"within 24hr only by credit card"
+msgstr ""
+"Recordamos que la póliza se tendrá que pagar en un plazo de 24 horas, y sólo "
+"con tarjeta de crédito, para que se active."
+
+msgid ""
+"You can pay now your insurance policy or follow the instructions provided by "
+"the email you will receive directly at your email address by Allianz"
+msgstr ""
+"Puede efectuar de inmediato el pago de la póliza o seguir las indicaciones "
+"del email que Allianz le enviará directamente"
+
+msgid "Adults - SHORT"
+msgstr "Adultos"
+
+msgid "Hurry up! The offer expires in"
+msgstr "¡Date prisa! La oferta termina en"
+
+msgid "short_days"
+msgstr "d"
+
+msgid "short_hours"
+msgstr "h"
+
+msgid "short_minutes"
+msgstr "m"
+
+msgid "short_seconds"
+msgstr "s"
+
+
+msgid "Choose %s and offers"
+msgstr "Elegir %s y ofertas"

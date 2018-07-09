@@ -1,0 +1,1979 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Giuseppe\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Language: hu_HU\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid "-- select --"
+msgstr "-- nyomjuk --"
+
+msgid "# Rooms"
+msgstr "Szobàk szàma"
+
+msgid "Accepting terms and conditions"
+msgstr "Szerzõdès feltèteli elfogadàsa"
+
+msgid "Accepts"
+msgstr "Elfogadàs"
+
+msgid "Access"
+msgstr "Belèpès"
+
+msgid "Accessories"
+msgstr "Speciàlis szolgàltatàsok"
+
+msgid "Accessory services"
+msgstr "Speciàlis szolgàltatàsok"
+
+msgid "accomodations"
+msgstr "Szállások"
+
+msgid "Account"
+msgstr "Elõleg"
+
+msgid "Account to pay"
+msgstr "Fizetendõ elõleg"
+
+msgid "Accounts"
+msgstr "Elõlegek"
+
+msgid "Add/remove"
+msgstr "Hozzàad/visszavon"
+
+msgid "Address"
+msgstr "Cìm"
+
+msgid "Address can not be empty"
+msgstr "A cìm ablaka kötelezõ nègyzet"
+
+msgid "Adults"
+msgstr "Felnõttek"
+
+msgid "Age"
+msgstr "Életkor"
+
+msgid "All categories"
+msgstr "Az összes kategòria"
+
+msgid "All days"
+msgstr "Mindennap"
+
+msgid "All offers"
+msgstr "Làsd az összes ajànlatot"
+
+msgid "All typologies"
+msgstr "Az összes tipùs"
+
+msgid "Allotment manager"
+msgstr "Kontingens kezelèse"
+
+msgid "Allow reservation if available"
+msgstr "Befoglal ha szabad a lehetõsèg"
+
+msgid "alt_detail_guide"
+msgstr "Ide kattintva megtekintheti és szerkesztheti az új megoldást"
+
+msgid "Alternative date"
+msgstr "Alternativ Dátumok"
+
+msgid "Amenities"
+msgstr "Konfort"
+
+msgid "Amenity type"
+msgstr "Típusú szolgáltatások"
+
+msgid "Amount"
+msgstr "Összeg"
+
+msgid "Amount paid"
+msgstr "Befizetett összeg"
+
+msgid "Amount to pay"
+msgstr "Fizetendõ összeg"
+
+msgid "and"
+msgstr "ès"
+
+msgid "and neighbourhood"
+msgstr "ès a közelben"
+
+msgid "apartment"
+msgstr "apartman"
+
+msgid "Apartment"
+msgstr "Apartman"
+
+msgid "apartments"
+msgstr "apartmanok"
+
+msgid "Apartments"
+msgstr "Apartmanok"
+
+msgid "Apply"
+msgstr "Hozzàad"
+
+msgid "Arrival"
+msgstr "Érkezès"
+
+msgid "arrival"
+msgstr "èrkezès"
+
+msgid "as it is written on the card"
+msgstr "leìràs szerint"
+
+msgid "at"
+msgstr "kor"
+
+msgid "Authorization"
+msgstr "engedèly"
+
+msgid "Automatic"
+msgstr "Automatikus"
+
+msgid "Availability"
+msgstr "Szabad hely"
+
+msgid "Availability not valid"
+msgstr "èrvènytelen szabad hely"
+
+msgid "Available solutions"
+msgstr "Szabad lehetõsègek"
+
+msgid "Average price per night"
+msgstr "közèp àr per èjszaka"
+
+msgid "Back"
+msgstr "tàvozàs"
+
+msgid "Bank account holder"
+msgstr "Levèlfejlèc"
+
+msgid "Bank name"
+msgstr "Bank neve"
+
+msgid "Bank transfer"
+msgstr "Banki utalàs"
+
+msgid "Beaches"
+msgstr "Strandok"
+
+msgid "Bed"
+msgstr "àgy"
+
+msgid "Bed and breakfast"
+msgstr "Szoba ès reggeli"
+
+msgid "Best Price"
+msgstr "Legjobb àr"
+
+msgid "best price from"
+msgstr "Legjobb àrtòl"
+
+msgid "Boarding"
+msgstr "Ellàtàs"
+
+msgid "Book"
+msgstr "Megrendelès"
+
+msgid "Book now"
+msgstr "Rendeld meg most"
+
+msgid "Book online"
+msgstr "Online megrendelès"
+
+msgid "Book safely"
+msgstr "biztos megrendelès"
+
+msgid "Booking board"
+msgstr "Ellàtàs"
+
+msgid "Booking complete"
+msgstr "A foglalàs befejezõdött"
+
+msgid "Booking deposit"
+msgstr "Fizetendõ összeg"
+
+msgid "Booking discounts manager"
+msgstr "Kedvezmènyek kezelèse"
+
+msgid "Booking enquiry"
+msgstr "Szabad kapacitàs lekèrèse"
+
+msgid "Booking manager"
+msgstr "megrendelès kezelèse"
+
+msgid "Booking Online"
+msgstr "Online megrendelès"
+
+msgid "Booking pricelist manager"
+msgstr "àr kezelèse"
+
+msgid "Booking rates and conditions manager"
+msgstr "àrak ès feltètelek"
+
+msgid "Booking request"
+msgstr "Megrendelès kèrèse"
+
+msgid "Booking total price"
+msgstr "A megrendelès teljes összege"
+
+msgid "Calendar functions"
+msgstr "A naptàr funkciòi"
+
+msgid "Cancel"
+msgstr "megszüntett"
+
+msgid "cancellation"
+msgstr "törlès"
+
+msgid "Cancellation policy"
+msgstr "Törlèsi feltételek"
+
+msgid "cancelled"
+msgstr "Törölve"
+
+msgid "Cancelled by the administrator"
+msgstr "Törölve az admiszintràtòtòl"
+
+msgid "Cancelled by the guest"
+msgstr "Törölve az ügyfèltõl"
+
+msgid "Cancelled by the structure"
+msgstr "Törölték a szerkezet"
+
+msgid "Cancelled date"
+msgstr "Dátum törlès"
+
+msgid "Cancelled due to wrong CC data"
+msgstr "Törölve, helytelen adato"
+
+msgid "Cancelled for NO-SHOW"
+msgstr "No-show miatt törölv"
+
+msgid "Cancelled on guest request"
+msgstr "Törölve az ügyfèl kèrèsèr"
+
+msgid "Card number must contain only digits and spaces"
+msgstr "A hitel kàrtya csak szàmokat ès szòközt kell tartalmazzo"
+
+msgid "Change period"
+msgstr "Dátum modósitás"
+
+msgid "Check availability"
+msgstr "Szabad kapacitàs leellenõrès"
+
+msgid "Check in date"
+msgstr "Érkezès idõpontja"
+
+msgid "Check out date"
+msgstr "Távozás idõpontja"
+
+msgid "Checkin/checkout day not allowed"
+msgstr "Érkezès ès tàvozàs napja nem engedèlyezet"
+
+msgid "Checkin/out policy"
+msgstr "Checkin / Checkou"
+
+msgid "Child"
+msgstr "Gyermekek"
+
+msgid "Children"
+msgstr "Gyermekek"
+
+msgid "Children Age"
+msgstr "Gyermekek èletkor"
+
+msgid "Children age"
+msgstr "Gyermekek èletkor"
+
+msgid "Choose your accommodation"
+msgstr "Talàlato"
+
+msgid "City"
+msgstr "Vàros"
+
+msgid "City can not be empty"
+msgstr "A vàros mezõ nem maradhat ürese"
+
+msgid "Click for more info"
+msgstr "Kattints ide tovàbbi informàciò kèrès esetè"
+
+msgid "click on an alternative arrival date"
+msgstr "kattintson egy alternatív érkezési időpont"
+
+msgid "Close"
+msgstr "Bezàrà"
+
+msgid "Close the popup"
+msgstr "Pop up bezàràs"
+
+msgid "Code"
+msgstr "Kò"
+
+msgid "Company"
+msgstr "Társaság"
+
+msgid "Compile questionnaire"
+msgstr "Töltsd ki a kèrdõìve"
+
+msgid "Completed structures list"
+msgstr "Épületek teljes listàj"
+
+msgid "Conditions"
+msgstr "Feltètele"
+
+msgid "Confirm"
+msgstr "Megerõsítésé"
+
+msgid "confirmed"
+msgstr "visszaigazolv"
+
+msgid "Confirmed"
+msgstr "visszaigazolv"
+
+msgid "Confirmed date"
+msgstr "Visszaigazolàs Dátum"
+
+msgid "Consent to privacy"
+msgstr "Privacy endegèlyezès"
+
+msgid "Consent to use personal data"
+msgstr "Szemèlyes adatok feldolgozàsànak engedèlyezès"
+
+msgid "Continue"
+msgstr "Folytatà"
+
+msgid "Copy"
+msgstr "Màsolà"
+
+msgid "Costs and prices"
+msgstr "Költségek ès àra"
+
+msgid "Country"
+msgstr "Nemzetiség"
+
+msgid "Created"
+msgstr "Létrehozá"
+
+msgid "Created date"
+msgstr "Lètrehozàs Dátum"
+
+msgid "Credit card"
+msgstr "Hitelkártya"
+
+msgid "Credit card accepted"
+msgstr "Hitel kàrtya elfogadà"
+
+msgid "Credit card data"
+msgstr "Hitel kàrty"
+
+msgid "Credit card guarantee. Payment in hotel"
+msgstr "Garanciàlis hitel kàrty"
+
+msgid "Credit card invalid. Please check number"
+msgstr "Érvénytelen kártya, Ellenõrizze le a szàmà"
+
+msgid "Currency manager"
+msgstr "Valuta kezelès"
+
+msgid "Customer area"
+msgstr "Ügyfél terüle"
+
+msgid "Date"
+msgstr "Dàtu"
+
+msgid "Date not valid"
+msgstr "Érvénytelen dàtu"
+
+msgid "days after"
+msgstr "Màsna"
+
+msgid "days before"
+msgstr "Elõzõna"
+
+msgid "Delete"
+msgstr "Törlè"
+
+msgid "Delete category"
+msgstr "Kategòria törlès"
+
+msgid "Delete product"
+msgstr "Törlés termék"
+
+msgid "Departure"
+msgstr "Indulà"
+
+msgid "departure"
+msgstr "indulà"
+
+msgid "Deposit"
+msgstr "Letétet"
+
+msgid "Description"
+msgstr "Leìrà"
+
+msgid "Destination"
+msgstr "Desztinàci"
+
+msgid "Detail"
+msgstr "Rèszle"
+
+msgid "Details"
+msgstr "Rèszletek"
+
+msgid "Details Policy Stay"
+msgstr "Rèszletek az üzlet politikàrò"
+
+msgid "Discount"
+msgstr "Kedvezmèn"
+
+msgid "Discount not valid"
+msgstr "Érvènytelen kedvezmèn"
+
+msgid "Discounts"
+msgstr "Kedvezmènye"
+
+msgid "distance"
+msgstr "Tàvolsà"
+
+msgid "District"
+msgstr "Vàro"
+
+msgid "Edit"
+msgstr "Modòsità"
+
+msgid "Edit profile"
+msgstr "Modositsd a profil"
+
+msgid "eg. arrival time"
+msgstr "Érkezès idõponjànak megjelölès"
+
+msgid "E-mail"
+msgstr "E-mai"
+
+msgid "Email can not be empty"
+msgstr "E-mail mezõ kötelez"
+
+msgid "Email is not the same"
+msgstr "Az e-mail cìmek nem egyezne"
+
+msgid "End address"
+msgstr "Érkezèsi cì"
+
+msgid "Enlarge the map"
+msgstr "Tèrkèp nagyìtàs"
+
+msgid "Enquiries"
+msgstr "Ajànlat kèrèse"
+
+msgid "Enquiry data"
+msgstr "Érdeklődés dátum"
+
+msgid "Enquiry date"
+msgstr "Kèrt dátum"
+
+msgid "Enquiry delivered"
+msgstr "Ajànlat elküldv"
+
+msgid "Enquiry request delivery successfully"
+msgstr "Ajànlat sikeresen elküldv"
+
+msgid "Enter"
+msgstr "Belèpè"
+
+msgid "Error"
+msgstr "Hib"
+
+msgid "Estimate"
+msgstr "Ajànlat kiszàmìtàs"
+
+msgid "Expires"
+msgstr "Lejàrta dátum"
+
+msgid "Expiry date"
+msgstr "Lejàrta dátum"
+
+msgid "Expiry date date is invalid"
+msgstr "Érvènytelen kàrtya/dàtu"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "feepaying"
+msgstr "fizetõ"
+
+msgid "Feepaying services"
+msgstr "Fizetõs szolgàltatàso"
+
+msgid "Fields manager"
+msgstr "Fields manager"
+
+msgid "File"
+msgstr "Mellèkelt fil"
+
+msgid "File categories"
+msgstr "File kategori"
+
+msgid "File data"
+msgstr "File adatai"
+
+msgid "File manager"
+msgstr "File kezelè"
+
+msgid "File size"
+msgstr "File nagysà"
+
+msgid "Filename"
+msgstr "File nev"
+
+msgid "Files"
+msgstr "Mellèkelt file-o"
+
+msgid "Files list"
+msgstr "File list"
+
+msgid "Finish publishing"
+msgstr "Befejezéshez kiadói"
+
+msgid "for minimum stays"
+msgstr "a minimális marad"
+
+msgid "Forward"
+msgstr "Elõr"
+
+msgid "found"
+msgstr "Talàl"
+
+msgid "founds"
+msgstr "Talàl"
+
+msgid "Free services"
+msgstr "Ingyenes szolgàltatàso"
+
+msgid "from"
+msgstr "tòl,tõ"
+
+msgid "From"
+msgstr "Tòl,tõ"
+
+msgid "from airport"
+msgstr "a repülõtèrrõ"
+
+msgid "From date"
+msgstr "Tòl,tõ"
+
+msgid "From date less than current date"
+msgstr "Az indulàs Dátuma helytele"
+
+msgid "From date less to date"
+msgstr "Az indulàs Dátuma helytele"
+
+msgid "From here"
+msgstr "Innentõ"
+
+msgid "from nearest centre"
+msgstr "a legközelebbi központtò"
+
+msgid "from Portoferraio harbour"
+msgstr "Portoferraio kikötõtõ"
+
+msgid "from sea"
+msgstr "a tengertõ"
+
+msgid "Full board"
+msgstr "Teljes ellàtà"
+
+msgid "Full text"
+msgstr "Teljes szöve"
+
+msgid "Fullname"
+msgstr "Teljes nè"
+
+msgid "Gallery categories"
+msgstr "Kèptàr kategori"
+
+msgid "Gallery manager"
+msgstr "Kèptàr kezelès"
+
+msgid "General"
+msgstr "àltalàno"
+
+msgid "General conditions"
+msgstr "àltalànos feltètele"
+
+msgid "General data"
+msgstr "àltalànos adato"
+
+msgid "Get directions"
+msgstr "Utvonal kèrè"
+
+msgid "Get route"
+msgstr "Utvonal szàmìtà"
+
+msgid "Go back"
+msgstr "vissz"
+
+msgid "Guest data"
+msgstr "Ügyfèl adatai"
+
+msgid "Guests"
+msgstr "Vendège"
+
+msgid "Guests and rooms"
+msgstr "Szobàk ès vendège"
+
+msgid "Half board"
+msgstr "Fèlpanzi"
+
+msgid "Header"
+msgstr "Heade"
+
+msgid "Headers"
+msgstr "Heade"
+
+msgid "Holder"
+msgstr "Tulajdono"
+
+msgid "Home page"
+msgstr "Fõ olda"
+
+msgid "Hotels and apartments"
+msgstr "Szàlloda ès apartmano"
+
+msgid "How to reach"
+msgstr "Hogyan jussunk e"
+
+msgid "I agree to the personal data's treatment policy"
+msgstr "Szemèlyes adatok feldolgozàsa elfogadàs"
+
+msgid "I have read and agreed with the terms and conditions"
+msgstr "Elolvastam ès tudomàsul vettem a felsorolt feltételeket"
+
+msgid "I Subscribe for the newsletter in"
+msgstr "Hìrlevèl feliratkozàs"
+
+msgid "Image not available"
+msgstr "Kèp nem elèrhet"
+
+msgid "Images"
+msgstr "Kèpe"
+
+msgid "Images list"
+msgstr "Kèpek listàj"
+
+msgid "Impossible to delete a mandatory element"
+msgstr "Nem lehetsèges egy kõtelezõ elemet töröln"
+
+msgid "in"
+msgstr "benne"
+
+msgid "In payment"
+msgstr "Fizetv"
+
+msgid "In the neighbourhood"
+msgstr "A közelbe"
+
+msgid "Infants"
+msgstr "Csecsemõ"
+
+msgid "Info Request"
+msgstr "Informàciò kèrè"
+
+msgid "Info request"
+msgstr "Informàciò kèrè"
+
+msgid "Info type"
+msgstr ""
+"A residence/Apartmanok kategòria az alàbbi tipusù szállásokat tartalmazzàk:"
+"Agriturizmus,Apartmanok,C.A.C,Kemping,R.T.A, Residence"
+
+msgid "Insert"
+msgstr "Beszùrà"
+
+msgid "Insert children's age if present"
+msgstr "Gyermekek èletkorànak megjelölèse ha vanna"
+
+msgid "Insert name"
+msgstr "Nèv leiràs"
+
+msgid "Insert your data"
+msgstr "Adatok megadás"
+
+msgid "Insufficient number of nights"
+msgstr "Éjszakák szàma nem elegend"
+
+msgid "Interested to"
+msgstr "Érdekelni"
+
+msgid "Intro text"
+msgstr "Bekezdèsi szöve"
+
+msgid "Invalid dates!"
+msgstr "Helytelen adatok"
+
+msgid "Language"
+msgstr "Nyel"
+
+msgid "Legend"
+msgstr "Tartalo"
+
+msgid "Less info"
+msgstr "Kevesebb informàci"
+
+msgid "Less photos"
+msgstr "Kevesebb kè"
+
+msgid "Link"
+msgstr "Lin"
+
+msgid "Link to"
+msgstr "Lin"
+
+msgid "List"
+msgstr "List"
+
+msgid "Make an estimate"
+msgstr "Ajànlat kiszàmìtàs"
+
+msgid "Mandatory Field"
+msgstr "Kötelező mező"
+
+msgid "Mandatory Fields"
+msgstr "Kötelezõ kitöltendõ mez"
+
+msgid "Mandatory fields"
+msgstr "Kötelezõ mezõ"
+
+msgid "Manual"
+msgstr "Kézikönyvben"
+
+msgid "Map"
+msgstr "Tèrkè"
+
+msgid "Message"
+msgstr "Üzene"
+
+msgid "Methods of payment"
+msgstr "Fizetèsi lehetõsège"
+
+msgid "Minimum stay"
+msgstr "Minimum tartòzkodà"
+
+msgid "Minimum stay not valid"
+msgstr "Helytelen minimum tartòzkodà"
+
+msgid "MM/YY"
+msgstr "Hònap/è"
+
+msgid "Mobile"
+msgstr "Mobiltelefon"
+
+msgid "Mobile phone number can not be empty"
+msgstr "A mobiltelefonszám megadàsa kötelez"
+
+msgid "modification"
+msgstr "Modósítá"
+
+msgid "Modify"
+msgstr "Modósítá"
+
+msgid "Month"
+msgstr "Hòna"
+
+msgid "More info"
+msgstr "Több informàci"
+
+msgid "More photos"
+msgstr "Màs kèpe"
+
+msgid "Most visited"
+msgstr "Leglátogatottabb"
+
+msgid "Multirate"
+msgstr "Multirate"
+
+msgid "N. Adults"
+msgstr "Felnõttek szàm"
+
+msgid "N. Children"
+msgstr "Gyermekek szàm"
+
+msgid "N. Persons"
+msgstr "Szemèlyek szàm"
+
+msgid "N. persons"
+msgstr "Szemèlyek szàm"
+
+msgid "N. rooms"
+msgstr "Szobàk szàm"
+
+msgid "Name"
+msgstr "Nèv"
+
+msgid "Name can not be empty"
+msgstr "A nèv nègyzet kitõltèse kötelez"
+
+msgid "Nationality"
+msgstr "Nemze"
+
+msgid "near to"
+msgstr "Köze"
+
+msgid "New"
+msgstr "Hozzàa"
+
+msgid "New search"
+msgstr "Újabb keresè"
+
+msgid "Next"
+msgstr "Következ"
+
+msgid "Next day"
+msgstr "Következõ Na"
+
+msgid "Next month"
+msgstr "Következõ hòna"
+
+msgid "Next year"
+msgstr "Következõ è"
+
+msgid "nights"
+msgstr "éjszakák"
+
+msgid "Nights"
+msgstr "Éjszakák"
+
+msgid "No"
+msgstr "Nem"
+
+msgid "No availability solution"
+msgstr "Nincsen szabad hel"
+
+msgid "No offer present"
+msgstr "Nincsenek ajànlato"
+
+msgid "No rooms or boarding info available"
+msgstr "Nincsen szoba vagy informàciò a foglalàssal kapcsolatosa"
+
+msgid "No solutions found"
+msgstr "Nincs eredmèn"
+
+msgid "no spaces or dashes"
+msgstr "szòköz nèlkü"
+
+msgid "None"
+msgstr "Semm"
+
+msgid "Norm"
+msgstr "Nor"
+
+msgid "Normal rate"
+msgstr "Normàl tarif"
+
+msgid "Not paid"
+msgstr "Nem fizetet"
+
+msgid "Nothing"
+msgstr "Semm"
+
+msgid "Num. nights"
+msgstr "Éjszakák szàm"
+
+msgid "Num. persons"
+msgstr "szemèlyek szàm"
+
+msgid "Num. rooms"
+msgstr "Szobàk szàm"
+
+msgid "Num. %s"
+msgstr "%s szàm"
+
+msgid "Number"
+msgstr "Szà"
+
+msgid "Offer"
+msgstr "Ajànla"
+
+msgid "Offer info"
+msgstr "Ajànlat inf"
+
+msgid "Offer packages"
+msgstr "Ajànlat csomago"
+
+msgid "Offers"
+msgstr "Ajànlato"
+
+msgid "On the map"
+msgstr "A tèrkèpe"
+
+msgid "Only board"
+msgstr "Kizàròlag szállás"
+
+msgid "Room Only"
+msgstr "Kizàròlag szállás"
+
+msgid "Only online availability"
+msgstr "Kizàròlag online szabad kapacità"
+
+msgid "Only with online availability"
+msgstr "Kizàròlag a szabad kapacitàssa"
+
+msgid "opened"
+msgstr "Megnyitv"
+
+msgid "Opened date"
+msgstr "Megnyitàs dátum"
+
+msgid "Opening date"
+msgstr "Megnyitàs dátum"
+
+msgid "Operation cancelled"
+msgstr "M?velet törlès"
+
+msgid "Operation completed"
+msgstr "Az Ön adatai frissitve lette"
+
+msgid "Order by"
+msgstr "Elrendezè"
+
+msgid "Order by:"
+msgstr "Elrendezè"
+
+msgid "Ordering"
+msgstr "Elrendezè"
+
+msgid "Other"
+msgstr "Mà"
+
+msgid "Other offers"
+msgstr "Tovàbbi ajànlato"
+
+msgid "Other solutions"
+msgstr "Alternativàk a megadott idõpontba"
+
+msgid "Other typologies"
+msgstr "Residence/apartmano"
+
+msgid "Paid"
+msgstr "Fizetv"
+
+msgid "Pax/night"
+msgstr "Fõ/na"
+
+msgid "Pax/week"
+msgstr "Fõ/è"
+
+msgid "Pay with credit card"
+msgstr "Fizetès hitel kàrtyàva"
+
+msgid "Pay with money transfer"
+msgstr "Fizetès banki utalàssa"
+
+msgid "Payment"
+msgstr "Fizetés"
+
+msgid "Payment failed"
+msgstr "Sikertelen fizetè"
+
+msgid "Payment methods"
+msgstr "Fizetè"
+
+msgid "Payment ok"
+msgstr "Sikeres fizetè"
+
+msgid "Payment request type"
+msgstr "Fizetèsi lehetõsège"
+
+msgid "Payment result"
+msgstr "Talàla"
+
+msgid "Payments"
+msgstr "Fizetèse"
+
+msgid "pending cancel"
+msgstr "Törlès felfüggesztv"
+
+msgid "pending confirm"
+msgstr "Visszaigazolàs felfüggesztv"
+
+msgid "pending modify"
+msgstr "Modositàs felfüggesztv"
+
+msgid "Period"
+msgstr "Idõponto"
+
+msgid "Person"
+msgstr "F"
+
+msgid "Person per night"
+msgstr "Fõ/na"
+
+msgid "Person per week"
+msgstr "Fõ/è"
+
+msgid "Personal information"
+msgstr "Szemèlyes informàciò"
+
+msgid "Persons"
+msgstr "Szemèlye"
+
+msgid "Persons per room"
+msgstr "Szemèlyek per szob"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Phone can not be empty"
+msgstr "A telefonszám mezõ kötelezõ nègyze"
+
+msgid "Pincode"
+msgstr "Pin kò"
+
+msgid "Place"
+msgstr "Helysè"
+
+msgid "Please check your card details"
+msgstr "Ellenõrizzèk a kàrtya adatoka"
+
+msgid "Please check your card number digits"
+msgstr "Ellenõrizzèk a kàrtya szàmo"
+
+msgid "Please select a day"
+msgstr "Jelölj ki egy napo"
+
+msgid "Please select an item from the list"
+msgstr "Jelölj ki legalàbb egy eleme"
+
+msgid "Please select number of children"
+msgstr "Jelöld meg a gyermekek szàmà"
+
+msgid "Please set chilldren's age"
+msgstr "Jelöld meg a gyermekek èletkorà"
+
+msgid "Popularity"
+msgstr "Hìressè"
+
+msgid "Prev"
+msgstr "Elõz"
+
+msgid "Prev month"
+msgstr "Elõzõ hòna"
+
+msgid "Prev year"
+msgstr "Elõzõ è"
+
+msgid "Prev. day"
+msgstr "Elõzõ na"
+
+msgid "Previous"
+msgstr "Elõz"
+
+msgid "Price"
+msgstr "à"
+
+msgid "Price not valid"
+msgstr "Érvènytelen à"
+
+msgid "Pricelist"
+msgstr "Listaà"
+
+msgid "Prices"
+msgstr "àra"
+
+msgid "Print"
+msgstr "Nyomtatás"
+
+msgid "Product"
+msgstr "Termékre"
+
+msgid "Properties"
+msgstr "Tulajdonsàgo"
+
+msgid "Protocol"
+msgstr "Jegyzőkönyvben"
+
+msgid "Published"
+msgstr "Meghìrdetv"
+
+msgid "Publishing"
+msgstr "Hìrdetv"
+
+msgid "Qty"
+msgstr "Mennyisèg"
+
+msgid "Rapid search"
+msgstr "Gyors keresè"
+
+msgid "Rapid search hotels and lodgings"
+msgstr "Szàlloda -szállások gyors keresès"
+
+msgid "Rates and conditions"
+msgstr "Tarifàk ès feltètele"
+
+msgid "Read More"
+msgstr "Olvass el minden"
+
+msgid "Reductions - Supplements"
+msgstr "Kedvezmènyek-Felàra"
+
+msgid "Refine the search"
+msgstr "Finomítsa keresésé"
+
+msgid "Repeat e-mail"
+msgstr "email cìm megadàs"
+
+msgid "Request"
+msgstr "Lekèrè"
+
+msgid "Request availability"
+msgstr "Szabad kapacitàs lekèrès"
+
+msgid "Request inserted"
+msgstr "Lekèrès beirv"
+
+msgid "Request sended"
+msgstr "Lekèrès elküldv"
+
+msgid "Request to be cancelled by guest"
+msgstr "Törlès kèrvèny az ügyfèl rèszèrõ"
+
+msgid "Request to be modified by guest"
+msgstr "modósitás kèrvèny az ügyfèl rèszèrõ"
+
+msgid "Requests"
+msgstr "Kèrèse"
+
+msgid "Reservation"
+msgstr "Megrendelè"
+
+msgid "Reservation confirmed"
+msgstr "Megrendelès visszaigazolv"
+
+msgid "Reservation data"
+msgstr "Szállás adatai"
+
+msgid "Reservation detail"
+msgstr "Megrendèles rèszlete"
+
+msgid "Reservation ID"
+msgstr "Megrendelès I"
+
+msgid "Reservation inserted"
+msgstr "Megrendelès vègrehajtv"
+
+msgid "Reservation number"
+msgstr "Megrendelès szàm"
+
+msgid "Reservation policy"
+msgstr "Booking politik"
+
+msgid "Reservation request inserted successfully"
+msgstr "A megrendelès sikeresen megtörtèn"
+
+msgid "Reservation sended"
+msgstr "megrendelès elküldv"
+
+msgid "Reservation status"
+msgstr "àllapo"
+
+msgid "Reservations"
+msgstr "Megrendelèse"
+
+msgid "Reserve now!"
+msgstr "Rendeld meg most"
+
+msgid "Resort"
+msgstr "Helysè"
+
+msgid "Return"
+msgstr "Vissz"
+
+msgid "Reversal"
+msgstr "Storn"
+
+msgid "Roads distance"
+msgstr "ùt tàvolsàgo"
+
+msgid "Room"
+msgstr "Szob"
+
+msgid "room"
+msgstr "szob"
+
+msgid "Room > numpax"
+msgstr "a szobàk szàma magasabb a szemèlyek szàmànà"
+
+msgid "Room code"
+msgstr "Szoba kòdszàm"
+
+msgid "Room description"
+msgstr "Szoba leìràs"
+
+msgid "Room not available for this board"
+msgstr "Helyiség nem áll rendelkezésre ehez a kezeléshe"
+
+msgid "Room number"
+msgstr "Szoba szàm"
+
+msgid "Room Price"
+msgstr "Szoba àr"
+
+msgid "Room services"
+msgstr "Szoba szolgàltatàsa"
+
+msgid "Room Total"
+msgstr "Szobàk szàm"
+
+msgid "%s Total"
+msgstr "%s szàm"
+
+msgid "Room type"
+msgstr "Szoba tipù"
+
+msgid "Room type and board"
+msgstr "Szoba tipùs ès kezelès tipù"
+
+msgid "Room/App. per night"
+msgstr "Szoba vagy apartman per è"
+
+msgid "Room/App. per week"
+msgstr "Szoba vagy apartman per hè"
+
+msgid "Room/night"
+msgstr "Szoba per è"
+
+msgid "Room/week"
+msgstr "Szoba per hè"
+
+msgid "Rooms"
+msgstr "Szobà"
+
+msgid "rooms"
+msgstr "szobà"
+
+msgid "Rooms list"
+msgstr "Szobàk listàj"
+
+msgid "Rooms manager"
+msgstr "Szobàk kezelès"
+
+msgid "Rooms summary"
+msgstr "Szobàk összefoglalás"
+
+msgid "Same fields are required or not correct"
+msgstr "hibàs vagy hiànyzò kötelezõ nègyze"
+
+msgid "Save"
+msgstr "Mentè"
+
+msgid "save up to"
+msgstr "Megtakarìtòt"
+
+msgid "Saving"
+msgstr "Megtakarìtà"
+
+msgid "Search"
+msgstr "Keresè"
+
+msgid "Search another option"
+msgstr "Alternativ dátumok ebben a szàllodàba"
+
+msgid "Search by name"
+msgstr "Keresès per nè"
+
+msgid "Search near to"
+msgstr "Keress a közelèbe"
+
+msgid "Search only available"
+msgstr "Keresès a szabad kapacitàson kereszt?"
+
+msgid "Search result"
+msgstr "Keresès eredmèny"
+
+msgid "sec_code_desc"
+msgstr ""
+"A kód CVV, CVC, vagy egy másik CID biztonsági elkerülése helytelen "
+"használata a hitelkártya online tranzakció során. A Mastercard, Visa, Diners "
+"Club hitelkártyák épül fel, az utolsó három szám mögött a kártya fel a "
+"szalag az aláírást. Az American Express hitelkártya áll össze négy szám a "
+"jobb felső meg a szám a kártya."
+
+msgid "SecureDataTransferSSL"
+msgstr ""
+"Az Ön személyes adatait szigorúan bizalmasan kezeli, és soha nem hárítják át "
+"harmadik félnek. Rá, hogy az adatvédelmi jogi szabályozás, és át az egész "
+"SSL titkosított kapcsolatot."
+
+msgid "Security code"
+msgstr "Security cod"
+
+msgid "Security code invalid"
+msgstr "Érvènytelen biztonsàgi kò"
+
+msgid "Select"
+msgstr "Kijelölès"
+
+msgid "Select a city"
+msgstr "Helysèg kivàlasztàs"
+
+msgid "Select all"
+msgstr "Kijelõli az összes"
+
+msgid "Select period and rooms"
+msgstr "Dátum ès szobàk kijelölès"
+
+msgid "Select type and boarding desired"
+msgstr "Tìpus ès kezelès kijelölès"
+
+msgid "Selected date"
+msgstr "Kijelölt dátumo"
+
+msgid "Selected days"
+msgstr "Kijelölt dàtu"
+
+msgid "Selection completed"
+msgstr "Kijelölès megtörtèn"
+
+msgid "Send"
+msgstr "Küld"
+
+msgid "Send request"
+msgstr "Lekèrès elküldès"
+
+msgid "Services"
+msgstr "Szolgàltatàso"
+
+msgid "Show conditions"
+msgstr "Olvasd a feltèteleke"
+
+msgid "Show map"
+msgstr "Megjelenìt a tèrkèpe"
+
+msgid "Show on homepage"
+msgstr "Megjelenìt a honlapo"
+
+msgid "Site manager"
+msgstr "Web-lap kezelès"
+
+msgid "Site name"
+msgstr "Web-lap nev"
+
+msgid "Site selected"
+msgstr "kijelölt web-la"
+
+msgid "Special Offers"
+msgstr "Speciàlis ajànlato"
+
+msgid "Special offers"
+msgstr "Speciàlis AJàNLATO"
+
+msgid "Special offers from"
+msgstr "Speciàlis AJàNLATO"
+
+msgid "Special rate"
+msgstr "Speciàlis tarif"
+
+msgid "Star"
+msgstr "Csilla"
+
+msgid "Star/Key"
+msgstr "Csillag/Kulc"
+
+msgid "Stars"
+msgstr "Csillago"
+
+msgid "Stars/Keys"
+msgstr "Csillagok/kulcso"
+
+msgid "Start address"
+msgstr "Kiindulò cì"
+
+msgid "Start publishing"
+msgstr "Hìrdetès dátum"
+
+msgid "State"
+msgstr "Megye"
+
+msgid "Status"
+msgstr "Státuz"
+
+msgid "Stay"
+msgstr "Szállá"
+
+msgid "Structure"
+msgstr "Épüle"
+
+msgid "Structure amenities"
+msgstr "Épületben lèvõ szolglatàso"
+
+msgid "Structure data"
+msgstr "informàciò az èpületrõ"
+
+msgid "Structure description"
+msgstr "Épület leiràs"
+
+msgid "Structure position"
+msgstr "Épület elhelyezès"
+
+msgid "Structure services"
+msgstr "Épületben lèvõ szolglatàso"
+
+msgid "Structure tipology"
+msgstr "Épület tìpu"
+
+msgid "Structure treatment"
+msgstr "Kezelèse"
+
+msgid "Structure type"
+msgstr "Épület tìpu"
+
+msgid "Structures"
+msgstr "Épülete"
+
+msgid "structures found"
+msgstr "Talàlt helysège"
+
+msgid "Subcategories"
+msgstr "Alsòkategòrià"
+
+msgid "Subdir"
+msgstr "Director"
+
+msgid "Subject"
+msgstr "Tàrg"
+
+msgid "Submit"
+msgstr "küld"
+
+msgid "Summary"
+msgstr "Összefoglalása"
+
+msgid "summary"
+msgstr "összegzése"
+
+msgid "Summary data"
+msgstr "Összegzés"
+
+msgid "Surname"
+msgstr "Vezetèknèv"
+
+msgid "Surname can not be empty"
+msgstr "A vetèknèv kötelezõ mez"
+
+msgid "Surroundings"
+msgstr "Környékén"
+
+msgid "Telephone"
+msgstr "Telefonszám"
+
+msgid "Terms and conditions"
+msgstr "Feltètele"
+
+msgid "Thanks for choosing our hotel"
+msgstr "Köszönjük hogy szàllodànkat vàlasztott"
+
+msgid "The email must be in the name@domain format."
+msgstr "az email cìmet az alàbbi formàtumban kell megadni: nèv@domè"
+
+msgid "The expiry date is not a valid date in the format MM/YY"
+msgstr "lejàrta dátumàt az alàbbi formàtumban kell megadni: hònap/è"
+
+msgid "The fields marked in red are required"
+msgstr "A pirosan megjelölt mezõk kötelezõ nègyzete"
+
+msgid "The month is invalid"
+msgstr "Helytelen hòna"
+
+msgid ""
+"The phone field must be 8 digits in length,with an optional 2 or 3 digit "
+"area code"
+msgstr "Érvènytelen telefonszà"
+
+msgid "The zipcode must be 4 or 5 digits in length"
+msgstr "Az irànyitòszàm 4 vagy 5 szàmbòl kell àlljo"
+
+msgid "There are no available accommodations"
+msgstr "Sajnàljuk,a kèrt idõpontban, jelen szálláshelyen nincsen szabad hel"
+
+msgid "Thumbnail"
+msgstr "Bèlyegkè"
+
+msgid "Thumbnails"
+msgstr "Bélyegképe"
+
+msgid "Tipology"
+msgstr "Tipus"
+
+msgid "Title"
+msgstr "Cì"
+
+msgid "to"
+msgstr "hogy"
+
+msgid "To"
+msgstr "Hogy"
+
+msgid "To date"
+msgstr "A mai napig"
+
+msgid "To here"
+msgstr "Idài"
+
+msgid "To pay"
+msgstr "Fizetendõ össze"
+
+msgid "Tot reservation price"
+msgstr "Megrendelès teljes összeg"
+
+msgid "Total"
+msgstr "Összese"
+
+msgid "Total room"
+msgstr "Apartman összesen"
+
+msgid "Total account"
+msgstr "Elõleg összeg"
+
+msgid "Total price"
+msgstr "Teljes össze"
+
+msgid "Total reservation"
+msgstr "üdülés teljes összege"
+
+msgid "Total reservation price"
+msgstr "üdülés teljes összege"
+
+msgid "Total room price"
+msgstr "Szoba teljes àr"
+
+msgid "Total to settle"
+msgstr "fizetendõ teljes össze"
+
+msgid "Transaction"
+msgstr "Tranzakci"
+
+msgid "Transaction failed"
+msgstr "sikertelen tranzakci"
+
+msgid "Type"
+msgstr "Tipu"
+
+msgid "Type of credit card"
+msgstr "Tipu"
+
+msgid "Typology"
+msgstr "Tipu"
+
+msgid "Unknown payment type"
+msgstr "Ismeretlen fizetèsi mò"
+
+msgid "Upload"
+msgstr "Feltöltè"
+
+msgid "URL name"
+msgstr "Link nev"
+
+msgid "Validity from"
+msgstr "Érvènyessège tò"
+
+msgid "Verify"
+msgstr "ellenõrizze l"
+
+msgid "Verify availability"
+msgstr "Szabad kapacitàs ès àr leellenõrzès"
+
+msgid "View"
+msgstr "Látvány"
+
+msgid "View reservations"
+msgstr "View fenntartások"
+
+msgid "Wait the confirmation of disponibility"
+msgstr "Figyelem!Vàrjon a szabad kapacitàs visszaigazolàsàr"
+
+msgid "Waiting to be confirmed"
+msgstr "Függõben a megerõsitèsi"
+
+msgid "Warning"
+msgstr "Figyele"
+
+msgid "Weather/Sea"
+msgstr "Idõjàrà"
+
+msgid "Welcome"
+msgstr "Üdvözöljü"
+
+msgid "We're processing your request"
+msgstr "A kèrès feldolgozàs alatt va"
+
+msgid "What is the security code?"
+msgstr "Mit jelent a biztonsàgi kòd"
+
+msgid "Where is the security code?"
+msgstr "hol talàlhatò"
+
+msgid "Where to stay"
+msgstr "Hol szàlljunk meg"
+
+msgid "with online availability"
+msgstr "a online elérhetősége"
+
+msgid "within"
+msgstr "i"
+
+msgid "Wrong reservation data"
+msgstr "A megrendelès adatai helytelene"
+
+msgid "Yes"
+msgstr "Igen"
+
+msgid "yes"
+msgstr "Igem"
+
+msgid "You can find more hotels by changing your search criteria"
+msgstr "tovàbbi keresès, màs kritèrium szerin"
+
+msgid "You may only proceed if you accept the privacy policy"
+msgstr "Folytatàs kizàròlag az adat feldolgozàs elfogadàsàva"
+
+msgid "You may only proceed if you accept the terms and conditions"
+msgstr "Folytatàs kizàròlag a feltètelek elfogadàsàva"
+
+msgid "You must select a payment method"
+msgstr "Fizetèsi lehetõsèg kivàlasztàs"
+
+msgid "Your reservation"
+msgstr "Az Ön foglalàs"
+
+msgid "Your services"
+msgstr "Az Ön szolgàltatàsa"
+
+msgid "ZIP"
+msgstr "Irányítószám"
+
+msgid "Zip"
+msgstr "Irányítószám"
+
+msgid "Zoom"
+msgstr "Nagyìtà"
+
+msgid "Search Hotels"
+msgstr "Szálláshelyek keresése"
+
+msgid "Open all year round"
+msgstr "Egész évben nyitva"
+
+msgid "All Inclusive"
+msgstr "All Inclusive"
+
+msgid "Hotel"
+msgstr "Szállodai"
+
+msgid "Comfort"
+msgstr "Kényelmi"
+
+msgid "Please be patient"
+msgstr "Kérjük, legyen türelemmel"
+
+msgid "Go on"
+msgstr "Folytat"
+
+msgid "View other periods"
+msgstr "Alternativ dátumok ebben a szàllodàba"
+
+msgid "alternative_case_1"
+msgstr "We are sorry, we are closed in the dates selected."
+
+msgid "alternative_case_2"
+msgstr ""
+"We are sorry, we have no availabilities for the dates and people selected."
+
+msgid "alternative_case_3"
+msgstr ""
+"We are sorry, we have no online availabilities for the dates and people "
+"selected."
+
+msgid "Mostra tutte le camere"
+msgstr "Összes szobák"
+
+msgid "Show all rooms"
+msgstr "Összes szobák"
+
+msgid "Apartments/Rooms"
+msgstr "Apartmanok/Szoba"
+
+msgid "Descending distance"
+msgstr "Csökkenő távolság"
+
+msgid "Ascending distance"
+msgstr "Növekvő távolság"
+
+msgid "Descending category"
+msgstr "Csökkenő kategória"
+
+msgid "Ascending category"
+msgstr "Növekvő kategória"
+
+msgid "Descending price"
+msgstr "Csökkenő ár"
+
+msgid "Ascending price"
+msgstr "Növekvő ár"
+
+msgid "Descending price "
+msgstr "Csökkenő ár "
+
+msgid "Ascending price "
+msgstr "Növekvő ár "
+
+msgid "Name Z-A"
+msgstr "Név Z-A"
+
+msgid "Name A-Z"
+msgstr "Név A-Z"
+
+msgid "from2"
+msgstr "Tól"
+
+msgid "Quantity"
+msgstr "Mennyiség"
+
+msgid "Add options to your stay"
+msgstr "Hozzáadás lehetőségek az üdülés"
+
+msgid "Added accessories"
+msgstr "Hozzáadott tartozékok"
+
+msgid "Gift packages"
+msgstr "Ajándékcsomagot"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "Booking conditions"
+msgstr "Foglalási feltételek"
+
+msgid "Credit card guarantee"
+msgstr "Hitelkártya jótállás"
+
+msgid "Discount code"
+msgstr "Kedvezmény kód"
+
+msgid "Zip code"
+msgstr "Irányító szám"
+
+msgid "Have you a discount code?"
+msgstr "Van kedvezmény kódja?"
+
+msgid "Repeat E-mail"
+msgstr "E-mail újból"
+
+msgid "step4nogateway"
+msgstr " "
+
+msgid "Reservation delivery successfully"
+msgstr "Rendeleés elküdése sikeres"
+
+msgid "Method"
+msgstr "Módja"
+
+msgid "Note"
+msgstr "Megjegyzés"
+
+msgid "Payment mode"
+msgstr "Fizetési mód"
+
+msgid "Ascending code"
+msgstr "Növekvő code"
+
+msgid "Descending code"
+msgstr "Csökkenő code"
+
+msgid "Photo indicative sample"
+msgstr "Tájékoztató fotó mintaként"
+
+msgid "Insure your trip is recommended"
+msgstr "Javasoljuk, hogy nyaralására kössön biztosítást"
+
+msgid "No thanks"
+msgstr "Nem, köszönöm"
+
+msgid "All inclusive insurance"
+msgstr "Booking Protection Plus"
+
+msgid "Cancellation of stay"
+msgstr "Foglalás visszamondása"
+
+msgid "24h support"
+msgstr "Segítségnyújtás a nap 24 órájában"
+
+msgid "medical expenses"
+msgstr "Orvosi ellátás költségei"
+
+msgid "interruption of stay"
+msgstr "Nyaralás félbeszakítása"
+
+msgid "refund of penalties"
+msgstr "A befizetett összeg visszatérítése"
+
+msgid "Insure"
+msgstr "Biztosítás megkötése"
+
+msgid "from only"
+msgstr "mindössze"
+
+msgid "Add Insurance"
+msgstr "Hozzáad"
+
+msgid "Account/Deposit"
+msgstr "Előleg / foglaló"
+
+msgid "Full stay"
+msgstr "Az egész nyaralás"
+
+msgid "Terms & conditions"
+msgstr "Szerződési feltételek"
+
+msgid ""
+"nb The insurance policy payment is separate from the reservation process: "
+"Allianz will send an e-mail with all payment information (only by credit "
+"card)."
+msgstr ""
+"Megjegyzés: a biztosítási díjat külön kell megfizetni. Az Allianz e-mailben "
+"küld tájékoztatást a fizetés mikéntjéről (csak bankkártyával lehetséges 24 "
+"órán belül)."
+
+msgid "Total Insurance price"
+msgstr "Biztosítási díj összesen"
+
+msgid "Proceed with the insurance payment"
+msgstr "Tovább a biztosítási díj befizetéséhez"
+
+msgid "Customer %s:"
+msgstr "%s. Ügyfél:"
+
+msgid "Adult, main contact"
+msgstr "felnőtt, elsődleges elérhetőség"
+
+msgid "cc_notes"
+msgstr ""
+"Nincs foglalási díj! A bankkártya garantálja a foglalást. A kártyára "
+"bármilyen összeget csak abban az esetben terhelünk, ha a szállásadó azt a "
+"foglalás megerősítéseként kéri, vagy ha a szerződési feltételekben rögzített "
+"határidőn túl mondja le a foglalását."
+
+msgid ""
+"Choose between the Insurances that Allianz Global Assistance has created for "
+"the tranquility of its travelers"
+msgstr ""
+"Válasszon az Allianz Global Assistance által az Ön nyugalma érdekében "
+"kidolgozott biztosítási módok közül"
+
+msgid "account_notes %s"
+msgstr ""
+"Alulírott hozzájárulok, hogy a fenti foglalásban megjelölt összeggel "
+"megterhelésre kerüljön a megadott bankkártya."
+
+msgid "Insure your holiday"
+msgstr "Javasoljuk, hogy aktiválja BIZTOSÍTÁSI KÖTVÉNYÉT"
+
+msgid "Cancellation of stay and refund of penalties"
+msgstr "<ul><li>Cancellation of stay</li><li>Refund of penalties</li></ul>"
+
+msgid ""
+"Cancellation of stay, 24h support, medical expenses, interruption of stay, "
+"refund of penalties"
+msgstr ""
+"<ul><li>Cancellation of stay</li><li>24h support</li><li>Medical expenses</"
+"li><li>Interruption of stay</li><li>Refund of penalties</li></ul>"
+
+msgid ""
+"Remember that, in order to be activated, the insurance policy must be paid "
+"within 24hr only by credit card"
+msgstr ""
+"Emlékeztetjük, hogy biztosítását akkor tudja aktiválni, ha 24 órán belül "
+"bankkártyával befizeti a díjat."
+
+msgid ""
+"You can pay now your insurance policy or follow the instructions provided by "
+"the email you will receive directly at your email address by Allianz"
+msgstr ""
+"Biztosítását kifizetheti most, vagy pedig a közvetlenül az Allianztól az Ön "
+"címére küldött e-mailben kapott útmutatás szerint."
+
+msgid "Last chance"
+msgstr "Utolsó esély"
+
+msgid "availables"
+msgstr "elérhető"
+
+msgid "available"
+msgstr "elèrhet"
+
+msgid "Shopping Bag"
+msgstr "Bevásárló táska"
+
+msgid "Total accessories"
+msgstr "Összesen kiegészítők"
+
+msgid "Standard rate"
+msgstr "általános adómérték"
+
+msgid "Total stay"
+msgstr "Összesen marad"
+
+msgid "alternative"
+msgstr "vagylagos"
+
+msgid "Alternative check in date"
+msgstr "Ritka bejelentkezési időpont"
+
+msgid "Alternative check out date"
+msgstr "Ritka pénztár dátuma"
+
+msgid "Adults - SHORT"
+msgstr "Felnõttek"
+
+msgid "Option 48h"
+msgstr "48 órás opció"
+
+msgid "Option 24h"
+msgstr "24 órás opció"
+
+msgid "Cancel estimate"
+msgstr "Ajánlat visszautasítása"
+
+msgid "Dear Customer, thank you for canceling the reservation"
+msgstr "Kedves Ügyfelünk, köszönjük, hogy foglalását törölte"
+
+msgid "The option with the reservation number"
+msgstr "Opció foglalási kóddal"
+
+msgid "will be canceled"
+msgstr "törölve lesz"
+
+msgid "Confirm cancel"
+msgstr "Lemondás megerősítése"
+
+msgid "distance from sea"
+msgstr "a tengertől való távolság"
+
+msgid "short_days"
+msgstr "n"
+
+msgid "short_hours"
+msgstr "o"
+
+msgid "short_minutes"
+msgstr "p"
+
+msgid "short_seconds"
+msgstr "m"

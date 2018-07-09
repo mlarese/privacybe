@@ -10,7 +10,7 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
-$app->get('/api/test/email', 'App\Action\Test:email');
+$app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequest');
 
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
 

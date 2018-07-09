@@ -414,10 +414,182 @@ class PrivacyResource extends AbstractResource
     }
 
     /**
-     * It is a alias for privacyListFw
-     * @param null $criteria
+     * @param null                $criteria
+     * @param IResultGrouper|null $grouper
+     * @param IFilter|null        $filter
      *
-     * @return array
+     * @return array|mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function privacyListLight($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        if(!isset($filter)) {
+            $filter = new PostFilter();
+        }
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.id'
+            // 'p.name',
+            // 'p.surname',
+            // 'p.ip',
+            // 'p.created',
+            // 'p.domain',
+            // 'p.site',
+            // 'p.termId',
+            // 'p.email'
+        ];
+
+        $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
+
+        $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( $ex->not("p.email=''") )
+            ->andWhere( $ex->not("p.email IS NULL") )
+        ;
+
+
+        $qb ->addOrderBy( 'p.email', 'ASC')
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
+
+        if($criteria === null) {
+            $qb ->addOrderBy( 'p.email', 'ASC')
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+        } else {
+
+            $person = null ;
+            $sort = 'default' ;
+            $sortDirection = 'ASC';
+
+
+            if(isset($criteria['person']) && $criteria['person']!=='') {
+                $person = $criteria['person'] ;
+                $person="%${person}%";
+                $persCond = [ "p.email LIKE :person ", "p.name LIKE :person ",  "p.surname LIKE :person "  ];
+
+                $qb
+                    ->andWhere( $ex->orX()->addMultiple($persCond))
+                    ->setParameter('person',$person);
+                ;
+            }
+
+
+            if(isset($criteria['created']) && $criteria['created']!=='') {
+                $created = $criteria['created'] ;
+                $dt = date($created);
+                $ndt = date('Y-m-d', strtotime($dt. ' + 1 days'));
+
+
+                $qb->andWhere( "p.created BETWEEN :firstdate AND :secondDate")
+                    ->setParameter('firstdate',$dt)
+                    ->setParameter('secondDate',$ndt)
+                ;
+
+            }
+
+            if(isset($criteria['domain']) && $criteria['domain']!=='' && $criteria['domain']!=='all' ) {
+                $crDomain = $criteria['domain'];
+                $qb->andWhere( "p.domain=:domain")
+                    ->setParameter('domain',$crDomain)
+                ;
+            }
+
+            $qb ->addOrderBy( 'p.email', $sortDirection)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
+
+        }
+
+
+        // $old = memory_get_usage();
+
+        $results = $qb->getQuery()->getResult();
+
+        // $mem = memory_get_usage();
+        // $size = abs($mem - $old);
+        // echo $size; die(1);
+
+        $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+
+        foreach ($results as &$pr) {
+            $this->privacyListLightIntegrateJsonFields($pr);
+            $privacyRecordIntegrator->integrate($pr);
+            unset($pr['privacy']);
+            unset($pr['form']);
+        }
+
+        if($filter)  $results = $filter->filter($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
+
+        //print_r($results); die('end');
+
+        return $results;
+    }
+
+
+    /**
+     * @param $record
+     *
+     * @return mixed
+     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    private function privacyListLightIntegrateJsonFields (&$record) {
+        $id = $record['id'];
+
+        /** @var Privacy $privacy */
+        $privacy = $this->entityManager->find(Privacy::class, $id);
+
+        $record['privacy'] = $privacy->getPrivacy();
+        $record['form'] = $privacy->getForm();
+        $record['privacyFlags'] = $privacy->getPrivacyFlags();
+
+        $record['name'] = $privacy->getName();
+        $record['surname'] = $privacy->getSurname();
+        $record['ip'] = $privacy->getIp();
+        $record['created'] = $privacy->getCreated();
+        $record['domain'] = $privacy->getDomain();
+        $record['site'] = $privacy->getSite();
+        $record['termId'] = $privacy->getTermId();
+        $record['email'] = $privacy->getEmail();
+
+        $this->entityManager->detach($privacy);
+        $privacy = null;
+
+        return $record;
+    }
+
+    /**
+     * @param null                $criteria
+     * @param IResultGrouper|null $grouper
+     * @param IFilter|null        $filter
+     *
+     * @return array|mixed
+     * @throws \Doctrine\ORM\ORMException
      */
     public function privacyList($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
          return $this->privacyListFw($criteria,  $grouper, $filter);

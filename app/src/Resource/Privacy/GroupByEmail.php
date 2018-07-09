@@ -7,7 +7,7 @@ use App\Resource\IResultGrouper;
 
 class GroupByEmail implements IResultGrouper
 {
-    public function group($list, $criteria){
+    public function group(&$list, $criteria){
         $res = [];
         foreach ($list as &$r) {
             $email = strtolower($r['email']);
@@ -16,6 +16,7 @@ class GroupByEmail implements IResultGrouper
             }
         }
 
+        unset($list);
         return $res;
     }
 }

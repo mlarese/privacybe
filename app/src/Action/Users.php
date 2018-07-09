@@ -29,6 +29,9 @@ class Users extends AbstractAction
     {
         $ownerId = $this->getOwnerId($request);
         session_commit();
+        ini_set('memory_limit', '1024M');
+        set_time_limit ( 300 );
+
         try {
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
@@ -40,25 +43,34 @@ class Users extends AbstractAction
                 $criteria = $body['filters'];
 
             $list = $priRes->privacyListFw($criteria, new GroupByEmail());
+            // $list = $priRes->privacyListLight($criteria, new GroupByEmail());
 
+
+
+            // print_r($list);
+            // die('fine');
             $export = [];
-            foreach($list as $email => $person){
+            foreach($list as $email => &$person){
                 $newExport = [
-                    'id' => $person['id'],
-                    '_counter_' => isset($person['_counter_'])?$person['_counter_']:0,
+                    // 'id' => $person['id'],
+                    // '_counter_' => isset($person['_counter_'])?$person['_counter_']:0,
                     '_flags_' => isset($person['_flags_'])?$person['_flags_']:[],
-                    'name'=>$person['name'],
-                    'surname'=>$person['surname'],
-                    'email'=>$person['email'],
-                    'termId'=>$person['termId'],
-                    'domain'=>$person['domain'],
-                    'site'=>$person['site'],
-                    'created'=>$person['created'],
-                    'language'=>$person['language'],
-                    'termName'=> $person['termName']
+                    'name'=>&$person['name'],
+                    'surname'=>&$person['surname'],
+                    'email'=>&$person['email'],
+                    'termId'=>&$person['termId'],
+                    'domain'=>&$person['domain'],
+                    'site'=>&$person['site'],
+                    'created'=>&$person['created'],
+                    'language'=>&$person['language'],
+                    'termName'=> &$person['termName']
                 ];
+
+
                 $export[] = $newExport;
             }
+
+            unset($list);
 
             return $response->withJson($this->toJson($export));
 

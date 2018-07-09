@@ -5,5 +5,5 @@ namespace App\Resource;
 
 interface IResultGrouper
 {
-    public function group($list, $criteria);
+    public function group(&$list, $criteria);
 }

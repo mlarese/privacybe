@@ -17,7 +17,10 @@ class GeneralDataIntegrator
 
         $record['denomination'] = $record['surname'].' '.$record['name'] ;
 
-        $record['_flags_'] = $record['privacyFlags'];
+        $record['_flags_'] = [];
+        foreach ($record['privacyFlags'] as $pf) {
+            $record['_flags_'][] = ["code" => $pf['code'], "selected" => $pf['selected']];
+        }
 
         return $record;
     }

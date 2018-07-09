@@ -1,0 +1,2130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ABS One\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2018-01-23 14:47+0100\n"
+"Last-Translator: Giuseppe\n"
+"Language-Team: ABS <daniele.turcato@mm-one.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: ro\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid "Already a guest?"
+msgstr "Sunteti deja client?"
+
+msgid "Login"
+msgstr "Autentificare"
+
+msgid "Logout"
+msgstr "Delogare"
+
+msgid "Lost password"
+msgstr "Recupera parola"
+
+msgid "Verify availability"
+msgstr "Verificati disponibilitatea si preturile"
+
+msgid "Check in date"
+msgstr "Data sosirii"
+
+msgid "January"
+msgstr "Ianuarie"
+
+msgid "February"
+msgstr "Februarie"
+
+msgid "March"
+msgstr "Martie"
+
+msgid "April"
+msgstr "Aprilie"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "June"
+msgstr "Iunie"
+
+msgid "July"
+msgstr "Iulie"
+
+msgid "August"
+msgstr "August"
+
+msgid "September"
+msgstr "Septembrie"
+
+msgid "October"
+msgstr "Octombrie"
+
+msgid "November"
+msgstr "Noiembrie"
+
+msgid "December"
+msgstr "Decembrie"
+
+msgid "Monday"
+msgstr "Luni"
+
+msgid "Tuesday"
+msgstr "Marti"
+
+msgid "Wednesday"
+msgstr "Miercuri"
+
+msgid "Thursday"
+msgstr "Joi"
+
+msgid "Friday"
+msgstr "Vineri"
+
+msgid "Saturday"
+msgstr "Sâmbata"
+
+msgid "Sunday"
+msgstr "Duminica"
+
+msgid "Check out date"
+msgstr "Data de plecare"
+
+msgid "Num. rooms"
+msgstr "Nr. Camere"
+
+msgid "Num. %s"
+msgstr "Num. %s"
+
+msgid "Guests and rooms"
+msgstr "Camere si oaspeti"
+
+msgid "Room number"
+msgstr "Nr. Camera"
+
+msgid "N. Adults"
+msgstr "Nr. Adulti"
+
+msgid "N. Children"
+msgstr "Nr. Copii"
+
+msgid "N. persons"
+msgstr "Nr. Persoane"
+
+msgid "Children Age"
+msgstr "Vârsta Copii"
+
+msgid "Verify"
+msgstr "Verifica"
+
+msgid "Reservation start note"
+msgstr "Note început de rezervare"
+
+msgid "Rooms"
+msgstr "Camere"
+
+msgid "Rooms manager"
+msgstr "Manager camere"
+
+msgid "room available"
+msgstr "camera disponibila"
+
+msgid "There are no available accommodations"
+msgstr "Ne pare rau, nu sunt camere disponibile"
+
+msgid "No availability solution"
+msgstr "Nu sunt solutii valabile"
+
+msgid "alternative_case_1"
+msgstr "Ne pare rau, dar în perioada selectata suntem închisi"
+
+msgid "alternative_case_2"
+msgstr ""
+"Ne pare rau, dar pentru datele si nr. De persoane introduse nu avem "
+"disponibilitate."
+
+msgid "Availability not found"
+msgstr "Nu s-a gasit disponibilitate"
+
+msgid "To send a request for information you can click here"
+msgstr "Pentru a trimite o cerere de informare poti da click aici"
+
+msgid "More info"
+msgstr "Mai multe informatii"
+
+msgid "Change period"
+msgstr "Modifica perioada"
+
+msgid "Choose your accommodation"
+msgstr "Solutii disponibile"
+
+msgid "nights"
+msgstr "nopti"
+
+msgid "# Rooms"
+msgstr "Nr. Camere"
+
+msgid "N. Persons"
+msgstr "Nr. Persoane"
+
+msgid "Last chance"
+msgstr "Ultima ocazie"
+
+msgid "rooms left"
+msgstr "camere ramase"
+
+msgid "Latest"
+msgstr "Ultimele"
+
+msgid "Image not available"
+msgstr "Imagine nedisponibila"
+
+msgid "From"
+msgstr "De la"
+
+msgid "Total stay"
+msgstr "Total sedere"
+
+msgid "Boarding"
+msgstr "Tratament"
+
+msgid "Bed and breakfast"
+msgstr "Camera si mic dejun"
+
+msgid "Half board"
+msgstr "Demipensiune"
+
+msgid "Full board"
+msgstr "Pensiune completa"
+
+msgid "Select"
+msgstr "Alege"
+
+msgid "Accessory services"
+msgstr "Servicii speciale"
+
+msgid "see and select"
+msgstr "vezi si alege"
+
+msgid "Single price"
+msgstr "Pret unitar"
+
+msgid "To pay a part"
+msgstr "Servicii extra la cerere (cu plata la sosire)"
+
+msgid "Total €"
+msgstr "Toal €"
+
+msgid "Add/remove"
+msgstr "Adauga/scoate"
+
+msgid "Add a special service"
+msgstr "Adauga un serviciu special "
+
+msgid "Confirm accessories"
+msgstr "Confirma serviciile adaugate"
+
+msgid "Accessories"
+msgstr "Servicii speciale"
+
+msgid "Accessories list"
+msgstr "Lista  servicii"
+
+msgid "Total accessories"
+msgstr "Total servicii speciale"
+
+msgid "Add accessories"
+msgstr "Adauga optiuni pentru sedere"
+
+msgid "Price"
+msgstr "Pret"
+
+msgid "Search alternative arrival date"
+msgstr "Cauta perioade alternative"
+
+msgid "We're processing your request"
+msgstr "Va procesam cererea"
+
+msgid "Guests"
+msgstr "Oaspeti"
+
+msgid "Insert your data"
+msgstr "Introduceti datele"
+
+msgid "Rooms summary"
+msgstr "Sumar camere"
+
+msgid "Step reached"
+msgstr "Pas ajuns"
+
+msgid "Step reached with availability"
+msgstr "Pas ajuns cu disponibilitate"
+
+msgid "Reservation conditions"
+msgstr "Conditii pentru rezervare"
+
+msgid "Room Price"
+msgstr "Pret camera"
+
+msgid "Room Total"
+msgstr "Total camera"
+
+msgid "%s Total"
+msgstr "Total %s"
+
+msgid "Total reservation"
+msgstr "Total sedere"
+
+msgid "Reservation end note"
+msgstr "Note sfârsit de rezervare"
+
+msgid "Checkin/out policy"
+msgstr "Checkin / Checkout"
+
+msgid "Reservation policy"
+msgstr "Politica de rezervare"
+
+msgid "Booking data"
+msgstr "Politica de rezervare"
+
+msgid "Payment policy"
+msgstr "Politica de plata"
+
+msgid "Cancellation policy"
+msgstr "Politica de renuntare"
+
+msgid "Rates policy"
+msgstr "Politica de preturi"
+
+msgid "Modify"
+msgstr "Modifica"
+
+msgid "modification"
+msgstr "modifica"
+
+msgid "Insert your Email and password"
+msgstr "Introduceti email si parola"
+
+msgid "Have you a discount code?"
+msgstr "Aveti cod de reducere?"
+
+msgid "Do you have a Discount Code?"
+msgstr "Aveti cod de reducere?"
+
+msgid "Discount code"
+msgstr "Cod de reducere"
+
+msgid "Add a discount"
+msgstr "Adauga un cod de reducere"
+
+msgid "Gift Card used"
+msgstr "Card cadou folosit"
+
+msgid "Discount code used"
+msgstr "Cod de reducere folosit"
+
+msgid "Send"
+msgstr "Trimite"
+
+msgid "Guest records"
+msgstr "Date client"
+
+msgid "Guest data"
+msgstr "Date client"
+
+msgid "Name"
+msgstr "Prenume"
+
+msgid "Surname"
+msgstr "Nume"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Repeat e-mail"
+msgstr "Repeta e-mail"
+
+msgid "Same fields are required or not correct"
+msgstr "Câmp obligatoriu incorect sau neintrodus"
+
+msgid "Mandatory Field"
+msgstr "Câmpuri obligatorii"
+
+msgid "Mandatory Fields"
+msgstr "Câmpuri obligatorii"
+
+msgid "Mandatory fields"
+msgstr "Câmpuri obligatorii"
+
+msgid "Payment mode"
+msgstr "Mod de plata"
+
+msgid "guarantee"
+msgstr "ca si garantie"
+
+msgid "with gateway"
+msgstr "cu poarta de acces"
+
+msgid "Credit card"
+msgstr "Card de credit"
+
+msgid "Credit card data"
+msgstr "Card de credit"
+
+# --- step3 booking
+msgid "Credit card invalid. Please check number"
+msgstr "Card de credit invalid. Va rugam controlati nr."
+
+msgid "Customer area"
+msgstr "Zona clienti"
+
+msgid "Date not valid"
+msgstr "Date invalide"
+
+msgid "Delete"
+msgstr "Sterge"
+
+msgid "Pay with credit card"
+msgstr "Plata cu card de credit"
+
+msgid "Pay with money transfer"
+msgstr "Plata prin transfer bancar"
+
+msgid "Payment"
+msgstr "Plata"
+
+msgid "Phone"
+msgstr "Telefon"
+
+# --- step3 booking e enquiry
+msgid "Phone can not be empty"
+msgstr "Câmpul telefon nu poate fi necompletat"
+
+msgid "Please check your card details"
+msgstr "Controlati datele cartii de credit"
+
+msgid "Please check your card number digits"
+msgstr "Controlati cifrele cartii de credit"
+
+msgid "Please select a day"
+msgstr "Selecteaza macar o zi"
+
+msgid "Please select an item from the list"
+msgstr "Selecteaza macar unelement din lista"
+
+# --- step2 booking ---
+msgid "Please select number of children"
+msgstr "Introduceti nr. Copiilor"
+
+# --- step2 booking ---
+msgid "Please set chilldren's age"
+msgstr "Introduceti vârsta copiilor"
+
+msgid "Prev"
+msgstr "Precendent"
+
+msgid "Prev month"
+msgstr "Luna precedenta"
+
+msgid "Prev year"
+msgstr "An precedent"
+
+msgid "Prev. day"
+msgstr "Zi precedenta"
+
+msgid "Price not valid"
+msgstr "Pret invalid"
+
+msgid "Pricelist"
+msgstr "Lista de preturi"
+
+msgid "Prices"
+msgstr "Preturi"
+
+msgid "Print"
+msgstr "Printeaza"
+
+msgid "What is the security code?"
+msgstr "Care este codul de securitate?"
+
+msgid "Where is the security code?"
+msgstr "Unde este codul de securitate?"
+
+# --- step3 booking e enquiry ---
+msgid "You may only proceed if you accept the privacy policy"
+msgstr "Puteti continua doar prin acceptarea politicilor de confidentialitate"
+
+# --- step3 booking ---
+msgid "You may only proceed if you accept the terms and conditions"
+msgstr "Puteti continua doar prin acceptarea termenilor si conditiilor"
+
+# --- step3 booking ---
+msgid "You must select a payment method"
+msgstr "Alegeti o metoda de plata"
+
+msgid "ZIP"
+msgstr "Cod postal"
+
+msgid "Zoom"
+msgstr "Mareste"
+
+msgid "Zoom size"
+msgstr "Dimensiune marire"
+
+msgid "as it is written on the card"
+msgstr "asa cum este scris pe card"
+
+msgid "cancelled"
+msgstr "anulata"
+
+msgid "cc_notes"
+msgstr ""
+"Fara taxe suplimentare! Doar prin garantia rezervarii. Plata se va efectu"
+
+msgid "account_title"
+msgstr "Autorizarea taxarii pentru cardul de credit"
+
+msgid "OLDaccount_notes %s"
+msgstr "Subsemnatul autorizeaza pentru acest card de credit, sau pentru u"
+
+msgid "account_notes %s"
+msgstr "Autorizez retinerea pentru întreaga suma"
+
+msgid "click on an alternative arrival date"
+msgstr "Dati click pe o data de sosire alternativa"
+
+msgid "confirmed"
+msgstr "confirma"
+
+msgid "eg. arrival time"
+msgstr "ex. Indicati ora de sosire"
+
+msgid "for minimum stays"
+msgstr "Pentru vacatede de"
+
+msgid "no spaces or dashes"
+msgstr "Fara spatii sau bari"
+
+msgid "opened"
+msgstr "deschisa"
+
+msgid "save up to"
+msgstr "reduceri pâna la"
+
+msgid "sec_code_desc"
+msgstr ""
+"Codul CVV , CVC , sau CID reprezinta un mijloc de securitate ulterioara "
+"pentru "
+
+msgid "within"
+msgstr " pâna la "
+
+msgid "Payments"
+msgstr "Plati"
+
+msgid "Terms & conditions"
+msgstr "Termeni si conditii"
+
+msgid "How to reach"
+msgstr "Come raggiungerci"
+
+msgid "Payment request type"
+msgstr "Tip de plata"
+
+msgid "Payment result"
+msgstr "Rezultatele platii"
+
+msgid "Terms and conditions"
+msgstr "Termeni si conditii"
+
+msgid "Total account"
+msgstr "Total cont"
+
+msgid "Total to settle"
+msgstr "Total suma care urmeaza sa fie platita"
+
+msgid "To pay"
+msgstr "De plata"
+
+msgid "Reversal"
+msgstr "Storno"
+
+msgid "Payment ok"
+msgstr "Plata efectuata"
+
+msgid "Payment failed"
+msgstr "Plata neefectuata"
+
+msgid "In payment"
+msgstr "În curs de plata"
+
+msgid "Credit card guarantee. Payment in hotel"
+msgstr "Card de credit ca si garantie. Plata la hotel."
+
+msgid "Allow reservation if available"
+msgstr "Permite rezervarea daca este posibila"
+
+msgid "Protocol"
+msgstr "Protocol"
+
+msgid "Total reservation price"
+msgstr "Total sedere"
+
+msgid "Credit card accepted"
+msgstr "Card de credit acceptat"
+
+msgid "Accepts"
+msgstr "Accepta"
+
+msgid "Yes"
+msgstr "Da"
+
+msgid "No"
+msgstr "Nu"
+
+msgid "Structure"
+msgstr "Structura"
+
+msgid "Waiting to be confirmed"
+msgstr "Se asteapta confirmarea"
+
+msgid "Confirmed"
+msgstr "Confirmat"
+
+msgid "Cancelled by the structure"
+msgstr "Anulat de structura"
+
+msgid "Cancelled by the guest"
+msgstr "Anulat de catre client"
+
+msgid "Cancelled for NO-SHOW"
+msgstr "Anulat pentru NO-SHOW"
+
+msgid "Cancelled due to wrong CC data"
+msgstr "Anulat pentru date CC incorecte"
+
+msgid "Structure data"
+msgstr "Informatii structura"
+
+msgid "Reservation inserted"
+msgstr "Rezervare introdusa"
+
+msgid "Request inserted"
+msgstr "Cerinta introdusa"
+
+msgid "Authorization"
+msgstr "Autorizare"
+
+msgid "Interested to"
+msgstr "Interesat  sa"
+
+# --- step3 booking
+msgid "Security code invalid"
+msgstr "Cod de securitate invalid"
+
+msgid "Payment methods"
+msgstr "Plata"
+
+#: ------------------ release 1.4.0
+msgid "cancellation"
+msgstr "anulare"
+
+msgid "Cancelled by the administrator"
+msgstr "Anulat de catre administrator"
+
+msgid "Cancelled on guest request"
+msgstr "Anulat la cererea clientului"
+
+msgid "Request to be cancelled by guest"
+msgstr "Cerere de anulare a clientului"
+
+msgid "Request to be modified by guest"
+msgstr "Cerere de modificare a clientului"
+
+msgid "Expires"
+msgstr "Expira"
+
+msgid "Expiry date"
+msgstr "Data  expirarii"
+
+# --- step3 booking ---
+msgid "Expiry date date is invalid"
+msgstr "Data expirarii data invalida"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Type"
+msgstr "Tip"
+
+msgid "Type of credit card"
+msgstr "Tip card de credit"
+
+msgid "Holder"
+msgstr "Titular"
+
+msgid "Bank Account Holder"
+msgstr "Titular al contului bancar curent"
+
+msgid "Use credit card"
+msgstr "Foloseste cartea de credit"
+
+msgid "All fields are mandatory"
+msgstr "Toate câmpurile sunt obligatorii"
+
+msgid "I Subscribe for the newsletter in"
+msgstr "Aboneaza-te la newsletter"
+
+msgid "I agree to the personal data's treatment policy"
+msgstr "Accept politica referitoare la datele personale"
+
+msgid "I have read and agreed with the terms and conditions"
+msgstr "Am citit si acceptat termenele si conditiile"
+
+msgid "Book now"
+msgstr "Rezerva acum"
+
+msgid "Reserve now!"
+msgstr "Rezerva acum!"
+
+msgid "Room"
+msgstr "Camera"
+
+msgid "Room > numpax"
+msgstr "Numarul de camere este mai mare decât numarul de persoane"
+
+msgid "Room code"
+msgstr "Cod camera"
+
+msgid "Room description"
+msgstr "Descriere camera"
+
+msgid "Room type"
+msgstr "Tip camera"
+
+msgid "Room type and board"
+msgstr "Tip camera si tratament"
+
+msgid "Room/App. per night"
+msgstr "Camera sau apartament per noapte"
+
+msgid "Room/App. per week"
+msgstr "Camera sau apartament pe saptamâna"
+
+msgid "S.C."
+msgstr "S.C."
+
+msgid "Save"
+msgstr "Salveaza"
+
+msgid "Search another option"
+msgstr ""
+"Vezi periaode alternative, click pe tabelul de lânga pentru date alternative"
+
+msgid "Reservation"
+msgstr "Rezervare"
+
+msgid "Request"
+msgstr "Cerere"
+
+#: ------------------ release 1.4.0 RC 3
+msgid "Reservation sent"
+msgstr "Rezervare trimisa"
+
+msgid "Request sended"
+msgstr "Cerere trimisa"
+
+msgid "Select type and boarding desired"
+msgstr "Selecteaza tipul de tratament dorit"
+
+msgid "Select period and rooms"
+msgstr "Selecteaza perioada si camerele"
+
+msgid "Continue"
+msgstr "Continua"
+
+msgid "Send request"
+msgstr "Trimite cerere"
+
+msgid "from"
+msgstr "de la"
+
+msgid "to"
+msgstr "pâna la"
+
+msgid "Selected date"
+msgstr "Data selectata"
+
+msgid "Alternative date"
+msgstr "Data alternativa"
+
+msgid "Wait the confirmation of disponibility"
+msgstr ""
+"Va multumim pentru cerere, veti primi un raspuns în cel mai scurt timp "
+"posibil"
+
+msgid "Transaction failed"
+msgstr "Tranzactie neefectuata"
+
+msgid "Successful cancellation"
+msgstr "Anulat cu succes"
+
+msgid "Successful editation"
+msgstr "Cererea dumneavoastra de modificare a fost trimisa.  Ne revine sarcin"
+
+msgid "Reservation delivery successfully"
+msgstr "Rezervare trimisa cu succes"
+
+msgid ""
+"Your request has been successfully sent, you will soon receive a confirm"
+msgstr ""
+"Cererea a fost trimisa cu succes, veti primi un mesaj de confirmare în "
+"curand."
+
+msgid "Number"
+msgstr "Numar"
+
+# --- step2 booking ---
+msgid "Insufficient number of nights"
+msgstr "Pentru perioada aleasa vi se cere un numar de nopti mai mare."
+
+msgid "MM/YY"
+msgstr "LL/AA"
+
+msgid "City"
+msgstr "Oras"
+
+# --- step3 booking e enquiry ---
+msgid "City can not be empty"
+msgstr "Câmpul Oras nu poate fi gol"
+
+msgid "Close"
+msgstr "Închide"
+
+msgid "Close the popup"
+msgstr "Închide fereastra"
+
+msgid "Code"
+msgstr "Cod"
+
+msgid "Company"
+msgstr "Societate comerciala"
+
+msgid "Conditions"
+msgstr "Conditii"
+
+msgid "Confirm"
+msgstr "Confirma"
+
+msgid "Confirmed date"
+msgstr "Data confirmata"
+
+msgid "Consent to privacy"
+msgstr "Sunt de acord cu politica de confidentialitate"
+
+msgid "Consent to use personal data"
+msgstr "Sunt de acord cu politica datelor personale"
+
+msgid "Copy"
+msgstr "Copiaza"
+
+msgid "Country"
+msgstr "Tara"
+
+msgid "Address"
+msgstr "Adresa"
+
+# --- step3 booking e enquiry
+msgid "Address can not be empty"
+msgstr "Câmpul Adresa nu poate ramâne necompletat"
+
+msgid "The phone field must be 8 digits in length,with an optional 2 or 3 digi"
+msgstr "Telefon invalid"
+
+msgid "The zipcode must be 4 or 5 digits in length"
+msgstr "Codul Postal trebuie sa fie de 4 sau 5 cifre"
+
+# --- step3 booking e enquiry
+msgid "Mobile phone number can not be empty"
+msgstr "Câmpul Telefon Mobil nu poate ramâne necompletat"
+
+msgid "Mobile"
+msgstr "Telefon Mobil"
+
+# --- step3 booking ---
+msgid "Email can not be empty"
+msgstr "Câmpul E-mail nu poate ramâne necompletat"
+
+# --- step3 booking ---
+msgid "Email is not the same"
+msgstr "Adresele de email nu sunt aceleasi."
+
+msgid "The email must be in the name@domain format."
+msgstr "Emailul trebuie sa respecte forma nume@domeniu"
+
+msgid "The expiry date is not a valid date in the format MM/YY"
+msgstr "Data expirarii este invalida. Aceasta trebuie sa fie în formatul LL/AA"
+
+msgid "The month is invalid"
+msgstr "Luna invalida"
+
+msgid ""
+"If you have forgotten your password, insert you email address in the fiel"
+msgstr "Daca ati uitat parola, inroduceti adresa de email în câmpul de mai jos"
+
+msgid "Your new password has been sent to the registered email address."
+msgstr "O noua parola a fost trimisa pe adresa de email înregistrata."
+
+msgid "Sorry, the email is not associated to any user."
+msgstr "Ne pare rau, emailul nu apartine unui utilizator înregistrat."
+
+msgid "Rooms list"
+msgstr "Lista camere"
+
+msgid "Saving"
+msgstr "Economisesti"
+
+msgid "Costs and prices"
+msgstr "Costuri si preturi"
+
+msgid "Apartments"
+msgstr "Apartamente"
+
+msgid "Apartment"
+msgstr "Apartament"
+
+msgid "Province of"
+msgstr "Judetul"
+
+msgid "Company can not be empty"
+msgstr "Câmpul Societate Comerciala nu poate ramâne necompletat"
+
+msgid "Zip cope can not be empty"
+msgstr "Câmpul Cod Postal nu poate ramâne necompletat"
+
+msgid "State can not be empty"
+msgstr "Câmpul Judet nu poate ramâne necompletat"
+
+msgid "Country can not be empty"
+msgstr "La nazione non può essere vuoto"
+
+msgid "Fax can not be empty"
+msgstr "Câmpul Fax nu poate ramâne necompletat"
+
+msgid "Guest language can not be empty"
+msgstr "Câmpul Limba nu poate ramâne necompletat"
+
+msgid "Note can not be empty"
+msgstr "Câmpul Note nu poate ramâne necompletat"
+
+# --- step3 e enquiry ---
+msgid "Name can not be empty"
+msgstr "Câmpul Prenume nu poate ramâne necompletat"
+
+# --- step3 booking e enquiry
+msgid "Surname can not be empty"
+msgstr "Câmpul Nume nu poate ramâne necompletat"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "at phone number"
+msgstr "la numarul de telefon"
+
+msgid "Mobile can not be empty"
+msgstr "Câmpul Telefon Mobil nu poate ramâne necompletat"
+
+msgid "Summary data"
+msgstr "Sumar date"
+
+msgid "Unknown payment type"
+msgstr "Tip de plata necunoscut"
+
+msgid "Email address is not valid"
+msgstr "Adresa email invalida"
+
+msgid "You will soon receive an e-mail for a confirmation."
+msgstr "Veti primi un emai de confirmare în curând"
+
+msgid "Go back to Your Reservation"
+msgstr "Întoarcere la rezervare"
+
+msgid "Booking total price"
+msgstr "Pret total rezervare"
+
+msgid "Booking deposit"
+msgstr "Pret de plata"
+
+msgid "Details Policy Stay"
+msgstr "Detalii Politici Sederi"
+
+msgid "Check your reservation"
+msgstr "Controleaza rezervarea facuta"
+
+msgid "Reservation number"
+msgstr "Numar rezervare"
+
+msgid "View reservations"
+msgstr "Vezi rezervari"
+
+msgid "Edit profile"
+msgstr "Modifica profil"
+
+msgid "Your services"
+msgstr "Serviciile tale"
+
+msgid "Your reservation"
+msgstr "Rezervarea ta"
+
+msgid "View"
+msgstr "Vezi"
+
+msgid "Tot reservation price"
+msgstr "Pret total al rezervarii"
+
+msgid "Star/Key"
+msgstr "Stea / Cheie"
+
+msgid "Stars/Keys"
+msgstr "Stele / Chei"
+
+msgid "accomodations"
+msgstr "cazare"
+
+msgid "Search"
+msgstr "Cauta"
+
+msgid "feepaying"
+msgstr "cu plata"
+
+msgid "Book online"
+msgstr "Rezerva online"
+
+# step3 booking
+msgid "Total price"
+msgstr "Pret total"
+
+msgid "Total room price"
+msgstr "Pret total pe camera"
+
+msgid "Thanks for choosing our hotel"
+msgstr "Va multumim ca ati ales hotelul nostru"
+
+msgid "Supplements and Reductions"
+msgstr "Suplimente si reduceri"
+
+msgid "Supplements and reductions"
+msgstr "Suplimente si reduceri"
+
+msgid "Special rate"
+msgstr "Tarif special"
+
+msgid "Select all"
+msgstr "Selecteaza tot"
+
+msgid "Selected days"
+msgstr "Perioada selectata"
+
+msgid "Selection completed"
+msgstr "Selectie efectuata"
+
+msgid "Rates and conditions"
+msgstr "Tarife si conditii"
+
+msgid "Reservation ID"
+msgstr "ID rezervare"
+
+msgid "Reservation confirmed"
+msgstr "Rezervare confirmata"
+
+msgid "Reservation data"
+msgstr "Date rezervare"
+
+msgid "Reservation detail"
+msgstr "Detalii rezervare"
+
+msgid "Product"
+msgstr "Produs"
+
+# --- step2 booking ---
+msgid "Intro text"
+msgstr "Text introductiv"
+
+msgid "Insert"
+msgstr "Introdu"
+
+msgid "Insert children's age if present"
+msgstr "Introduceti vârsta copiilor prezenti"
+
+# --- step2 booking ---
+msgid "From date less than current date"
+msgstr "Data plecarii este anterioara datii curente"
+
+# --- step2 booking ---
+msgid "From date less to date"
+msgstr "Data plecarii este anterioara sau aceeasi cu data curenta"
+
+msgid "Enter"
+msgstr "Comfirma"
+
+msgid "Enquiry data"
+msgstr "Intrebare data"
+
+msgid "Enquiry date"
+msgstr "Data cerere"
+
+msgid "Enquiry delivered"
+msgstr "Cerere trimisa"
+
+msgid "Enquiry request delivery successfully"
+msgstr "Cerere de disponibilitate trimisa cu succes"
+
+msgid "Are you sure that you want to delete this elemet?"
+msgstr "Esti sigur ca vrei sa elimini acest element?"
+
+msgid "Amount"
+msgstr "Suma"
+
+msgid "Amount paid"
+msgstr "Suma platita"
+
+msgid "Amount to pay"
+msgstr "Suma de plata"
+
+msgid "Apply"
+msgstr "Aplica"
+
+msgid "All days"
+msgstr "Toate zilele"
+
+msgid "Num nights"
+msgstr "Numar de nopti"
+
+msgid "Select a city"
+msgstr "Selecteaza o localitate"
+
+msgid "Best Price"
+msgstr "Cel mai bun pret"
+
+msgid "Validity from"
+msgstr "Valabil din"
+
+msgid "Special offers from"
+msgstr "Oferte speciale de la"
+
+msgid "Account to pay"
+msgstr "Suma de plata"
+
+msgid "Impossible to delete a mandatory element"
+msgstr "Imposibil de sters un element obligatoriu"
+
+msgid "Delete category"
+msgstr "Anuleaza categoria"
+
+msgid "Delete product"
+msgstr "Anuleaza produsul"
+
+msgid "Operation cancelled"
+msgstr "Operatie anulata"
+
+msgid "% amount on total"
+msgstr "Procent pe total"
+
+msgid "for reservation carried out within"
+msgstr "pentru rezervari efectuate integral"
+
+msgid "for reservation carried out beyond"
+msgstr "pentru rezervari efectuate în plus"
+
+msgid "Acceptable minimum amount"
+msgstr "Suma minima ceruta"
+
+msgid "Payment within day"
+msgstr "Plata pâna la data de"
+
+msgid "Protocol/ID"
+msgstr "Protocol/ID"
+
+msgid "No offer present"
+msgstr "Nicio oferta prezenta"
+
+msgid "No rooms or boarding info available"
+msgstr "Nicio camera sau informatii de rezervare disponibile"
+
+msgid "No solutions found"
+msgstr "Nicio solutie gasita"
+
+msgid "No account"
+msgstr "Niciun cont"
+
+msgid "No result"
+msgstr "Niciun rezultat"
+
+msgid "No available room"
+msgstr "Camera nedisponibila"
+
+msgid "Structure amenity"
+msgstr "Structura de agrement"
+
+msgid "Structure description"
+msgstr "Descriere structura"
+
+msgid "Structure services"
+msgstr "Servicii ale structurii"
+
+msgid "Structure position"
+msgstr "Pozitia structurii"
+
+msgid "Structure tipology"
+msgstr "Tipologia structurii"
+
+msgid "Structure type"
+msgstr "Tip de structura"
+
+msgid "Structure treatment"
+msgstr "Tratamente"
+
+msgid "Structures"
+msgstr "Structuri"
+
+msgid "Completed structures list"
+msgstr "Lista  completa de structuri"
+
+msgid "structures found"
+msgstr "structuri gasite"
+
+msgid "Complete list structures"
+msgstr "Lista  completa de structuri"
+
+msgid "There are structures with this amenity associated"
+msgstr "Exista structuri cu acest serviciu asociat"
+
+msgid "No structures selected"
+msgstr "Nicio structura selectata"
+
+msgid "Cancelled date"
+msgstr "Data anularii"
+
+msgid "Request the cancellation of this reservation"
+msgstr "Cere anularea acestei rezervari"
+
+msgid "We remind you that IT is not possible to nullify the cancellation!"
+msgstr "Va amintim ca nu este posibila anularea rezervarii!"
+
+msgid "Please select the reason for the cancellation"
+msgstr "Te rugam sa ne comunici motivul anularii "
+
+msgid "Days before cancellation"
+msgstr "Numar minim de zile înainte de anulare"
+
+msgid "Holder name is invalid"
+msgstr "Numele proprietarului cardului nu este valabil"
+
+msgid "Book"
+msgstr "Rezerva"
+
+msgid "Book safely"
+msgstr "Rezerva în siguranta"
+
+msgid "Room/week"
+msgstr "Camera pe saptamâna"
+
+msgid "Room/night"
+msgstr "Camera pe noapte"
+
+msgid "Room services"
+msgstr "Servicii de camera"
+
+msgid "Room not available for this board"
+msgstr "Camera nedisponibila pentru acest tratament"
+
+msgid "Reservation status"
+msgstr "Status rezervare"
+
+msgid "Reservation request inserted successfully"
+msgstr "Cerere de rezervare introdusa cu succes"
+
+msgid "Info Request"
+msgstr "Informatii cerere"
+
+msgid "Request availability"
+msgstr "Cere disponibilitate"
+
+msgid "Show Reservation Conditions"
+msgstr "Vezi Conditii pentru Rezervari"
+
+msgid "View Terms and Conditions for this facility"
+msgstr "Vezi Temene si Conditii pentru aceasta structura"
+
+msgid "View other periods"
+msgstr "Vezi perioade alternative"
+
+msgid "Search only available"
+msgstr "Cauta doar între cele disponibile"
+
+msgid "Search result"
+msgstr "Rezultat cautare"
+
+msgid "Search results"
+msgstr "Rezultate cautare"
+
+msgid "Go to Search"
+msgstr "Întoarcere la Cautare"
+
+msgid "Search by name"
+msgstr "Cautare dupa nume"
+
+msgid "Search near to"
+msgstr "Cautare în apropiere de"
+
+msgid "Insert name"
+msgstr "Introdu nume"
+
+msgid "Accepting terms and conditions"
+msgstr "Acceptare termene si conditii"
+
+msgid "Access"
+msgstr "Acces"
+
+msgid "Account"
+msgstr "Cont"
+
+msgid "Accounts"
+msgstr "Conturi"
+
+msgid "Adults"
+msgstr "Adulti"
+
+msgid "Age"
+msgstr "Vârsta"
+
+msgid "All categories"
+msgstr "Toate categoriile"
+
+msgid "All offers"
+msgstr "Vezi toate ofertele"
+
+msgid "All typologies"
+msgstr "Toate tipologiile"
+
+msgid "Allotment manager"
+msgstr "Manager de  alocare"
+
+msgid "alt_detail_guide"
+msgstr "da click pentru a vizualiza si modifica noua solutie"
+
+msgid "Amenities"
+msgstr "Comfort"
+
+msgid "Amenity type"
+msgstr "Tipuri de servicii"
+
+msgid "and"
+msgstr "si"
+
+msgid "and neighbourhood"
+msgstr "si vecinatati"
+
+msgid "Arrival"
+msgstr "Sosire"
+
+msgid "at"
+msgstr "la"
+
+msgid "Automatic"
+msgstr "automat"
+
+msgid "Availability"
+msgstr "Disponibilitate"
+
+msgid "Availability not valid"
+msgstr "Disponibilitate nevalida"
+
+msgid "Available solutions"
+msgstr "Solutii disponibile"
+
+msgid "Average price per night"
+msgstr "Pret mediu pe noapte"
+
+msgid "Back"
+msgstr "Întoarcere"
+
+msgid "Bank account holder"
+msgstr "Titular cont bancar"
+
+msgid "Bank name"
+msgstr "Nume banca"
+
+msgid "Bank transfer"
+msgstr "Transfer bancar"
+
+msgid "Beaches"
+msgstr "Plaje"
+
+msgid "Bed"
+msgstr "Pat"
+
+msgid "best price from"
+msgstr "cel mai bun pret din"
+
+msgid "Booking board"
+msgstr "Tratament"
+
+msgid "Booking complete"
+msgstr "Rezervare completata"
+
+msgid "Booking discounts manager"
+msgstr "Reduceri manager de rezervari"
+
+msgid "Booking enquiry"
+msgstr "Cerere de disponibilitate"
+
+msgid "Booking manager"
+msgstr "Manager de rezervari"
+
+msgid "Booking Online"
+msgstr "Rezervare online"
+
+msgid "Booking pricelist manager"
+msgstr "Manager de preturi"
+
+msgid "Booking rates and conditions manager"
+msgstr "Tarife si conditii"
+
+msgid "Booking request"
+msgstr "Cerere de rezervare "
+
+msgid "Calendar functions"
+msgstr "Functii calendar"
+
+msgid "Cancel"
+msgstr "Anuleaza"
+
+msgid "Card number must contain only digits and spaces"
+msgstr "Cardul de credit trebuie sa contina doar numere si spatii"
+
+msgid "Check availability"
+msgstr "Verifica disponibilitate"
+
+msgid "Checkin/checkout day not allowed"
+msgstr "Zi de plecare/sosire nepermisa"
+
+msgid "Child"
+msgstr "Copil"
+
+msgid "Children"
+msgstr "Copii"
+
+msgid "Children age"
+msgstr "Vârsta copiilor"
+
+msgid "Click for more info"
+msgstr "Cauta pentru mai multe informatii"
+
+msgid "Compile questionnaire"
+msgstr "Completeaza chestionarul"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Currency manager"
+msgstr "Manager de valuta"
+
+msgid "days before"
+msgstr "zile înainte"
+
+msgid "days after"
+msgstr "zile dupa"
+
+msgid "Departure"
+msgstr "Plecare"
+
+msgid "Deposit"
+msgstr "Depozit"
+
+msgid "Description"
+msgstr "Descriere"
+
+msgid "Destination"
+msgstr "Destinatie"
+
+msgid "Detail"
+msgstr "Detaliu"
+
+msgid "Details"
+msgstr "Detalii"
+
+msgid "Discount"
+msgstr "Reducere"
+
+msgid "Discount not valid"
+msgstr "Reducere nevalabila"
+
+msgid "Discounts"
+msgstr "Reduceri"
+
+msgid "distance"
+msgstr "distanta"
+
+msgid "District"
+msgstr "Oras"
+
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "End address"
+msgstr "Adresa de sosire"
+
+msgid "Enlarge the map"
+msgstr "Mareste harta"
+
+msgid "Enquiries"
+msgstr "Cerinte"
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "Estimate"
+msgstr "Estimativ"
+
+msgid "Feepaying services"
+msgstr "Servizi a pagamento"
+
+msgid "Fields manager"
+msgstr "Manager produse"
+
+msgid "File"
+msgstr "Fisier atasat"
+
+msgid "File categories"
+msgstr "Categorii fisier"
+
+msgid "File data"
+msgstr "Date fisier"
+
+msgid "File manager"
+msgstr "Manager fisier"
+
+msgid "File size"
+msgstr "Dimensiune fisier"
+
+msgid "Filename"
+msgstr "Nume fisier"
+
+msgid "Files"
+msgstr "Fisiere"
+
+msgid "Files list"
+msgstr "Lista fisiere"
+
+msgid "Finish publishing"
+msgstr "Final de publicare"
+
+msgid "Forward"
+msgstr "Înainte"
+
+msgid "found"
+msgstr "gasit"
+
+msgid "founds"
+msgstr "gasite"
+
+msgid "Free services"
+msgstr "Servicii gratuite"
+
+msgid "from airport"
+msgstr "de la aeroport"
+
+msgid "From date"
+msgstr "De la data"
+
+msgid "From here"
+msgstr "De aici"
+
+msgid "from nearest centre"
+msgstr "de la cel mai apropiat centru"
+
+msgid "from Portoferraio harbour"
+msgstr "de la portul Portoferraio"
+
+msgid "from sea"
+msgstr "de la mare"
+
+msgid "Full text"
+msgstr "Text complet"
+
+msgid "Fullname"
+msgstr "Nume complet"
+
+msgid "Gallery categories"
+msgstr "Categorii de galerii"
+
+msgid "Gallery manager"
+msgstr "Manager galerie"
+
+msgid "General"
+msgstr "În genral"
+
+msgid "General conditions"
+msgstr "Conditii generale"
+
+msgid "General data"
+msgstr "Date generale"
+
+msgid "Get directions"
+msgstr "Obtine indicatii stradale"
+
+msgid "Get route"
+msgstr "Calculeaza ruta"
+
+msgid "Go back"
+msgstr "Înapoi"
+
+msgid "Header"
+msgstr "Antet"
+
+msgid "Headers"
+msgstr "Antete"
+
+msgid "Home page"
+msgstr "Pagina principala"
+
+msgid "Hotels and apartments"
+msgstr "Hoteluri si apartamente"
+
+msgid "Images"
+msgstr "Imagini"
+
+msgid "Images list"
+msgstr "Lista cu imagini"
+
+msgid "in"
+msgstr "în"
+
+msgid "In the neighbourhood"
+msgstr "În apropiere"
+
+msgid "Infants"
+msgstr "Bebelusi"
+
+msgid "Info request"
+msgstr "Info cerere"
+
+msgid "Info type"
+msgstr ""
+"Categoria Resedinta/Apartamente cuprinde urmatoarele tipuri de cazari: "
+"Autoturism"
+
+msgid "Invalid dates!"
+msgstr "Date  invalide"
+
+msgid "Language"
+msgstr "Limba"
+
+msgid "Legend"
+msgstr "Legenda"
+
+msgid "Less info"
+msgstr "Mai putine informatii"
+
+msgid "Less photos"
+msgstr "Mai putine fotografii"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Link to"
+msgstr "Link catre"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Make an estimate"
+msgstr "Calcola il preventivo"
+
+msgid "Manual"
+msgstr "Manual"
+
+msgid "Map"
+msgstr "Harta"
+
+msgid "Message"
+msgstr "Mesaj"
+
+msgid "Methods of payment"
+msgstr "Metode de plata"
+
+msgid "Minimum stay"
+msgstr "Sedere minima"
+
+msgid "Minimum stay not valid"
+msgstr "Sedere minima nevalida"
+
+msgid "Month"
+msgstr "Luna"
+
+msgid "More photos"
+msgstr "Mai multe poze"
+
+msgid "Most visited"
+msgstr "Cele mai vizualizate"
+
+msgid "Multirate"
+msgstr "Tarife"
+
+msgid "N. rooms"
+msgstr "nr. Camere"
+
+msgid "Nationality"
+msgstr "Nationalitate"
+
+msgid "near to"
+msgstr "În apropiere de"
+
+msgid "New"
+msgstr "Adauga"
+
+msgid "New search"
+msgstr "Cautare noua"
+
+msgid "Next"
+msgstr "Urmator"
+
+msgid "Next day"
+msgstr "Ziua urmatoare"
+
+msgid "Next month"
+msgstr "Luna urmatoare"
+
+msgid "Next year"
+msgstr "Anul urmator"
+
+msgid "None"
+msgstr "Nici unul"
+
+msgid "Norm"
+msgstr "Norma"
+
+msgid "Normal rate"
+msgstr "Tarif normal"
+
+msgid "Not paid"
+msgstr "Neplatit"
+
+msgid "Nothing"
+msgstr "Nimic"
+
+msgid "Num. persons"
+msgstr "nr. Persoane"
+
+msgid "Offer"
+msgstr "Oferta"
+
+msgid "Offer packages"
+msgstr "Oferta de pachete"
+
+msgid "Offer info"
+msgstr "Info Oferta"
+
+msgid "Offers"
+msgstr "Oferte"
+
+msgid "On the map"
+msgstr "Pe harta"
+
+msgid "Only board"
+msgstr "Doar cazare peste noapte"
+
+msgid "Room Only"
+msgstr "Doar cazare peste noapte"
+
+msgid "Only with online availability"
+msgstr "Disponibila doar online"
+
+msgid "Only online availability"
+msgstr "Disponibila doar online"
+
+msgid "Opened date"
+msgstr "Data de deschidere"
+
+msgid "Opening date"
+msgstr "Data de deschidere"
+
+msgid "Operation completed"
+msgstr "Operatie terminata"
+
+msgid "Order by"
+msgstr "Comanda pentru"
+
+msgid "Ordering"
+msgstr "Comanda"
+
+msgid "Other"
+msgstr "Alte"
+
+msgid "Other typologies"
+msgstr "Resedinte/Apartamente"
+
+msgid "Other solutions"
+msgstr "Alte solutii Îti propune alte solutii pentru datele cerute"
+
+msgid "Other offers"
+msgstr "Alte oferte"
+
+msgid "Paid"
+msgstr "Platit"
+
+msgid "Pax/night"
+msgstr "Per persoana per noapte"
+
+msgid "Pax/week"
+msgstr "Per persoana per saptamâna"
+
+msgid "pending confirm"
+msgstr "confirmare în asteptare"
+
+msgid "pending cancel"
+msgstr "anulare în asteptare"
+
+msgid "pending modify"
+msgstr "modificare în asteptare"
+
+msgid "Period"
+msgstr "Perioada"
+
+msgid "Person per night"
+msgstr "Per persoana per noapte"
+
+msgid "Person per week"
+msgstr "Per persoana per saptamâna"
+
+msgid "Person"
+msgstr "Persoana"
+
+msgid "Personal information"
+msgstr "Informatii personale"
+
+msgid "Persons"
+msgstr "Persoane"
+
+msgid "Persons per room"
+msgstr "Persoane per camera"
+
+msgid "Pincode"
+msgstr "Cod PIN"
+
+msgid "Place"
+msgstr "Localitate"
+
+msgid "Popularity"
+msgstr "Notorietate"
+
+msgid "Previous"
+msgstr "Precedent"
+
+msgid "Properties"
+msgstr "Proprietati"
+
+msgid "Published"
+msgstr "Publicat"
+
+msgid "Publishing"
+msgstr "Editura"
+
+msgid "Qty"
+msgstr "Cantitate"
+
+msgid "Rapid search"
+msgstr "Cautare rapida"
+
+msgid "Rapid search hotels and lodgings"
+msgstr "Cautare rapida hoteluri si cazari"
+
+msgid "Read More"
+msgstr "Citeste tot"
+
+msgid "Reductions - Supplements"
+msgstr "Reduceri - Suplimente"
+
+msgid "Refine the search"
+msgstr "Cautare selectiva"
+
+msgid "Requests"
+msgstr "Cerinte"
+
+msgid "Reservations"
+msgstr "Rezervari"
+
+msgid "Resort"
+msgstr "Statiune"
+
+msgid "Return"
+msgstr "Întoarcere"
+
+msgid "Roads distance"
+msgstr "Distante stradale"
+
+msgid "room"
+msgstr "camera"
+
+msgid "rooms"
+msgstr "camere"
+
+msgid "SecureDataTransferSSL"
+msgstr ""
+"Datele dumneavoastra cu caracter personal vor fi tratate cu maxima retiner"
+
+msgid "Security code"
+msgstr "Cod de securitate"
+
+msgid "Services"
+msgstr "Servicii"
+
+msgid "Show conditions"
+msgstr "Citeste conditiile"
+
+msgid "Show map"
+msgstr "Arata harta"
+
+msgid "Show on homepage"
+msgstr "Arata în pagina principala"
+
+msgid "Site manager"
+msgstr "Manager site"
+
+msgid "Site name"
+msgstr "Nume site"
+
+msgid "Site selected"
+msgstr "Site selectat"
+
+msgid "Special Offers"
+msgstr "Oferete Speciale"
+
+msgid "Special offers"
+msgstr "OFFERTE speciale"
+
+msgid "Star"
+msgstr "Stea"
+
+msgid "Stars"
+msgstr "Stele"
+
+msgid "Start address"
+msgstr "Adresa de plecare"
+
+msgid "Start publishing"
+msgstr "Început de publicare"
+
+msgid "State"
+msgstr "Judet"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stay"
+msgstr "Sedere"
+
+msgid "Subcategories"
+msgstr "Subcategorii"
+
+msgid "Subdir"
+msgstr "Subdirectoare"
+
+msgid "Subject"
+msgstr "Subiect"
+
+msgid "Submit"
+msgstr "Trimite"
+
+msgid "Summary"
+msgstr "Sumar"
+
+msgid "Surroundings"
+msgstr "Împrejurimi"
+
+msgid "The fields marked in red are required"
+msgstr "Câmpurile în rosu sunt obligatorii"
+
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgid "Thumbnails"
+msgstr "Miniaturi"
+
+msgid "Tipology"
+msgstr "Tipologie"
+
+msgid "Title"
+msgstr "Titlu"
+
+msgid "To date"
+msgstr "La data"
+
+msgid "To here"
+msgstr "Aici"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Transaction"
+msgstr "Tranzactii"
+
+msgid "Typology"
+msgstr "Tipologie"
+
+msgid "Upload"
+msgstr "Încarcare"
+
+msgid "URL name"
+msgstr "Nume link"
+
+msgid "Warning"
+msgstr "Atentie"
+
+msgid "Weather/Sea"
+msgstr "Meteo/Mare"
+
+msgid "Weather"
+msgstr "Meteo"
+
+msgid "Welcome"
+msgstr "Bine ati venit"
+
+msgid "Transaction list"
+msgstr "Lista tranzactii"
+
+msgid "Open all year round"
+msgstr "Deschis pe tot parcursul anului"
+
+msgid "All Inclusive"
+msgstr "Totul inclus"
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Please be patient"
+msgstr "Te rugam sa astepti"
+
+msgid "Go on"
+msgstr "Continua"
+
+msgid "You can find more hotels by changing your search criteria"
+msgstr "Poti gasi si alte hoteluri marind criteriile de cautare"
+
+msgid "Wrong reservation data"
+msgstr "Datele rezervarii nu sunt corecte"
+
+msgid "with online availability"
+msgstr "cu disponibilitate online"
+
+msgid "Where to stay"
+msgstr "Unde sa te cazezi"
+
+msgid ""
+"To see the availability and prices please enter your check-in and check-out "
+"dates"
+msgstr ""
+"Pentru a vedea disponibilitatea și prețuri Introduceți datele de check-in și "
+"check-out"
+
+msgid "from2"
+msgstr "din"
+
+msgid "available"
+msgstr "disponibil"
+
+msgid "available in other periods"
+msgstr "disponibil în alte perioade"
+
+msgid "Show prices"
+msgstr "Afișare prețuri"
+
+msgid "Booking conditions"
+msgstr "Condiții de rezervare"
+
+msgid "Descending distance"
+msgstr "Descendent distanță"
+
+msgid "Ascending distance"
+msgstr "Ascendentă distanță"
+
+msgid "Descending category"
+msgstr "Descendent categorie"
+
+msgid "Ascending category"
+msgstr "Ascendentă categorie"
+
+msgid "Descending price"
+msgstr "Pret descrescator"
+
+msgid "Ascending price"
+msgstr "Pret crescator"
+
+msgid "Descending price "
+msgstr "Pret descrescator "
+
+msgid "Ascending price "
+msgstr "Pret crescator "
+
+msgid "Name Z-A"
+msgstr "Denumire Z-A"
+
+msgid "Name A-Z"
+msgstr "Denumire A-Z"
+
+msgid "Quantity"
+msgstr "Cantitate"
+
+msgid "Add options to your stay"
+msgstr "Adauga opțiuni pentru a sejurului"
+
+msgid "Added accessories"
+msgstr "Accesorii adăugate"
+
+msgid "Gift packages"
+msgstr "Pachete cadou"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "Credit card guarantee"
+msgstr "Garanție carte de credit"
+
+msgid "alternative_case_3"
+msgstr ""
+"Ne pare rau, dar pentru datele si nr. De persoane introduse nu avem "
+"disponibilitate."
+
+msgid "alternative_case_4"
+msgstr ""
+"Ne pare rau, dar pentru datele si nr. De persoane introduse nu avem "
+"disponibilitate."
+
+msgid "Descending code"
+msgstr "Descendent cod"
+
+msgid "Ascending code"
+msgstr "Ascendentă cod"
+
+msgid "Photo indicative sample"
+msgstr "Foto orientativă mostră"
+
+msgid "Adults - SHORT"
+msgstr "Adulti"
+
+msgid "distance from sea"
+msgstr "distanta de la mare"
+
+msgid "short_days"
+msgstr "z"
+
+msgid "short_hours"
+msgstr "o"
+
+msgid "short_minutes"
+msgstr "m"
+
+msgid "short_seconds"
+msgstr "s"

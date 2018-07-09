@@ -97,6 +97,18 @@ class Test extends AbstractAction
      */
     public function email($request, $response, $args) {
 
+        $t = [
+           "dear" => 'Gentile'
+        ];
+
+        $d = [
+            "name" => 'Mauro',
+            "surname" => 'Larese'
+        ];
+
+
+        $body = require('Emails/templates/subscription-info-email_tpl.php');
+
         try {
             $client = $this->getEmailClient();
             $data = [
@@ -110,8 +122,8 @@ class Test extends AbstractAction
                     'sender' => 'dataone',
                     'from' => 'mauro.larese@mm-one.com', // @todo email da richiedere in dinamico
                     'to' => 'mauro.larese@gmail.com',
-                    'subject' => 'Test  email',
-                    'body' => 'This is a simple PHPUnit generated test email!'
+                    'subject' => 'Test email',
+                    'body' => $body
                 ]
             ];
             $client->request('POST', '', $data);
@@ -121,6 +133,6 @@ class Test extends AbstractAction
             echo $e->getMessage();
         }
 
-        die('done');
+        echo $body;
     }
 }

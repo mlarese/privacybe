@@ -1,0 +1,2092 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ABS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Giuseppe\n"
+"Language-Team: MM-One <info@mm-one.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.3\n"
+"Language: nl_NL\n"
+
+msgid "Already a guest?"
+msgstr "Al klant?"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Lost password"
+msgstr "Password vergeten"
+
+msgid "Verify availability"
+msgstr "Controleer beschikbaarheid en prijzen"
+
+msgid "Check in date"
+msgstr "Aankomstdatum"
+
+msgid "January"
+msgstr "Januari"
+
+msgid "February"
+msgstr "Februari"
+
+msgid "March"
+msgstr "Maart"
+
+msgid "April"
+msgstr "April"
+
+msgid "May"
+msgstr "Mei"
+
+msgid "June"
+msgstr "Juni"
+
+msgid "July"
+msgstr "Juli"
+
+msgid "August"
+msgstr "Augustus"
+
+msgid "September"
+msgstr "September"
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "November"
+msgstr "November"
+
+msgid "December"
+msgstr "December"
+
+msgid "Monday"
+msgstr "Maandag"
+
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+msgid "Wednesday"
+msgstr "Woensdag"
+
+msgid "Thursday"
+msgstr "Donderdag"
+
+msgid "Friday"
+msgstr "Vrijdag"
+
+msgid "Saturday"
+msgstr "Zaterdag"
+
+msgid "Sunday"
+msgstr "Zondag"
+
+msgid "Check out date"
+msgstr "Vertrekdatum"
+
+msgid "Num. rooms"
+msgstr "Aantal kamers"
+
+msgid "Num. %s"
+msgstr "Aantal %s"
+
+msgid "Guests and rooms"
+msgstr "Gasten en kamers"
+
+msgid "Room number"
+msgstr "Kamernummer"
+
+msgid "N. Adults"
+msgstr "Aantal volwassenen"
+
+msgid "N. Children"
+msgstr "Aantal kinderen"
+
+msgid "N. persons"
+msgstr "Aantal personen"
+
+msgid "Children Age"
+msgstr "Leeftijd kinderen"
+
+msgid "Verify"
+msgstr "Controleer"
+
+msgid "Reservation start note"
+msgstr "Notities inleiding reservering"
+
+msgid "Rooms"
+msgstr "Kamers"
+
+msgid "Rooms manager"
+msgstr "Kamerbeheer"
+
+msgid "room available"
+msgstr "Kamer beschikbaar"
+
+msgid "There are no available accommodations"
+msgstr "Sorry, voor de aangevraagde data is geen accommodatie beschikbaar"
+
+msgid "No availability solution"
+msgstr "Geen beschikbaarheid"
+
+msgid "alternative_case_1"
+msgstr "Sorry, in de door u uitgekozen periode zijn wij gesloten."
+
+msgid "alternative_case_2"
+msgstr ""
+"Sorry, voor de door u gekozen data en aantal personen is geen accomodatie "
+"beschikbaar "
+
+msgid "Availability not found"
+msgstr "Niet beschikbaar"
+
+msgid "To send a request for information you can click here"
+msgstr "Voor aanvraag informatie kun je hier klikken."
+
+msgid "More info"
+msgstr "Meer informatie\t"
+
+msgid "Change period"
+msgstr "Wijzig data"
+
+msgid "Reservation data"
+msgstr "Geselecteerde data"
+
+msgid "Choose your accommodation"
+msgstr "Kies accommodatie"
+
+msgid "nights"
+msgstr "Nachten"
+
+msgid "# Rooms"
+msgstr "Aantal kamers"
+
+msgid "N. Persons"
+msgstr "Aantal personen"
+
+msgid "Last chance"
+msgstr "Laatste kans"
+
+msgid "rooms left"
+msgstr "Beschikbare kamers"
+
+msgid "Latest"
+msgstr "Laatste"
+
+msgid "Image not available"
+msgstr "Geen afbeelding beschikbaar"
+
+msgid "From"
+msgstr "Van"
+
+msgid "Total stay"
+msgstr "Totaal verblijf"
+
+msgid "Boarding"
+msgstr "Verzorging"
+
+msgid "Bed and breakfast"
+msgstr "Kamer met ontbijt"
+
+msgid "Half board"
+msgstr "Half pension"
+
+msgid "Full board"
+msgstr "Vol pension"
+
+msgid "Select"
+msgstr "Selecteer"
+
+msgid "Accessory services"
+msgstr "Speciale service"
+
+msgid "see and select"
+msgstr "Bekjijk en selecteer"
+
+msgid "Single price"
+msgstr "Prijs"
+
+msgid "To pay a part"
+msgstr "Te betalen bij aankomst"
+
+msgid "to pay a part"
+msgstr "Te betalen bij aankomst"
+
+msgid "Total â‚¬"
+msgstr "Totaal"
+
+msgid "Add/remove"
+msgstr "Voeg toe/verwijder"
+
+msgid "Add a special service"
+msgstr "Voeg extra service toe"
+
+msgid "Confirm accessories"
+msgstr "Bevestig extra service"
+
+msgid "Accessories"
+msgstr "Extra services"
+
+msgid "Accessories list"
+msgstr "Lijst extra services"
+
+msgid "Total accessories"
+msgstr "Totaal extra services"
+
+msgid "Add accessories"
+msgstr "Voeg extra services toe"
+
+msgid "Price"
+msgstr "Prijs"
+
+msgid "Search alternative arrival date"
+msgstr "Zoek andere aankomstdatum"
+
+msgid "We're processing your request"
+msgstr "Uw verzoek wordt verwerkt"
+
+msgid "Guests"
+msgstr "Gasten"
+
+msgid "Insert your data"
+msgstr "Vul je gegevens in"
+
+msgid "Rooms summary"
+msgstr "Overzicht kamers"
+
+msgid "Step reached"
+msgstr "Step reached"
+
+msgid "Step reached with availability"
+msgstr "Step reached with availability"
+
+msgid "Reservation conditions"
+msgstr "Reserveringsvoorwaarden"
+
+msgid "Room Price"
+msgstr "Kamerprijs"
+
+msgid "Room Total"
+msgstr "Totaal kamer"
+
+msgid "%s Total"
+msgstr "Totaal %s"
+
+msgid "Total reservation"
+msgstr "Totaal verblijf"
+
+msgid "Reservation end note"
+msgstr "Notities einde reservering"
+
+msgid "Checkin/out policy"
+msgstr "Checkin/checkout"
+
+msgid "Reservation policy"
+msgstr "Reserveringsbeleid"
+
+msgid "Booking data"
+msgstr "Reserveringsbeleid"
+
+msgid "Payment policy"
+msgstr "Betalingsbeleid"
+
+msgid "Cancellation policy"
+msgstr "Annuleringsbeleid"
+
+msgid "Rates policy"
+msgstr "Prijsbeleid"
+
+msgid "Modify"
+msgstr "Wijzig"
+
+msgid "modification"
+msgstr "Wijziging"
+
+msgid "Insert your Email and password"
+msgstr "Vul je Email en password in"
+
+msgid "Have you a discount code?"
+msgstr "Heb je een kortingscode?"
+
+msgid "Do you have a Discount Code?"
+msgstr "Heb je een kortingscode?"
+
+msgid "Discount code"
+msgstr "Kortingscode"
+
+msgid "Add a discount"
+msgstr "voeg kortingscode toe"
+
+msgid "Gift Card used"
+msgstr "Gift Card gebruikt"
+
+msgid "Discount code used"
+msgstr "Kortingscode gebruikt"
+
+msgid "Send"
+msgstr "Verzend"
+
+msgid "Guest records"
+msgstr "Klantgegevens"
+
+msgid "Guest data"
+msgstr "Klantgegevens"
+
+msgid "Name"
+msgstr "Voornaam"
+
+msgid "Surname"
+msgstr "Achternaam"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Repeat e-mail"
+msgstr "Herhaal e-mail"
+
+msgid "Repeat E-mail"
+msgstr "Herhaal E-mail"
+
+msgid "Same fields are required or not correct"
+msgstr "Verplicht veld fout of niet ingevuld"
+
+msgid "Mandatory Field"
+msgstr "Verplicht veld"
+
+msgid "Mandatory Fields"
+msgstr "Verplicht in te vullen veld"
+
+msgid "Mandatory fields"
+msgstr "Verplichte velden"
+
+msgid "Payment mode"
+msgstr "Betalingswijze"
+
+msgid "guarantee"
+msgstr "Ter garantie"
+
+msgid "with gateway"
+msgstr "Met gateway"
+
+msgid "Credit card"
+msgstr "Credit card"
+
+msgid "Credit card data"
+msgstr "Credit card"
+
+# --- step3 booking
+msgid "Credit card invalid. Please check number"
+msgstr "Ongeldige credit card. Controleer nummer"
+
+msgid "Customer area"
+msgstr "Customer area"
+
+msgid "Date not valid"
+msgstr "Ongeldige datum"
+
+msgid "Delete"
+msgstr "Verwijder"
+
+msgid "Pay with credit card"
+msgstr "Betaal met credit card"
+
+msgid "Pay with money transfer"
+msgstr "Betaal per bankoverschrijving"
+
+msgid "Payment"
+msgstr "Betaling"
+
+msgid "Phone"
+msgstr "Telefoon"
+
+# --- step3 booking e enquiry
+msgid "Phone can not be empty"
+msgstr "Veld Telefoon moet ingevuld zijn"
+
+msgid "Please check your card details"
+msgstr "Controleer gegevens van je credit card"
+
+msgid "Please check your card number digits"
+msgstr "Controleer aantal cijfers van je credit card"
+
+msgid "Please select a day"
+msgstr "Minimaal ŽŽn dag selecteren"
+
+msgid "Please select an item from the list"
+msgstr "Minimaal ŽŽn item van de lijst selecteren"
+
+# --- step2 booking ---
+msgid "Please select number of children"
+msgstr "Vul aantal kinderen in"
+
+# --- step2 booking ---
+msgid "Please set chilldren's age"
+msgstr "Vul leeftijd kinderen in"
+
+msgid "Prev"
+msgstr "Prec."
+
+msgid "Prev month"
+msgstr "Maand eerder"
+
+msgid "Prev year"
+msgstr "Jaar eerder"
+
+msgid "Prev. day"
+msgstr "Dag eerder"
+
+msgid "Price not valid"
+msgstr "Ongeldige prijs"
+
+msgid "Pricelist"
+msgstr "Prijslijst"
+
+msgid "Prices"
+msgstr "Prijzen\t"
+
+msgid "Print"
+msgstr "Print"
+
+msgid "What is the security code?"
+msgstr "Wat is een veligheidscode?"
+
+msgid "Where is the security code?"
+msgstr "Waar is de veiligheids code?"
+
+# --- step3 booking e enquiry ---
+msgid "You may only proceed if you accept the privacy policy"
+msgstr "Je kunt alleen doorgaan na acceptatie privacy policy"
+
+# --- step3 booking ---
+msgid "You may only proceed if you accept the terms and conditions"
+msgstr "Je kunt alleen doorgaan na acceptatie algemene voorwaarden"
+
+# --- step3 booking ---
+msgid "You must select a payment method"
+msgstr "Selecteer betalingswijze"
+
+msgid "ZIP"
+msgstr "Postcode"
+
+msgid "Zoom"
+msgstr "Zoom"
+
+msgid "Zoom size"
+msgstr "Zoom size"
+
+msgid "as it is written on the card"
+msgstr "zoals geschreven op de card"
+
+msgid "cancelled"
+msgstr "geannuleerd"
+
+msgid "cc_notes"
+msgstr "Geen toeslag! Slechts ter garantie van de reservering"
+
+msgid "account_title"
+msgstr "Machtiging voor betaling met credit card"
+
+msgid "OLDaccount_notes %s"
+msgstr "OLDaccount_notes %s"
+
+msgid "account_notes %s"
+msgstr "Ik ga akkoord met afschrijving bedrag"
+
+msgid "click on an alternative arrival date"
+msgstr "klik op andere aankomstdatum"
+
+msgid "confirmed"
+msgstr "bevestigd"
+
+msgid "eg. arrival time"
+msgstr "bijv. aankomsttijd aangeven"
+
+msgid "for minimum stays"
+msgstr "Voor verblijven van"
+
+msgid "no spaces or dashes"
+msgstr "zonder streepjes of spaties"
+
+msgid "opened"
+msgstr "geopend"
+
+msgid "save up to"
+msgstr "bespaar tot"
+
+msgid "sec_code_desc"
+msgstr ""
+"De CVV, CVC, of CID code is een extra zekerheid om misbruik van credit card"
+
+msgid "within"
+msgstr "voor"
+
+msgid "Payments"
+msgstr "Betalingen"
+
+msgid "Terms & conditions"
+msgstr "Algemene voorwaarden"
+
+msgid "How to reach"
+msgstr "Waar vindt je ons"
+
+msgid "Payment request type"
+msgstr "Betalingswijze"
+
+msgid "Payment result"
+msgstr "Betalingsresultaat"
+
+msgid "Terms and conditions"
+msgstr "Algemene voorwaarden"
+
+msgid "Total account"
+msgstr "Totaal aanbetaling"
+
+msgid "Total to settle"
+msgstr "Totaal nog te betalen"
+
+msgid "To pay"
+msgstr "Te betalen"
+
+msgid "Reversal"
+msgstr "Terugstorting"
+
+msgid "Payment ok"
+msgstr "Betaling ok"
+
+msgid "Payment failed"
+msgstr "Betaling mislukt"
+
+msgid "In payment"
+msgstr "In betaling"
+
+msgid "Credit card guarantee. Payment in hotel"
+msgstr "Credit card ter garantie. Betaling in hotel"
+
+msgid "Allow reservation if available"
+msgstr "Reservering uitvoeren bij beschikbaarheid"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Total reservation price"
+msgstr "Totaal bedrag voor reservering"
+
+msgid "Credit card accepted"
+msgstr "Credit card geaccepteerd"
+
+msgid "Accepts"
+msgstr "Accepteer"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "Structure"
+msgstr "Accommodatie"
+
+msgid "Waiting to be confirmed"
+msgstr "In afwachting van bevestiging"
+
+msgid "Confirmed"
+msgstr "Bevestigd"
+
+msgid "Cancelled by the structure"
+msgstr "Geannuleerd door accommodatie"
+
+msgid "Cancelled by the guest"
+msgstr "Cancellata dal cliente"
+
+msgid "Cancelled for NO-SHOW"
+msgstr "Geannuleerd door NO-SHOW"
+
+msgid "Cancelled due to wrong CC data"
+msgstr "Geannuleerd door foute CC gegevens"
+
+msgid "Structure data"
+msgstr "Informatie over accommodatie"
+
+msgid "Reservation inserted"
+msgstr "Reservering ingevoerd"
+
+msgid "Request inserted"
+msgstr "Aanvraag ingevoerd"
+
+msgid "Authorization"
+msgstr "machtiging"
+
+msgid "Interested to"
+msgstr "Geinteresseerd in"
+
+# --- step3 booking
+msgid "Security code invalid"
+msgstr "Ongeldige veiligheidscode"
+
+msgid "Payment methods"
+msgstr "Betaling"
+
+#: ------------------ release 1.4.0
+msgid "cancellation"
+msgstr "Annulering"
+
+msgid "Cancelled by the administrator"
+msgstr "Geannuleerd door  administratie"
+
+msgid "Cancelled on guest request"
+msgstr "Geannuleerd op verzoek van client"
+
+msgid "Request to be cancelled by guest"
+msgstr "Annulerings verzoek van client"
+
+msgid "Request to be modified by guest"
+msgstr "Verzoek tot wijziging van client"
+
+msgid "Expires"
+msgstr "Verval"
+
+msgid "Expiry date"
+msgstr "Vervaldatum"
+
+# --- step3 booking ---
+msgid "Expiry date date is invalid"
+msgstr "Vervaldatum is ongeldig"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Type"
+msgstr "type"
+
+msgid "Type of credit card"
+msgstr "type credit card"
+
+msgid "Holder"
+msgstr "Houder"
+
+msgid "Bank Account Holder"
+msgstr "Bankrekeninghouder"
+
+msgid "Use credit card"
+msgstr "Gebruik credit card"
+
+msgid "All fields are mandatory"
+msgstr "Alle velden verplicht invullen"
+
+msgid "I Subscribe for the newsletter in"
+msgstr "Schrijf mij in voor nieuwsbrief"
+
+msgid "I agree to the personal data's treatment policy"
+msgstr "Ik accepteer privacy policy"
+
+msgid "I have read and agreed with the terms and conditions"
+msgstr ""
+"Ik heb de voorwaarden gelezen en ga accoord met de algemene voorwaarden"
+
+msgid "Book now"
+msgstr "Reserveer nu"
+
+msgid "Reserve now!"
+msgstr "Reserveer nu"
+
+msgid "Room"
+msgstr "Kamer"
+
+msgid "Room > numpax"
+msgstr "Aantal kamers hoger dan aantal personen"
+
+msgid "Room code"
+msgstr "Kamercode"
+
+msgid "Room description"
+msgstr "Kamerbeschrijving"
+
+msgid "Room type"
+msgstr "Kamertype"
+
+msgid "Room type and board"
+msgstr "Kamertype en verzorging"
+
+msgid "Room/App. per night"
+msgstr "Kamer of appartement per nacht"
+
+msgid "Room/App. per week"
+msgstr "Kamer of appartement per week"
+
+msgid "S.C."
+msgstr "S.C."
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Search another option"
+msgstr "Zoek andere optie, klik op tabel hiernaast voor de data\t"
+
+msgid "Reservation"
+msgstr "Reservering"
+
+msgid "Request"
+msgstr "Aanvraag"
+
+#: ------------------ release 1.4.0 RC 3
+msgid "Reservation sent"
+msgstr "Reservering verzonden"
+
+msgid "Request sended"
+msgstr "Aanvraag verzonden"
+
+msgid "Select type and boarding desired"
+msgstr "Selecteer gewenste type en verzorging"
+
+msgid "Select period and rooms"
+msgstr "Selecteer periode en kamers"
+
+msgid "Continue"
+msgstr "Doorgaan"
+
+msgid "Send request"
+msgstr "Verzend aanvraag"
+
+msgid "from"
+msgstr "Vanaf"
+
+msgid "to"
+msgstr "Tot"
+
+msgid "To"
+msgstr "Tot"
+
+msgid "Booking"
+msgstr "Reservering"
+
+msgid "Selected date"
+msgstr "Geselecteerde data"
+
+msgid "Alternative date"
+msgstr "Alternatieve data"
+
+msgid "Wait the confirmation of disponibility"
+msgstr ""
+"Wij bedanken u voor uw aanvraag, u ontvangt zo spoedig mogelijk bevestiging "
+"van de beschikbaarheid"
+
+msgid "Transaction failed"
+msgstr "Transaktie mislukt"
+
+msgid "Successful cancellation"
+msgstr "Annulering met succes uitgevoerd"
+
+msgid "Successful editation"
+msgstr ""
+"Uw wijzigingsaanvraag is correct verzonden. Wij zullen u zo spoedig mogelijk "
+"antwoorden"
+
+msgid "Reservation delivery successfully"
+msgstr "Reservering is succesvol verzonden"
+
+msgid ""
+"Your request has been successfully sent, you will soon receive a confirm"
+msgstr ""
+"Uw aanvraag is succesvol verzonden, u ontvangt zo spoedig mogelijk bericht "
+"van ons"
+
+msgid "Number"
+msgstr "Nummer"
+
+# --- step2 booking ---
+msgid "Insufficient number of nights"
+msgstr "Voor de uitgekozen periode is hoger aantal nachten vereisd"
+
+msgid "MM/YY"
+msgstr "MM/JJ"
+
+msgid "City"
+msgstr "Woonplaats"
+
+# --- step3 booking e enquiry ---
+msgid "City can not be empty"
+msgstr "Veld woonplaats moet ingevuld zijn"
+
+msgid "Close"
+msgstr "Sluit"
+
+msgid "Close the popup"
+msgstr "Sluit popup"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Company"
+msgstr "Bedrijf"
+
+msgid "Conditions"
+msgstr "Voorwaarden"
+
+msgid "Confirm"
+msgstr "Bevestig"
+
+msgid "Confirmed date"
+msgstr "Bevestigingsdatum"
+
+msgid "Consent to privacy"
+msgstr "Akkoord privacy policy"
+
+msgid "Consent to use personal data"
+msgstr "Akkoord gebruik persoonsgegevens"
+
+msgid "Copy"
+msgstr "Copie"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Address"
+msgstr "Adres"
+
+# --- step3 booking e enquiry
+msgid "Address can not be empty"
+msgstr "Veld Adres moet ingevuld zijn"
+
+msgid "The phone field must be 8 digits in length,with an optional 2 or 3 digi"
+msgstr "Veld Telefoon ongeldig"
+
+msgid "The zipcode must be 4 or 5 digits in length"
+msgstr "De postcode moet uit 4 of 5 nummers bestaan"
+
+# --- step3 booking e enquiry
+msgid "Mobile phone number can not be empty"
+msgstr "Veld Mobiel telefoonnummer moet ingevuld zijn"
+
+msgid "Mobile"
+msgstr "Mobiel"
+
+# --- step3 booking ---
+msgid "Email can not be empty"
+msgstr "Veld Emailmoet ingevuld zijn"
+
+# --- step3 booking ---
+msgid "Email is not the same"
+msgstr "De Email adressen zijn niet gelijk"
+
+msgid "The email must be in the name@domain format."
+msgstr "Email formeren door naam@domain"
+
+msgid "The expiry date is not a valid date in the format MM/YY"
+msgstr "De vervaldatum moet in MM/JJ formaat zijn"
+
+msgid "The month is invalid"
+msgstr "Ongeldige maand"
+
+msgid ""
+"If you have forgotten your password, insert you email address in the fiel"
+msgstr "Wachtwoord vergeten? Vul je email adres hieronder in"
+
+msgid "Your new password has been sent to the registered email address."
+msgstr "Je nieuwe wachtwoord is naar het geregistreerd email adres verzonden."
+
+msgid "Sorry, the email is not associated to any user."
+msgstr "Sorry, het email correspondeert niet met gebruiker"
+
+msgid "Rooms list"
+msgstr "Kamerlijst"
+
+msgid "Saving"
+msgstr "Besparing"
+
+msgid "Costs and prices"
+msgstr "Kosten en prijzen"
+
+msgid "Apartments"
+msgstr "Appartementen"
+
+msgid "Apartment"
+msgstr "Appartement"
+
+msgid "Province of"
+msgstr "Provincie"
+
+msgid "Company can not be empty"
+msgstr "Veld Bedrijf moet ingevuld zijn"
+
+msgid "Zip cope can not be empty"
+msgstr "Veld Postcode moet ingevuld zijn"
+
+msgid "State can not be empty"
+msgstr "Veld Provincie moet ingevuld zijn"
+
+msgid "Country can not be empty"
+msgstr "Veld Land moet ingevuld zijn"
+
+msgid "Fax can not be empty"
+msgstr "Veld Fax moet ingevuld zijn"
+
+msgid "Guest language can not be empty"
+msgstr "Veld Taal moet ingevuld zijn"
+
+msgid "Note can not be empty"
+msgstr "Veld Notities moet ingevuld zijn"
+
+# --- step3 e enquiry ---
+msgid "Name can not be empty"
+msgstr "Veld Voornaam moet ingevuld zijn"
+
+# --- step3 booking e enquiry
+msgid "Surname can not be empty"
+msgstr "Veld Achternaam moet ingevuld zijn"
+
+msgid "Telephone"
+msgstr "Telefoon"
+
+msgid "at phone number"
+msgstr "Op telefoon nummer"
+
+msgid "Mobile can not be empty"
+msgstr "Veld Mobiel moet ingevuld zijn"
+
+msgid "Summary data"
+msgstr "Gegevensoverzicht"
+
+msgid "Unknown payment type"
+msgstr "Onbekende betalingswijze"
+
+msgid "Email address is not valid"
+msgstr "Ongeldig email adres"
+
+msgid "You will soon receive an e-mail for a confirmation."
+msgstr "Je zult spoedig een email ter bevestiging ontvangen"
+
+msgid "Go back to Your Reservation"
+msgstr "Ga terug naar je reservering"
+
+msgid "Booking total price"
+msgstr "Totale reserveringssprijs"
+
+msgid "Booking deposit"
+msgstr "Te betalen bedrag"
+
+msgid "Details Policy Stay"
+msgstr "Details Verblijfsbeleid"
+
+msgid "Check your reservation"
+msgstr "Controleer je reservering"
+
+msgid "Reservation number"
+msgstr "Reserveringsnummer"
+
+msgid "View reservations"
+msgstr "Bekijk Reservering"
+
+msgid "Edit profile"
+msgstr "Wijzig profiel"
+
+msgid "Your services"
+msgstr "Jouw gekozen services"
+
+msgid "Your reservation"
+msgstr "Jouw reservering"
+
+msgid "View"
+msgstr "Bekijk"
+
+msgid "Tot reservation price"
+msgstr "Totaalprijs reservering"
+
+msgid "Star/Key"
+msgstr "Ster/sleutel"
+
+msgid "Stars/Keys"
+msgstr "Sterren/sleutels"
+
+msgid "accomodations"
+msgstr "Accommodatie"
+
+msgid "Search"
+msgstr "Zoek"
+
+msgid "feepaying"
+msgstr "tegen betaling"
+
+msgid "Book online"
+msgstr "Reserveer online"
+
+# --- step3 booking ---
+msgid "Total price"
+msgstr "Totaalprijs"
+
+msgid "Total room price"
+msgstr "Totale kamerprijs"
+
+msgid "Thanks for choosing our hotel"
+msgstr "Wij bedanken u voor uw hotelkeuze"
+
+msgid "Supplements and Reductions"
+msgstr "Toeslagen en kortingen"
+
+msgid "Supplements and reductions"
+msgstr "Toeslagen en kortingen"
+
+msgid "Special rate"
+msgstr "Speciaal tarief"
+
+msgid "Select all"
+msgstr "Selecteer alles"
+
+msgid "Selected days"
+msgstr "Geselecteerde periode"
+
+msgid "Selection completed"
+msgstr "Selectie uitgevoerd"
+
+msgid "Rates and conditions"
+msgstr "Tarieven en voorwaarden"
+
+msgid "Reservation ID"
+msgstr "ID reservering"
+
+msgid "Reservation confirmed"
+msgstr "Reservering bevestigd"
+
+msgid "Reservation detail"
+msgstr "Reserveringsdetails"
+
+msgid "Product"
+msgstr "Produkt"
+
+# --- step2 booking ---
+msgid "Intro text"
+msgstr "Introduktie tekst"
+
+msgid "Insert"
+msgstr "Vul in"
+
+msgid "Insert children's age if present"
+msgstr "Vul leeftijd evetuele kinderen in"
+
+# --- step2 booking ---
+msgid "From date less than current date"
+msgstr "De vertrekdatum eerder dan huidige datum"
+
+# --- step2 booking ---
+msgid "From date less to date"
+msgstr "Vertrekdatum eerder of gelijk aan aankomstdatum\t"
+
+msgid "Enter"
+msgstr "Ga door"
+
+msgid "Enquiry data"
+msgstr "Gegevens aanvraag"
+
+msgid "Enquiry date"
+msgstr "Datum aanvraag"
+
+msgid "Enquiry delivered"
+msgstr "Aanvraag verzonden"
+
+msgid "Enquiry request delivery successfully"
+msgstr "Aanvraag beschikbaarheid succesvol verzonden"
+
+msgid "Are you sure that you want to delete this elemet?"
+msgstr "Weet je zeker dat je dit onderdeel wilt verwijderen?"
+
+msgid "Amount"
+msgstr "Bedrag"
+
+msgid "Amount paid"
+msgstr "Betaald bedrag"
+
+msgid "Amount to pay"
+msgstr "Te betalen bedrag"
+
+msgid "Apply"
+msgstr "Toepassen"
+
+msgid "All days"
+msgstr "Alle dagen"
+
+msgid "Num nights"
+msgstr "Aantal nachten"
+
+msgid "Select a city"
+msgstr "Selecteer een plaats"
+
+msgid "Best Price"
+msgstr "Beste prijs"
+
+msgid "Validity from"
+msgstr "Geldig vanaf"
+
+msgid "Special offers from"
+msgstr "Speciale aanbiedingen vanaf"
+
+msgid "Account to pay"
+msgstr "Te betalen aanbetaling"
+
+msgid "Impossible to delete a mandatory element"
+msgstr "Een verplicht veld kan niet verwijderd worden"
+
+msgid "Delete category"
+msgstr "Annuleer categorie"
+
+msgid "Delete product"
+msgstr "Annuleer produkt"
+
+msgid "Operation cancelled"
+msgstr "Handeling geannuleerd"
+
+msgid "% amount on total"
+msgstr "Percentage op totaal"
+
+msgid "for reservation carried out within"
+msgstr "Voor reserveringen gemaakt binnen"
+
+msgid "for reservation carried out beyond"
+msgstr "Voor reserveringen gemaakt na"
+
+msgid "Acceptable minimum amount"
+msgstr "Vereiste minimumbedrag"
+
+msgid "Payment within day"
+msgstr "Betaling binnen"
+
+msgid "Protocol/ID"
+msgstr "Protokol/ID"
+
+msgid "No offer present"
+msgstr "Geen aanbieding aanwezig"
+
+msgid "No rooms or boarding info available"
+msgstr "Geen kamer of reserveringsinformatie beschikbaar"
+
+msgid "No solutions found"
+msgstr "geen resultaat gevonden"
+
+msgid "No account"
+msgstr "Geen aanbetaling"
+
+msgid "No result"
+msgstr "Geen resultaat"
+
+msgid "No available room"
+msgstr "Geen kamer beschikbaar"
+
+msgid "Structure amenity"
+msgstr "Services accommodatie"
+
+msgid "Structure description"
+msgstr "Beschrijving van de accomodatie"
+
+msgid "Structure services"
+msgstr "Services van de accommodatie"
+
+msgid "Structure position"
+msgstr "Lokatie accommodatie"
+
+msgid "Structure tipology"
+msgstr "Type accommodatie"
+
+msgid "Structure type"
+msgstr "Type accomodatie"
+
+msgid "Structure treatment"
+msgstr "Verzorging"
+
+msgid "Structures"
+msgstr "Accommodaties"
+
+msgid "Completed structures list"
+msgstr "Komplete lijst accommodaties"
+
+msgid "structures found"
+msgstr "Gevonden accommodaties"
+
+msgid "Complete list structures"
+msgstr "Komplete lijst accommodaties"
+
+msgid "There are structures with this amenity associated"
+msgstr "Er zijn accommodaties met deze service"
+
+msgid "No structures selected"
+msgstr "Geen accommodatie geselecteerd"
+
+msgid "Cancelled date"
+msgstr "Annuleringsdatum"
+
+msgid "Request the cancellation of this reservation"
+msgstr "Vraag annulering van deze reservering aan"
+
+msgid "We remind you that IT is not possible to nullify the cancellation!"
+msgstr "Wij wijzen u erop dat de annulering niet ongedaan kan worden gemaakt"
+
+msgid "Please select the reason for the cancellation"
+msgstr "Wij verzoeken u de reden van annulering aan te geven"
+
+msgid "Days before cancellation"
+msgstr "Dagen voor annulering"
+
+msgid "Holder name is invalid"
+msgstr "Naam  credit card houder onjuist"
+
+msgid "Book"
+msgstr "Reserveer"
+
+msgid "Book safely"
+msgstr "Reserveer veilig "
+
+msgid "Room/week"
+msgstr "Kamer/week"
+
+msgid "Room/night"
+msgstr "Kamer/nacht"
+
+msgid "Room services"
+msgstr "Kamerfaciliteiten"
+
+msgid "Room not available for this board"
+msgstr "Kamer met deze verzorging niet beschikbaar"
+
+msgid "Reservation status"
+msgstr "Reserveringsstatus"
+
+msgid "Reservation request inserted successfully"
+msgstr "Aanvraag reservering geslaagd"
+
+msgid "Info Request"
+msgstr "Aanvraag info"
+
+msgid "Request availability"
+msgstr "Vraag beschikbaarheid aan"
+
+msgid "Show Reservation Conditions"
+msgstr "Toon reserveringsvoorwaarden"
+
+msgid "View Terms and Conditions for this facility"
+msgstr "Toon de voorwaarden van de accommodatie"
+
+msgid "View other periods"
+msgstr "Bekijk andere perioden"
+
+msgid "Search only available"
+msgstr "Zoek alleen met beschikbaarheid"
+
+msgid "Search result"
+msgstr "Zoekresultaat"
+
+msgid "Search results"
+msgstr "Zoekresultaten"
+
+msgid "Go to Search"
+msgstr "Ga terug naar Zoek"
+
+msgid "Search by name"
+msgstr "Zoek met naam"
+
+msgid "Search near to"
+msgstr "Zoek dicht bij"
+
+msgid "Insert name"
+msgstr "Vul naam in"
+
+msgid "Accepting terms and conditions"
+msgstr "Accepteer algemene voorwaarden"
+
+msgid "Access"
+msgstr "Toegang"
+
+msgid "Account"
+msgstr "Aanbetaling"
+
+msgid "Accounts"
+msgstr "Aanbetalingen"
+
+msgid "Adults"
+msgstr "Volwassenen"
+
+msgid "Age"
+msgstr "Leeftijd"
+
+msgid "All categories"
+msgstr "Alle categorieen"
+
+msgid "All offers"
+msgstr "Toon alle aanbiedingen"
+
+msgid "All typologies"
+msgstr "Alle typologieen"
+
+msgid "Allotment manager"
+msgstr "Beheer Allotment"
+
+msgid "alt_detail_guide"
+msgstr "Klik hier om nieuwe optie te bekijken en te wijzigen"
+
+msgid "Amenities"
+msgstr "Comfort"
+
+msgid "Amenity type"
+msgstr "Type faciliteiten"
+
+msgid "and"
+msgstr "en"
+
+msgid "and neighbourhood"
+msgstr "en omgeving"
+
+msgid "Arrival"
+msgstr "Aankomst"
+
+msgid "at"
+msgstr "om"
+
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgid "Availability"
+msgstr "Beschikbaarheid"
+
+msgid "Availability not valid"
+msgstr "Beschikbaarheid ongeldig"
+
+msgid "Available solutions"
+msgstr "Beschikbare alternatieven"
+
+msgid "Average price per night"
+msgstr "Gemiddelde prijs per nacht"
+
+msgid "Back"
+msgstr "Ga terug"
+
+msgid "Bank account holder"
+msgstr "Bankrekening houder"
+
+msgid "Bank name"
+msgstr "Naam bank"
+
+msgid "Bank transfer"
+msgstr "Bankoverschrijving"
+
+msgid "Beaches"
+msgstr "Stranden"
+
+msgid "Bed"
+msgstr "Bed"
+
+msgid "best price from"
+msgstr "Beste prijs vanaf"
+
+msgid "Booking board"
+msgstr "Verzorging"
+
+msgid "Booking complete"
+msgstr "Boeking voltooid"
+
+msgid "Booking discounts manager"
+msgstr "Kortingsbeheer"
+
+msgid "Booking enquiry"
+msgstr "Aanvraag beschikbaarheid"
+
+msgid "Booking manager"
+msgstr "Boekingsbeheer"
+
+msgid "Booking Online"
+msgstr "Online reservering"
+
+msgid "Booking pricelist manager"
+msgstr "Prijsbeheer"
+
+msgid "Booking rates and conditions manager"
+msgstr "Tarieven en voorwaarden"
+
+msgid "Booking request"
+msgstr "Reserveringsaanvraag"
+
+msgid "Calendar functions"
+msgstr "Kalender funkties"
+
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgid "Card number must contain only digits and spaces"
+msgstr "Credit card nummer bevat alleen cijfers en spaties"
+
+msgid "Check availability"
+msgstr "Controleer beschikbaarheid"
+
+msgid "Checkin/checkout day not allowed"
+msgstr "Giorno di partenza/arrivo non permesso"
+
+msgid "Child"
+msgstr "Kind"
+
+msgid "Children"
+msgstr "Kinderen"
+
+msgid "Children age"
+msgstr "Leeftijd kinderen"
+
+msgid "Click for more info"
+msgstr "Klik voor meer info"
+
+msgid "Compile questionnaire"
+msgstr "Vul vragenlijst in"
+
+msgid "Date"
+msgstr "datum"
+
+msgid "Currency manager"
+msgstr "Valutabeheer"
+
+msgid "days before"
+msgstr "dagen eerder"
+
+msgid "days after"
+msgstr "dagen later"
+
+msgid "Departure"
+msgstr "Vertrek"
+
+msgid "Deposit"
+msgstr "Waarborgsom"
+
+msgid "Description"
+msgstr "Beschrijving"
+
+msgid "Destination"
+msgstr "Eindbestemming"
+
+msgid "Detail"
+msgstr "Detail"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Discount"
+msgstr "Korting"
+
+msgid "Discount not valid"
+msgstr "Ongeldige korting"
+
+msgid "Discounts"
+msgstr "Kortingen"
+
+msgid "distance"
+msgstr "Afstand"
+
+msgid "District"
+msgstr "Plaats"
+
+msgid "Edit"
+msgstr "Wijzig"
+
+msgid "End address"
+msgstr "Aankomstadres"
+
+msgid "Enlarge the map"
+msgstr "Vergroot map"
+
+msgid "Enquiries"
+msgstr "Aanvragen"
+
+msgid "Error"
+msgstr "Fout"
+
+msgid "Estimate"
+msgstr "Bereken offerte"
+
+msgid "Feepaying services"
+msgstr "Betaalde services"
+
+msgid "Fields manager"
+msgstr "Fieldbeheer"
+
+msgid "File"
+msgstr "Bijgesloten file"
+
+msgid "File categories"
+msgstr "File categorie"
+
+msgid "File data"
+msgstr "File gegevens"
+
+msgid "File manager"
+msgstr "Filebeheer"
+
+msgid "File size"
+msgstr "Afmeting file"
+
+msgid "Filename"
+msgstr "Filenaam"
+
+msgid "Files"
+msgstr "Bijgesloten files"
+
+msgid "Files list"
+msgstr "Lijst files"
+
+msgid "Finish publishing"
+msgstr "Einde uitgave"
+
+msgid "Forward"
+msgstr "Verder"
+
+msgid "found"
+msgstr "gevonden"
+
+msgid "founds"
+msgstr "gevonden"
+
+msgid "Free services"
+msgstr "Gratis services"
+
+msgid "from airport"
+msgstr "Van vliegveld"
+
+msgid "From date"
+msgstr "Vanaf"
+
+msgid "From here"
+msgstr "Vanaf hier"
+
+msgid "from nearest centre"
+msgstr "Vanaf het dichtsbijzijnde centrum"
+
+msgid "from Portoferraio harbour"
+msgstr "Vanaf de haven van Portoferraio"
+
+msgid "from sea"
+msgstr "Van zee"
+
+msgid "Full text"
+msgstr "Komplete tekst"
+
+msgid "Fullname"
+msgstr "Komplete naam"
+
+msgid "Gallery categories"
+msgstr "Gallerie categorieen"
+
+msgid "Gallery manager"
+msgstr "Galleriebeheer"
+
+msgid "General"
+msgstr "Algemeen"
+
+msgid "General conditions"
+msgstr "Algemene voorwaarden"
+
+msgid "General data"
+msgstr "Algemene gegevens"
+
+msgid "Get directions"
+msgstr "Routebeschrijving"
+
+msgid "Get route"
+msgstr "Bereken route"
+
+msgid "Go back"
+msgstr "Ga terug"
+
+msgid "Header"
+msgstr "Header"
+
+msgid "Headers"
+msgstr "Headers"
+
+msgid "Home page"
+msgstr "Home page"
+
+msgid "Hotels and apartments"
+msgstr "Hotels en appartementen"
+
+msgid "Images"
+msgstr "Afbeeldingen"
+
+msgid "Images list"
+msgstr "Lijst afbeeldingen"
+
+msgid "in"
+msgstr "in"
+
+msgid "In the neighbourhood"
+msgstr "In de omgeving"
+
+msgid "Infants"
+msgstr "Babies"
+
+msgid "Info request"
+msgstr "Info aanvraag"
+
+msgid "Info type"
+msgstr ""
+"De categorie Residence/appartementen bevat de volgende verblijfsmogelijheden"
+
+msgid "Invalid dates!"
+msgstr "Ongeldige data"
+
+msgid "Language"
+msgstr "Taal"
+
+msgid "Legend"
+msgstr "Legenda"
+
+msgid "Less info"
+msgstr "Minder informatie"
+
+msgid "Less photos"
+msgstr "Minder foto's"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Link to"
+msgstr "Link naar"
+
+msgid "List"
+msgstr "Lijst"
+
+msgid "Make an estimate"
+msgstr "Bereken offerte"
+
+msgid "Manual"
+msgstr "Handmatig"
+
+msgid "Map"
+msgstr "Map"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Methods of payment"
+msgstr "Betalingswijze"
+
+msgid "Minimum stay"
+msgstr "Minimum verblijf"
+
+msgid "Minimum stay not valid"
+msgstr "Minimum verblijf ongeldig"
+
+msgid "Month"
+msgstr "Maand"
+
+msgid "More photos"
+msgstr "Meer foto's"
+
+msgid "Most visited"
+msgstr "Meest bekeken"
+
+msgid "Multirate"
+msgstr "Multirate"
+
+msgid "N. rooms"
+msgstr "Aantal kamers"
+
+msgid "Nationality"
+msgstr "Nationaliteit"
+
+msgid "near to"
+msgstr "vlakbij"
+
+msgid "New"
+msgstr "Voeg toe"
+
+msgid "New search"
+msgstr "Opnieuw zoeken"
+
+msgid "Next"
+msgstr "Volgende"
+
+msgid "Next day"
+msgstr "Dag later"
+
+msgid "Next month"
+msgstr "Maand later"
+
+msgid "Next year"
+msgstr "Jaar later"
+
+msgid "None"
+msgstr "Geen"
+
+msgid "Norm"
+msgstr "Norm"
+
+msgid "Normal rate"
+msgstr "Normaal tarief"
+
+msgid "Not paid"
+msgstr "Niet betaald"
+
+msgid "Nothing"
+msgstr "Geen"
+
+msgid "Num. persons"
+msgstr "Aantal personen"
+
+msgid "Offer"
+msgstr "Aanbieding"
+
+msgid "Offer packages"
+msgstr "Aanbiedingspakketten"
+
+msgid "Offer info"
+msgstr "Aanbiedingsinfo"
+
+msgid "Offers"
+msgstr "Aanbiedingen"
+
+msgid "On the map"
+msgstr "Op de map"
+
+msgid "Only board"
+msgstr "Alleen overnachting"
+
+msgid "Room Only"
+msgstr "Alleen overnachting"
+
+msgid "Only with online availability"
+msgstr "Alleen met online beschikbaarheid"
+
+msgid "Only online availability"
+msgstr "Alleen online beschikbaarheid"
+
+msgid "Opened date"
+msgstr "Openingsdatum"
+
+msgid "Opening date"
+msgstr "Openingsdatum"
+
+msgid "Operation completed"
+msgstr "Je gegevens zijn verwerkt"
+
+msgid "Order by"
+msgstr "Sorteer op"
+
+msgid "Ordering"
+msgstr "Sorteer"
+
+msgid "Other"
+msgstr "Meer"
+
+msgid "Other typologies"
+msgstr "Residence/appartementen"
+
+msgid "Other solutions"
+msgstr "Andere opties voor de aangevraagde data"
+
+msgid "Other offers"
+msgstr "Andere aanbiedingen"
+
+msgid "Paid"
+msgstr "Betaald"
+
+msgid "Pax/night"
+msgstr "Persoon/nacht"
+
+msgid "Pax/week"
+msgstr "Persoon/week"
+
+msgid "pending confirm"
+msgstr "In afwachting van bevestiging"
+
+msgid "pending cancel"
+msgstr "In afwachting van anullering"
+
+msgid "pending modify"
+msgstr "In afwachting van wijziging"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Person per night"
+msgstr "Persoon/nacht"
+
+msgid "Person per week"
+msgstr "Persoon/week"
+
+msgid "Person"
+msgstr "Persoon"
+
+msgid "Personal information"
+msgstr "Persoonsinformatie"
+
+msgid "Persons"
+msgstr "Personen"
+
+msgid "Persons per room"
+msgstr "Personen/kamer"
+
+msgid "Pincode"
+msgstr "Pincode"
+
+msgid "Place"
+msgstr "Plaats"
+
+msgid "Popularity"
+msgstr "Populariteit"
+
+msgid "Previous"
+msgstr "Voorgaand"
+
+msgid "Properties"
+msgstr "Eigendommen/eigenschappen??"
+
+msgid "Published"
+msgstr "Gepubliceerd"
+
+msgid "Publishing"
+msgstr "Publicatie"
+
+msgid "Qty"
+msgstr "Hoeveelheid"
+
+msgid "Rapid search"
+msgstr "Snelzoeken"
+
+msgid "Rapid search hotels and lodgings"
+msgstr "Snelzoeken hotels en accommodaties"
+
+msgid "Read More"
+msgstr "Lees meer"
+
+msgid "Reductions - Supplements"
+msgstr "Kortingen - Toeslagen"
+
+msgid "Refine the search"
+msgstr "Uitgebreid zoeken"
+
+msgid "Requests"
+msgstr "Aanvragen"
+
+msgid "Reservations"
+msgstr "Reserveringen"
+
+msgid "Resort"
+msgstr "Resort"
+
+msgid "Return"
+msgstr "Ga terug"
+
+msgid "Roads distance"
+msgstr "Afstand over de weg"
+
+msgid "room"
+msgstr "Kamer"
+
+msgid "rooms"
+msgstr "Kamers"
+
+msgid "SecureDataTransferSSL"
+msgstr "Je persoonsgegevens worden met de maximale discretie behandel"
+
+msgid "Security code"
+msgstr "Veiligheidscode"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Show conditions"
+msgstr "Lees voorwaarden"
+
+msgid "Show map"
+msgstr "Toon map"
+
+msgid "Show on homepage"
+msgstr "Toon in homepage"
+
+msgid "Site manager"
+msgstr "Beheer sites"
+
+msgid "Site name"
+msgstr "Site naam"
+
+msgid "Site selected"
+msgstr "Geselecteerde site"
+
+msgid "Special Offers"
+msgstr "Speciale aanbiedingen"
+
+msgid "Special offers"
+msgstr "Speciale aanbiedingen"
+
+msgid "Star"
+msgstr "Ster"
+
+msgid "Stars"
+msgstr "Sterren"
+
+msgid "Start address"
+msgstr "Vertrekadres"
+
+msgid "Start publishing"
+msgstr "Start publicatie"
+
+msgid "State"
+msgstr "Provincie"
+
+msgid "Status"
+msgstr "Land"
+
+msgid "Stay"
+msgstr "Verblijf"
+
+msgid "Subcategories"
+msgstr "Ondercategorie"
+
+msgid "Subdir"
+msgstr "Onderdirectory"
+
+msgid "Subject"
+msgstr "Onderwerp"
+
+msgid "Submit"
+msgstr "Verzend"
+
+msgid "Summary"
+msgstr "Overzicht"
+
+msgid "Surroundings"
+msgstr "Bezienswaardigheden"
+
+msgid "The fields marked in red are required"
+msgstr "De in rood aangegeven velden zijn verplicht"
+
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+msgid "Thumbnails"
+msgstr "Thumbnails"
+
+msgid "Tipology"
+msgstr "Typologie"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "To date"
+msgstr "Naar"
+
+msgid "To here"
+msgstr "Naar hier"
+
+msgid "Total"
+msgstr "Totaal"
+
+msgid "Transaction"
+msgstr "Transaktie"
+
+msgid "Typology"
+msgstr "Typologie"
+
+msgid "Upload"
+msgstr "Upload"
+
+msgid "URL name"
+msgstr "Link naam"
+
+msgid "Warning"
+msgstr "Pas op"
+
+msgid "Weather/Sea"
+msgstr "Weer- en zeebericht"
+
+msgid "Weather"
+msgstr "Weer"
+
+msgid "Welcome"
+msgstr "Welkom"
+
+msgid "Transaction list"
+msgstr "Transaktielijst"
+
+msgid "Open all year round"
+msgstr "Gehele jaar geopend"
+
+msgid "All Inclusive"
+msgstr "All inclusive"
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Please be patient"
+msgstr "Geduld A.U.B."
+
+msgid "Go on"
+msgstr "Ga verder"
+
+msgid "You can find more hotels by changing your search criteria"
+msgstr "Je kunt meer hotels vinden door zoekcriteria te wijzigen"
+
+msgid "Wrong reservation data"
+msgstr "De reserveringsgegevens zijn onjuist"
+
+msgid "with online availability"
+msgstr "Met online beschikbaarheid"
+
+msgid "Where to stay"
+msgstr "Waar te verblijven"
+
+msgid "from2"
+msgstr "Van"
+
+msgid "Quantity"
+msgstr "Kwantiteit"
+
+msgid "Add options to your stay"
+msgstr "Opties toe te voegen aan uw verblijf"
+
+msgid "Added accessories"
+msgstr "Toegevoegde accessoires"
+
+msgid "Gift packages"
+msgstr "Giftpakketten"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "Booking conditions"
+msgstr "Boekingsvoorwaarden"
+
+msgid "Credit card guarantee"
+msgstr "Creditcard garantie"
+
+msgid "alternative_case_3"
+msgstr "Sorry, in de door u uitgekozen periode zijn wij gesloten."
+
+msgid "alternative_case_4"
+msgstr "Sorry, in de door u uitgekozen periode zijn wij gesloten."
+
+msgid "Photo indicative sample"
+msgstr "Indicatieve voorbeeldfoto"
+
+msgid "Adults - SHORT"
+msgstr "Volwassenen"
+
+msgid "For"
+msgstr "Voor"
+
+msgid "available"
+msgstr "beschikbaar"
+
+msgid "Read all"
+msgstr "Lees alles"
+
+msgid "Add accessory"
+msgstr "Voeg toe"
+
+msgid "short_days"
+msgstr "d"
+
+msgid "short_hours"
+msgstr "u"
+
+msgid "short_minutes"
+msgstr "m"
+
+msgid "short_seconds"
+msgstr "s"

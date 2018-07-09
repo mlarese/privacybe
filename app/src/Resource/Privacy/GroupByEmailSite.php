@@ -7,7 +7,7 @@ use App\Resource\IResultGrouper;
 
 class GroupByEmailSite implements IResultGrouper
 {
-    public function group($list, $criteria){
+    public function group(&$list, $criteria){
         $res = [];
         foreach ($list as $r) {
             if(!isset(     $res      [$r['email']]       [$r['domain'].$r['site']]       ))

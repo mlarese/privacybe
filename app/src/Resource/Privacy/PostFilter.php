@@ -80,7 +80,7 @@ class PostFilter implements IFilter {
         }
 
         // print_r($debug);
-
+        unset($list);
         return $ret;
     }
 }

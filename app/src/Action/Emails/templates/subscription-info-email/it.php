@@ -1,5 +1,5 @@
 <?php include 'styles.php'; ?>
-
+<?php $clang='it'; ?>
 <!DOCTYPE html>
 <html lang="it">
     <head>
@@ -30,13 +30,15 @@
                     foreach($d['privacies'] as $tid=> $prs) {
                         $cntp = 0;
                         foreach($prs as $page=> $data) {
-                           if($cntp === 0) include ("header_$lang.php");
+                           if($cntp === 0) include ("header_$clang.php");
                            include ("prrow.php"); $cntp++;
                         }
                         echo $spacer; $cntt++;
                     }
                 ?>
-
+                <tr><td colspan="4">
+                    Responsabile del trattamento dei dati <?=$d['resp']?>
+                </td></tr>
                 <tr><td colspan="4"><b>
                     se si desidera  consultare i dettagli di compilazione o modificare le sottoscrizioni alle Normative
                     o revocarle <a href="#">clicchi qui</a>

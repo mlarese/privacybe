@@ -93,7 +93,7 @@ class MailOneDirectExport  implements IDirectExport
         switch ($this->action){
             case 'export':
                 if(empty($this->user) || empty($this->userpassword)){
-                    throw new \Exception("MailOne account not configured");
+                    throw new \Exception("MailOne account not setted");
                 }
 
 
@@ -322,7 +322,7 @@ class MailOneDirectExport  implements IDirectExport
             }
         }
         if(!$this->mailOneId || $this->mailOneId<=0){
-            throw new \Exception("MailOne account not configured");
+            throw new \Exception("MailOne account not configured !!!");
         }
     }
 }

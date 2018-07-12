@@ -294,7 +294,12 @@ class PrivacyResource extends AbstractResource
         $termPageMap = $termPageRes->map();
 
         if(!isset($filter)) {
-            $filter = new PostFilter();
+            if(isset($criteria['postFilter'])) {
+                if($criteria['postFilter']) $filter = new PostFilter();
+            } else {
+                $filter = new PostFilter();
+            }
+
         }
 
         $ex = $this->entityManager->getExpressionBuilder();

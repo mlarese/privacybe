@@ -43,11 +43,7 @@ class PostFilter implements IFilter {
                 }
             }
 
-
-            // print_r($debug);die;
-            // print_r($validTreatments); die;
             $counter = 0;
-
             foreach ($list as &$pr ) {
                 $includeRec = false;
                 foreach ($pr['privacyFlags'] as $f) {
@@ -60,13 +56,7 @@ class PostFilter implements IFilter {
 
                 }
 
-                if($includeRec && isset($criteria['language']) && $criteria['language']!=='' && $criteria['language']!=='all') {
-                    $language = $criteria['language'] ;
-
-                     if($pr['language']!== $criteria['language']) {
-                         $includeRec = false;
-                     }
-                }
+                if($includeRec) $this->checkLanguage($includeRec, $criteria, $pr);
 
                 if($includeRec) {
                     $counter++;
@@ -76,11 +66,43 @@ class PostFilter implements IFilter {
             }
 
         } else {
-            $ret = &$list;
+            // $ret = &$list;
+
+            $counter = 0;
+            foreach ($list as &$pr ) {
+                $includeRec = true;
+                foreach ($pr['privacyFlags'] as $f) {
+                    if(  $f['selected']) {
+                        $includeRec = false;
+                        break;
+                    }
+                }
+
+                if($includeRec) $this->checkLanguage($includeRec, $criteria, $pr);
+
+                if($includeRec) {
+                    $counter++;
+                    $pr['_counter_'] = $counter;
+                    $ret[] = $pr;
+                }
+            }
+
         }
 
         // print_r($debug);
         unset($list);
         return $ret;
+    }
+
+    private function checkLanguage (&$includeRec, $criteria, &$pr) {
+        if($includeRec && isset( $criteria['language']) && $criteria['language']!=='' && $criteria['language']!=='all') {
+            $language = $criteria['language'] ;
+
+            if($pr['language']!== $criteria['language']) {
+                $includeRec = false;
+            }
+        }
+
+        return $includeRec;
     }
 }

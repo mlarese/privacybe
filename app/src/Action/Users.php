@@ -241,8 +241,6 @@ class Users extends AbstractAction
             $priRes = new PrivacyResource($em);
 
             $priRes->deletePrivacyByEmail($email);
-
-
             return $response->withJson($this->success());
 
         } catch (ORMException $e) {

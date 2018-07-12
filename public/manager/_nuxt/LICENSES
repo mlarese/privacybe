@@ -23,6 +23,196 @@
  * Released under the MIT License.
  */
 
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+
+/*! no static exports found */
+
+/*!**********************!*\
+  !*** ./src/cache.js ***!
+  \**********************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*! lodash/isString */
+
+/*! lodash/isFunction */
+
+/*! ./serialize */
+
+/*!***********************!*\
+  !*** ./src/config.js ***!
+  \***********************/
+
+/*! no static exports found */
+
+/*! axios */
+
+/*! lodash/merge */
+
+/*! lodash/omit */
+
+/*! ./memory */
+
+/*! ./cache */
+
+/*!************************!*\
+  !*** ./src/exclude.js ***!
+  \************************/
+
+/*! no static exports found */
+
+/*! lodash/find */
+
+/*! lodash/isEmpty */
+
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*! axios */
+
+/*! lodash/omit */
+
+/*! lodash/merge */
+
+/*! lodash/isFunction */
+
+/*! ./request */
+
+/*! ./config */
+
+/*!**********************!*\
+  !*** ./src/limit.js ***!
+  \**********************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*!***********************!*\
+  !*** ./src/memory.js ***!
+  \***********************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*! lodash/size */
+
+/*! lodash/map */
+
+/*!************************!*\
+  !*** ./src/request.js ***!
+  \************************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*! lodash/extend */
+
+/*! ./response */
+
+/*! ./exclude */
+
+/*! ./cache */
+
+/*!*************************!*\
+  !*** ./src/response.js ***!
+  \*************************/
+
+/*! no static exports found */
+
+/*! regenerator-runtime/runtime */
+
+/*! ./limit */
+
+/*! ./cache */
+
+/*!**************************!*\
+  !*** ./src/serialize.js ***!
+  \**************************/
+
+/*! no static exports found */
+
+/*! lodash/omit */
+
+/*!****************************!*\
+  !*** multi ./src/index.js ***!
+  \****************************/
+
+/*! no static exports found */
+
+/*! ./src/index.js */
+
+/*!*************************************************************************************!*\
+  !*** external {"umd":"axios","amd":"axios","commonjs":"axios","commonjs2":"axios"} ***!
+  \*************************************************************************************/
+
+/*! no static exports found */
+
+/*!*********************************************************************************************************************!*\
+  !*** external {"umd":"lodash/extend","amd":"lodash/extend","commonjs":"lodash/extend","commonjs2":"lodash/extend"} ***!
+  \*********************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*************************************************************************************************************!*\
+  !*** external {"umd":"lodash/find","amd":"lodash/find","commonjs":"lodash/find","commonjs2":"lodash/find"} ***!
+  \*************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*************************************************************************************************************************!*\
+  !*** external {"umd":"lodash/isEmpty","amd":"lodash/isEmpty","commonjs":"lodash/isEmpty","commonjs2":"lodash/isEmpty"} ***!
+  \*************************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*************************************************************************************************************************************!*\
+  !*** external {"umd":"lodash/isFunction","amd":"lodash/isFunction","commonjs":"lodash/isFunction","commonjs2":"lodash/isFunction"} ***!
+  \*************************************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*****************************************************************************************************************************!*\
+  !*** external {"umd":"lodash/isString","amd":"lodash/isString","commonjs":"lodash/isString","commonjs2":"lodash/isString"} ***!
+  \*****************************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*********************************************************************************************************!*\
+  !*** external {"umd":"lodash/map","amd":"lodash/map","commonjs":"lodash/map","commonjs2":"lodash/map"} ***!
+  \*********************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*****************************************************************************************************************!*\
+  !*** external {"umd":"lodash/merge","amd":"lodash/merge","commonjs":"lodash/merge","commonjs2":"lodash/merge"} ***!
+  \*****************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*************************************************************************************************************!*\
+  !*** external {"umd":"lodash/omit","amd":"lodash/omit","commonjs":"lodash/omit","commonjs2":"lodash/omit"} ***!
+  \*************************************************************************************************************/
+
+/*! no static exports found */
+
+/*!*************************************************************************************************************!*\
+  !*** external {"umd":"lodash/size","amd":"lodash/size","commonjs":"lodash/size","commonjs2":"lodash/size"} ***!
+  \*************************************************************************************************************/
+
+/*! no static exports found */
+
 /**
  * Checks if an event is supported in the current execution environment.
  *

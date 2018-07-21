@@ -12,6 +12,17 @@ class OwnerResource extends AbstractResource {
         return $this->entityManager->getRepository( Owner::class);
     }
 
+    public function geOwnersFW() {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb
+            ->select(['o.id','o.name','o.surname','o.company'])
+            ->where('o.deleted=0')
+        ;
+
+        $results = $qb->getQuery()->getResult();
+
+        return $results;
+    }
     /**
      * @param $company
      * @param $email

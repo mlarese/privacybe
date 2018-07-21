@@ -1,0 +1,475 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Privacy api
+  description: ''
+host: privacy.dataone.online
+basePath: /api
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /owner/term:
+    get:
+      operationId: getTreatments
+      summary: Get term
+      tags:
+        - Terms
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/term'
+  '/owner/treatment/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    get:
+      operationId: getTreatment
+      summary: Get Treatment
+      tags:
+        - Treatments
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/treatments-output'
+          examples:
+            application/json:
+              code: dati_personali
+              name: Dati personali
+              note: null
+              created: '2018-06-15'
+              creator:
+                userId: 36
+                user: democompany
+                userName: Demo company owner
+                role: owners
+                ownerId: 34
+                source: remote
+              deleted: false
+              options: null
+              history: null
+              groupCode: null
+    put:
+      operationId: updateTreatment
+      summary: Update Treatment
+      tags:
+        - Treatments
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/treatments-input'
+            example:
+              code: dati_personali
+              name: Dati personali
+              note: null
+              created: '2018-06-15'
+              creator:
+                userId: 36
+                user: democompany
+                userName: Demo company owner
+                role: owners
+                ownerId: 34
+                source: remote
+              deleted: false
+              options: null
+              history: null
+              groupCode: null
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/treatments-output'
+          examples:
+            application/json:
+              code: dati_personali
+              name: Dati personali
+              note: null
+              created: '2018-06-15'
+              creator:
+                userId: 36
+                user: democompany
+                userName: Demo company owner
+                role: owners
+                ownerId: 34
+                source: remote
+              deleted: false
+              options: null
+              history: null
+              groupCode: null
+    delete:
+      operationId: deleteTreatment
+      summary: Delete Treatment
+      tags:
+        - Treatments
+      responses:
+        '204':
+          description: ''
+  /owner/treatment:
+    get:
+      operationId: listTreatments
+      summary: List Treatments
+      tags:
+        - Treatments
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/treatments-output'
+          examples:
+            application/json:
+              - code: dati_personali
+                name: Dati personali
+                note: null
+                created: '2018-06-15'
+                creator:
+                  userId: 36
+                  user: democompany
+                  userName: Demo company owner
+                  role: owners
+                  ownerId: 34
+                  source: remote
+                deleted: false
+                options: null
+                history: null
+                groupCode: null
+    post:
+      operationId: createTreatment
+      summary: Create Treatment
+      tags:
+        - Treatments
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/treatments-input'
+            example:
+              code: dati_personali
+              name: Dati personali
+              note: null
+              created: '2018-06-15'
+              creator:
+                userId: 36
+                user: democompany
+                userName: Demo company owner
+                role: owners
+                ownerId: 34
+                source: remote
+              deleted: false
+              options: null
+              history: null
+              groupCode: null
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/treatments-output'
+          examples:
+            application/json:
+              code: dati_personali
+              name: Dati personali
+              note: null
+              created: '2018-06-15'
+              creator:
+                userId: 36
+                user: democompany
+                userName: Demo company owner
+                role: owners
+                ownerId: 34
+                source: remote
+              deleted: false
+              options: null
+              history: null
+              groupCode: null
+definitions:
+  term:
+    title: Term
+    type: object
+    properties:
+      uid:
+        type: string
+      name:
+        type: string
+      paragraphs:
+        type: array
+        items:
+          type: object
+          properties:
+            title:
+              type: object
+              properties:
+                it:
+                  type: string
+            text:
+              type: object
+              properties:
+                it:
+                  type: string
+            treatments:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  restrictive:
+                    type: boolean
+                  mandatory:
+                    type: boolean
+                  text:
+                    type: object
+                    properties:
+                      it:
+                        type: string
+      status:
+        type: string
+      published:
+        type: 'null'
+      created:
+        type: string
+      modified:
+        type: string
+      suspended:
+        type: 'null'
+      deleted:
+        type: boolean
+      options:
+        type: object
+        properties:
+          history:
+            type: array
+            items:
+              type: object
+              properties:
+                action:
+                  type: string
+                date:
+                  type: string
+                user:
+                  type: object
+                  properties:
+                    userId:
+                      type: integer
+                    user:
+                      type: string
+                    userName:
+                      type: string
+                    role:
+                      type: string
+                    ownerId:
+                      type: integer
+                    source:
+                      type: string
+                description:
+                  type: string
+      pages:
+        type: array
+        items:
+          type: object
+          properties:
+            termUid:
+              type: string
+            domain:
+              type: string
+            page:
+              type: string
+            deleted:
+              type: boolean
+      deletable:
+        type: boolean
+    example:
+      uid: 695b81a4-3d94-435a-9cef-14be3523ed30
+      name: Test demo
+      paragraphs:
+        - title:
+            it: Test
+          text:
+            it: 'test&nbsp;<span style="font-size: 12px; text-align: center;">Demo company owner??</span>'
+          treatments:
+            - name: dati_personali
+              restrictive: false
+              mandatory: true
+              text:
+                it: test dati
+            - mandatory: false
+              restrictive: false
+              name: newsletter
+              text:
+                it: test news
+      status: draft
+      published: null
+      created: '2018-06-19'
+      modified: '2018-07-16'
+      suspended: null
+      deleted: false
+      options:
+        history:
+          - action: creation
+            date: '2018-06-19'
+            user:
+              userId: 36
+              user: democompany
+              userName: Demo company owner
+              role: owners
+              ownerId: 34
+              source: remote
+            description: ''
+          - action: Term changes update
+            date: '2018-06-19T11:07:52.713Z'
+            user:
+              userId: 36
+              user: democompany
+              userName: Demo company owner
+              role: owners
+              ownerId: 34
+              source: remote
+            description: ''
+          - action: Term changes update
+            date: '2018-07-16T11:49:45.290Z'
+            user:
+              userId: 36
+              user: democompany
+              userName: Demo company owner
+              role: owners
+              ownerId: 34
+              source: remote
+            description: ''
+          - action: Term changes update
+            date: '2018-07-16T11:50:39.248Z'
+            user:
+              userId: 36
+              user: democompany
+              userName: Demo company owner
+              role: owners
+              ownerId: 34
+              source: remote
+            description: ''
+          - action: Term changes update
+            date: '2018-07-16T11:51:08.734Z'
+            user:
+              userId: 36
+              user: democompany
+              userName: Demo company owner
+              role: owners
+              ownerId: 34
+              source: remote
+            description: ''
+      pages:
+        - termUid: 695b81a4-3d94-435a-9cef-14be3523ed30
+          domain: www.test.it
+          page: /contatti
+          deleted: false
+      deletable: true
+  treatments-input:
+    title: Treatments Input
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      note:
+        type: 'null'
+      created:
+        type: string
+      creator:
+        type: object
+        properties:
+          userId:
+            type: integer
+          user:
+            type: string
+          userName:
+            type: string
+          role:
+            type: string
+          ownerId:
+            type: integer
+          source:
+            type: string
+      deleted:
+        type: boolean
+      options:
+        type: 'null'
+      history:
+        type: 'null'
+      groupCode:
+        type: 'null'
+    example:
+      code: dati_personali
+      name: Dati personali
+      note: null
+      created: '2018-06-15'
+      creator:
+        userId: 36
+        user: democompany
+        userName: Demo company owner
+        role: owners
+        ownerId: 34
+        source: remote
+      deleted: false
+      options: null
+      history: null
+      groupCode: null
+  treatments-output:
+    title: Treatments Output
+    allOf:
+      - type: object
+        properties:
+          code:
+            type: string
+          name:
+            type: string
+          note:
+            type: 'null'
+          created:
+            type: string
+          creator:
+            type: object
+            properties:
+              userId:
+                type: integer
+              user:
+                type: string
+              userName:
+                type: string
+              role:
+                type: string
+              ownerId:
+                type: integer
+              source:
+                type: string
+          deleted:
+            type: boolean
+          options:
+            type: 'null'
+          history:
+            type: 'null'
+          groupCode:
+            type: 'null'
+      - $ref: '#/definitions/treatments-input'
+    example:
+      code: dati_personali
+      name: Dati personali
+      note: null
+      created: '2018-06-15'
+      creator:
+        userId: 36
+        user: democompany
+        userName: Demo company owner
+        role: owners
+        ownerId: 34
+        source: remote
+      deleted: false
+      options: null
+      history: null
+      groupCode: null

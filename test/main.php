@@ -24,15 +24,3 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
     false
 );
 
-$em = EntityManager::create($settings['connection'], $config);
-
-$role = new \App\Entity\Role();
-
-$role->setCode('MKR')
-    ->setName('Courage Name');
-
-$em->persist($role);
-
-
-$em->flush();
-

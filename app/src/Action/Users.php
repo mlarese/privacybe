@@ -42,6 +42,7 @@ class Users extends AbstractAction
             if(isset($body['filters']))
                 $criteria = $body['filters'];
 
+            $step = "- getting list";
             $list = $priRes->privacyListFw($criteria, new GroupByEmail());
             // $list = $priRes->privacyListLight($criteria, new GroupByEmail());
 
@@ -50,6 +51,7 @@ class Users extends AbstractAction
             // print_r($list);
             // die('fine');
             $export = [];
+            $step.= "- creating records";
             foreach($list as $email => &$person){
                 $newExport = [
                     // 'id' => $person['id'],
@@ -77,10 +79,12 @@ class Users extends AbstractAction
 
         } catch (ORMException $e) {
             echo $e->getMessage();
-            return $response->withStatus(500, 'ORMException saving privacy');
+            echo " $step";
+            return $response->withStatus(500, 'ORMException searching user');
         } catch (\Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(500, 'Exception saving privacy');
+            echo " $step";
+            return $response->withStatus(500, 'Exception searching user');
         }
 
     }

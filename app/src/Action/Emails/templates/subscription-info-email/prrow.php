@@ -1,10 +1,22 @@
 <?php
-    $date = date_create($data['created']['date']);
+
+
+    if(  is_array($data['created'])  ) {
+        $date = date_create($data['created']['date']);
+    } else {
+
+        if(is_string($data['created']))
+            $date = date_create($data['created']);
+        else
+            $date = $data['created'];
+    }
+
     $dtcreate = date_format($date,"d/m/Y");
     $tmcreate = date_format($date,"H:i");
 
     $flparagraphs = $data['privacy']['paragraphs'];
     $flags = '';
+
     foreach ($flparagraphs as $pg) {
         foreach ($pg['treatments'] as $t) {
             $checked = $t['selected']?'checked="true"':'';

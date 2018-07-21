@@ -3,6 +3,7 @@
 namespace App\Action;
 
 
+use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 use App\Resource\MandatoryFieldMissingException;
 use App\Resource\OwnerExistException;
 use DateTime;
@@ -208,6 +209,14 @@ class AbstractAction
     public function getEmConfig(): EntityManager
     {
         return $this->container['em-config'];
+    }
+
+    /**
+     * @return EncryptorInterface
+     */
+    public function getEncryptor():EncryptorInterface
+    {
+        return $this->container['encryptor'];
     }
 
     /**

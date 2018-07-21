@@ -3,8 +3,10 @@ namespace App\Action;
 
 use App\Entity\Config\OwnerUserRequest;
 use App\Entity\Privacy\UserRequest;
+use App\Resource\EmailResource;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -29,7 +31,11 @@ class UsersRequests  extends AbstractAction{
 
             $mail = $body ['email'];
             $ownerId = $body ['ref'];
+            $language = "it";
 
+            if(isset($body["language"])) {
+                $language = $body["language"];
+            }
             $ownerId = $this->findOwnerIdFromHash($ownerId);
 
             $em = $this->getEmPrivacy($ownerId);
@@ -58,14 +64,20 @@ class UsersRequests  extends AbstractAction{
             $em->persist($r);
             $this->getEmConfig()->persist($or);
 
+
+            $emailRes = new EmailResource($em);
+            $emailRes->privacyRequest($language, $mail,$this->getEmailClient());
+
             $em->flush();
             $this->getEmConfig()->flush();
 
             return $response->withJson($this->success());
-
         } catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error');
+        } catch (GuzzleException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error sending email');
         }
 
     }

@@ -22,6 +22,13 @@ class OperatorResource extends AbstractResource
     }
 
     /**
+     * @return null|Operator
+     */
+    public function getOwner () {
+        return $this->getRepository()->findOneBy(['role'=>'owner', 'deleted'=>0]);
+    }
+
+    /**
      * @param $id
      * @param $role
      * @param $periodFrom

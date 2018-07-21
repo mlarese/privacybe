@@ -13,6 +13,7 @@ use App\Resource\Privacy\PostFilter;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
+use App\Service\DeferredPrivacyService;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -117,6 +118,8 @@ class PrivacyResource extends AbstractResource
        return $ph;
     }
 
+
+
     /**
      * @param $ip
      * @param $form
@@ -152,7 +155,8 @@ class PrivacyResource extends AbstractResource
         $telephone,
         $language=null,
         $page=null,
-        $raiseException = false
+        $raiseException = false,
+        $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO
 
     ) {
         $privacyEntry = new Privacy();
@@ -181,12 +185,26 @@ class PrivacyResource extends AbstractResource
             $this->getRepository();
         }
 
+        $isDeferred = ($deferred !== DeferredPrivacyService::DEFERRED_TYPE_NO);
+        $privacyDef = null;
+
+        if($isDeferred) {
+            $deferredTYpe = $deferred;
+            $defSrv = new DeferredPrivacyService();
+            $privacyDef = $defSrv->setDeferred($privacyEntry, $deferredTYpe);
+        }
+
         if($raiseException)
         {
             if($this->entityManager->isOpen())
             {
                 try {
                     $this->entityManager->merge($privacyEntry);
+
+                    if($isDeferred) {
+                        $this->entityManager->merge($privacyDef);
+                    }
+
                     $this->entityManager->flush();
                 } catch (Exception $e) {
                     echo $e;
@@ -206,6 +224,9 @@ class PrivacyResource extends AbstractResource
         {
             try {
                 $this->entityManager->merge($privacyEntry);
+                if($isDeferred) {
+                    $this->entityManager->merge($privacyDef);
+                }
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 echo $e;
@@ -637,6 +658,7 @@ class PrivacyResource extends AbstractResource
             ->select($fields)
             ->where('p.deleted=0')
             ->andWhere( "p.email=:email")
+            ->andWhere( $ex->not("p.ip='####'"))
             ->setParameter('email', $email)
                 ->addOrderBy( 'p.termId', 'ASC')
                 ->addOrderBy( 'p.created', 'DESC')

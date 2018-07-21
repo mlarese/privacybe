@@ -5,6 +5,7 @@ use App\Entity\Config\Domain;
 use App\Entity\Config\Page;
 use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
+use App\Entity\Privacy\PrivacyDeferred;
 use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
 use App\Helpers\UploadsManager;
@@ -18,6 +19,7 @@ use App\Resource\PropertiesResource;
 use App\Resource\PropertyNotFoundException;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
+use App\Service\DeferredPrivacyService;
 use function base64_encode;
 use DateTime;
 use Doctrine\Common\Annotations\AnnotationException;
@@ -41,6 +43,7 @@ use function toJson;
 
 class PrivacyManager extends AbstractAction
 {
+
 
     /**
      * @param $request Request
@@ -886,7 +889,6 @@ class PrivacyManager extends AbstractAction
      * @return Privacy
      */
     public static function savePlainPrivacyByAssoc($privacyResource,$data,$ownerId, $ip='') {
-
         $domain = $data['domain'];
 
         $email = "";
@@ -983,6 +985,12 @@ class PrivacyManager extends AbstractAction
             $ref = $data['ref'];
         }
 
+        $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO;
+        if(isset($data['deferred'])) {
+            $deferred = $data['deferred'];
+        }
+
+
         /** @var Privacy $pr */
         $pr=$privacyResource->savePrivacy(
             $ip,
@@ -1000,12 +1008,33 @@ class PrivacyManager extends AbstractAction
             $privacyFlags,
             $telephone,
             $language,
-            $page
+            $page,
+            false,
+            $deferred
         );
 
-
-        // print_r(self::toJsonStatic($pr));
         return $pr ;
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function deferredVisited($request, $response, $args) {
+
+        try {
+            $body = $request->getParsedBody();
+            $ref = $body['ref'];
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500,'System Error');
+        }
+
+        return $response->withJson($this->success());
     }
 
     /**

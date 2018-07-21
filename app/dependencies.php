@@ -1,5 +1,6 @@
 <?php
 // DIC configuration
+use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
 use GuzzleHttp\Client;
 
 $container = $app->getContainer();
@@ -38,6 +39,34 @@ $container['em-config'] = function ($c) {
         new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_config']['encryption_key'])
     );
     $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
+    $eventManager = $em->getEventManager();
+    $eventManager->addEventSubscriber($subscriber);
+
+    return $em;
+};
+
+
+/**
+ * Super user privacy entity manager
+ * @param $c
+ *
+ * @return \Doctrine\ORM\EntityManager
+ */
+$container['em-su-privacy'] = function ($c) {
+    $settings = $c->get('settings');
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $settings['doctrine_privacy']['meta']['entity_path'],
+        $settings['doctrine_privacy']['meta']['auto_generate_proxies'],
+        $settings['doctrine_privacy']['meta']['proxy_dir'],
+        $settings['doctrine_privacy']['meta']['cache'],
+        false
+    );
+
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+        new \Doctrine\Common\Annotations\AnnotationReader(),
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+    );
+    $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
     $eventManager = $em->getEventManager();
     $eventManager->addEventSubscriber($subscriber);
 
@@ -128,6 +157,14 @@ $container['csv_direct'] = function ($container) {
     return $exportService;
 };
 
+$container['encryptor'] = function ($container) {
+    $settings = $container->get('settings');
+    $options = $settings['doctrine_privacy'];
+
+    $enc = new OpenSslEncryptor($options['encryption_key']);
+
+    return $enc;
+};
 
 
 $container['mailone_direct'] = function ($container) {

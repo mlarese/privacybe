@@ -145,6 +145,10 @@ class DeferredPrivacyService extends SlimAbstractService {
 
     }
 
+    public function findDeferredPrivacies(EntityManager $em, $type = DeferredPrivacyService::DEFERRED_TYPE_DOUBLE_OPTIN){
+        
+    }
+
     public function sendDeferredConfirmEmails() {
         /** @var EncryptorInterface $enc */
         $enc = $this->getDependency('encryptor');

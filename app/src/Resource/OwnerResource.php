@@ -3,6 +3,7 @@
 namespace App\Resource;
 
 use App\Entity\Config\Owner;
+use App\Entity\Proxy\OwnerProxy;
 
 class OwnerResource extends AbstractResource {
     /**
@@ -12,16 +13,19 @@ class OwnerResource extends AbstractResource {
         return $this->entityManager->getRepository( Owner::class);
     }
 
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getProxyRepository() {
+        return $this->entityManager->getRepository( OwnerProxy::class);
+    }
+
+    /**
+     * @return OwnerProxy[]
+     */
     public function geOwnersFW() {
-        $qb = $this->getRepository()->createQueryBuilder('o');
-        $qb
-            ->select(['o.id','o.name','o.surname','o.company'])
-            ->where('o.deleted=0')
-        ;
-
-        $results = $qb->getQuery()->getResult();
-
-        return $results;
+        $r = $this->getProxyRepository();
+        return $r->findBy(["deleted"=>0]);
     }
     /**
      * @param $company

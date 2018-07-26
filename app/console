@@ -21,6 +21,7 @@ use App\Console\Command\ImportNewsletter;
 use App\Console\Command\ImportPortalReservation;
 use App\Console\Command\ImportABSEnquiry;
 use App\Console\Command\ImportStructureReservation;
+use App\Console\Command\ImportStoreONE;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;
@@ -32,6 +33,7 @@ try {
     $application->add(new ImportPortalReservation());
     $application->add(new ImportABSEnquiry());
     $application->add(new ImportStructureReservation());
+    $application->add(new ImportStoreONE());
     $application->run();
 
 } catch (\Exception $e) {

@@ -32,6 +32,7 @@
               <option value="3">ABS STRUCTURE RESERVATION</option>
               <option value="4">ABS PORTAL RESERVATION</option>
               <option value="5">ABS ENQUIRY</option>
+              <option value="6">ABS STORE ONE</option>
             </select>
           </div>
         </div>
@@ -195,6 +196,33 @@
                   <div class="form-group col-sm-4">
                       <label for="csv">Inserisci il file csv:</label>
                       <input name="csv" type="file" class="form-control-file" id="csvenquiry">
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Invia</button>
+          </form>
+      </div>
+  </div>
+  <div class="container-fluid formAbsStoreONE py-5">
+      <div class="container">
+          <h3>Compila il seguente form:</h3>
+          <hr>
+          <form id="formAbsStoreONE" enctype="multipart/form-data">
+              <div class="row">
+                  <div class="form-group col-sm-4">
+                      <label for="ownerId">Owner Id</label>
+                      <input name="ownerId" type="text" class="form-control" id="ownerId">
+                  </div>
+                  <div class="form-group col-sm-4">
+                      <label for="termId">Term Id</label>
+                      <input name="termId" type="text" class="form-control" id="termId">
+                  </div>
+                  <div class="form-group col-sm-4">
+                      <label for="storeONERegistrationUrl">StoreONE registration URL</label>
+                      <input name="storeONERegistrationUrl" type="text" class="form-control" id="storeONERegistrationUrl">
+                  </div>
+                  <div class="form-group col-sm-4">
+                      <label for="csv">Inserisci il file csv:</label>
+                      <input name="csv" type="file" class="form-control-file" id="csvstoreone">
                   </div>
               </div>
               <button type="submit" class="btn btn-primary">Invia</button>

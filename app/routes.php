@@ -183,3 +183,7 @@ $app->post(
     '/api/import/abs/enquiry',
     'App\Action\Import\ABSEnquiry:import'
 );
+$app->post(
+    '/api/import/abs/storeone',
+    'App\Action\Import\StoreONE:import'
+);

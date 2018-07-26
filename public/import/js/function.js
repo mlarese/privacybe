@@ -230,4 +230,47 @@ $(document).ready(function(){
       }
     });
   });
+  //Submit form StoreONE
+  $('#formAbsStoreONE').on('submit', function (e) {
+    e.preventDefault();
+    var item = new FormData();
+    item.append('file', $('#csvstoreone')[0].files[0]);
+    var myData = $(this).serialize();
+    item.append('myData', myData);
+    $.ajax({
+      url: '/api/import/abs/storeone',
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      data: item,
+      crossDomain: true,
+      cache: false,
+      timeout: (1000 * 60 * 60 * 24),
+      beforeSend: function () {
+        $('<div class="loadingOver"><span class="fas fa-spinner mm-spin"></span></div>').insertBefore($('#formAbsStoreONE'));
+      },
+      success: function (msg) {
+        $('.loadingOver').fadeOut(100, function () {
+          $(this).remove();
+        });
+        if (msg['result'] == 'welcome') {
+          $('#formAbsStoreONE')[0].reset();
+          swal({
+            type: 'success',
+            title: 'Dati inviati correttamente'
+          });
+        }
+      },
+      error: function (msg) {
+        $('.loadingOver').fadeOut(100, function () {
+          $(this).remove();
+        });
+        swal({
+          type: 'error',
+          title: 'Errore',
+          text: msg.statusText
+        })
+      }
+    });
+  });
 });

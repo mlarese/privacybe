@@ -5,7 +5,7 @@ namespace App\Action\Import;
 use App\Action\AbstractAction;
 use App\Service\ABSImport;
 
-class ABSEnquiry extends AbstractAction {
+class StoreONE extends AbstractAction {
 
     /**
      * @param \Slim\Http\Request $request
@@ -31,8 +31,8 @@ class ABSEnquiry extends AbstractAction {
                 case 'termId':
                     $termId = $value;
                     break;
-                case 'enquiryUrl':
-                    $enquiryUrl = rawurldecode($value);
+                case 'storeONERegistrationUrl':
+                    $registrationUrl = rawurldecode($value);
                     break;
             }
         }
@@ -40,10 +40,10 @@ class ABSEnquiry extends AbstractAction {
         try {
             $service = new ABSImport();
             ini_set('max_execution_time', 60*60*24);
-            $service->importEnquiry(
+            $service->importStoreONE(
                 $ownerId,
                 $termId,
-                $enquiryUrl,
+                $registrationUrl,
                 $csv->file
             );
         } catch (\Exception $e) {

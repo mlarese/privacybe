@@ -5,6 +5,7 @@ $(document).ready(function(){
   $('.formAbsStructureReservation').hide();
   $('.formAbsPortalReservation').hide();
   $('.formAbsEnquiry').hide();
+  $('.formAbsStoreONE').hide();
   //Select tipologia
   $('#selectType').change(function(){
     $('.formOne').hide();
@@ -21,6 +22,8 @@ $(document).ready(function(){
       $('.formAbsPortalReservation').show();
     } else if ($(this).val() == 5) {
       $('.formAbsEnquiry').show();
+    } else if ($(this).val() == 6) {
+      $('.formAbsStoreONE').show();
     }
   });
   //Submit form FormOne

@@ -66,7 +66,9 @@ if($authMode === 'jwt') {
             "/api/import/abs/structure/reservation",
             "/api/import/abs/portal/reservation",
             "/api/import/abs/enquiry",
-            "/api/import/abs/storeone"
+            "/api/import/abs/storeone",
+            "/api/import/advancedimporter/preset",
+            "/api/import/advancedimporter/import",
         ],
         "secret" => $auth['secret'],
         "secure" => false,

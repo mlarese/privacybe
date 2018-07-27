@@ -16,6 +16,20 @@ abstract class AbstractResource
      */
     protected $entityManager = null;
 
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager {
+        return $this->entityManager;
+    }
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public function setEntityManager(EntityManager $entityManager): void {
+        $this->entityManager = $entityManager;
+    }
+
     public function toJson($obj) {
         $on = new ObjectNormalizer();
         $on->setCircularReferenceLimit(1);

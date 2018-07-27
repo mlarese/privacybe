@@ -9,6 +9,8 @@
 namespace App\Action\Emails;
 
 
+use function file_exists;
+
 class TemplateBuilder {
     private $templateName;
     private $data;
@@ -22,11 +24,21 @@ class TemplateBuilder {
      * @param $labels
      */
     public function __construct($templateName, $data, $language) {
-        $this->templateName = "templates/$templateName/${language}.php";
+        $this->configureTemplateName($templateName,$language);
         $this->data = $data;
         $this->language = $language;
     }
 
+    private function configureTemplateName($templateName,$language) {
+        $tmpTpl = "templates/$templateName/${language}.php";
+
+        if(!file_exists($tmpTpl))
+            $tmpTpl = "templates/$templateName/en.php";
+        if(!file_exists($tmpTpl))
+            $tmpTpl = "templates/$templateName/it.php";
+
+        $this->templateName = $tmpTpl;
+    }
     public function render () {
         $d = $this->data;
 

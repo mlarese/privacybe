@@ -23,7 +23,7 @@ class EntityManagerBuilder {
         return $this->container['em-config'];
     }
 
-    private function buildSUPrivateEM($ownerId):EntityManager {
+    public function buildSUPrivateEM($ownerId):EntityManager {
         $settings = $this->container['settings'];
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(

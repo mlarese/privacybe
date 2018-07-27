@@ -70,27 +70,6 @@ class Privacy {
     protected $language;
 
     /**
-     * @ORM\Column(name="form", type="json", nullable=true)
-     */
-    protected $form;
-
-    /**
-     * @ORM\Column(name="crypted_form", type="text", nullable=true, length=4294967295)
-     * @Encrypted
-     */
-    protected $cryptedForm;
-
-    /**
-     * @ORM\Column(name="privacy", type="json_array", nullable=true, length=4294967295)
-     */
-    protected $privacy;
-
-    /**
-     * @ORM\Column(name="privacy_flags", type="json", nullable=true)
-     */
-    protected $privacyFlags;
-
-    /**
      * @ORM\Column(name="term_id", type="string", nullable=false)
      */
     protected $termId;

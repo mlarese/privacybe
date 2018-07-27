@@ -135,6 +135,8 @@ class PrivacyResource extends AbstractResource
      * @param $email
      * @param $privacyFlags
      * @param $telephone
+     * @param $raiseException
+     * @param $deferred
      * @return Privacy
      * @throws \Doctrine\ORM\OptimisticLockException
      */

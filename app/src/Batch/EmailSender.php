@@ -20,13 +20,14 @@ class EmailSender{
         /** @var Client $cli */
         $client = $this->container['email_client'];
 
+        $to = 'mauro.larese@gmail.com';
         $data = [
             'allow_redirects' => false,
             'headers' => [ 'Accept-Encoding' => 'gzip', 'Accept' => 'application/json', 'Content-Type' => 'application/json'],
             'json' => [ 'sender' => $sender,  'from' => $from, 'to' => $to, 'subject' => $subject, 'body' => $body ]
         ];
 
-        $client->request('POST', '', $data);
+        return $client->request('POST', '', $data);
     }
 
 }

@@ -12,9 +12,10 @@ class DeferredPrivacyService extends SlimAbstractService {
     const DEFERRED_TYPE_DOUBLE_OPTIN = 'double_optin';
     const DEFERRED_TYPE_NO = '#NO#';
 
-    const DEFERRED_STATUS_OPEN = 'open';
-    const DEFERRED_STATUS_VISITED = 'visited';
-    const DEFERRED_STATUS_CLOSE = 'close';
+    const DEFERRED_STATUS_OPEN = 1;
+    const DEFERRED_STATUS_ELABORATED = 2;
+    const DEFERRED_STATUS_VISITED = 3;
+    const DEFERRED_STATUS_CLOSE = 0;
     const DEFERRED_VALUE = '####';
 
 
@@ -146,7 +147,7 @@ class DeferredPrivacyService extends SlimAbstractService {
     }
 
     public function findDeferredPrivacies(EntityManager $em, $type = DeferredPrivacyService::DEFERRED_TYPE_DOUBLE_OPTIN){
-        
+
     }
 
     public function sendDeferredConfirmEmails() {

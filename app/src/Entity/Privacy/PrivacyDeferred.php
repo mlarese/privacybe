@@ -109,7 +109,7 @@ class PrivacyDeferred {
     protected $updated;
 
     /**
-     * @ORM\Column(name="status", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="integer", nullable=false)
      */
     protected $status;
 

@@ -1,5 +1,9 @@
 <?php
 // DIC configuration
+use App\Action\Emails\PlainTemplateBuilder;
+use App\Batch\DeferredPrivacyBatch;
+use App\Batch\EmailSender;
+use App\Batch\EntityManagerBuilder;
 use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
 use GuzzleHttp\Client;
 
@@ -192,13 +196,10 @@ $container['direct_handler'] = function ($container) {
 
 
 $container['mailone_direct_service'] = function ($container) {
-    $settings = $container->get('settings');
 
-    $exportService = \App\Service\MailOneService::getInstance($settings['MailOne'],true);
 
-    return $exportService;
+    return null;
 };
-
 
 
 $container['direct_service'] = function ($container) {
@@ -209,9 +210,27 @@ $container['direct_service'] = function ($container) {
     return $exportService;
 };
 
+$container['entity-manager_builder'] = function ($container) {
+    return new EntityManagerBuilder($container);
+};
 
+$container['email_sender'] = function ($container) {
+    return new EmailSender($container);
+};
+$container['dbl_optin_template_builder'] = function ($container) {
+    $bld = new PlainTemplateBuilder();
+    $bld->setTemplateName('double-optin');
+    return $bld;
+};
 
+$container['deferred_privacy_batch'] = function ($container) {
+    /** @var EntityManagerBuilder $emb */
+    $emb = $container->get('entity-manager_builder');
+    /** @var EmailSender $emsnd */
+    $emsnd= $container->get('email_sender');
 
+    return new DeferredPrivacyBatch($emb,$container,$emsnd);
+};
 
 
 $container['actionHandler'] = function ($container) {

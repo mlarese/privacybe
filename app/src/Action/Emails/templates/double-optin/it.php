@@ -14,14 +14,15 @@
             <table style="<?=$tableStyle?>">
                 <tr>
                     <td colspan="100">
-                       Double optin
+                        Buongiorno  <?=$d['name']?>  <?=$d['surname']?>,
                     </td>
                 </tr><?=$spacer?>
 
                 <tr>
                     <td colspan="100">
-                        Desidera confermare i consensi inseriti?
-                        <a href="<?=$d['enclink']?>">Conferma</a>
+                        abbiamo ricevuto l'accettazione del trattamento dei dati raccolta attraverso il servizio DataOne. Per assicurarti la massima protezione
+                        dei tuoi dati ti chiediamo di confermare la tua accettazione cliccando
+                        <a href="<?=$d['enclink']?>">qui</a>
                     </td>
                 </tr><?=$spacer?>
 

@@ -37,10 +37,12 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
         $ownres = new OwnerResource($emcfg);
 
+        /** @var DeferredPrivacyService $srv */
+        $srv = $this->container->get('deferred_privacy_service');
         /**
          * $emcfg solo per inizializzare
          */
-        $defpres = new DeferredPrivacyResource($emcfg);
+        $defpres = new DeferredPrivacyResource($emcfg, $srv);
 
         $owns = $ownres->geOwnersFW();
         /** @var PlainTemplateBuilder $tpbuilder */

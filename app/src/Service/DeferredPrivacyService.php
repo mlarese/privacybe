@@ -112,39 +112,75 @@ class DeferredPrivacyService extends SlimAbstractService {
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function setVisited(string $deferredUid, EntityManager $em, string $privacyUid=null ) {
+    public function setStatus(string $deferredUid, EntityManager $em, $status, string $privacyUid=null ) {
         if($privacyUid === null){
             $privacyUid = $deferredUid;
         }
 
         /** @var PrivacyDeferred $defR */
         $defR = $em->find(PrivacyDeferred::class, $deferredUid);
-        /** @var Privacy $pryR */
-        $pryR = $em->find(Privacy::class, $privacyUid);
-
 
         $defR
-            ->setStatus( DeferredPrivacyService::DEFERRED_STATUS_VISITED)
+            ->setStatus( $status)
             ->setUpdated( new DateTime())
         ;
 
-        $pryR
-            ->setCryptedForm(  $defR->getCryptedForm() )
-            ->setDomain(  $defR->getDomain() )
-            ->setForm(  $defR->getForm() )
-            ->setIp(  $defR->getIp() )
-            ->setPage(  $defR->getPage() )
-            ->setSite(  $defR->getSite() )
-            ->setPrivacy(  $defR->getPrivacy() )
-            ->setPrivacyFlags(  $defR->getPrivacyFlags() )
-        ;
+        if(
+            $status === DeferredPrivacyService::DEFERRED_STATUS_VISITED
+        ){
+            /** @var Privacy $pryR */
+            $pryR = $em->find(Privacy::class, $privacyUid);
+
+            $pryR
+                ->setCryptedForm(  $defR->getCryptedForm() )
+                ->setDomain(  $defR->getDomain() )
+                ->setForm(  $defR->getForm() )
+                ->setIp(  $defR->getIp() )
+                ->setPage(  $defR->getPage() )
+                ->setSite(  $defR->getSite() )
+                ->setPrivacy(  $defR->getPrivacy() )
+                ->setPrivacyFlags(  $defR->getPrivacyFlags() )
+            ;
+            $em->merge($pryR);
+        }
 
         $em->merge($defR);
-        $em->merge($pryR);
+
 
         $em->flush();
 
     }
+
+    /**
+     * @param string        $deferredUid
+     * @param EntityManager $em
+     * @param string|null   $privacyUid
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function setVisited(string $deferredUid, EntityManager $em, string $privacyUid=null ) {
+        $this->setStatus($deferredUid, $em,DeferredPrivacyService::DEFERRED_STATUS_VISITED,$privacyUid );
+    }
+
+    /**
+     * @param string        $deferredUid
+     * @param EntityManager $em
+     * @param string|null   $privacyUid
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function setClosed(string $deferredUid, EntityManager $em, string $privacyUid=null ) {
+        $this->setStatus($deferredUid, $em,DeferredPrivacyService::DEFERRED_STATUS_CLOSE,$privacyUid );
+    }
+
+    public function setElaborated(string $deferredUid, EntityManager $em, string $privacyUid=null ) {
+        $this->setStatus($deferredUid, $em,DeferredPrivacyService::DEFERRED_STATUS_ELABORATED,$privacyUid );
+    }
+
 
     public function findDeferredPrivacies(EntityManager $em, $type = DeferredPrivacyService::DEFERRED_TYPE_DOUBLE_OPTIN){
 

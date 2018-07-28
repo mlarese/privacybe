@@ -5,7 +5,9 @@ use App\Batch\DeferredPrivacyBatch;
 use App\Batch\EmailSender;
 use App\Batch\EntityManagerBuilder;
 use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use App\Service\DeferredPrivacyService;
 use GuzzleHttp\Client;
+use Slim\App;
 
 $container = $app->getContainer();
 
@@ -208,6 +210,17 @@ $container['direct_service'] = function ($container) {
     $exportService = \App\Service\MailOneService::getInstance($settings['MailOne'],true);
 
     return $exportService;
+};
+
+$container['deferred_privacy_service'] = function  ($container) use($app){
+    $s = new DeferredPrivacyService();
+    $s->config($app);
+
+    return $s;
+};
+
+$container['slim_app'] = function  ($container) use($app){
+    return $app;
 };
 
 $container['entity-manager_builder'] = function ($container) {

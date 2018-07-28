@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 16/07/2018
- * Time: 17:20
- */
-
 namespace App\Service;
 
 
@@ -32,16 +25,16 @@ abstract class  SlimAbstractService {
         }
 
         $container = [];
-        $app = new \Slim\App($settings);
+        $app = new App($settings);
         require __DIR__ . '/../../dependencies.php';
 
         $this->container = $container;
         $this->app = $app;
     }
     /**
-     * @return \Slim\App
+     * @return App
      */
-    public function getApp(): \Slim\App {
+    public function getApp(): App {
         return $this->app;
     }
 

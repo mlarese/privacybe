@@ -12,6 +12,7 @@ $app->post('/api/test/upload', 'App\Action\Test:upload');
 
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
 $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
+$app->put('/api/test/dbloptvis', 'App\Action\Emails\Emails:doubleOptinVisited');
 
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
 
@@ -67,7 +68,7 @@ $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
-
+$app->put('/api/surfer/dbloptvis/{ref}', 'App\Action\Emails\DeferredPrivacies:setVisited');
 
 /*********************************************************
  *                  TREATMENTS

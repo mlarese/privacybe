@@ -12,7 +12,9 @@ $defs->autoConfig();
 
 try {
     $enc = $defs->getDependency('encryptor');
-    print_r($enc);
+    $appnew = $defs->getDependency('deferred_privacy_service');
+
+    print_r($appnew);
 } catch (DependencyNotFoundException $e) {
     echo $e->getMessage();
 }

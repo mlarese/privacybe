@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 use App\Entity\Config\ActionHistory;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyDeferred;
@@ -9,6 +10,7 @@ use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermHistory;
 use App\Resource\DeferredPrivacyResource;
 use App\Resource\MandatoryFieldMissingException;
+use App\Resource\PrivacyResource;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use App\Resource\Logs;
@@ -35,24 +37,34 @@ class DeferredPrivacies extends AbstractAction{
     public function setVisited($request, $response, $args) {
         try {
 
-            $ref = $args['ref'];
+            $body = $request->getParsedBody();
+            $_k = $body['_k'];
+            $_j = $body['_j'];
 
-            $ownerId = 1;
-            $privacyUid = '';
+            /** @var EncryptorInterface $enc */
+            $enc = $this->getContainer()->get('encryptor');
+            $ownerId = $enc->decrypt( base64_decode( $_k ));
+            $privacyUid = $enc->decrypt( base64_decode( $_j ));
 
+            // die(" o=$ownerId   p=$privacyUid");
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
 
             /** @var DeferredPrivacyService $srv */
-            $srv = $this->context->get('deferred_privacy_service');
-            $res = new DeferredPrivacyResource($em, $srv );
+            $srv = $this->getContainer()->get('deferred_privacy_service');
 
-            $res->setVisited($privacyUid);
-            return $response->withJson($this->success());
+            $defRes = new DeferredPrivacyResource($em, $srv );
+
+            $defRes->setVisited($privacyUid);
+
+            $prRes = new PrivacyResource($em);
+            $pr=$prRes->getPrivacy($privacyUid);
+
+            return $response->withJson( $this->toJson($pr)  );
 
         } catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(500, 'Exception saving privacy');
+            return $response->withStatus(500, 'Exception with privacy');
         }
     }
 

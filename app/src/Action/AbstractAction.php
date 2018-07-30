@@ -196,7 +196,7 @@ class AbstractAction
         }
     }
     /**
-     * @return mixed
+     * @return Container
      */
     public function getContainer()
     {

@@ -168,7 +168,6 @@ $container['encryptor'] = function ($container) {
     $options = $settings['doctrine_privacy'];
 
     $enc = new OpenSslEncryptor($options['encryption_key']);
-
     return $enc;
 };
 

@@ -47,22 +47,27 @@ class Emails extends AbstractAction {
      * @return mixed
      */
     public function doubleOptinConfirm($request, $response, $args) {
-        $lang = 'it';
-
-        $ownerId = 34;
-        $prv = '9fde1360-88f0-11e8-82a7-a14515583fe0';
-
-        $ownerId =  urlencode( base64_encode( $this->getEncryptor()->encrypt($ownerId) ) );
-        $prv = urlencode( base64_encode( $this->getEncryptor()->encrypt($ownerId) ) );
-
-        $d = [
-            "enclink" => "https://zzz.com?_k=$ownerId&_j=$prv"
-        ];
-
-        $tpl = new TemplateBuilder( 'double-optin', $d, $lang );
-        $body = $tpl->render();
-
         try {
+            $lang = 'it';
+
+            $ownerId = 34;
+            $prv = '9fde1360-88f0-11e8-82a7-a14515583fe0';
+
+            $ownerId =  urlencode( base64_encode( $this->getEncryptor()->encrypt($ownerId) ) );
+            $prv = urlencode( base64_encode( $this->getEncryptor()->encrypt($prv) ) );
+
+
+            $d = [
+                "enclink" => "http://zzz.com?_k=$ownerId&_j=$prv"
+            ];
+
+            echo ("s=1&_j=$prv&_k=$ownerId&=2");
+
+            die;
+            $tpl = new TemplateBuilder( 'double-optin', $d, $lang );
+            $body = $tpl->render();
+
+
             $client = $this->getEmailClient();
             $data = $this->buildGuzzleData('mauro.larese@mm-one.com','mauro.larese@gmail.com', 'Test email',$body  ) ;
             $client->request('POST', '', $data);
@@ -75,7 +80,5 @@ class Emails extends AbstractAction {
         }
 
         return $response->withJson($this->success()) ;
-
-        return $response->withJson($this->success( )) ;
     }
 }

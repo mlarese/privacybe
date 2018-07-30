@@ -20,9 +20,8 @@
 
                 <tr>
                     <td colspan="100">
-                        abbiamo ricevuto l'accettazione del trattamento dei dati raccolta attraverso il servizio DataOne. Per assicurarti la massima protezione
-                        dei tuoi dati ti chiediamo di confermare la tua accettazione cliccando
-                        <a href="<?=$d['enclink']?>">qui</a>
+                        abbiamo ricevuto le tue preferenze sul trattamento dei dati raccolti attraverso il servizio DataOne.
+                        Per proteggerli al meglio, conferma la tua accettazione cliccando su questo <a href="<?=$d['enclink']?>">link</a>
                     </td>
                 </tr><?=$spacer?>
 

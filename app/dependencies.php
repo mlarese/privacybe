@@ -247,8 +247,6 @@ $container['deferred_privacy_batch'] = function ($container) {
 
 $container['actionHandler'] = function ($container) {
     $actionHandler = new \App\Action\ActionHandler($container);
-
-
     return $actionHandler;
 };
 

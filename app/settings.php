@@ -7,6 +7,14 @@
 
 return [
     'settings' => [
+        'double_optin' => [
+            'dev' => [
+                'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
+            ],
+            'prod' => [
+                'confirm_link' => 'https://privacy.dataone.online/surfer/confirmdeferred'
+            ]
+        ],
         'label' => 'production',
         'applications' => [
             'apps' => [

@@ -8,6 +8,14 @@
 return [
     'settings' => [
         'double_optin' => [
+            'all' => [
+                "dictionary" => [
+                    "email_subject" => [
+                        "it" => "Conferma le tue preferenze",
+                        "en" => "Conferma le tue preferenze"
+                    ]
+                ]
+            ],
             'dev' => [
                 'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
             ],

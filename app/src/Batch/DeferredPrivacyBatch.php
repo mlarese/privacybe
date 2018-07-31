@@ -68,7 +68,10 @@ class DeferredPrivacyBatch extends AbstractBatch {
              */
             $defpres = new DeferredPrivacyResource($emcfg, $srv);
             $deferredSettings = $this->getContainer()->get('settings');
-            $confirmLink = $deferredSettings[$this->getEnv()]['confirm_link'];
+
+            $confirmLink = $deferredSettings[$deferredTYPE][$this->getEnv()]['confirm_link'];
+            $aEmailSubject = $deferredSettings[$deferredTYPE]['all']['dictionary']['email_subject'];
+
 
             $owns = $ownres->geOwnersFW();
             /** @var PlainTemplateBuilder $tpbuilder */
@@ -77,6 +80,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
             /** @var EncryptorInterface $enc */
             $encryptor = $this->getContainer()->get('encryptor');
+
+
 
         } catch (ContainerException $e) {
             echo $e->getMessage();
@@ -108,24 +113,34 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $encOwnerId =  urlencode( base64_encode( $encryptor->encrypt($own->getId()) ) );
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
 
-                    $data=[
-                        'enclink'=>"$confirmLink?_j$encPprivacyUid&_k=$encOwnerId",
-                        'name'=>$priv->getName(),
-                        'surname'=>$priv->getSurname()
-                    ];
-                    $body = $tpbuilder->render($data,$priv->getLanguage());
+                    $_lang = 'en';
+                    $emailSubject = $aEmailSubject[$_lang] ;
+                    if(isset($aEmailSubject[$priv->getLanguage()])) {
+                        $_lang = $priv->getLanguage();
+                        $emailSubject = $aEmailSubject[$priv->getLanguage()] ;
+                    }
+
+
                     try {
+                        $data=[
+                            'enclink'=>"$confirmLink?_j=$encPprivacyUid&_k=$encOwnerId&lang=$_lang",
+                            'name'=>$priv->getName(),
+                            'surname'=>$priv->getSurname()
+                        ];
+                        $body = $tpbuilder->render($data,$priv->getLanguage());
                         $this->emailSender->sendEmail(
                             $own->getEmail(),
                             $priv->getEmail(),
-                            $deferredTYPE,
-                            'doptin'
+                            $emailSubject,
+                            $body
                         );
 
                         $q->setParameter(1, $priv->getId())
                             ->getQuery()
                             ->execute();
-                    } catch (Exception $e) { }
+                    } catch (Exception $e) {
+                        echo ' error ' . $e->getMessage();
+                    }
                 }
 
             } catch (Exception $e) {

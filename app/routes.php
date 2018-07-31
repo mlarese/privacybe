@@ -56,18 +56,24 @@ $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 /*********************************************************
  *                  PRIVACY GROUPED
  *********************************************************/
+/**  @var App\Action\PrivacyManager */
 $app->post('/api/owner/privacygrp', 'App\Action\PrivacyManager:searchPrivacyGrouped');
 $app->post('/api/owner/privacyusers', 'App\Action\PrivacyManager:privacyUsers');
+/**  @var App\Action\Users */
 $app->put('/api/owner/userlastdata/{id}', 'App\Action\Users:updateMainData');
 $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 
 /*********************************************************
  *                  PRIVACY OWNER AND SURFER
  *********************************************************/
+/**  @var App\Action\PrivacyManager */
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+/**  @var App\Action\Users */
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
+
+/**  @var App\Action\DeferredPrivacies */
 $app->put('/api/surfer/dbloptvis', 'App\Action\DeferredPrivacies:setVisited');
 
 /*********************************************************
@@ -123,7 +129,6 @@ $app->put('/api/customercare/operator/{id}', 'App\Action\CustomerCares:updateOpe
  *********************************************************/
 $app->get('/api/customercare/user', 'App\Action\CustomerCare:getUsers');
 $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
-
 
 /*********************************************************
  *                  OWNER ADD USER

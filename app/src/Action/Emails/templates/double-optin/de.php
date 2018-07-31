@@ -14,17 +14,17 @@
             <table style="<?=$tableStyle?>">
                 <tr>
                     <td colspan="100">
-                        Buongiorno  <?=$d['name']?>  <?=$d['surname']?>,
+                        Guten Tag  <?=$d['name']?>  <?=$d['surname']?>,
                     </td>
                 </tr><?=$spacer?>
 
                 <tr>
                     <td colspan="100">
-                        abbiamo ricevuto le tue preferenze sul trattamento dei dati raccolti attraverso il servizio DataOne.
-                        Per proteggerli al meglio, conferma la tua accettazione cliccando su questo <a href="<?=$d['enclink']?>">link</a>
+                        Über unseren DataOne-Service haben wir Ihre Präferenzen für die Behandlung Ihrer persönlichen Daten erhalten.
+                        Um diese nun zu schützen, wollen Sie bitte auf diesen <a href="<?=$d['enclink']?>Link</a> klicken, um Ihre Zustimmung zu bestätigen.
                         <br>
-                        Grazie,
-                        Il team di DataOne
+                        Danke
+                        Ihr DataOne-Team
 
                     </td>
                 </tr><?=$spacer?>

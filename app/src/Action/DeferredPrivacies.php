@@ -31,15 +31,19 @@ class DeferredPrivacies extends AbstractAction{
      * @param $request Request
      * @param $response Response
      * @param $args
+     *
      * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Interop\Container\Exception\ContainerException
      */
     public function setVisited($request, $response, $args) {
         try {
 
             $body = $request->getParsedBody();
+
             $_k = $body['_k'];
             $_j = $body['_j'];
+
+
 
             /** @var EncryptorInterface $enc */
             $enc = $this->getContainer()->get('encryptor');

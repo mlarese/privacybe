@@ -125,7 +125,7 @@ class ImportNewsletter extends Base
                     $prRes = new PrivacyResource($privacy);
 
                     $query = 'SELECT * FROM email_list_subscribers 
-                              WHERE listid = '.$singleId.' 
+                              WHERE listid = '.$singleId.'                              
                               AND subscribedate < '.$limitDate.' 
                               AND unsubscribeconfirmed = 0';
 
@@ -281,7 +281,7 @@ class ImportNewsletter extends Base
                                     "referrer" => $domain,
                                     "ownerId" =>$ownerId,
                                     "termId" => $termId,
-                                    "language" => $lang,
+                                    "language" => $userLang,
                                     "name" => $term->getName(),
                                     "paragraphs" => array(
                                         array(

@@ -506,6 +506,16 @@ class ABSImport {
         return $em;
     }
 
+    /**
+     * Import ABS enquiry
+     *
+     * @param string $ownerId
+     * @param string $termId
+     * @param string $enquiryUrl
+     * @param string $file
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function importEnquiry (
         $ownerId,
         $termId,
@@ -675,6 +685,190 @@ class ABSImport {
                     ->persist($privacyEntity);
                 echo('.');
                 unset($referer, $lang, $created);
+            }
+            $this->getOwnerEntityManager($ownerId)->flush();
+        } catch (\Exception $e) {
+            // @todo aggiungere gestione errore in inserimento
+            throw  $e;
+        }
+    }
+
+    /**
+     * Import StoreONE clients
+     *
+     * @param string $ownerId
+     * @param string $termId
+     * @param string $registrationUrl
+     * @param string $file
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function importStoreONE (
+        $ownerId,
+        $termId,
+        $registrationUrl,
+        $file
+    ) {
+
+        // Expected CSV header
+        $expectedHeader = json_decode('{"ID":0,"Nome":1,"Cognome":2,"Indirizzo":3,"Citt\u00e0":4,"CAP":5,"Provincia":6,"Nazione":7,"Telefono":8,"Fax":9,"Mobile":10,"E-Mail":11,"Data registrazione":12}', true);
+
+        // Read the CSV file
+        $csv = $this->readCSVFile($file);
+
+        // Check if import header was changed
+        if (count(array_diff($expectedHeader, $csv->header)) !== 0) {
+            throw new \Exception(sprintf(
+                "Something was changed in CSV file header"
+            ));
+        }
+
+        /** @var \App\Entity\Privacy\Term $term */
+        $term = $this->getOwnerEntityManager($ownerId)
+            ->getRepository('App\Entity\Privacy\Term')
+            ->findOneByUid($termId);
+        $termParagraphs = $term->getParagraphs();
+
+        // Transform and insert data
+        $now = new \DateTime('now');
+        try {
+            foreach ($csv->body as $row) {
+
+                // Check if the user already exist in this DataONE account
+                $user = $this->getOwnerEntityManager($ownerId)
+                    ->getRepository('App\Entity\Privacy\Privacy')
+                    ->findOneByEmail($row[$csv->header['E-Mail']]);
+                if (!is_null($user)) {
+
+                    // This user was already added, continue with next user
+                    continue;
+                }
+
+                // Bypass invalid or  NULL registration dates
+                if (empty($row[$csv->header['Data registrazione']]) ||
+                    $row[$csv->header['Data registrazione']] == '0000-00-00 00:00:00'
+                ) {
+                    continue;
+                }
+
+                // Bypass empty name and surname
+                if (empty(trim($row[$csv->header['Nome']]))) {
+                    continue;
+                }
+                if (empty(trim($row[$csv->header['Cognome']]))) {
+                    continue;
+                }
+
+                // Set the default country
+                if (empty(trim($row[$csv->header['Nazione']]))) {
+                    $row[$csv->header['Nazione']] = 'IT';
+                }
+
+                // Create a new entry
+                $privacyEntity = new PrivacyEntity();
+
+                // Set email
+                $privacyEntity->setEmail(trim($row[$csv->header['E-Mail']]));
+
+                // Set no IP address in Store ONE Registration
+                $privacyEntity->setIp('');
+
+                // Set UID
+                $privacyEntity->setId(
+                    sprintf(
+                        "%s-%s-%s",
+                        $row[$csv->header['ID']],
+                        md5($privacyEntity->getEmail()),
+                        rand(100000000, 999999999)
+                    )
+                );
+
+                // Set reference
+                $privacyEntity->setRef(sprintf(
+                    "import-console-storeone-%s",
+                    $now->format('YMDHi')
+                ));
+
+                // Set name
+                $privacyEntity->setName(ucfirst(trim(utf8_encode($row[$csv->header['Nome']]))));
+                // Set surname
+                $privacyEntity->setSurname(ucfirst(trim(utf8_encode($row[$csv->header['Cognome']]))));
+
+                // Set language
+                $privacyEntity->setLanguage(strtolower(substr(trim($row[$csv->header['Nazione']]), 0, 2)));
+
+                $privacyEntity->setTelephone((!empty(trim(utf8_encode($row[$csv->header['Telefono']])))) ? trim(utf8_encode($row[$csv->header['Telefono']])) : trim(utf8_encode($row[$csv->header['Mobile']])));
+
+                // Set form
+                $privacyEntity->setForm([
+                    'id' => $privacyEntity->getId(),
+                    'email' => $privacyEntity->getEmail(),
+                    'name' => $privacyEntity->getName(),
+                    'surname' => $privacyEntity->getSurname(),
+                    'phone' => trim(utf8_encode($row[$csv->header['Telefono']])),
+                    'mobile' => trim(utf8_encode($row[$csv->header['Mobile']])),
+                    'fax' => trim(utf8_encode($row[$csv->header['Fax']])),
+                    'address' => trim(utf8_encode($row[$csv->header['Indirizzo']])),
+                    'city' => trim(utf8_encode($row[$csv->header['Città']])),
+                    'language' => $privacyEntity->getLanguage(),
+                    'zipcode' => trim(utf8_encode($row[$csv->header['CAP']])),
+                    'nation' => $row[$csv->header['Nazione']],
+                    'ip' => $privacyEntity->getIp(),
+                    'subscribeurl' => $registrationUrl,
+                    'privacy' => (isset($termParagraphs[0]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['text']['en']
+                ]);
+                $privacyEntity->setCryptedForm(json_encode($privacyEntity->getForm()));
+
+                if (isset($termParagraphs[0]['treatments'][0]['name']) &&
+                    !empty($termParagraphs[0]['treatments'][0]['name'])
+                ) {
+                    $codeDatiPersonali = $termParagraphs[0]['treatments'][0]['name'];
+                }
+
+                // Set privacy
+                $privacyEntity->setPrivacyFlags([
+                    [
+                        'code' => $codeDatiPersonali,
+                        'selected' => true,
+                        'mandatory' => true,
+                        'text' => (isset($termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['treatments'][0]['text']['en']
+                    ]
+                ]);
+                $privacyEntity->setPrivacy([
+                    "referrer" => $registrationUrl,
+                    "ownerId" => $ownerId,
+                    "termId" => $termId,
+                    "language" => $privacyEntity->getLanguage(),
+                    "name" => $term->getName(),
+                    "paragraphs" => [
+                        [
+                            "text" => (isset($termParagraphs[0]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['text']['en'],
+                            "title" => (isset($termParagraphs[0]['title'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['title'][$privacyEntity->getLanguage()] : $termParagraphs[0]['title']['en'],
+                            "treatments" => $privacyEntity->getPrivacyFlags()
+                        ]
+                    ],
+                ]);
+
+                // Set term ID
+                $privacyEntity->setTermId($termId);
+
+                // Set domain & site
+                $referer = parse_url($registrationUrl);
+                isset($referer['host']) ? $privacyEntity->setDomain($referer['host']) : $privacyEntity->setDomain('');
+                isset($referer['path']) ? $privacyEntity->setSite($referer['path']) : $privacyEntity->setSite('');
+
+
+                // Set created
+                $created = new \DateTime($row[$csv->header['Data registrazione']]);
+                $privacyEntity->setCreated($created);
+                unset($created);
+
+                // Set deleted
+                $privacyEntity->setDeleted(0);
+
+                $this->getOwnerEntityManager($ownerId)
+                    ->persist($privacyEntity);
+                echo('.');
             }
             $this->getOwnerEntityManager($ownerId)->flush();
         } catch (\Exception $e) {

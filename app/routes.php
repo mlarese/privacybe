@@ -190,3 +190,16 @@ $app->post(
     '/api/import/abs/enquiry',
     'App\Action\Import\ABSEnquiry:import'
 );
+
+$app->post(
+    '/api/import/abs/storeone',
+    'App\Action\Import\StoreONE:import'
+);
+$app->post(
+    '/api/import/advancedimporter/preset',
+    'App\Action\Import\AdvancedImporter:preset'
+);
+$app->post(
+    '/api/import/advancedimporter/import',
+    'App\Action\Import\AdvancedImporter:import'
+);

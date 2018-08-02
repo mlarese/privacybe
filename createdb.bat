@@ -1,1 +1,1 @@
-call "vendor/bin/doctrine.bat" orm:schema-tool:create
+// call "vendor/bin/doctrine.bat" orm:schema-tool:create

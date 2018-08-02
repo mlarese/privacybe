@@ -59,6 +59,14 @@ class Owners extends AbstractAction
      */
     private function createPrivacyTables($db) {
         $sql = "
+        CREATE TABLE $db.privacy_attachment (
+          uid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          deleted tinyint(1) NOT NULL DEFAULT '0',
+          created datetime DEFAULT CURRENT_TIMESTAMP,
+          attachments longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
+          PRIMARY KEY (uid),
+          KEY privacy_created (created)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;   
         CREATE TABLE $db.privacy( id INT AUTO_INCREMENT NOT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, privacy LONGTEXT DEFAULT NULL , privacy_id INT NOT NULL, type VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, INDEX privacy_history_created (created), INDEX privacy_history_privacy_id (privacy_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;      
         CREATE TABLE $db.domain (name VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, active TINYINT(1) DEFAULT '1' NOT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX domain_active (active), PRIMARY KEY(name)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.action_history (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, history LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', user_name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
@@ -68,17 +76,27 @@ class Owners extends AbstractAction
             uid VARCHAR(128) NOT NULL, 
             created DATETIME DEFAULT CURRENT_TIMESTAMP, 
             language VARCHAR(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-            email VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL, ref VARCHAR(100) DEFAULT NULL, 
+            email VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL, 
+            status VARCHAR(20) DEFAULT NULL, 
+            ref VARCHAR(100) DEFAULT NULL, 
             surname VARCHAR(100) NOT NULL, 
             page varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+            properties LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
             form LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
-            crypted_form LONGTEXT DEFAULT NULL, privacy LONGTEXT DEFAULT NULL, privacy_flags LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', term_id VARCHAR(255) NOT NULL, domain VARCHAR(255) NOT NULL, site VARCHAR(255) NOT NULL, ip VARCHAR(100) DEFAULT NULL, telephone VARCHAR(120) DEFAULT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, 
+            crypted_form LONGTEXT DEFAULT NULL, 
+            privacy LONGTEXT DEFAULT NULL, 
+            privacy_flags LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
+            term_id VARCHAR(255) NOT NULL, domain VARCHAR(255) NOT NULL, 
+            site VARCHAR(255) NOT NULL, ip VARCHAR(100) DEFAULT NULL, 
+            telephone VARCHAR(120) DEFAULT NULL, 
+            deleted TINYINT(1) DEFAULT '0' NOT NULL, 
             INDEX privacy_created (created), 
             INDEX privacy_name_surname (name, surname), 
             INDEX privacy_ref (ref), 
             INDEX privacy_term_id (term_id), 
             INDEX privacy_language (language),  
             INDEX privacy_page (page),  
+            INDEX privacy_status (status), 
             INDEX privacy_email (email), 
             PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.operator (

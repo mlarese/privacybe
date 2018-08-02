@@ -13,6 +13,7 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
  *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
  *          @ORM\Index(name="privacy_page", columns={"page"}),
+ *          @ORM\Index(name="privacy_status", columns={"status"}),
  *          @ORM\Index(name="privacy_term_id", columns={"domain","term_id"}),
  *          @ORM\Index(name="privacy_language", columns={"domain","language"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
@@ -55,6 +56,28 @@ class Privacy {
     protected $email;
 
     /**
+     * @return mixed
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return Privacy
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="string", nullable=true, length=20)
+     */
+    protected $status;
+
+    /**
      * @ORM\Column(name="name", type="string", nullable=false, length=100)
      */
     protected $name;
@@ -68,6 +91,31 @@ class Privacy {
      * @ORM\Column(name="language", type="string", nullable=true, length=20)
      */
     protected $language;
+
+    /**
+     * @ORM\Column(name="form", type="json", nullable=true)
+     */
+    protected $form;
+
+    /**
+     * @ORM\Column(name="properties", type="json", nullable=true)
+     */
+    protected $properties;
+    /**
+     * @ORM\Column(name="crypted_form", type="text", nullable=true, length=4294967295)
+     * @Encrypted
+     */
+    protected $cryptedForm;
+
+    /**
+     * @ORM\Column(name="privacy", type="json_array", nullable=true, length=4294967295)
+     */
+    protected $privacy;
+
+    /**
+     * @ORM\Column(name="privacy_flags", type="json", nullable=true)
+     */
+    protected $privacyFlags;
 
     /**
      * @ORM\Column(name="term_id", type="string", nullable=false)

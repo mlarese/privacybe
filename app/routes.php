@@ -4,6 +4,9 @@
 /*********************************************************
  *                  TEST
  *********************************************************/
+
+use App\Action\Users;
+
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
@@ -97,6 +100,7 @@ $app->get('/api/owner/operator/{id}', 'App\Action\Operators:getOperator');
 /*********************************************************
  *                  OWNERS USER SEARCH
  *********************************************************/
+/** @var Users */
 $app->post('/api/owner/usersearch', 'App\Action\Users:search');
 $app->get('/api/owner/usersearch/{email}', 'App\Action\Users:privacyUser');
 

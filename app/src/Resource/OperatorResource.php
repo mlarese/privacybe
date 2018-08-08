@@ -29,6 +29,18 @@ class OperatorResource extends AbstractResource
     }
 
     /**
+     * @param $userId
+     *
+     * @return Operator|null
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function findOperator ($userId) {
+        return $this->getEntityManager()->find(Operator::class, $userId);
+    }
+
+    /**
      * @param $id
      * @param $role
      * @param $periodFrom

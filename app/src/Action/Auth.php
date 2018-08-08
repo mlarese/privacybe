@@ -6,6 +6,7 @@ use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Config\UserLogin;
 use App\Entity\Privacy\Privacy;
+use App\Resource\OperatorResource;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
@@ -109,23 +110,31 @@ class Auth extends AbstractAction {
 
 
         // echo 'here' ; die;
-        /**
-         * @var User $ue
-         */
+        /** @var User $ue */
         $ue = null;
-
+        $op = null;
         try {
-
             $ue = $this->userHasAuth($user, $password);
             $found = true ;
-        } catch (UserNotAuthorizedException $e) {
-            return $response->withStatus(401, 'User not authorized ' );
-        }
 
+            $opRes = new OperatorResource($this->getEmPrivacy( $ue->getOwnerId() ));
+
+            $op = $opRes->findOperator($ue->getId());
+
+        } catch (UserNotAuthorizedException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'User not authorized ' );
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Authentication error ' );
+        }
+        $gdprRole =  $op->getRole();
         $settings = $this->getContainer()->get('settings');
         $host = $settings["doctrine_config"]['connection']['host'];
         if($found) {
             $userSpec = [
+                "acl" => $this->getAcl($gdprRole),
+                "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
                 "user" => $user,
                 "userName" => $ue->getName(),
@@ -149,6 +158,13 @@ class Auth extends AbstractAction {
                 ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
         }
+    }
+
+    private function getAcl($gdprRole) {
+
+        return [
+          "see-no-agreement" => ($gdprRole !== 'incharge')
+        ];
     }
 
     /**

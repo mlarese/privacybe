@@ -10,6 +10,7 @@ namespace App\Resource\Privacy;
 
 
 use App\Resource\IFilter;
+use function is_array;
 
 class PostFilter implements IFilter {
     /**
@@ -95,12 +96,11 @@ class PostFilter implements IFilter {
     }
 
     private function checkLanguage (&$includeRec, $criteria, &$pr) {
-        if($includeRec && isset( $criteria['language']) && $criteria['language']!=='' && $criteria['language']!=='all') {
-            $language = $criteria['language'] ;
+        if($includeRec && isset( $criteria['language']) && is_array($criteria['language']) && count($criteria['language'])>0) {
+            $languages = $criteria['language'] ;
 
-            if($pr['language']!== $criteria['language']) {
-                $includeRec = false;
-            }
+            $includeRec = in_array($pr['language'], $languages);
+
         }
 
         return $includeRec;

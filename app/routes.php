@@ -5,6 +5,7 @@
  *                  TEST
  *********************************************************/
 
+use App\Action\DeferredPrivacies;
 use App\Action\Users;
 
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
@@ -13,8 +14,12 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
+
+/** @var App\Action\Emails\ */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
 $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
+
+/** @var App\Action\DeferredPrivacies */
 $app->put('/api/test/dbloptvis', 'App\Action\DeferredPrivacies:doubleOptinVisited');
 
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');

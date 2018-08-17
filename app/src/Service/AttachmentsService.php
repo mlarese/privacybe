@@ -9,6 +9,9 @@
 namespace App\Service;
 
 
+use App\Helpers\StringTemplate\Engine;
+use function is_array;
+use function md5;
 use Slim\Http\UploadedFile;
 
 class AttachmentsService {
@@ -21,6 +24,27 @@ class AttachmentsService {
      */
     public function __construct($container) { $this->container = $container; }
 
+    public function savePrivacyAttachments($files, $ownerId, $privacyId) {
+        if(!is_array($files)) $files=[$files];
+
+        $settings = $this->container->get('settings');
+        $attachmentPath = $settings['attachments'] ['users'] ['path'];
+        /** @var Engine $stringTemplate */
+        $stringTemplate = $this->container->get('string_template');
+        $attachmentsPath = $stringTemplate->render($stringTemplate, ['ownerId'=>$ownerId, 'privacyId' => $privacyId]);
+
+        /** @var UploadedFile $file */
+        foreach ($files as $file) {
+            $fileParts = pathinfo($file->getClientFilename());
+
+            $name = $fileParts['filename'];
+            $extension = $fileParts['extension'];
+            $name = md5($name);
+
+            $newFile = "$attachmentsPath/$name.$extension";
+            $file->moveTo($newFile);
+        }
+    }
     public function savePrivacyAttachment(UploadedFile $file, $ownerId, $privacyId) {
         $file->getClientFilename();
         $file->file;

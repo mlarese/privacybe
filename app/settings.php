@@ -7,6 +7,11 @@
 
 return [
     'settings' => [
+        'attachments' => [
+          'users' => [
+              'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}'
+          ]
+        ],
         'double_optin' => [
             'all' => [
                 "dictionary" => [

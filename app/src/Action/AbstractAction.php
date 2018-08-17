@@ -6,6 +6,7 @@ namespace App\Action;
 use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 use App\Resource\MandatoryFieldMissingException;
 use App\Resource\OwnerExistException;
+use Closure;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -50,6 +51,25 @@ class AbstractAction
     public function addP3P ($response) {
         header('P3P: CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
         // $response->withAddedHeader('P3P','CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo CNT COM INT NAV ONL PHY PRE PUR UNI"');
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function postActionPrototype($request, $response, $args, Closure $closure, $mandatoryFields = []) {
+        try {
+            $body = $request->getParsedBody();
+            $res = $closure($body);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, "Server error on closure execution");
+        }
+
+        return $response->withJson($this->success());
     }
 
     /**

@@ -5,6 +5,7 @@ use App\Batch\DeferredPrivacyBatch;
 use App\Batch\EmailSender;
 use App\Batch\EntityManagerBuilder;
 use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use App\Helpers\StringTemplate\Engine;
 use App\Service\AttachmentsService;
 use App\Service\DeferredPrivacyService;
 use GuzzleHttp\Client;
@@ -250,8 +251,12 @@ $container['action_handler'] = function ($container) {
     return $actionHandler;
 };
 
-$container['attachmentsService'] = function ($container) {
+$container['attachments_service'] = function ($container) {
     $obj = new AttachmentsService($container);
     return $obj;
 };
 
+$container['string_template'] = function ($container) {
+    $obj =   new Engine();
+    return $obj;
+};

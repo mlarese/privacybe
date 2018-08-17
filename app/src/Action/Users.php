@@ -11,8 +11,11 @@ use App\Resource\PrivacyLogger;
 use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
 use App\Service\AttachmentsService;
+use Closure;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
+use Exception;
+use Interop\Container\Exception\ContainerException;
 use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -23,25 +26,40 @@ class Users extends AbstractAction
      * @param $request Request
      * @param $response Response
      * @param $args
-     * @return mixed
-     * @throws \Doctrine\ORM\ORMException
+     *
+     * @throws \Interop\Container\Exception\ContainerException
      */
     public function saveAttachment($request, $response, $args){
 
-        $ownerId = $args['ownerId'];
-        $privacyId = $args['privacyId'];
-
-        /** @var \Slim\Http\UploadedFile[] $file */
-        $files = $request->getUploadedFiles();
-        $attSrv = new AttachmentsService($this->getContainer());
-
-        foreach ($files as $f) {
-            $attSrv->savePrivacyAttachment($file, $ownerId,$privacyId );
+        try {
+            $ownerId = $args['ownerId'];
+            $privacyId = $args['privacyId'];
+            /** @var \Slim\Http\UploadedFile[] $file */
+            $files = $request->getUploadedFiles();
+            $attSrv = $this->getContainer()->get('attachments_service');
+            $attSrv->savePrivacyAttachment($files, $ownerId, $privacyId);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, "Error saving attachments");
         }
 
+        return $response->withJson($this->success());
+    }
 
-
-
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function saveAttachList($request, $response, $args){
+        /** @var Closure $closure */
+        $container = $this->getContainer();
+        $closure = function ($post) use($args, $container){
+            $attachList = $post['attachList'];
+        };
+        return $this->postActionPrototype($request, $response, $args, $closure);
     }
 
     /**

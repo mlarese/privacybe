@@ -24,7 +24,7 @@ $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
 $app->put('/api/test/dbloptvis', 'App\Action\DeferredPrivacies:doubleOptinVisited');
 
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
-
+$app->post('/api/test/usersupfile/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 
 
 /*********************************************************

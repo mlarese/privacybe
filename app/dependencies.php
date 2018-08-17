@@ -5,6 +5,7 @@ use App\Batch\DeferredPrivacyBatch;
 use App\Batch\EmailSender;
 use App\Batch\EntityManagerBuilder;
 use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use App\Service\AttachmentsService;
 use App\Service\DeferredPrivacyService;
 use GuzzleHttp\Client;
 use Slim\App;
@@ -244,9 +245,13 @@ $container['deferred_privacy_batch'] = function ($container) {
     return new DeferredPrivacyBatch($emb,$container,$emsnd);
 };
 
-
-$container['actionHandler'] = function ($container) {
+$container['action_handler'] = function ($container) {
     $actionHandler = new \App\Action\ActionHandler($container);
     return $actionHandler;
+};
+
+$container['attachmentsService'] = function ($container) {
+    $obj = new AttachmentsService($container);
+    return $obj;
 };
 

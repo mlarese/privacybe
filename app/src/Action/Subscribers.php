@@ -127,7 +127,7 @@ class Subscribers extends AbstractAction
                 }
 
                 $container = $this->getContainer();
-                $service = $container->get('actionHandler');
+                $service = $container->get('action_handler');
                 $service->setConfig($action[0]);
                 $service->setParameters($params);
 

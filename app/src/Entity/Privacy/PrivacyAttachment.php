@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity\Privacy;
+use App\DoctrineEncrypt\Configuration\Encrypted;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table( name="privacy_attachment",
@@ -45,6 +46,7 @@ class PrivacyAttachment {
 
     /**
      * @ORM\Column(name="attachments", type="json", nullable=true)
+     * @Encrypted()
      */
     protected $attachments;
 

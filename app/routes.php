@@ -7,6 +7,7 @@
 
 use App\Action\DeferredPrivacies;
 use App\Action\Users;
+use App\Action\UsersRequests;
 
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
@@ -24,6 +25,13 @@ $app->put('/api/test/dbloptvis', 'App\Action\DeferredPrivacies:doubleOptinVisite
 
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
 
+
+
+/*********************************************************
+ *                  UPLOAD
+ *********************************************************/
+/** @var  Users*/
+$app->post('/api/user/attachment/{owner}/{privacy}', 'App\Action\Users:saveAttachment');
 
 /*********************************************************
  *                  WIDGET

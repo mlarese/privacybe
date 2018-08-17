@@ -10,6 +10,7 @@ use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyLogger;
 use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
+use App\Service\AttachmentsService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use function session_commit;
@@ -18,6 +19,31 @@ use Slim\Http\Response;
 
 class Users extends AbstractAction
 {
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function saveAttachment($request, $response, $args){
+
+        $ownerId = $args['ownerId'];
+        $privacyId = $args['privacyId'];
+
+        /** @var \Slim\Http\UploadedFile[] $file */
+        $files = $request->getUploadedFiles();
+        $attSrv = new AttachmentsService($this->getContainer());
+
+        foreach ($files as $f) {
+            $attSrv->savePrivacyAttachment($file, $ownerId,$privacyId );
+        }
+
+
+
+
+    }
+
     /**
      * @param $request Request
      * @param $response Response

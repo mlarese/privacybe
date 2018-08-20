@@ -2,12 +2,10 @@
 
 namespace App\Base;
 
-
 use App\Action\AbstractAction;
-use Doctrine\ORM\EntityManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
-
+use App\Base\BaseResource;
 
 abstract class BaseAction extends AbstractAction
 {
@@ -26,8 +24,9 @@ abstract class BaseAction extends AbstractAction
     /**
      * BaseAction constructor.
      */
-    public function __construct()
+    public function __construct($container)
     {
+        parent::__construct($container);
         $this->setClazz($this->clazz());
         $this->setBaseParams($this->baseParams());
     }
@@ -35,6 +34,41 @@ abstract class BaseAction extends AbstractAction
     abstract public function clazz();
     abstract function baseParams ();
 
+    protected function checkMandatory($values) {
+        $man = $this->mandatoryFields();
+        foreach ($man as $m) {
+
+        }
+        return true;
+    }
+
+    public function injectEntityManager(){
+        $isPrivacyEm = strpos($this->getClazz(),"App\Entity\Privacy")===0;
+
+        if($isPrivacyEm) {
+
+            $ownerId = $this->request->getParam('ownerId');
+            if(isset($ownerId))  {
+                $em = $this->getEmPrivacy($ownerId);
+                return $this->setEm($em);
+            }
+
+            if(isset($this->args['ownerId'])) {
+                $ownerId =$this->args['ownerId'] ;
+                if(isset($ownerId))  return $this->setEm($this->getEmPrivacy($ownerId));
+            }
+
+            $ownerId = $this->getOwnerId($this->request);
+            $this->setEm($this->getEmPrivacy($ownerId));
+        } else {
+            $this->setEm(  $this->getEmConfig());
+        }
+    }
+    public function beforeGet (&$params){}
+    public function afterGet (&$recordset){}
+    public function beforeSave (&$values){}
+    abstract public function mandatoryFields();
+    public function validate ($values) {return true;}
     public function get (Request $request, Response $response, $args){
 
         try {
@@ -50,36 +84,6 @@ abstract class BaseAction extends AbstractAction
         }
 
     }
-
-    protected function checkMandatory($values) {
-        $man = $this->mandatoryFields();
-        foreach ($man as $m) {
-
-        }
-        return true;
-    }
-
-    public function injectEntityManager(){
-        if(strpos($this->getClazz(),"App\Entity\Privacy")) {
-            try {
-                $ownerId = $this->getOwnerId($this->request);
-            } catch (\Exception $e) { }
-
-            if(!isset($ownerId) && isset($this->args['ownerId']))
-                $ownerId =$this->args['ownerId'];
-            else if(!isset($ownerId) && $this->request->getParam('ownerId'))
-                $ownerId =$this->request->getParam('ownerId');
-
-            $this->setEm($this->getEmPrivacy($ownerId));
-        } else {
-            $this->setEm(  $this->getEmConfig());
-        }
-    }
-    public function beforeGet (&$params){}
-    public function afterGet (&$recordset){}
-    public function beforeSave (&$values){}
-    abstract public function mandatoryFields();
-    public function validate ($values) {return true;}
     public function post (Request $request, Response $response, $args){
         try {
             $this->setActionParams($request, $response, $args);

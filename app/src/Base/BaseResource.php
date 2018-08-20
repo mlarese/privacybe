@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauroadmin
- * Date: 19/08/18
- * Time: 23:25
- */
 
 namespace App\Base;
 
@@ -25,6 +19,9 @@ trait BaseResource
         return $this->em;
     }
 
+    /**
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function flush() {
         $this->em->flush();
     }

@@ -299,7 +299,6 @@ class AbstractAction
         $settings = $this->container['settings'];
 
 
-
         $guestCredentials = $this->getGuestDbCredentials($ownerId);
 
 
@@ -308,7 +307,6 @@ class AbstractAction
         $user = $guestCredentials['user'];
 
         $pwd = $guestCredentials['password'];
-
 
 
         $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(

@@ -33,7 +33,7 @@ class Users extends AbstractAction
 
         try {
             $ownerId = $args['ownerId'];
-            $privacyId = $args['privacyId'];
+            $privacyId = $args['id'];
             /** @var \Slim\Http\UploadedFile[] $file */
             $files = $request->getUploadedFiles();
             $attSrv = $this->getContainer()->get('attachments_service');

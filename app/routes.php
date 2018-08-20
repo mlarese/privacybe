@@ -5,9 +5,14 @@
  *                  TEST
  *********************************************************/
 
+use App\Action\Attachments;
 use App\Action\DeferredPrivacies;
 use App\Action\Users;
 use App\Action\UsersRequests;
+use App\Base\BaseRoutesManager;
+
+$routeMngr = new BaseRoutesManager($app);
+
 
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
@@ -31,7 +36,10 @@ $app->post('/api/test/usersupfile/{uid}', 'App\Action\PrivacyManager:uploadUserP
  *                  UPLOAD
  *********************************************************/
 /** @var  Users*/
-$app->post('/api/user/attachment/{owner}/{privacy}', 'App\Action\Users:saveAttachment');
+$app->put('/api/user/attachment/{id}', 'App\Action\Users:saveAttachment');
+
+
+$routeMngr->baseRoutes("/test/attachment", Attachments::class);
 
 /*********************************************************
  *                  WIDGET

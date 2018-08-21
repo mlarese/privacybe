@@ -48,6 +48,7 @@ abstract class BaseAction extends AbstractAction
         if($isPrivacyEm) {
 
             $ownerId = $this->request->getParam('ownerId');
+
             if(isset($ownerId))  {
                 $em = $this->getEmPrivacy($ownerId);
                 return $this->setEm($em);
@@ -70,7 +71,6 @@ abstract class BaseAction extends AbstractAction
     abstract public function mandatoryFields();
     public function validate ($values) {return true;}
     public function get (Request $request, Response $response, $args){
-
         try {
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();
@@ -89,6 +89,7 @@ abstract class BaseAction extends AbstractAction
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();
             $body = $request->getParsedBody();
+
             if(!$this->validate($body)) throw new \Exception('Mandatory field missing');
             $this->beforeSave($body);
             $this->create($body);
@@ -96,6 +97,7 @@ abstract class BaseAction extends AbstractAction
             return  $response->withJson( $this->success());
         } catch (\Exception $e) {
             echo $e->getMessage();
+            echo($e->getTraceAsString());
             return $response->withStatus(500, 'Error creating record');
         }
     }

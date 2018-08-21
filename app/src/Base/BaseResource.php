@@ -3,7 +3,16 @@
 namespace App\Base;
 
 
+use App\Action\Attachments;
+use App\Entity\Privacy\PrivacyAttachment;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 trait BaseResource
 {
@@ -31,6 +40,42 @@ trait BaseResource
     public function getBaseParams(): array
     {
         return $this->baseParams;
+    }
+
+    protected function normalizeData(&$data) {
+        /** @var ClassMetadata $metadata */
+        $metadata = $this->meta();
+        $m=$metadata->fieldMappings;
+
+        foreach ($m as $name => $value) {
+            if(!isset($data[$name])) continue;
+            $att = $data[$name];
+            if($value['type']==='datetime') {
+                $data[$name] = new \DateTime($data[$name]);
+            }
+
+        }
+    }
+    private function hydrateAdv(array $attributes) {
+        $this->normalizeData($attributes);
+
+        $on = new ObjectNormalizer(null,null,null, new ReflectionExtractor());
+
+        $on->setCircularReferenceLimit(1);
+        $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+
+        $dtn = new DateTimeNormalizer();
+
+        $ard = new ArrayDenormalizer();
+        //$dtn1 = new DateTimeNormalizer('Y-m-d');
+        $s = new Serializer([$dtn, $on, $ard]);
+
+        $clazz = $this->getClazz();
+
+
+        return  $s->denormalize($attributes, $clazz);
+
+
     }
 
     private function hydrateAttributes(&$entity, array $attributes, $scope = '')
@@ -97,8 +142,11 @@ trait BaseResource
         return $this->getEm()->getRepository($this->getClazz());
     }
     public function create($values) {
-        $classname= new $this->getClazz();
-        $en = new $classname();
+
+        $classname= $this->getClazz();
+
+        $en = $this->hydrateAdv($values);
+
         $this->em->persist($en);
     }
 

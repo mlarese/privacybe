@@ -45,7 +45,7 @@ class PrivacyAttachment {
     protected $created;
 
     /**
-     * @ORM\Column(name="attachments", type="json", nullable=true)
+     * @ORM\Column(name="attachments", type="string", nullable=true)
      * @Encrypted()
      */
     protected $attachments;

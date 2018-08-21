@@ -16,6 +16,7 @@ use function print_r;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -117,10 +118,16 @@ class AbstractAction
      */
     public function toJson($obj) {
         $on = new ObjectNormalizer();
+        $on->setCallbacks([
+            'attachments' => function ($val) {
+                if(!$val) return [];
+                return json_decode( $val , true);
+            }
+        ]);
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
 
-        $dtn = new DateTimeNormalizer('Y-m-d');
+        $dtn = new DateTimeNormalizer();
         $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
 
         return $s->normalize($obj,'json');
@@ -128,10 +135,16 @@ class AbstractAction
 
     public static function toJsonStatic($obj) {
         $on = new ObjectNormalizer();
+        $on->setCallbacks([
+            'attachments' => function ($val) {
+                if(!$val) return [];
+                return json_decode( $val , true);
+            }
+        ]);
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
 
-        $dtn = new DateTimeNormalizer('Y-m-d');
+        $dtn = new DateTimeNormalizer();
         $s = new Serializer(array($dtn, $on), array(new JsonEncoder()) );
 
         return $s->normalize($obj,'json');

@@ -7,7 +7,6 @@ use App\Action\Attachments;
 use App\Entity\Privacy\PrivacyAttachment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -58,8 +57,7 @@ trait BaseResource
     }
     private function hydrateAdv(array $attributes) {
         $this->normalizeData($attributes);
-
-        $on = new ObjectNormalizer(null,null,null, new ReflectionExtractor());
+        $on = new ObjectNormalizer();
 
         $on->setCircularReferenceLimit(1);
         $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });

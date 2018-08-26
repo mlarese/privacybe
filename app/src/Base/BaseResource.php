@@ -150,9 +150,22 @@ trait BaseResource
 
     public function update($values, $params) {
         $en = $this->findOneBy($params);
+        if(!isset($en)) {
+            $classname= $this->getClazz();
+            $en = new $classname();
+        }
         $this->hydrateAttributes($en, $values);
         $this->em->merge($en);
     }
+
+    /**
+     * @param $id
+     *
+     * @return null|object
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function find($id) {
         return $this->em->find($this->getClazz(),$id);
     }

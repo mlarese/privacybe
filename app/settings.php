@@ -12,6 +12,22 @@ return [
               'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}'
           ]
         ],
+        'news_unsub_email_notif' => [
+            'all' => [
+                "dictionary" => [
+                    "email_subject" => [
+                        "it" => "Richiesta di disiscrizione da newsletter",
+                        "en" => "Newsletters unsubscribe request"
+                    ]
+                ]
+            ],
+            'dev' => [
+                'confirm_link' => 'http://localhost:3000/surfer/newsunsubemailnotif'
+            ],
+            'prod' => [
+                'confirm_link' => 'https://privacy.dataone.online/surfer/newsunsubemailnotif'
+            ]
+        ],
         'double_optin' => [
             'all' => [
                 "dictionary" => [

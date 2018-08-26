@@ -2,6 +2,8 @@
 namespace App\Action\Emails;
 use App\Action\AbstractAction;
 use App\Resource\EmailResource;
+
+use App\Traits\UrlHelpers;
 use function base64_encode;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -11,6 +13,54 @@ use function urlencode;
 
 class Emails extends AbstractAction {
 
+    use UrlHelpers;
+    use Environment;
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function unsubscribeEmail($request, $response, $args) {
+        // _k=urlenc(base64(email=&owner=)) & l=language
+        try {
+            $lang = $request->getParam('l');
+            $_k = $request->getParam('_k');
+            $emailSender = $this->getContainer()->get('email_sender');
+            $tpbuilder = $this->getContainer()->get('news_unsub_email_notif_template_builder');
+
+            echo $_SERVER["REMOTE_ADDR"];
+            die;
+
+            $settings =  $this->getContainer()->get('settings');
+            $confirmLink = $settings[$deferredTYPE]['prod']['confirm_link'];
+            $aEmailSubject = $deferredSettings[$deferredTYPE]['all']['dictionary']['email_subject'];
+
+            $params = $this->urlB64DecodeToArray($_k);
+                $data=[
+                    'enclink'=>"$confirmLink?_k=$_k&l=$lang"
+                ];
+
+                $body = $tpbuilder->render($data,lang);
+                $emailSender->sendEmail(
+                    $own->getEmail(),
+                    $priv->getEmail(),
+                    $emailSubject,
+                    $body
+                );
+        } catch (GuzzleException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Email Error ') ;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error ') ;
+        }
+
+        // return $response->withJson($this->success()) ;
+    }
 
 
     /**

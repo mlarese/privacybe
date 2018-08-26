@@ -7,6 +7,7 @@
 
 use App\Action\Attachments;
 use App\Action\DeferredPrivacies;
+use App\Action\PrivacyManager;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
@@ -28,18 +29,26 @@ $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
 /** @var App\Action\DeferredPrivacies */
 $app->put('/api/test/dbloptvis', 'App\Action\DeferredPrivacies:doubleOptinVisited');
 
+/** @var PrivacyManager */
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');
 $app->post('/api/test/usersupfile/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 
+/*********************************************************
+ *                  UNSUB NEWSLETTERS
+ *********************************************************/
+/** invio email annullamento */
+/**
+ * @var App\Action\Emails\Emails
+ * @example  esempio link  /api/surfer/sendunsubemail?_k=urlenc(base64(email=&owner=)) & l=language
+ */
+
+$app->get('/api/surfer/sendunsubemail', 'App\Action\Emails\Emails:unsubscribeEmail');
 
 /*********************************************************
- *                  UPLOAD
+ *                  Attachments
  *********************************************************/
-/** @var  Users*/
-$app->put('/api/user/attachment/{id}', 'App\Action\Users:saveAttachment');
-
-
-$routeMngr->baseRoutes("/test/attachment", Attachments::class);
+$app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
+$routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 
 /*********************************************************
  *                  WIDGET
@@ -47,6 +56,7 @@ $routeMngr->baseRoutes("/test/attachment", Attachments::class);
 $app->get('/api/widgetreq', 'App\Action\PrivacyManager:getWidgetRequest');
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
+/** @var PrivacyManager */
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
 $app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insert');

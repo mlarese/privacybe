@@ -653,6 +653,8 @@ class PrivacyManager extends AbstractAction
      */
     public function uploadUserPrivacy($request, $response, $args) {
 
+        return $response->withJson($this->success( ["fn"=>"fname"] ));
+
         $files = $request->getUploadedFiles();
         $privacyId = $args['uid'];
         /** @var UploadedFile $file */

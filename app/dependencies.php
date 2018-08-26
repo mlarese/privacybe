@@ -236,7 +236,11 @@ $container['dbl_optin_template_builder'] = function ($container) {
     $bld->setTemplateName('double-optin');
     return $bld;
 };
-
+$container['news_unsub_email_notif_template_builder'] = function ($container) {
+    $bld = new PlainTemplateBuilder();
+    $bld->setTemplateName('news-unsubscribe-notif');
+    return $bld;
+};
 $container['deferred_privacy_batch'] = function ($container) {
     /** @var EntityManagerBuilder $emb */
     $emb = $container->get('entity-manager_builder');

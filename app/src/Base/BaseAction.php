@@ -3,6 +3,7 @@
 namespace App\Base;
 
 use App\Action\AbstractAction;
+use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use App\Base\BaseResource;
@@ -67,6 +68,8 @@ abstract class BaseAction extends AbstractAction
     }
     public function beforeGet (&$params){}
     public function afterGet (&$recordset){}
+    public function beforeGetById (&$params){}
+    public function afterGetById (&$record, $args){}
     public function beforeSave (&$values){}
     abstract public function mandatoryFields();
     public function validate ($values) {return true;}
@@ -78,6 +81,20 @@ abstract class BaseAction extends AbstractAction
             $recordset = $this->findBy($args);
             $this->afterGet($recordset);
             return $response->withJson( $this->toJson( $recordset));
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error finding records');
+        }
+
+    }
+    public function getById (Request $request, Response $response, $args){
+        try {
+            $this->setActionParams($request, $response, $args);
+            $this->injectEntityManager();
+            $this->beforeGetById($args);
+            $record = $this->find($args['id']);
+            $this->afterGetById($record, $args)  ;
+            return $response->withJson( $this->toJson( $record));
         } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error finding records');

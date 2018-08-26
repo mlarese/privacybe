@@ -5,6 +5,7 @@ namespace App\Action;
 
 use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
+use App\Entity\Privacy\PrivacyAttachment;
 use App\Resource\Privacy\EmptyFilter;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyLogger;
@@ -44,6 +45,31 @@ class Users extends AbstractAction
         }
 
         return $response->withJson($this->success());
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function loadAttachments($request, $response, $args){
+
+        try {
+            $id = $args['id'];
+            $ownerId = $this->getOwnerId($request);
+
+            $em = $this->getEmPrivacy($ownerId);
+
+            $att = $em->find(PrivacyAttachment::class, $id);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, "Error loading attachments");
+        }
+
+        return $response->withJson($this->toJson($att));
     }
 
     /**

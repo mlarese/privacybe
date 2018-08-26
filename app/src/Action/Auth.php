@@ -5,6 +5,7 @@ namespace App\Action;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Config\UserLogin;
+use App\Entity\Privacy\Operator;
 use App\Entity\Privacy\Privacy;
 use App\Resource\OperatorResource;
 use DateTime;
@@ -112,6 +113,7 @@ class Auth extends AbstractAction {
         // echo 'here' ; die;
         /** @var User $ue */
         $ue = null;
+        /** @var Operator $op */
         $op = null;
         try {
             $ue = $this->userHasAuth($user, $password);

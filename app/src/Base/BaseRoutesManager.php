@@ -18,15 +18,14 @@ class BaseRoutesManager {
 
 
     public function baseRoutes(string $route, string $controller) {
+        $routeId = "$route/{id}";
+
         /** @var App $app */
         $app = $this->app;
-        $app->group("/api", function () use ($app, $route, $controller) {
-            $routeId = "$route/{id}";
                 $app->get($route ,"$controller:get" );
-                $app->get($routeId ,"$controller:get" );
+                $app->get($routeId ,"$controller:getById" );
                 $app->put($routeId ,"$controller:put" );
                 $app->post("$route" ,"$controller:post" );
                 $app->delete($routeId ,"$controller:delete" );
-        });
     }
 }

@@ -24,6 +24,30 @@ class Emails extends AbstractAction {
      * @return mixed
      * @throws \Interop\Container\Exception\ContainerException
      */
+    public function notifyModAccepted($request, $response, $args) {
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function notifyModExecuted($request, $response, $args) {
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Interop\Container\Exception\ContainerException
+     */
     public function unsubscribeEmail($request, $response, $args) {
         // _k=urlenc(base64(email=&owner=)) & l=language
         try {

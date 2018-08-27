@@ -27,7 +27,7 @@ $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
 $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
 
 /** @var App\Action\DeferredPrivacies */
-$app->put('/api/test/dbloptvis', 'App\Action\DeferredPrivacies:doubleOptinVisited');
+$app->put('/api/test/dblopFtvis', 'App\Action\DeferredPrivacies:doubleOptinVisited');
 
 /** @var PrivacyManager */
 $app->post('/api/test/import', 'App\Action\PrivacyManager:import');

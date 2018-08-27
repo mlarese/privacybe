@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     name="term_history",
  *     indexes={
  *          @ORM\Index(name="term_history_created", columns={"created"}),
+ *          @ORM\Index(name="term_history_version", columns={"version"}),
  *          @ORM\Index(name="term_history_modifier", columns={"modifier"}),
  *          @ORM\Index(name="term_history_term_uid", columns={"term_uid"}),
  *     }
@@ -33,6 +34,29 @@ class TermHistory
      * @ORM\Column(name="term", type="json", nullable=true)
      */
     protected $term;
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param mixed $version
+     * @return TermHistory
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column( type="integer", nullable=true,  options={"default" = 0} )
+     */
+    protected $version;
 
     /**
      * @ORM\Column(name="term_uid", type="string", nullable=false, length=128)

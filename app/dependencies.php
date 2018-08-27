@@ -231,6 +231,12 @@ $container['entity-manager_builder'] = function ($container) {
 $container['email_sender'] = function ($container) {
     return new EmailSender($container);
 };
+
+$container['template_builder'] = function ($container) {
+    $bld = new PlainTemplateBuilder();
+    return $bld;
+};
+
 $container['dbl_optin_template_builder'] = function ($container) {
     $bld = new PlainTemplateBuilder();
     $bld->setTemplateName('double-optin');

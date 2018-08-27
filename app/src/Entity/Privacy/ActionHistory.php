@@ -143,6 +143,24 @@ class ActionHistory
     }
 
     /**
+     * @return mixed
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * @param mixed $properties
+     * @return ActionHistory
+     */
+    public function setProperties($properties)
+    {
+        $this->properties = $properties;
+        return $this;
+    }
+
+    /**
      * @ORM\Column(name="date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     protected $date;
@@ -151,6 +169,11 @@ class ActionHistory
      * @ORM\Column(name="history", type="json", nullable=true)
      */
     protected $history;
+
+    /**
+     * @ORM\Column(name="properties", type="json", nullable=true)
+     */
+    protected $properties;
 
     /**
      * @ORM\Column(name="user_name", type="string", nullable=false, length=50)

@@ -1,9 +1,13 @@
 <?php
 namespace App\Action;
 
+use App\Action\Emails\EmailHelpers;
+use App\Entity\Config\Owner;
 use App\Entity\Config\OwnerUserRequest;
 use App\Entity\Privacy\UserRequest;
 use App\Resource\EmailResource;
+use App\Resource\PrivacyResource;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -46,8 +50,18 @@ class UsersRequests  extends AbstractAction{
 
             $uid = Uuid::uuid4();
 
-            // die('--'.$uid);
+            $pres = new  PrivacyResource($em);
+            $emService = new  EmailService();
 
+            $lastPrv = $pres->getLastPrivacyByEmail($mail);
+
+            if(!isset($p)) {
+                echo $e->getMessage();
+                return $response->withStatus(500, 'Error finding last privacy');
+            }
+
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
             $r->setUid($uid )
                 ->setCreated(new \DateTime())
                 ->setStatus(self::STATUS_OPEN)
@@ -70,6 +84,16 @@ class UsersRequests  extends AbstractAction{
 
             $em->flush();
             $this->getEmConfig()->flush();
+
+            $emService->notifyModAccepted(
+                $this->container,
+                $owner->getEmail(),
+                $mail,
+                $lastPrv->getLanguage(),
+                $lastPrv->getName(),
+                $lastPrv->getSurname()
+                );
+
 
             return $response->withJson($this->success());
         } catch (Exception $e) {

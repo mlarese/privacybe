@@ -3,9 +3,11 @@
 namespace App\Action;
 
 
+use App\Action\Emails\EmailHelpers;
 use App\Entity\Config\User;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyAttachment;
+use App\Resource\OperatorResource;
 use App\Resource\Privacy\EmptyFilter;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyLogger;
@@ -23,6 +25,8 @@ use Slim\Http\Response;
 
 class Users extends AbstractAction
 {
+    use EmailHelpers;
+
     /**
      * @param $request Request
      * @param $response Response
@@ -252,7 +256,6 @@ class Users extends AbstractAction
 
             $body = $request->getParsedBody();
 
-
             if(
                 !isset($body['userId']) ||
                 !isset($body['password']) ||
@@ -284,6 +287,21 @@ class Users extends AbstractAction
             $user->setPassword(      md5($body['password'])    );
             $this->getEmConfig()->merge($user);
             $this->getEmConfig()->flush();
+
+            $emprv = $this->getEmPrivacy( $user->getOwnerId() );
+
+            $opRes = new OperatorResource($emprv);
+
+            $op = $opRes->findOperator($user->getId());
+
+            $this->sendGenericEmail(
+                $this->getContainer(),
+                ["name"=>$op->getName(),"surname"=>$op->getSurname()],
+                'change_password',
+                'it',
+                $this->getCallCenterEmail(),
+                $op->getEmail()
+            );
 
             return $response->withJson($this->success());
         } catch (ORMException $e) {

@@ -9,6 +9,7 @@
 namespace App\Resource;
 
 
+use App\Action\Emails\EmailHelpers;
 use App\Action\Emails\TemplateBuilder;
 use App\Entity\Privacy\Operator;
 use DateTime;
@@ -18,23 +19,8 @@ use GuzzleHttp\Client;
 use function str_replace;
 
 class EmailResource extends AbstractResource{
-    private function buildGuzzleData ($from, $to, $subject, $body, $sender = 'dataone') {
-        return [
-            'allow_redirects' => false,
-            'headers' => [
-                'Accept-Encoding' => 'gzip',
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [
-                'sender' => $sender,
-                'from' => $from,
-                'to' =>$to,
-                'subject' => $subject,
-                'body' => $body
-            ]
-        ];
-    }
+    use EmailHelpers;
+
 
     /**
      * @param        $lang
@@ -103,7 +89,7 @@ class EmailResource extends AbstractResource{
         ];
 
 
-        $tpl = new TemplateBuilder( 'subscription-info-email', $d, $lang );
+        $tpl = new TemplateBuilder( 'subscription_info_email', $d, $lang );
         $body = $tpl->render();
 
         $data = $this->buildGuzzleData('mauro.larese@mm-one.com','mauro.larese@gmail.com', 'Test email',$body  ) ;

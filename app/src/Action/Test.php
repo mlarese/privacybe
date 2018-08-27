@@ -107,7 +107,7 @@ class Test extends AbstractAction
         ];
 
 
-        $body = require('Emails/templates/subscription-info-email_tpl.php');
+        $body = require('Emails/templates/subscription_info_email_tpl.php');
 
         try {
             $client = $this->getEmailClient();

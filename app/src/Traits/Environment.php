@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Env\Env;
 
-class Environment {
+trait Environment {
     public function detectEnvironment() {
         $whitelist = array('127.0.0.1', "::1", "localhost");
 

@@ -12,38 +12,71 @@ return [
               'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}'
           ]
         ],
-        'news_unsub_email_notif' => [
-            'all' => [
-                "dictionary" => [
-                    "email_subject" => [
-                        "it" => "Richiesta di disiscrizione da newsletter",
-                        "en" => "Newsletters unsubscribe request"
+        "dataone_emails" => [
+            '_options_' => [
+              "callcenter_email" => "beatrice.breseghello@mm-one.com"
+            ],
+            'news_unsub_email_notif' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Richiesta di disiscrizione da newsletter",
+                            "en" => "Newsletters unsubscribe request"
+                        ]
+                    ]
+                ],
+                'dev' => [
+                    'confirm_link' => 'http://localhost:3000/surfer/newsunsubemailnotif'
+                ],
+                'prod' => [
+                    'confirm_link' => 'https://privacy.dataone.online/surfer/newsunsubemailnotif'
+                ]
+            ],
+            'notify_privacy_mod_executed' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Modifiche privacy"
+                        ]
                     ]
                 ]
             ],
-            'dev' => [
-                'confirm_link' => 'http://localhost:3000/surfer/newsunsubemailnotif'
-            ],
-            'prod' => [
-                'confirm_link' => 'https://privacy.dataone.online/surfer/newsunsubemailnotif'
-            ]
-        ],
-        'double_optin' => [
-            'all' => [
-                "dictionary" => [
-                    "email_subject" => [
-                        "it" => "Conferma le tue preferenze",
-                        "en" => "Conferma le tue preferenze"
+            'notify_mod_accepted' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Richiesta di modifiche privacy"
+                        ]
                     ]
                 ]
             ],
-            'dev' => [
-                'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
+            'change_password' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Cambio password account dataone"
+                        ]
+                    ]
+                ]
             ],
-            'prod' => [
-                'confirm_link' => 'https://privacy.dataone.online/surfer/confirmdeferred'
-            ]
+            'double_optin' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Conferma le tue preferenze",
+                            "en" => "Conferma le tue preferenze"
+                        ]
+                    ]
+                ],
+                'dev' => [
+                    'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
+                ],
+                'prod' => [
+                    'confirm_link' => 'https://privacy.dataone.online/surfer/confirmdeferred'
+                ]
+            ],
         ],
+
         'label' => 'production',
         'applications' => [
             'apps' => [
@@ -131,7 +164,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy',
+                'dbname'   => 'privacy_2',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

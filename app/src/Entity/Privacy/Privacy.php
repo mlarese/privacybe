@@ -80,22 +80,22 @@ class Privacy {
      * @ORM\Column(name="uid", type="string", nullable=false, length=128)
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    protected $id;
+    public $id;
 
     /**
      * @ORM\Column(name="created", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    protected $created;
+    public $created;
 
     /**
      * @ORM\Column(name="email", type="string", nullable=false, length=100)
      */
-    protected $email;
+    public $email;
 
     /**
      * @ORM\Column( type="integer", nullable=true,  options={"default" = 0} )
      */
-    protected $version;
+    public $version;
 
     /**
      * @return mixed
@@ -117,52 +117,52 @@ class Privacy {
     /**
      * @ORM\Column(type="string", nullable=true, length=20)
      */
-    protected $status;
+    public $status;
 
     /**
      * @ORM\Column(name="name", type="string", nullable=false, length=100)
      */
-    protected $name;
+    public $name;
 
     /**
      * @ORM\Column(name="surname", type="string", nullable=false, length=100)
      */
-    protected $surname;
+    public $surname;
 
     /**
      * @ORM\Column(name="language", type="string", nullable=true, length=20)
      */
-    protected $language;
+    public $language;
 
     /**
      * @ORM\Column(name="form", type="json", nullable=true)
      */
-    protected $form;
+    public $form;
 
     /**
      * @ORM\Column(name="properties", type="json", nullable=true)
      */
-    protected $properties;
+    public $properties;
     /**
      * @ORM\Column(name="crypted_form", type="text", nullable=true, length=4294967295)
      * @Encrypted
      */
-    protected $cryptedForm;
+    public $cryptedForm;
 
     /**
      * @ORM\Column(name="privacy", type="json_array", nullable=true, length=4294967295)
      */
-    protected $privacy;
+    public $privacy;
 
     /**
      * @ORM\Column(name="privacy_flags", type="json", nullable=true)
      */
-    protected $privacyFlags;
+    public $privacyFlags;
 
     /**
      * @ORM\Column(name="term_id", type="string", nullable=false)
      */
-    protected $termId;
+    public $termId;
 
     /**
      * @return mixed
@@ -183,17 +183,17 @@ class Privacy {
     /**
      * @ORM\Column(type="string", nullable=false)
      */
-    protected $domain;
+    public $domain;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $page;
+    public $page;
 
     /**
      * @ORM\Column(name="site", type="string", nullable=false, length=255)
      */
-    protected $site;
+    public $site;
 
     /**
      * @return mixed
@@ -368,7 +368,7 @@ class Privacy {
      *
      * @ORM\Column(name="ip", type="string", nullable=true, length=100)
      */
-    protected $ip;
+    public $ip;
 
     /**
      * @return mixed
@@ -445,12 +445,12 @@ class Privacy {
      * @var $telephone  string
      * @ORM\Column(name="telephone", type="string", nullable=true, length=120)
      */
-    protected $telephone;
+    public $telephone;
 
     /**
      * @ORM\Column(name="deleted", type="boolean", nullable=false, options={"default" = 0} )
      */
-    protected $deleted;
+    public $deleted;
 
     /**
      * @return mixed
@@ -473,7 +473,7 @@ class Privacy {
     /**
      * @ORM\Column(name="ref", type="string", nullable=true, length=100)
      */
-    protected $ref;
+    public $ref;
 
     /**
      * @return mixed
@@ -491,5 +491,9 @@ class Privacy {
     {
         $this->ref = $ref;
         return $this;
+    }
+
+    public function toArray() {
+        return (array) $this;
     }
 }

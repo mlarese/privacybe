@@ -3,6 +3,9 @@ namespace App\Action\Emails;
 use App\Action\AbstractAction;
 use App\Resource\EmailResource;
 
+use App\Resource\PrivacyResource;
+use App\Service\EmailService;
+use App\Traits\Environment;
 use App\Traits\UrlHelpers;
 use function base64_encode;
 use Exception;
@@ -15,6 +18,47 @@ class Emails extends AbstractAction {
 
     use UrlHelpers;
     use Environment;
+    use EmailHelpers;
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function generic($request, $response, $args) {
+        $esrv = new EmailService();
+        try {
+            $from = 'mlarese@email.it';
+            $to = 'mauro.larese@gmail.com';
+
+            $privres = new PrivacyResource( $this->getEmPrivacy(2));
+
+            $lastPr = $privres->getLastPrivacyByEmail($to);
+
+            $data = [
+              "name"=>"nome " . $lastPr->getName(),
+              "surname"=>"cognome " . $lastPr->getSurname()
+            ];
+
+
+            $esrv->sendGenericEmail(
+                $this->getContainer(),
+                $data,
+                'notify_privacy_mod_executed',
+                $lastPr->getLanguage(),
+                $from,
+                $to
+            );
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error sending email');
+        }
+
+        return $response->withJson($this->success());
+    }
 
     /**
      * @param $request Request
@@ -26,6 +70,25 @@ class Emails extends AbstractAction {
      */
     public function notifyModAccepted($request, $response, $args) {
 
+        try {
+            $templateData = [
+
+            ];
+            $params = $this->urlB64DecodeToArray($request->getParam('_k'));
+            $from = '';
+            $to = $params['email'];
+            $this->sendGenericEmail(
+                $this->getContainer(),
+                $templateData,
+                'templateName',
+                'language',
+                $from,
+                $to);
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Error sending email');
+        }
+
+        return $response->withJson($this->success());
     }
 
     /**
@@ -34,10 +97,17 @@ class Emails extends AbstractAction {
      * @param $args
      *
      * @return mixed
-     * @throws \Interop\Container\Exception\ContainerException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function notifyModExecuted($request, $response, $args) {
+        try{
 
+        }catch(Exception $e) {
+            echo $e->getMessage();
+            return  $response->withStatus(500, $e->getMessage());
+        }
+
+        return $response->withJson( $this->success());
     }
 
     /**
@@ -54,13 +124,14 @@ class Emails extends AbstractAction {
             $lang = $request->getParam('l');
             $_k = $request->getParam('_k');
             $emailSender = $this->getContainer()->get('email_sender');
+            $emsettings = $this->getContainer()->get('');
             $tpbuilder = $this->getContainer()->get('news_unsub_email_notif_template_builder');
 
             echo $_SERVER["REMOTE_ADDR"];
             die;
 
             $settings =  $this->getContainer()->get('settings');
-            $confirmLink = $settings[$deferredTYPE]['prod']['confirm_link'];
+            $confirmLink = $settings['dataone_emails'][$deferredTYPE]['prod']['confirm_link'];
             $aEmailSubject = $deferredSettings[$deferredTYPE]['all']['dictionary']['email_subject'];
 
             $params = $this->urlB64DecodeToArray($_k);
@@ -138,7 +209,7 @@ class Emails extends AbstractAction {
             echo ("s=1&_j=$prv&_k=$ownerId&=2");
 
             die;
-            $tpl = new TemplateBuilder( 'double-optin', $d, $lang );
+            $tpl = new TemplateBuilder( 'double_optin', $d, $lang );
             $body = $tpl->render();
 
             $client = $this->getEmailClient();

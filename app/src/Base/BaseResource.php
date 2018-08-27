@@ -55,7 +55,22 @@ trait BaseResource
 
         }
     }
-    private function hydrateAdv(array $attributes) {
+
+    public static function hydrateByArray(array $attributes, $clazz) {
+        $on = new ObjectNormalizer();
+        $on->setCircularReferenceLimit(1);
+        $on->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+
+        $dtn = new DateTimeNormalizer();
+
+        $ard = new ArrayDenormalizer();
+        //$dtn1 = new DateTimeNormalizer('Y-m-d');
+        $s = new Serializer([$dtn, $on, $ard]);
+        return  $s->denormalize($attributes, $clazz);
+    }
+
+
+    private function hydrateAdv(array $attributes, $clazz) {
         $this->normalizeData($attributes);
         $on = new ObjectNormalizer();
 

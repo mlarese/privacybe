@@ -22,8 +22,9 @@ $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
 
-/** @var App\Action\Emails\ */
+/** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
+$app->get('/api/test/generic', 'App\Action\Emails\Emails:generic');
 $app->get('/api/test/dblopt', 'App\Action\Emails\Emails:doubleOptinConfirm');
 
 /** @var App\Action\DeferredPrivacies */

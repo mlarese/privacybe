@@ -136,6 +136,7 @@ class Auth extends AbstractAction {
         if($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
+                "email"=> $op->getEmail(),
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
                 "user" => $user,

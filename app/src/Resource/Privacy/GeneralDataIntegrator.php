@@ -10,10 +10,18 @@ class GeneralDataIntegrator
     public function integrate(&$record)
     {
         // $record['email'] = trim($record['email']);
-        $record['page'] = $record['domain'].$record['site'] ;
-        $record['referrer'] = $record['page'];
+
+        if(isset($record['domain']) && isset($record['site']))
+           $record['page'] = "record['domain'].record['site']" ;
+
+
+        if(isset($record['page']))
+            $record['referrer'] = $record['page'];
+
         if(isset($record['privacy']['referrer']))
             $record['referrer'] =  $record['privacy']['referrer'];
+
+
 
         $record['denomination'] = $record['surname'].' '.$record['name'] ;
 

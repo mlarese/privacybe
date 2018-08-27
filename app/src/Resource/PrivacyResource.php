@@ -4,6 +4,7 @@ namespace App\Resource;
 
 
 use App\Action\Terms;
+use App\Base\BaseResource;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
@@ -18,6 +19,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
+use function get_object_vars;
 use http\Env\Response;
 use function json_encode;
 use function strtolower;
@@ -44,6 +46,27 @@ class PrivacyResource extends AbstractResource
 
         return $prRec;
     }
+
+    /**
+     * @param $email
+     *
+     * @return Privacy
+     */
+    public function getLastPrivacyByEmail ($email) {
+        $integrator = new GeneralDataIntegrator();
+        $r = $this->getRepository();
+        /** @var Privacy $record */
+        $record = $r->findOneBy(["email" => $email, "deleted"=>0],["created"=>"desc"]);
+
+        $arecord = $record->toArray();
+        $integrator->integrate($arecord);
+
+        $record = BaseResource::hydrateByArray($arecord, Privacy::class);
+
+        return $record;
+
+    }
+
 
     /**
      * @param $email

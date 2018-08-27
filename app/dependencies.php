@@ -239,12 +239,12 @@ $container['template_builder'] = function ($container) {
 
 $container['dbl_optin_template_builder'] = function ($container) {
     $bld = new PlainTemplateBuilder();
-    $bld->setTemplateName('double-optin');
+    $bld->setTemplateName('double_optin');
     return $bld;
 };
 $container['news_unsub_email_notif_template_builder'] = function ($container) {
     $bld = new PlainTemplateBuilder();
-    $bld->setTemplateName('news-unsubscribe-notif');
+    $bld->setTemplateName('news_unsub_email_notif');
     return $bld;
 };
 $container['deferred_privacy_batch'] = function ($container) {

@@ -69,15 +69,44 @@ class Owners extends AbstractAction
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;   
         CREATE TABLE $db.privacy( id INT AUTO_INCREMENT NOT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, privacy LONGTEXT DEFAULT NULL , privacy_id INT NOT NULL, type VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, INDEX privacy_history_created (created), INDEX privacy_history_privacy_id (privacy_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;      
         CREATE TABLE $db.domain (name VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, active TINYINT(1) DEFAULT '1' NOT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX domain_active (active), PRIMARY KEY(name)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-        CREATE TABLE $db.action_history (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, description VARCHAR(255) NOT NULL, date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, history LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', user_name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-        CREATE TABLE $db.term (uid VARCHAR(128) NOT NULL, options LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)',name VARCHAR(255) NOT NULL, paragraphs LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', status VARCHAR(30) NOT NULL, published DATETIME DEFAULT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, modified DATETIME DEFAULT CURRENT_TIMESTAMP, suspended DATETIME DEFAULT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, INDEX term_created (created), INDEX term_suspended (suspended), INDEX term_published (published), INDEX term_modified (modified), PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-        CREATE TABLE $db.term_history (id INT AUTO_INCREMENT NOT NULL, created DATETIME DEFAULT CURRENT_TIMESTAMP, term LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', term_uid VARCHAR(128) NOT NULL, modifier INT NOT NULL, type VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, INDEX term_history_created (created), INDEX term_history_modifier (modifier), INDEX term_history_term_uid (term_uid), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+        CREATE TABLE $db.action_history (
+            id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, 
+            description VARCHAR(255) NOT NULL, 
+            date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+            history LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
+            properties LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
+            user_name VARCHAR(50) NOT NULL, 
+            PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+        CREATE TABLE $db.term (
+            uid VARCHAR(128) NOT NULL, 
+            options LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)',
+            name VARCHAR(255) NOT NULL, 
+            paragraphs LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
+            version INT DEFAULT NULL, 
+            status VARCHAR(30) NOT NULL, 
+            published DATETIME DEFAULT NULL, 
+            created DATETIME DEFAULT CURRENT_TIMESTAMP, modified DATETIME DEFAULT CURRENT_TIMESTAMP, suspended DATETIME DEFAULT NULL, deleted TINYINT(1) DEFAULT '0' NOT NULL, 
+            INDEX term_created (created), 
+            INDEX version (version), 
+            INDEX term_suspended (suspended), INDEX term_published (published), INDEX term_modified (modified), PRIMARY KEY(uid)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+        CREATE TABLE $db.term_history (
+            id INT AUTO_INCREMENT NOT NULL, 
+            created DATETIME DEFAULT CURRENT_TIMESTAMP, 
+            term LONGTEXT DEFAULT NULL COMMENT '(DC2Type:json)', 
+            term_uid VARCHAR(128) NOT NULL, 
+            modifier INT NOT NULL, type VARCHAR(255) NOT NULL, 
+            description VARCHAR(255) NOT NULL, 
+            version INT DEFAULT NULL, 
+            INDEX term_history_created (created), 
+            INDEX version (version), 
+            INDEX term_history_modifier (modifier), INDEX term_history_term_uid (term_uid), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
         CREATE TABLE $db.privacy_entry( 
             uid VARCHAR(128) NOT NULL, 
             created DATETIME DEFAULT CURRENT_TIMESTAMP, 
             language VARCHAR(20) COLLATE utf8_unicode_ci DEFAULT NULL,
             email VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL, 
             status VARCHAR(20) DEFAULT NULL, 
+            version INT DEFAULT NULL, 
             ref VARCHAR(100) DEFAULT NULL, 
             surname VARCHAR(100) NOT NULL, 
             page varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -93,6 +122,7 @@ class Owners extends AbstractAction
             INDEX privacy_created (created), 
             INDEX privacy_name_surname (name, surname), 
             INDEX privacy_ref (ref), 
+            INDEX privacy_version (version), 
             INDEX privacy_term_id (term_id), 
             INDEX privacy_language (language),  
             INDEX privacy_page (page),  

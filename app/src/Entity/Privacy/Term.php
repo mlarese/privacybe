@@ -208,6 +208,29 @@ class Term
     protected $deleted;
 
     /**
+     * @ORM\Column( type="integer", nullable=true,  options={"default" = 0} )
+     */
+    protected $version;
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param mixed $version
+     * @return Term
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getDeleted()

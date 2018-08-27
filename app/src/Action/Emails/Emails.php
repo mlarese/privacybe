@@ -117,7 +117,6 @@ class Emails extends AbstractAction {
             $tpl = new TemplateBuilder( 'double-optin', $d, $lang );
             $body = $tpl->render();
 
-
             $client = $this->getEmailClient();
             $data = $this->buildGuzzleData('mauro.larese@mm-one.com','mauro.larese@gmail.com', 'Test email',$body  ) ;
             $client->request('POST', '', $data);

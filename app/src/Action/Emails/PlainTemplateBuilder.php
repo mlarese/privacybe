@@ -17,16 +17,21 @@ class PlainTemplateBuilder {
     /**
      * @return mixed
      */
-    public function getTemplateName() {
+    public function getTemplateName()
+    {
         return $this->templateName;
     }
 
     /**
      * @param mixed $templateName
+     * @return PlainTemplateBuilder
      */
-    public function setTemplateName($templateName): void {
+    public function setTemplateName($templateName)
+    {
         $this->templateName = $templateName;
+        return $this;
     }
+
 
     /**
      * @param $data

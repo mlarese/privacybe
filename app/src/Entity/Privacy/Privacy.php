@@ -13,6 +13,7 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_domain_site", columns={"domain","site"}),
  *          @ORM\Index(name="privacy_ref", columns={"domain","ref"}),
  *          @ORM\Index(name="privacy_page", columns={"page"}),
+ *          @ORM\Index(name="privacy_version", columns={"version"}),
  *          @ORM\Index(name="privacy_status", columns={"status"}),
  *          @ORM\Index(name="privacy_term_id", columns={"domain","term_id"}),
  *          @ORM\Index(name="privacy_language", columns={"domain","language"}),
@@ -27,6 +28,42 @@ class Privacy {
      */
     public function getLanguage() {
         return $this->language;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param mixed $version
+     * @return Privacy
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * @param mixed $properties
+     * @return Privacy
+     */
+    public function setProperties($properties)
+    {
+        $this->properties = $properties;
+        return $this;
     }
 
     /**
@@ -54,6 +91,11 @@ class Privacy {
      * @ORM\Column(name="email", type="string", nullable=false, length=100)
      */
     protected $email;
+
+    /**
+     * @ORM\Column( type="integer", nullable=true,  options={"default" = 0} )
+     */
+    protected $version;
 
     /**
      * @return mixed

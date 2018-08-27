@@ -26,11 +26,57 @@ class User {
      */
      protected $id;
 
+    /**
+     * @ORM\Column(name="activation_required", type="boolean", nullable=true, options={"default" = 0})
+     */
+    protected $activationRequired;
 
     /**
      * @ORM\Column(name="user", type="string", nullable=false, length=100)
      */
     protected $user;
+
+    /**
+     * @return mixed
+     */
+    public function getActivationRequired()
+    {
+        return $this->activationRequired;
+    }
+
+    /**
+     * @param mixed $activationRequired
+     * @return User
+     */
+    public function setActivationRequired($activationRequired)
+    {
+        $this->activationRequired = $activationRequired;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivationDate()
+    {
+        return $this->activationDate;
+    }
+
+    /**
+     * @param mixed $activationDate
+     * @return User
+     */
+    public function setActivationDate($activationDate)
+    {
+        $this->activationDate = $activationDate;
+        return $this;
+    }
+
+
+    /**
+     * @ORM\Column(name="activation_date", type="datetime", nullable=true)
+     */
+    protected $activationDate;
 
     /**
      * admin, operator, owner

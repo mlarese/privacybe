@@ -93,7 +93,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
             if($this->getEnv() === Env::ENV_DEV) {
                 // solo struttura demo
-                if($own->getId()!=34) continue;
+                // if($own->getId()!=34) continue;
             }
 
             try {

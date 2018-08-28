@@ -20,7 +20,8 @@
 
                 <tr>
                     <td colspan="100">
-                        Abbiamo ricevuto la sua richiesta di modifiche alla privacy.
+                        Abbiamo eseguito le modifiche alla privacy come da lei richiesto.
+
                         <br>
                         Grazie,<br>
                         Il team di DataOne

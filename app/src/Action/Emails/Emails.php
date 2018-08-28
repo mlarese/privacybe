@@ -1,6 +1,7 @@
 <?php
 namespace App\Action\Emails;
 use App\Action\AbstractAction;
+use App\Entity\Config\Owner;
 use App\Resource\EmailResource;
 
 use App\Resource\PrivacyResource;
@@ -35,7 +36,6 @@ class Emails extends AbstractAction {
             $to = 'mauro.larese@gmail.com';
 
             $privres = new PrivacyResource( $this->getEmPrivacy(2));
-
             $lastPr = $privres->getLastPrivacyByEmail($to);
 
             $data = [
@@ -123,38 +123,41 @@ class Emails extends AbstractAction {
         try {
             $lang = $request->getParam('l');
             $_k = $request->getParam('_k');
-            $emailSender = $this->getContainer()->get('email_sender');
-            $emsettings = $this->getContainer()->get('');
-            $tpbuilder = $this->getContainer()->get('news_unsub_email_notif_template_builder');
 
-            echo $_SERVER["REMOTE_ADDR"];
-            die;
+            $settings = $this->getContainer()->get('settings');
+            $dataOneSettings = $settings['dataone'];
 
-            $settings =  $this->getContainer()->get('settings');
-            $confirmLink = $settings['dataone_emails'][$deferredTYPE]['prod']['confirm_link'];
-            $aEmailSubject = $deferredSettings[$deferredTYPE]['all']['dictionary']['email_subject'];
+            $confirmLink = $dataOneSettings['_options_'][$this->detectEnvironment()]['fe_address'];
 
+            $referrer = isset($_SERVER["REMOTE_ADDR"])?$_SERVER["REMOTE_ADDR"]:null ;
             $params = $this->urlB64DecodeToArray($_k);
+            $email = $params['email'];
+            $ownerId = $params['ownerId'];
+
+            $em = $this->getEmPrivacy($ownerId);
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+
                 $data=[
-                    'enclink'=>"$confirmLink?_k=$_k&l=$lang"
+                    'enclink'=>"$confirmLink/surfer/flagspage?_k=$_k&l=$lang"
                 ];
 
-                $body = $tpbuilder->render($data,lang);
-                $emailSender->sendEmail(
-                    $own->getEmail(),
-                    $priv->getEmail(),
-                    $emailSubject,
-                    $body
-                );
-        } catch (GuzzleException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Email Error ') ;
+                $this->sendGenericEmail(
+                    $this->getContainer(),
+                    $data,
+                    'news_unsub_email_notif',
+                    $lang,
+                    $from,
+                    $to
+                )
+
+
         } catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error ') ;
         }
 
-        // return $response->withJson($this->success()) ;
+        return $response->withJson($this->success()) ;
     }
 
 

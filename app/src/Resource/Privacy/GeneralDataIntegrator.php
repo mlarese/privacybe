@@ -12,7 +12,7 @@ class GeneralDataIntegrator
         // $record['email'] = trim($record['email']);
 
         if(isset($record['domain']) && isset($record['site']))
-           $record['page'] = "record['domain'].record['site']" ;
+           $record['page'] = $record['domain'].$record['site'] ;
 
 
         if(isset($record['page']))

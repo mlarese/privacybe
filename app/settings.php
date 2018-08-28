@@ -14,7 +14,13 @@ return [
         ],
         "dataone_emails" => [
             '_options_' => [
-              "callcenter_email" => "beatrice.breseghello@mm-one.com"
+                'dev' => [
+                    'fe_address' => 'http://localhost:3000'
+                ],
+                'prod' => [
+                    'fe_address' => 'https://privacy.dataone.online'
+                ],
+                "callcenter_email" => "beatrice.breseghello@mm-one.com"
             ],
             'news_unsub_email_notif' => [
                 'all' => [

@@ -20,6 +20,7 @@ use App\Resource\PropertyNotFoundException;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use App\Service\DeferredPrivacyService;
+use App\Traits\UrlHelpers;
 use function base64_encode;
 use DateTime;
 use Doctrine\Common\Annotations\AnnotationException;
@@ -43,7 +44,7 @@ use function toJson;
 
 class PrivacyManager extends AbstractAction
 {
-
+    use UrlHelpers;
 
     /**
      * @param $request Request
@@ -105,45 +106,24 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getPrivacyByEmail($request, $response, $args) {
-        $email = $args['id'];
-        $email = urldecode(base64_decode(email));
-
-        $ownerHash = substr($id,37, strlen ($id));
-
         try {
-            $ownerId = $this->findOwnerIdFromHash($ownerHash);
-        } catch (OwnerExistException $e) {
-            return $response->withStatus(500,$e->getMessage());
-        }
-        $em = $this->getEmPrivacy($ownerId);
-        $pres = new PrivacyResource($em);
+            $_k = $request->getParam('_k');
 
-        try {
-            /** @var Privacy $p */
-            $p = $pres->getPrivacy($uid);
+            $params = $this->urlB64DecodeToArray($_k);
+            $email = $params['email'];
+            $ownerId = $params['ownerId'];
 
-            $cForm = $p->getCryptedForm();
-            $cForm = json_decode($cForm, true);
+            $em = $this->getEmPrivacy($ownerId);
+            $pres = new PrivacyResource($em);
+            $user = $pres->privacyRecord($email);
 
-            $p->setCryptedForm($cForm);
-        } catch (PrivacyNotFoundException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500,'PrivacyNotFoundException');
-        } catch (OptimisticLockException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500,'OptimisticLockException');
-        } catch (TransactionRequiredException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500,'TransactionRequiredException');
-        } catch (ORMException $e) {
-            echo $e->getMessage();
-            $response->withStatus(500,'ORMException');
+
         }catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500,'Exception');
         }
 
-        return $response->withJson( $this->toJson($p));
+        return $response->withJson( $this->toJson($user));
     }
 
     /**

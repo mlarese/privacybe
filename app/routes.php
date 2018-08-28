@@ -105,6 +105,7 @@ $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+$app->get('/api/surfer/privacybye', 'App\Action\PrivacyManager:getPrivacyByEmail');
 /**  @var App\Action\Users */
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
 

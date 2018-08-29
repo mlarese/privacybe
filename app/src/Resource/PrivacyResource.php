@@ -17,7 +17,9 @@ use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\QueryBuilder;
 use Exception;
 use function get_object_vars;
 use http\Env\Response;
@@ -646,6 +648,21 @@ class PrivacyResource extends AbstractResource
          return $this->privacyListFw($criteria,  $grouper, $filter);
     }
 
+    public function updateFlags($flags, $term, $id) {
+        /** @var QueryBuilder $qb */
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        /** @var Query $query */
+        $query = $qb->update(Privacy::class, 'p')
+            ->set('p.privacy', $term)
+            ->set('p.privacyFlags', $flags)
+            ->where('p.id=?1')
+            ->setParameter(1, $id)
+            ->getQuery()
+        ;
+
+        $query->execute();
+
+    }
 
     public function privacyRecord($email) {
         $repo = $this->getRepository();

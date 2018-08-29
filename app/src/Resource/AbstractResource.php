@@ -24,7 +24,7 @@ abstract class AbstractResource
     }
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManager\ $entityManager
      */
     public function setEntityManager(EntityManager $entityManager): void {
         $this->entityManager = $entityManager;

@@ -24,6 +24,7 @@ use Exception;
 use function get_object_vars;
 use http\Env\Response;
 use function json_encode;
+use function print_r;
 use function strtolower;
 use function var_dump;
 
@@ -649,18 +650,16 @@ class PrivacyResource extends AbstractResource
     }
 
     public function updateFlags($flags, $term, $id) {
-        /** @var QueryBuilder $qb */
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        /** @var Query $query */
-        $query = $qb->update(Privacy::class, 'p')
-            ->set('p.privacy', $term)
-            ->set('p.privacyFlags', $flags)
-            ->where('p.id=?1')
-            ->setParameter(1, $id)
-            ->getQuery()
-        ;
 
-        $query->execute();
+        /** @var Privacy $pr */
+        $pr = $this->getEntityManager()->find(Privacy::class, $id);
+
+        $pr->setPrivacy($term)
+            ->setPrivacyFlags($flags);
+
+        $this->getEntityManager()->merge($pr);
+
+
 
     }
 

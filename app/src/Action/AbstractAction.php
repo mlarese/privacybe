@@ -272,6 +272,22 @@ class AbstractAction
     }
 
     /**
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function getActionUser(Request $request) {
+        $ud = $this->getUserData($request);
+        $user = 'surfer';
+
+        if(isset($ud)) {
+            $user = $ud->user;
+        }
+
+        return $user;
+    }
+
+    /**
      * @param $request Request
      * @return array
      */

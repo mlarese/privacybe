@@ -26,8 +26,15 @@ class GeneralDataIntegrator
         $record['denomination'] = $record['surname'].' '.$record['name'] ;
 
         $record['_flags_'] = [];
+
         foreach ($record['privacyFlags'] as $pf) {
-            $record['_flags_'][] = ["code" => $pf['code'], "selected" => $pf['selected']];
+            $unsub = false;
+            $user='';
+            if(isset($pf['unsubscribe']))  $unsub = true;
+            if(isset($pf['user']))  $user = $pf['user'];
+
+            $record['_flags_'][] = ["code" => $pf['code'], "selected" => $pf['selected'], "user" => $user, "unsubscribe" => $unsub, "mandatory" => $pf['mandatory']];
+
         }
 
         return $record;

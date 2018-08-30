@@ -31,7 +31,6 @@ class Operators extends AbstractAction
     public function getAllOperators($request, $response, $args) {
         $ownerId = $this->getOwnerId($request);
 
-
         $term = null;
         try {
             /**

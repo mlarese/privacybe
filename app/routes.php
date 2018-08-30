@@ -7,7 +7,9 @@
 
 use App\Action\Attachments;
 use App\Action\DeferredPrivacies;
+use App\Action\Operators;
 use App\Action\PrivacyManager;
+use App\Action\Subscriptions;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
@@ -44,6 +46,12 @@ $app->post('/api/test/usersupfile/{uid}', 'App\Action\PrivacyManager:uploadUserP
  */
 
 $app->get('/api/surfer/sendunsubemail', 'App\Action\Emails\Emails:unsubscribeEmail');
+
+/**
+ * @var Subscriptions
+ * @example  esempio link  /api/surfer/unsubnews?_k=email=&owner=
+ */
+$app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewsletters');
 
 /*********************************************************
  *                  Attachments
@@ -125,6 +133,7 @@ $app->get('/api/owner/domain', 'App\Action\Owners:getDomains');
 /*********************************************************
  *                  OWNERS OPERATORS
  *********************************************************/
+/** @var Operators */
 $app->put('/api/owner/operator/{id}', 'App\Action\Operators:updateOperator');
 $app->post('/api/owner/operator', 'App\Action\Operators:newOperator');
 $app->get('/api/owner/operator', 'App\Action\Operators:getAllOperators');

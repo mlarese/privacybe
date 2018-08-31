@@ -1,5 +1,5 @@
 <?php include 'styles.php'; ?>
-<?php $clang='it'; ?>
+<?php $clang='de'; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

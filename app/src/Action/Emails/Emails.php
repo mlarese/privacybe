@@ -172,10 +172,17 @@ class Emails extends AbstractAction {
      */
     public function privacyRequestTest($request, $response, $args) {
         try {
-            $lang = 'it';
+            $lang = 'de';
             $email = 'mauro.larese@gmail.com';
-            $emailRes = new EmailResource($this->getEmPrivacy(34));
-            $body = $emailRes->privacyRequest($lang, $email,$this->getEmailClient());
+            $emailRes = new EmailResource($this->getEmPrivacy(2), $this->getEmConfig());
+            $body = $emailRes->privacyRequest(
+                $lang,
+                $email,
+                2,
+                $this->getContainer(),
+                'www.aloe-shop.it',
+                'fe742340-6fe8-11e8-9267-c95d4c7b2492'
+                );
 
             echo $body;
 

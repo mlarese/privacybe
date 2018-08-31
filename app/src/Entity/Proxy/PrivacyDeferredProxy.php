@@ -206,6 +206,25 @@ class PrivacyDeferredProxy {
     protected $name;
 
     /**
+     * @return mixed
+     */
+    public function getDomain() {
+        return $this->domain;
+    }
+
+    /**
+     * @param mixed $domain
+     */
+    public function setDomain($domain): void {
+        $this->domain = $domain;
+    }
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $domain;
+
+    /**
      * @ORM\Column(name="surname", type="string", nullable=false, length=100)
      */
     protected $surname;

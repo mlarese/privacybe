@@ -72,6 +72,7 @@ trait EmailHelpers
 
         $data = $this->buildGuzzleData($from,$to, $subject,$body  ) ;
         $client->request('POST', '', $data);
+        return $body;
     }
 
 }

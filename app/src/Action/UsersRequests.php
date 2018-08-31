@@ -32,10 +32,9 @@ class UsersRequests  extends AbstractAction{
     public function insert($request, $response, $args){
         try {
             $body = $request->getParsedBody();
-
             $mail = $body ['email'];
             $ownerId = $body ['ref'];
-            $language = "it";
+            $language = "de";
 
             if(isset($body["language"])) {
                 $language = $body["language"];
@@ -56,7 +55,6 @@ class UsersRequests  extends AbstractAction{
             $lastPrv = $pres->getLastPrivacyByEmail($mail);
 
             if(!isset($p)) {
-                echo $e->getMessage();
                 return $response->withStatus(500, 'Error finding last privacy');
             }
 
@@ -79,8 +77,9 @@ class UsersRequests  extends AbstractAction{
             $this->getEmConfig()->persist($or);
 
 
-            $emailRes = new EmailResource($em);
-            $emailRes->privacyRequest($language, $mail,$this->getEmailClient());
+            $emailRes = new EmailResource($em, $this->getEmConfig());
+            $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+            $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
 
             $em->flush();
             $this->getEmConfig()->flush();

@@ -3,12 +3,14 @@
 namespace App\Batch;
 
 
+use App\Action\Emails\EmailHelpers;
 use App\Action\Emails\PlainTemplateBuilder;
 use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 use App\Entity\Privacy\PrivacyDeferred;
 use App\Entity\Proxy\PrivacyDeferredProxy;
 use App\Env\Env;
 use App\Resource\DeferredPrivacyResource;
+use App\Resource\EmailResource;
 use App\Resource\OwnerResource;
 use App\Resource\UserResource;
 use App\Service\DeferredPrivacyService;
@@ -20,7 +22,7 @@ use function print_r;
 class DeferredPrivacyBatch extends AbstractBatch {
     private $emailSender;
     use Environment;
-
+    use EmailHelpers;
     /**
      * DeferredPrivacyBatch constructor.
      *
@@ -87,6 +89,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
             try {
                 $emprv = $this->emBuilder->buildSUPrivateEM($own->getId());
+                $emailResource = new EmailResource($emprv, $emcfg);
                 $defpres->setEntityManager($emprv);
 
                 $qb = $emprv->createQueryBuilder();
@@ -113,18 +116,25 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
                     // echo '-----------'.$emailSubject;
                     try {
-                        $data=[
-                            'enclink'=>"$confirmLink?_j=$encPprivacyUid&_k=$encOwnerId&lang=$_lang",
-                            'name'=>$priv->getName(),
-                            'surname'=>$priv->getSurname()
-                        ];
-                        $body = $tpbuilder->render($data,$priv->getLanguage());
-                        $this->emailSender->sendEmail(
-                            $own->getEmail(),
+                        $data = $emailResource->composePrivaciesData(
+                            $_lang,
                             $priv->getEmail(),
-                            $emailSubject,
-                            $body
+                            $own->getId(),
+                            $priv->getDomain(),
+                            $priv->getId()
                         );
+
+                        $data[ 'enclink'] ="$confirmLink?_j=$encPprivacyUid&_k=$encOwnerId&lang=$_lang";
+
+                        $this->sendGenericEmail(
+                            $this->getContainer(),
+                            $data,
+                            'double_optin',
+                            $_lang,
+                            $own->getEmail(),
+                            $priv->getEmail()
+                        );
+
 
                         $q->setParameter(1, $priv->getId())
                             ->getQuery()

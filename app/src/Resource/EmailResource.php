@@ -12,14 +12,94 @@ namespace App\Resource;
 use App\Action\Emails\EmailHelpers;
 use App\Action\Emails\TemplateBuilder;
 use App\Entity\Privacy\Operator;
+use App\Entity\Proxy\OwnerProxy;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Exception;
 use function explode;
 use GuzzleHttp\Client;
+use Slim\Container;
 use function str_replace;
 
 class EmailResource extends AbstractResource{
+    private $confEntityManager;
     use EmailHelpers;
+
+    public function __construct(EntityManager $prvEntityManager, EntityManager $confEntityManager) {
+        parent::__construct($prvEntityManager);
+        $this->confEntityManager = $confEntityManager;
+    }
+
+    public function composePrivaciesData($lang, $mail, $ownerId, $reqDomain,$privacyId = null) {
+
+        $privacyRes = new PrivacyResource($this->entityManager);
+        $privacies = $privacyRes->privacyRecord($mail);
+        $opRes = new OperatorResource($this->getEntityManager());
+
+        $owner = '';
+        $ownerRec = null;
+
+        try {
+            /** @var Operator $rep */
+            $rep = $opRes->getOwner();
+            $owner = $rep->getName() . ' ' . $rep->getSurname();
+
+            /** @var OwnerProxy $ownerRec */
+            $ownerRec = $this->confEntityManager->find(OwnerProxy::class,$ownerId );
+
+        } catch (Exception $e) {
+        }
+
+        $now = new DateTime();
+        $name = "";
+        $surname = "";
+        $createdDate = date_format($now, "d/m/Y");
+        $createdTime = date_format($now, "H:i");
+        // $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+        $areqDomain = explode('://', $reqDomain);
+        if (count($areqDomain) === 2) {
+            $reqDomain = str_replace('/', '', $areqDomain['1']);
+        }
+
+
+        $validPrivacies = [];
+        foreach ($privacies as $pruid => &$domain) {
+            foreach ($domain as &$term) {
+                if ($term['domain'] === $reqDomain) {
+
+                    if ($privacyId !== null) {
+                        if ($term['id'] !== $privacyId) continue;
+                    }
+
+
+                    $name = $term['name'];
+                    $surname = $term['surname'];
+
+                    $validPrivacies[$pruid][$term['domain']] = $term;
+
+                    // echo('<br> $reqDomain ' . $reqDomain . ' $term ' . $term['id']);
+                } else {
+                    // echo('<br> $reqDomain ' . $reqDomain . ' $term ' . $term['domain']);
+                }
+
+            }
+        }
+
+        $d = [
+            "name" => $name,
+            "surname" => $surname,
+            "createdDate" => $createdDate,
+            "createdTime" => $createdTime,
+            "domain" => $reqDomain,
+            "privacies" => $validPrivacies,
+            "resp" => $owner,
+            "rep" => $rep,
+            "owner" => $ownerRec
+        ];
+
+        return $d;
+    }
 
 
     /**
@@ -30,70 +110,21 @@ class EmailResource extends AbstractResource{
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function privacyRequest($lang, $mail, Client $client) {
+    public function privacyRequest($lang, $mail, $ownerId, Container $container,$reqDomain,$privacyId = null, $subject="subscription info") {
 
-        //$privacy = require ('fixtures/privacy.php');
-        //$privacies = json_decode($privacy, true);
+        $d = $this->composePrivaciesData($lang, $mail, $ownerId,$reqDomain, $privacyId);
 
-        $privacyRes = new PrivacyResource($this->entityManager);
-        $privacies = $privacyRes->privacyRecord($mail);
+        /** @var OwnerProxy $ownerRec */
+        $ownerRec = $d['owner'];
+        $body = $this->sendGenericEmail(
+            $container,
+            $d,
+            'subscription_info_email',
+            $lang,
+            $ownerRec->getEmail(),
+            $mail
+        );
 
-        $opRes = new OperatorResource($this->entityManager);
-
-        $owner = '';
-
-
-        try {
-            /** @var Operator $rep */
-            $rep = $opRes->getOwner();
-            $owner = $rep->getName() . ' ' . $rep->getSurname();
-        } catch (Exception $e) {
-        }
-
-        $now = new DateTime();
-        $name = "";
-        $surname = "";
-        $createdDate =  date_format( $now , "d/m/Y");
-        $createdTime = date_format( $now , "H:i");
-        $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-
-        $areqDomain = explode('://',$reqDomain);
-        if(count($areqDomain) === 2) {
-            $reqDomain = str_replace('/','', $areqDomain['1'] );
-        }
-
-        foreach($privacies as $pruid=>&$domain){
-            foreach($domain as &$term){
-                $name = $term['name'];
-                $surname  = $term['surname'];
-
-                if($reqDomain === 'localhost:8080')
-                    $reqDomain = $term['domain'];
-
-                break;
-            }
-        }
-
-
-        //print_r($privacies); die;
-
-
-        $d = [
-            "name" => $name,
-            "surname"=>$surname,
-            "createdDate"=>$createdDate,
-            "createdTime"=>$createdTime,
-            "domain"=>$reqDomain,
-            "privacies" => $privacies,
-            "resp" => $owner
-        ];
-
-
-        $tpl = new TemplateBuilder( 'subscription_info_email', $d, $lang );
-        $body = $tpl->render();
-
-        $data = $this->buildGuzzleData('mauro.larese@mm-one.com','mauro.larese@gmail.com', 'Test email',$body  ) ;
-        $client->request('POST', '', $data);
 
         return $body;
     }

@@ -47,12 +47,14 @@ class PlainTemplateBuilder {
         $templateName = $this->templateName;
 
         $tmpTpl = "templates/$templateName/${language}.php";
+        $tmpTplComplete = dirname(__FILE__)."/$tmpTpl";
 
-        if(!file_exists($tmpTpl))
+        if(!file_exists($tmpTplComplete))
             $tmpTpl = "templates/$templateName/en.php";
-        if(!file_exists($tmpTpl))
-            $tmpTpl = "templates/$templateName/it.php";
 
+        $tmpTplComplete = dirname(__FILE__)."/$tmpTpl";
+        if(!file_exists($tmpTplComplete))
+            $tmpTpl = "templates/$templateName/it.php";
 
         $d = $data;
 

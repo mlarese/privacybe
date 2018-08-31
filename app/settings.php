@@ -22,6 +22,17 @@ return [
                 ],
                 "callcenter_email" => "beatrice.breseghello@mm-one.com"
             ],
+            'subscription_info_email' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Le tue preferenze",
+                            "en" => "Your preferences",
+                            "de" => "Ihre Vorlieben"
+                        ]
+                    ]
+                ],
+            ],
             'news_unsub_email_notif' => [
                 'all' => [
                     "dictionary" => [
@@ -70,7 +81,8 @@ return [
                     "dictionary" => [
                         "email_subject" => [
                             "it" => "Conferma le tue preferenze",
-                            "en" => "Conferma le tue preferenze"
+                            "en" => "Confirm your preferences",
+                            "de" => "Bestätigen Sie Ihre Präferenzen"
                         ]
                     ]
                 ],

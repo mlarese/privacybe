@@ -18,6 +18,19 @@
                     </td>
                 </tr><?=$spacer?>
 
+
+                <?php
+                $cntt = 0;
+                foreach($d['privacies'] as $tid=> $prs) {
+                    $cntp = 0;
+                    foreach($prs as $domain=> $data) {
+                        if($cntp === 0) include ("header_$clang.php");
+                        include ("prrow.php"); $cntp++;
+                    }
+                    echo $spacer; $cntt++;
+                }
+                ?>
+
                 <tr>
                     <td colspan="100">
                         Über unseren DataOne-Service haben wir Ihre Präferenzen für die Behandlung Ihrer persönlichen Daten erhalten.

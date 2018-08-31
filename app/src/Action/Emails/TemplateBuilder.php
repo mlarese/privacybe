@@ -31,10 +31,11 @@ class TemplateBuilder {
 
     private function configureTemplateName($templateName,$language) {
         $tmpTpl = "templates/$templateName/${language}.php";
+        $tmpTplComplete = dirname(__FILE__)."/templates/$templateName/${language}.php";
 
-        if(!file_exists($tmpTpl))
+        if(!file_exists($tmpTplComplete))
             $tmpTpl = "templates/$templateName/en.php";
-        if(!file_exists($tmpTpl))
+        if(!file_exists($tmpTplComplete))
             $tmpTpl = "templates/$templateName/it.php";
 
         $this->templateName = $tmpTpl;

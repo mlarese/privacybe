@@ -62,6 +62,7 @@ $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 /*********************************************************
  *                  WIDGET
  *********************************************************/
+/** @var PrivacyManager */
 $app->get('/api/widgetreq', 'App\Action\PrivacyManager:getWidgetRequest');
 $app->get('/api/widget', 'App\Action\PrivacyManager:getWidgetTerm');
 $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');

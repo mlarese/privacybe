@@ -170,7 +170,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy_10',
+                'dbname'   => 'privacy_59',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

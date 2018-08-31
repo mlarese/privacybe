@@ -12,27 +12,14 @@ use App\Resource\DeferredPrivacyResource;
 use App\Resource\OwnerResource;
 use App\Resource\UserResource;
 use App\Service\DeferredPrivacyService;
+use App\Traits\Environment;
 use Exception;
 use Interop\Container\Exception\ContainerException;
 use function print_r;
 
 class DeferredPrivacyBatch extends AbstractBatch {
     private $emailSender;
-    private $env;
-
-    /**
-     * @return string
-     */
-    public function getEnv(): string {
-        return $this->env;
-    }
-
-    /**
-     * @param string $env
-     */
-    public function setEnv(string $env): void {
-        $this->env = $env;
-    }
+    use Environment;
 
     /**
      * DeferredPrivacyBatch constructor.
@@ -59,6 +46,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
     public function sendDeferredEmails($deferredTYPE = DeferredPrivacyService::DEFERRED_TYPE_DOUBLE_OPTIN){
 
         try {
+            $env = $this->detectEnvironment();
             $emcfg = $this->emBuilder->buildEmConfig();
             $ownres = new OwnerResource($emcfg);
             /** @var DeferredPrivacyService $srv */
@@ -68,8 +56,9 @@ class DeferredPrivacyBatch extends AbstractBatch {
              */
             $defpres = new DeferredPrivacyResource($emcfg, $srv);
             $deferredSettings = $this->getContainer()->get('settings');
+            $deferredSettings = $deferredSettings['dataone_emails'];
 
-            $confirmLink = $deferredSettings[$deferredTYPE][$this->getEnv()]['confirm_link'];
+            $confirmLink = $deferredSettings[$deferredTYPE][$env]['confirm_link'];
             $aEmailSubject = $deferredSettings[$deferredTYPE]['all']['dictionary']['email_subject'];
 
 
@@ -109,6 +98,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     ->where('p.id = ?1');
 
 
+
                 foreach ($privs as $priv) {
                     $encOwnerId =  urlencode( base64_encode( $encryptor->encrypt($own->getId()) ) );
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
@@ -121,6 +111,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     }
 
 
+                    // echo '-----------'.$emailSubject;
                     try {
                         $data=[
                             'enclink'=>"$confirmLink?_j=$encPprivacyUid&_k=$encOwnerId&lang=$_lang",

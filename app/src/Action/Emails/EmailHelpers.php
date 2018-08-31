@@ -10,6 +10,7 @@ namespace App\Action\Emails;
 
 
 use GuzzleHttp\Client;
+use function print_r;
 use Slim\Container;
 
 trait EmailHelpers
@@ -57,6 +58,7 @@ trait EmailHelpers
     ) {
         /** @var Client $client */
         $client = $container['email_client'];
+
         /** @var PlainTemplateBuilder $bld */
         $bld=$container->get('template_builder');
             $bld->setTemplateName($templateName);

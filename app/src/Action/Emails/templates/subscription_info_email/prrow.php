@@ -1,6 +1,6 @@
 <?php
 
-
+//echo '<pre>'; print_r($data); die;
     if(  is_array($data['created'])  ) {
         $date = date_create($data['created']['date']);
     } else {
@@ -17,6 +17,7 @@
     $flparagraphs = $data['privacy']['paragraphs'];
     $flags = '';
 
+    if(!isset($flparagraphs)) $flparagraphs=[];
     foreach ($flparagraphs as $pg) {
         foreach ($pg['treatments'] as $t) {
             $checked = $t['selected']?'checked="true"':'';

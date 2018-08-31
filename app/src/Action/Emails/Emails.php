@@ -2,6 +2,8 @@
 namespace App\Action\Emails;
 use App\Action\AbstractAction;
 use App\Entity\Config\Owner;
+use App\Entity\Privacy\Privacy;
+use App\Entity\Privacy\UserRequest;
 use App\Resource\EmailResource;
 
 use App\Resource\PrivacyResource;
@@ -30,6 +32,10 @@ class Emails extends AbstractAction {
      * @throws \Interop\Container\Exception\ContainerException
      */
     public function generic($request, $response, $args) {
+
+        print_r($_SERVER);
+        die('generic');
+
         $esrv = new EmailService();
         try {
             $from = 'mlarese@email.it';
@@ -196,6 +202,56 @@ class Emails extends AbstractAction {
 
         // return $response->withJson($this->success()) ;
     }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function sendPrivaciesAfterRequest($request, $response, $args) {
+        try {
+            $email = $request->getParam('email');
+            $reqId = $request->getParam('id');
+
+            $ownerId = $this->getOwnerId($request);
+            $em = $this->getEmPrivacy($ownerId);
+
+            /** @var UserRequest $req */
+            $req = $em->find(UserRequest::class, $reqId) ;
+            $pres = new PrivacyResource($em);
+            /** @var Privacy $lastPrv */
+            $lastPrv = $pres->getLastPrivacyByEmail($email);
+            $lang = $lastPrv->getLanguage();
+
+            $requestDomain =$req->getDomain();
+            if(isset($requestDomain))
+                $reqDomain = $requestDomain;
+            else
+                $reqDomain = $lastPrv->getDomain();
+
+
+            $emailRes = new EmailResource($em, $this->getEmConfig());
+            $body = $emailRes->privacyRequest(
+                $lang,
+                $email,
+                $ownerId,
+                $this->getContainer(),
+                $reqDomain
+            );
+
+        } catch (GuzzleException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Guzzle Error ') ;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error ') ;
+        }
+
+        return $response->withJson($this->success()) ;
+    }
+
 
     /**
      * @param $request Request

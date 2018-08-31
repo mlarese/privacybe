@@ -16,7 +16,7 @@
 
     $flparagraphs = $data['privacy']['paragraphs'];
     $flags = '';
-
+    if(!isset($flparagraphs)) $flparagraphs=[];
     foreach ($flparagraphs as $pg) {
         foreach ($pg['treatments'] as $t) {
             $checked = $t['selected']?'checked="true"':'';

@@ -153,8 +153,10 @@ $app->post('/api/owners/usersupfile/{uid}', 'App\Action\PrivacyManager:uploadUse
 /*********************************************************
  *                  OWNERS USERREQUESTS
  *********************************************************/
+/** @var UsersRequests */
 $app->get('/api/owner/userrequest', 'App\Action\UsersRequests:retrieve');
 $app->get('/api/owner/userrequesto', 'App\Action\UsersRequests:retrieveOpen');
+$app->get('/api/owner/userrequestsendm', 'App\Action\Emails\Emails:sendPrivaciesAfterRequest');
 $app->put('/api/owner/userrequestc/{id}', 'App\Action\UsersRequests:closeRequest');
 
 /*********************************************************

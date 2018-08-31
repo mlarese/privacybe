@@ -134,6 +134,8 @@ class Emails extends AbstractAction {
             $email = $params['email'];
             $ownerId = $params['ownerId'];
 
+            $from = null;
+            $to=null;
             $em = $this->getEmPrivacy($ownerId);
             $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
 
@@ -149,7 +151,7 @@ class Emails extends AbstractAction {
                     $lang,
                     $from,
                     $to
-                )
+                );
 
 
         } catch (Exception $e) {

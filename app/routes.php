@@ -108,13 +108,18 @@ $app->put('/api/owner/userlastdata/{id}', 'App\Action\Users:updateMainData');
 $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 
 /*********************************************************
+ *                  DICTIONARY
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/dictionary", Attachments::class);
+
+/*********************************************************
  *                  PRIVACY OWNER AND SURFER
  *********************************************************/
 /**  @var App\Action\PrivacyManager */
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
-$app->get('/api/surfer/privacybye', 'App\Action\PrivacyManager:getPrivacyByEmail');
+$app->get('/api/surfer/privacybye', '?. App\Action\PrivacyManager:getPrivacyByEmail');
 /**  @var App\Action\Users */
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
 
@@ -192,6 +197,7 @@ $app->post('/api/auth/login', 'App\Action\Auth:login');
 $app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
+$app->get('/api/auth/pwdres', 'App\Action\Auth:resetPassword');
 
 
 //upgrade privacy disclaimere phase < 25th May

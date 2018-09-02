@@ -194,4 +194,70 @@ class Auth extends AbstractAction {
 
         return $response->withJson( ["user" => $token['user'] ] );
     }
+    private function resetPassword($request, $response, $args) {
+        session_commit();
+        $found = false;
+        $user = $request->getParam('username');
+        $password = $request->getParam('password');
+
+
+        // echo 'here' ; die;
+        /** @var User $ue */
+        $ue = null;
+        /** @var Operator $op */
+        $op = null;
+        try {
+            $ue = $this->userHasAuth($user, $password);
+            $found = true ;
+
+            $opRes = new OperatorResource($this->getEmPrivacy( $ue->getOwnerId() ));
+
+            $op = $opRes->findOperator($ue->getId());
+
+        } catch (UserNotAuthorizedException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'User not authorized ' );
+        }catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Authentication error ' );
+        }
+        $gdprRole =  $op->getRole();
+        $settings = $this->getContainer()->get('settings');
+        $host = $settings["doctrine_config"]['connection']['host'];
+        if($found) {
+            $userSpec = [
+                "acl" => $this->getAcl($gdprRole),
+                "email"=> $op->getEmail(),
+                "gdprRole" => $gdprRole,
+                "userId" => $ue->getId(),
+                "user" => $user,
+                "userName" => $ue->getName(),
+                "role" => $ue->getType(),
+                "ownerId" => $ue->getOwnerId(),
+                "source" => ($host==='127.0.0.1' )?'local': 'remote'
+            ];
+            $data = $this->defineJwtToken($request, $userSpec);
+
+
+            $log = new UserLogin();
+            $log->setIpAddress( $this->getIp() )
+                ->setLoginDate(new DateTime())
+                ->setUserId($ue->getId());
+
+            $this->getEmConfig()->persist($log);
+            $this->getEmConfig()->flush();
+
+            return $response->withStatus(201)
+                ->withHeader("Content-Type", "application/json")
+                ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
+        }
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
 }

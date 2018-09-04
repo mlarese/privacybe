@@ -27,3 +27,8 @@ Esegue il maintenance interno:
 `mail:mailup:refresh_resources`
 Esegue il refresh delle risorse statiche di MailUP (da usare solo in caso di emergenza)                         
                          
+#### Esempio di utilizzo
+Portarsi nella root e digitare il comando desiderato, ad esempio:   
+`php app/console mail:mailup:maintenance`    
+per avere un helper di utilizzo del comando:    
+`php app/console mail:mailup:maintenance -h`   

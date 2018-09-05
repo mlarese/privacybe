@@ -139,6 +139,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
                         $q->setParameter(1, $priv->getId())
                             ->getQuery()
                             ->execute();
+
+                        $emprv->flush();
                     } catch (Exception $e) {
                         echo ' error ' . $e->getMessage();
                     }

@@ -90,7 +90,7 @@ return [
                     'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/surfer/confirmdeferred'
+                    'confirm_link' => 'https://privacy.dataone.online/manager/surfer/confirmdeferred'
                 ]
             ],
         ],

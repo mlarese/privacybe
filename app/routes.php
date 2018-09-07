@@ -184,6 +184,7 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *********************************************************/
 //retrieve term
 $app->get('/api/owner/termtosign/{language}/{termId}', 'App\Action\PrivacyManager:toSuscribeTerm');
+/** @var PrivacyManager */
 $app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
 /*********************************************************
  *                  AUTH

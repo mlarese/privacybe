@@ -184,8 +184,9 @@ class PrivacyResource extends AbstractResource
         $language=null,
         $page=null,
         $raiseException = false,
-        $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO
-
+        $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO,
+        $version=null,
+        $status=null
     ) {
         $privacyEntry = new Privacy();
         $privacyEntry
@@ -208,7 +209,12 @@ class PrivacyResource extends AbstractResource
 
         if(isset($language)) $privacyEntry->setLanguage($language);
         if(isset($page)) $privacyEntry->setPage($page);
+        if($status!==null) $privacyEntry->setStatus($status);
 
+        if($version!==null) $privacyEntry->setVersion($version);
+        if($privacyEntry->getVersion()=== null) {
+            $privacyEntry->setVersion(0);
+        }
         if (!$this->entityManager->isOpen()) {
             $this->getRepository();
         }

@@ -70,6 +70,7 @@ abstract class BaseAction extends AbstractAction
     public function afterGet (&$recordset){}
     public function beforeGetById (&$params){}
     public function afterGetById (&$record, $args){}
+    public function beforeCreate (&$values){}
     public function beforeSave (&$values){}
     abstract public function mandatoryFields();
     public function validate ($values) {return true;}
@@ -108,7 +109,9 @@ abstract class BaseAction extends AbstractAction
             $body = $request->getParsedBody();
 
             if(!$this->validate($body)) throw new \Exception('Mandatory field missing');
+            $this->beforeCreate($body);
             $this->beforeSave($body);
+
             $this->create($body);
             $this->flush();
             return  $response->withJson( $this->success());

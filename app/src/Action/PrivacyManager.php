@@ -666,6 +666,7 @@ class PrivacyManager extends AbstractAction
         $ownerId = $request->getHeader('OwnerId')[0];
         $body = $request->getParsedBody();
 
+        $hasAttachments = false;
         try {
             $ip = $this->getIp();
             $domain = $body['domain'];

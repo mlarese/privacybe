@@ -63,7 +63,7 @@ class Owners extends AbstractAction
           uid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
           deleted tinyint(1) NOT NULL DEFAULT '0',
           created datetime DEFAULT CURRENT_TIMESTAMP,
-          attachments longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
+          attachments longtext COLLATE utf8_unicode_ci,
           PRIMARY KEY (uid),
           KEY privacy_created (created)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;   

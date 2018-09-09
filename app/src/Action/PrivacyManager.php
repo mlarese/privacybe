@@ -20,6 +20,7 @@ use App\Resource\PropertyNotFoundException;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use App\Service\DeferredPrivacyService;
+use App\Service\FilesService;
 use App\Traits\UrlHelpers;
 use function base64_encode;
 use DateTime;
@@ -30,8 +31,10 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
+use function fnmatch;
 use function json_decode;
 use function json_encode;
+use function md5;
 use function move_uploaded_file;
 use function pathinfo;
 use function print_r;
@@ -633,23 +636,19 @@ class PrivacyManager extends AbstractAction
      */
     public function uploadUserPrivacy($request, $response, $args) {
 
-        return $response->withJson($this->success( ["fn"=>"fname"] ));
-
-        $files = $request->getUploadedFiles();
-        $privacyId = $args['uid'];
-        /** @var UploadedFile $file */
-        $file = $files['file'];
-
-        // print_r($file);
-
-        $tmpFileName = $file->file;
-        $fileName = $file->getClientFilename();
-        $pinfo = pathinfo($fileName);
-        $ext = $pinfo['extension'];
-
-        $newFileName = 'prv_'.$privacyId.'.'.$ext;
-
-        return $response->withJson($this->success( ["fn"=>$newFileName] ));
+        try {
+            $files = $request->getUploadedFiles();
+            $ownerId = $this->getOwnerId($request);
+            $privacyId = $args['uid'];
+            /** @var UploadedFile $file */
+            $file = $files['file'];
+            $fsrv = new FilesService($this->getContainer());
+            $fsrv->saveUserAttachment($file, $ownerId, $privacyId);
+            return $response->withJson($this->success());
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'error saving attachment');
+        }
     }
     /**
      * @param $request Request
@@ -731,6 +730,22 @@ class PrivacyManager extends AbstractAction
         return $response->withJson($this->success()) ;
     }
 
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function downloadAttachment($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        $privacyUid = $args['uid'];
+        $fname = $args['fname'];
+        $fname = $this->urlB64DecodeString($fname);
+        $fname = md5($fname);
+        die('download '.$ownerId . ' '.$fname);
+    }
     /**
      * @param $request Request
      * @param $response Response

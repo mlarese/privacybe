@@ -9,7 +9,8 @@ return [
     'settings' => [
         'attachments' => [
           'users' => [
-              'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}'
+              'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}',
+              'spf_path' => '/atttmp/repository/dataone/owners/%s/users/%s/attachments'
           ]
         ],
         "dataone_emails" => [

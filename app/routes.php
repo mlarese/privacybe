@@ -56,6 +56,7 @@ $app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewslett
 /*********************************************************
  *                  Attachments
  *********************************************************/
+$app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:downloadAttachment');
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 

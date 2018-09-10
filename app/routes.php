@@ -13,6 +13,7 @@ use App\Action\Subscriptions;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
+use App\Entity\Privacy\UserRequest;
 
 $routeMngr = new BaseRoutesManager($app);
 
@@ -70,6 +71,7 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 /** @var PrivacyManager */
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
+/** @var UsersRequests */
 $app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insert');
 
 /*********************************************************

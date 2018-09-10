@@ -10,7 +10,7 @@ return [
         'attachments' => [
           'users' => [
               'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}',
-              'spf_path' => '/atttmp/repository/dataone/owners/%s/users/%s/attachments'
+              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments'
           ]
         ],
         "dataone_emails" => [

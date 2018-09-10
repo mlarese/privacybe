@@ -34,11 +34,17 @@ class UsersRequests  extends AbstractAction{
             $body = $request->getParsedBody();
             $mail = $body ['email'];
             $ownerId = $body ['ref'];
-            $language = "de";
-
-            if(isset($body["language"])) {
-                $language = $body["language"];
+            $language = "it";
+            $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+            $type = self::TYPE_SUBSCRIPTIONS_REQUEST;
+            if(isset($body["domain"])) {
+                $reqDomain = $body["domain"];
             }
+
+            if(isset($body["type"])) {
+                $type = $body["type"];
+            }
+
             $ownerId = $this->findOwnerIdFromHash($ownerId);
 
             $em = $this->getEmPrivacy($ownerId);
@@ -54,19 +60,29 @@ class UsersRequests  extends AbstractAction{
 
             $lastPrv = $pres->getLastPrivacyByEmail($mail);
 
-            if(!isset($p)) {
+
+            if(!isset($lastPrv)) {
                 return $response->withStatus(500, 'Error finding last privacy');
             }
+
+            if(isset($body["language"])) {
+                $language = $body["language"];
+            } else {
+                $language = $lastPrv->getLanguage();
+            }
+
 
             /** @var Owner $owner */
             $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
             $r->setUid($uid )
                 ->setCreated(new \DateTime())
                 ->setStatus(self::STATUS_OPEN)
-                ->setType(self::TYPE_SUBSCRIPTIONS_REQUEST)
+                ->setType($type)
                 ->setMail($mail)
                 ->setNote('')
+                ->setDomain($reqDomain)
                 ;
+
 
 
             $or = new OwnerUserRequest();
@@ -78,29 +94,26 @@ class UsersRequests  extends AbstractAction{
 
 
             $emailRes = new EmailResource($em, $this->getEmConfig());
-            $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-            $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
+
 
             $em->flush();
             $this->getEmConfig()->flush();
 
-            $emService->notifyModAccepted(
-                $this->container,
-                $owner->getEmail(),
-                $mail,
-                $lastPrv->getLanguage(),
-                $lastPrv->getName(),
-                $lastPrv->getSurname()
-                );
+            $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
 
+            /**$emService->notifyModAccepted(
+                    $this->container,
+                    $owner->getEmail(),
+                    $mail,
+                    $language,
+                    $lastPrv->getName(),
+                    $lastPrv->getSurname()
+                    );**/
 
             return $response->withJson($this->success());
         } catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(500, 'Error');
-        } catch (GuzzleException $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Error sending email');
+            return $response->withStatus(500, 'Error on request');
         }
 
     }

@@ -59,6 +59,7 @@ trait EmailHelpers
         /** @var Client $client */
         $client = $container['email_client'];
 
+
         /** @var PlainTemplateBuilder $bld */
         $bld=$container->get('template_builder');
             $bld->setTemplateName($templateName);

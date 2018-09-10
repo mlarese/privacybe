@@ -174,7 +174,6 @@ class EmailResource extends AbstractResource{
             $mail
         );
 
-
         return $body;
     }
 }

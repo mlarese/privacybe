@@ -58,6 +58,19 @@ class PrivacyManager extends AbstractAction
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
+    public function getPrivaciesByEmailOwnerDomain($request, $response, $args) {
+        $_k = $request->getParam('_k');
+
+    }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function getPrivacy($request, $response, $args) {
         $id = $args['id'];
         $uid = substr($id,0, 36);

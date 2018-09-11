@@ -21,6 +21,8 @@ $routeMngr = new BaseRoutesManager($app);
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
+$app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
+
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 

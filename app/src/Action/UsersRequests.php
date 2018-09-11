@@ -8,6 +8,7 @@ use App\Entity\Privacy\UserRequest;
 use App\Resource\EmailResource;
 use App\Resource\PrivacyResource;
 use App\Service\EmailService;
+use App\Traits\UrlHelpers;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -21,6 +22,18 @@ class UsersRequests  extends AbstractAction{
     const STATUS_COMPLETED = 'completed';
 
     const TYPE_SUBSCRIPTIONS_REQUEST = 'subscriptions_request';
+    const TYPE_UNSUBSCRIBE_ALL_REQUEST = 'unsubscribe_all_request';
+
+    use UrlHelpers;
+
+    protected function addHistory ($action, $options, $status,$user='surfer') {
+        return [
+            'action' => $action,
+            'user'=> $user,
+            'options'=>$options,
+            'status' => $status
+        ];
+    }
 
     /**
      * @param $request Request
@@ -29,8 +42,88 @@ class UsersRequests  extends AbstractAction{
      * @return mixed
      * @throws \Doctrine\ORM\ORMException
      */
-    public function insert($request, $response, $args){
+    public function insertUnsubscribeAllRequest($request, $response, $args){
+
+        $body = $request->getParsedBody();
+        $_k = $body['_k'];
+
+        $params = $this->urlB32DecodeToArray($_k);
+
+        $language = $body['language'];
+        $ownerId = $params['ownerId'];
+        $email = $params['email'];
+        $domain = $params['domain'];
+
+        $privacies = $body['privacies']   ;
+        $em = $this->getEmPrivacy($ownerId);
+
+
+        /** @var UserRequest $r */
+        $r = new UserRequest();
+
+        $uid = Uuid::uuid4();
+
+        $pres = new  PrivacyResource($em);
+        $emService = new  EmailService();
+
+        $lastPrv = $pres->getLastPrivacyByEmail($email);
+
+
+        if(!isset($lastPrv)) {
+            return $response->withStatus(500, 'Error finding last privacy');
+        }
+
+        if(isset($body["language"])) {
+            $language = $body["language"];
+        } else {
+            $language = $lastPrv->getLanguage();
+        }
+
+        $flow = [
+            'privacies' => $privacies
+        ];
+        /** @var Owner $owner */
+        $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+
+        $r->setUid($uid )
+            ->setCreated(new \DateTime())
+            ->setStatus(self::STATUS_OPEN)
+            ->setType(self::TYPE_UNSUBSCRIBE_ALL_REQUEST)
+            ->setMail($mail)
+            ->setFlow($flow)
+            ->setNote('')
+            ->setDomain($domain)
+        ;
+
+
+
+        $or = new OwnerUserRequest();
+        $or->setUserRequestId( $r->getUid())
+            ->setOwnerId( $ownerId);
+
+        $em->merge($r);
+        $this->getEmConfig()->merge($or);
+
+        $emailRes = new EmailResource($em, $this->getEmConfig());
+
+        $this->getEmConfig()->flush();
+        $em->flush();
+
+
+    }
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function insertSubscriptionRequest($request, $response, $args){
         try {
+
             $body = $request->getParsedBody();
             $mail = $body ['email'];
             $ownerId = $body ['ref'];
@@ -71,12 +164,13 @@ class UsersRequests  extends AbstractAction{
                 $language = $lastPrv->getLanguage();
             }
 
-
             /** @var Owner $owner */
             $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+
             $r->setUid($uid )
                 ->setCreated(new \DateTime())
-                ->setStatus(self::STATUS_OPEN)
+                ->setStatus(self::STATUS_COMPLETED)
                 ->setType($type)
                 ->setMail($mail)
                 ->setNote('')
@@ -89,15 +183,13 @@ class UsersRequests  extends AbstractAction{
             $or->setUserRequestId( $r->getUid())
                 ->setOwnerId( $ownerId);
 
-            $em->persist($r);
-            $this->getEmConfig()->persist($or);
-
+            $em->merge($r);
+            $this->getEmConfig()->merge($or);
 
             $emailRes = new EmailResource($em, $this->getEmConfig());
 
-
-            $em->flush();
             $this->getEmConfig()->flush();
+            $em->flush();
 
             $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
 

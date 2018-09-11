@@ -42,7 +42,7 @@
                 </td></tr>
                 <tr><td colspan="4"><b>
                   falls Sie die Details der ausgefüllten Daten einsehen, die Unterzeichnung der Bestimmungen ändern oder widerrufen möchten
-                  <a href="#">klicken Sie bitte hier</a>
+                            <a href="<?=$d['link']?>">klicken Sie bitte hier</a>
                 </b></td></tr>
 
             </table>

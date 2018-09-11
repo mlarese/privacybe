@@ -115,13 +115,19 @@ class Auth extends AbstractAction {
         $ue = null;
         /** @var Operator $op */
         $op = null;
+
         try {
             $ue = $this->userHasAuth($user, $password);
             $found = true ;
 
-            $opRes = new OperatorResource($this->getEmPrivacy( $ue->getOwnerId() ));
-
-            $op = $opRes->findOperator($ue->getId());
+            $gdprRole = 'customercare';
+            $gdprEmail = '';
+            if($ue->getOwnerId()>0) {
+                $opRes = new OperatorResource($this->getEmPrivacy($ue->getOwnerId()));
+                $op = $opRes->findOperator($ue->getId());
+                $gdprRole =  $op->getRole();
+                $gdprEmail = $op->getEmail();
+            }
 
         } catch (UserNotAuthorizedException $e) {
             echo $e->getMessage();
@@ -130,13 +136,15 @@ class Auth extends AbstractAction {
             echo $e->getMessage();
             return $response->withStatus(401, 'Authentication error ' );
         }
-        $gdprRole =  $op->getRole();
+
+
+
         $settings = $this->getContainer()->get('settings');
         $host = $settings["doctrine_config"]['connection']['host'];
         if($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
-                "email"=> $op->getEmail(),
+                "email"=> $gdprEmail,
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
                 "user" => $user,

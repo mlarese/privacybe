@@ -37,6 +37,12 @@ trait EmailHelpers
         $s = $container->get('settings');
         return $s['dataone_emails']['_options_']['callcenter_email'];
     }
+
+    public function getFrontEndServer(Container $container, $env) {
+        $s = $container->get('settings');
+        return $s['dataone_emails']['_options_'][$env]['fe_address'];
+    }
+
     public function extractLanguage($dictionary, $language, $defaultLanguage = 'en') {
         if(isset($dictionary[$language])) {
             return $dictionary[$language];

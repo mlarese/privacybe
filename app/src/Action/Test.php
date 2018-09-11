@@ -27,14 +27,14 @@ class Test extends AbstractAction
     public function testEncDec($request, $response, $args) {
         $enc = $this->getContainer()->get('encryptor');
        // $enc=null;
-       // $str = $this->urlB64EncodeString('email=mauro.larese@gmail.com&ownerId=34&domain=www.test.it');
-        $stren = $this->urlB64EncodeString('email=mauro.larese@gmail.com&ownerId=34&domain=www.test.it', $enc);
+        $str = $this->urlB64EncodeString('email=mauro.larese@gmail.com&ownerId=34&domain=www.test.it');
+        $stren = $this->urlB32EncodeString('email=mauro.larese@gmail.com&ownerId=34&domain=www.test.com', $enc);
 
-        $ap = $this->urlB64DecodeToArray($stren, $enc);
+        $ap = $this->urlB32DecodeToArray($stren, $enc);
+        $ap = $this->urlB64DecodeToArray($str);
 
-        echo $stren;
-         print_r($ap);
-        die(0);
+        print_r($ap);
+        die;
     }
 
     /**

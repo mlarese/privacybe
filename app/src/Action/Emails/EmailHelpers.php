@@ -53,7 +53,8 @@ trait EmailHelpers
         string $language,
         string $from,
         string $to,
-        $settingProp = 'dataone_emails'
+        $settingProp = 'dataone_emails',
+		string $subject
     ) {
         /** @var Client $client */
         $client = $container['email_client'];
@@ -68,7 +69,9 @@ trait EmailHelpers
         $templateSettings = $settings[$settingProp][$templateName];
         $aEmailSubject =$templateSettings['all']['dictionary']['email_subject'];
 
-        $subject = $this->extractLanguage($aEmailSubject,$language);
+        if (!isset($subject) || empty($subject)) {
+	        $subject = $this->extractLanguage($aEmailSubject,$language);
+        }
 
         $data = $this->buildGuzzleData($from,$to, $subject,$body  ) ;
         $client->request('POST', '', $data);

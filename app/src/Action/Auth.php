@@ -18,7 +18,8 @@ use Slim\Http\Response;
 use function strtolower;
 use Tuupola\Base62;
 
-class Auth extends AbstractAction {
+class Auth extends AbstractAction
+{
     /**
      * @param       $request Request
      * @param       $user
@@ -26,7 +27,8 @@ class Auth extends AbstractAction {
      *
      * @return mixed
      */
-    private function defineJwtToken ($request, $user, $scope = ["read", "write", "delete"]) {
+    private function defineJwtToken($request, $user, $scope = ["read", "write", "delete"])
+    {
         $requested_scopes = $request->getParsedBody() ?: [];
 
         $settings = $this->getContainer()->get('settings');
@@ -59,30 +61,31 @@ class Auth extends AbstractAction {
      * @return User
      * @throws UserNotAuthorizedException
      */
-    private function userHasAuth ($user, $pwd) {
+    private function userHasAuth($user, $pwd)
+    {
         /**
          * @var User $userEntity
          */
 
-        $userEntity = $this ->getEmConfig()
+        $userEntity = $this->getEmConfig()
             ->getRepository(User::class)
             ->findOneBy(['user' => $user]);
 
         $valid = false;
 
-        $msg='';
-        if(isset($userEntity)) {
+        $msg = '';
+        if (isset($userEntity)) {
             $msg = 'User found';
-            if($userEntity->getActive() && !$userEntity->getDeleted()) {
+            if ($userEntity->getActive() && !$userEntity->getDeleted()) {
                 $cfp = md5($pwd);
                 $cfp = strtolower($cfp);
 
-                $userPwd =  strtolower($userEntity->getPassword());
+                $userPwd = strtolower($userEntity->getPassword());
 
                 if ($userPwd === $cfp) {
                     $valid = true;
                 }
-            } else{
+            } else {
                 $msg = 'User found but not active or deleted';
             }
 
@@ -103,7 +106,8 @@ class Auth extends AbstractAction {
      *
      * @return mixed
      */
-    public function login($request, $response, $args) {
+    public function login($request, $response, $args)
+    {
         session_commit();
         $found = false;
         $user = $request->getParam('username');
@@ -115,49 +119,49 @@ class Auth extends AbstractAction {
         $ue = null;
         /** @var Operator $op */
         $op = null;
-
         try {
             $ue = $this->userHasAuth($user, $password);
-            $found = true ;
+            $found = true;
 
             $gdprRole = 'customercare';
             $gdprEmail = '';
-            if($ue->getOwnerId()>0) {
+
+            if ($ue->getOwnerId() > 0) {
+
                 $opRes = new OperatorResource($this->getEmPrivacy($ue->getOwnerId()));
+
                 $op = $opRes->findOperator($ue->getId());
-                $gdprRole =  $op->getRole();
+                $gdprRole = $op->getRole();
                 $gdprEmail = $op->getEmail();
             }
 
         } catch (UserNotAuthorizedException $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'User not authorized ' );
-        }catch (Exception $e) {
+            return $response->withStatus(401, 'User not authorized ');
+        } catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'Authentication error ' );
+            return $response->withStatus(401, 'Authentication error ');
         }
-
-
 
         $settings = $this->getContainer()->get('settings');
         $host = $settings["doctrine_config"]['connection']['host'];
-        if($found) {
+        if ($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
-                "email"=> $gdprEmail,
+                "email" => $gdprEmail,
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
                 "user" => $user,
                 "userName" => $ue->getName(),
                 "role" => $ue->getType(),
                 "ownerId" => $ue->getOwnerId(),
-                "source" => ($host==='127.0.0.1' )?'local': 'remote'
+                "source" => ($host === '127.0.0.1') ? 'local' : 'remote'
             ];
             $data = $this->defineJwtToken($request, $userSpec);
 
 
             $log = new UserLogin();
-            $log->setIpAddress( $this->getIp() )
+            $log->setIpAddress($this->getIp())
                 ->setLoginDate(new DateTime())
                 ->setUserId($ue->getId());
 
@@ -171,10 +175,11 @@ class Auth extends AbstractAction {
         }
     }
 
-    private function getAcl($gdprRole) {
+    private function getAcl($gdprRole)
+    {
 
         return [
-          "see-no-agreement" => ($gdprRole !== 'incharge')
+            "see-no-agreement" => ($gdprRole !== 'incharge')
         ];
     }
 
@@ -184,9 +189,10 @@ class Auth extends AbstractAction {
      * @param $args
      * @return mixed
      */
-    public function logout($request, $response, $args) {
+    public function logout($request, $response, $args)
+    {
         session_commit();
-        return $response->withJson( array("logout"=>"ok"));
+        return $response->withJson(array("logout" => "ok"));
     }
 
     /**
@@ -195,11 +201,12 @@ class Auth extends AbstractAction {
      * @param $args
      * @return mixed
      */
-    public function user($request, $response, $args) {
+    public function user($request, $response, $args)
+    {
         session_commit();
         $token = $request->getAttribute("token");
         $ud = $this->getUserData($request);
 
-        return $response->withJson( ["user" => $token['user'] ] );
+        return $response->withJson(["user" => $token['user']]);
     }
 }

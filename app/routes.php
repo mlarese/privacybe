@@ -74,6 +74,8 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
 /** @var UsersRequests */
+$app->post('/api/surfer/unsubnewsrequest', 'App\Action\UsersRequests:insertUnsubscribeNewsRequest');
+$app->post('/api/surfer/unsuballrequest', 'App\Action\UsersRequests:insertUnsubscribeAllRequest');
 $app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insertSubscriptionRequest');
 
 /*********************************************************

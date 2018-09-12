@@ -20,7 +20,7 @@
 
                 <tr>
                     <td colspan="100">
-                        Abbiamo eseguito le modifiche alla privacy come da lei richiesto.
+                        Come da sua richiesta è stato disiscritto dalle nostre newsletters.
 
                         <br>
                         Grazie,<br>

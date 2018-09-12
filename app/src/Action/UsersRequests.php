@@ -8,8 +8,13 @@ use App\Entity\Privacy\UserRequest;
 use App\Resource\EmailResource;
 use App\Resource\PrivacyResource;
 use App\Service\EmailService;
+use App\Service\SubscriptionService;
 use App\Traits\UrlHelpers;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Ramsey\Uuid\Uuid;
@@ -20,9 +25,11 @@ class UsersRequests  extends AbstractAction{
 
     const STATUS_OPEN = 'open';
     const STATUS_COMPLETED = 'completed';
+    const STATUS_PROGRESS = 'in_progress';
 
     const TYPE_SUBSCRIPTIONS_REQUEST = 'subscriptions_request';
     const TYPE_UNSUBSCRIBE_ALL_REQUEST = 'unsubscribe_all_request';
+    const TYPE_UNSUBSCRIBE_NEWS_REQUEST = 'unsubscribe_news_request';
 
     use UrlHelpers;
 
@@ -42,74 +49,167 @@ class UsersRequests  extends AbstractAction{
      * @return mixed
      * @throws \Doctrine\ORM\ORMException
      */
+    public function insertUnsubscribeNewsRequest($request, $response, $args){
+
+        try {
+            $body = $request->getParsedBody();
+            $_k = $body['_k'];
+
+            $enc = $this->getContainer()->get('encryptor');
+            $params = $this->urlB32DecodeToArray($_k, $enc);
+
+            $ownerId = $params['ownerId'];
+            $email = $params['email'];
+            $domain = $params['domain'];
+            $privacies = $body['privacies'];
+            $em = $this->getEmPrivacy($ownerId);
+            /** @var UserRequest $r */
+            $r = new UserRequest();
+            $uid = Uuid::uuid4();
+            $pres = new  PrivacyResource($em);
+
+
+            $emService = new  EmailService();
+            $lastPrv = $pres->getLastPrivacyByEmail($email);
+            if (!isset($lastPrv)) {
+                return $response->withStatus(500, 'Error finding last privacy');
+            }
+            if (isset($body["language"])) {
+                $language = $body["language"];
+            } else {
+                $language = $lastPrv->getLanguage();
+            }
+            $flow = [
+                'privacies' => $privacies
+            ];
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+            $hrec = $this->addHistory('insert', $flow, self::STATUS_OPEN);
+            $h = [$hrec];
+            $r->setUid($uid)
+                ->setCreated(new \DateTime())
+                ->setStatus(self::STATUS_COMPLETED)
+                ->setType(self::TYPE_UNSUBSCRIBE_NEWS_REQUEST)
+                ->setMail($email)
+                ->setFlow($flow)
+                ->setHistory($h)
+                ->setNote('')
+                ->setDomain($domain);
+            $or = new OwnerUserRequest();
+            $or->setUserRequestId($r->getUid())
+                ->setOwnerId($ownerId);
+            $em->merge($r);
+            $this->getEmConfig()->merge($or);
+            $emailRes = new EmailResource($em, $this->getEmConfig());
+            $this->getEmConfig()->flush();
+            $em->flush();
+
+            $emService = new  EmailService();
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+            $subscriptionService = new SubscriptionService();
+            $subscriptionService->unsubFromNewsletters($em, $privacies, 'surfer');
+
+            $emService->notifyUnsubNewsletters(
+                $this->getContainer(),
+                $owner->getEmail(),
+                $email,
+                $language,
+                $lastPrv->getName(),
+                $lastPrv->getSurname()
+            );
+            return $response->withJson($this->success());
+
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error on request');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function insertUnsubscribeAllRequest($request, $response, $args){
 
-        $body = $request->getParsedBody();
-        $_k = $body['_k'];
+        try {
+            $body = $request->getParsedBody();
+            $_k = $body['_k'];
 
-        $params = $this->urlB32DecodeToArray($_k);
+            $enc = $this->getContainer()->get('encryptor');
+            $params = $this->urlB32DecodeToArray($_k, $enc);
 
-        $language = $body['language'];
-        $ownerId = $params['ownerId'];
-        $email = $params['email'];
-        $domain = $params['domain'];
-
-        $privacies = $body['privacies']   ;
-        $em = $this->getEmPrivacy($ownerId);
-
-
-        /** @var UserRequest $r */
-        $r = new UserRequest();
-
-        $uid = Uuid::uuid4();
-
-        $pres = new  PrivacyResource($em);
-        $emService = new  EmailService();
-
-        $lastPrv = $pres->getLastPrivacyByEmail($email);
+            $ownerId = $params['ownerId'];
+            $email = $params['email'];
+            $domain = $params['domain'];
+            $privacies = $body['privacies'];
+            $em = $this->getEmPrivacy($ownerId);
+            /** @var UserRequest $r */
+            $r = new UserRequest();
+            $uid = Uuid::uuid4();
+            $pres = new  PrivacyResource($em);
 
 
-        if(!isset($lastPrv)) {
-            return $response->withStatus(500, 'Error finding last privacy');
+            $emService = new  EmailService();
+            $lastPrv = $pres->getLastPrivacyByEmail($email);
+            if (!isset($lastPrv)) {
+                return $response->withStatus(500, 'Error finding last privacy');
+            }
+            if (isset($body["language"])) {
+                $language = $body["language"];
+            } else {
+                $language = $lastPrv->getLanguage();
+            }
+            $flow = [
+                'privacies' => $privacies
+            ];
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+            $hrec = $this->addHistory('insert', $flow, self::STATUS_OPEN);
+            $h = [$hrec];
+            $r->setUid($uid)
+                ->setCreated(new \DateTime())
+                ->setStatus(self::STATUS_OPEN)
+                ->setType(self::TYPE_UNSUBSCRIBE_ALL_REQUEST)
+                ->setMail($email)
+                ->setFlow($flow)
+                ->setHistory($h)
+                ->setNote('')
+                ->setDomain($domain);
+            $or = new OwnerUserRequest();
+            $or->setUserRequestId($r->getUid())
+                ->setOwnerId($ownerId);
+            $em->merge($r);
+            $this->getEmConfig()->merge($or);
+            $emailRes = new EmailResource($em, $this->getEmConfig());
+            $this->getEmConfig()->flush();
+            $em->flush();
+
+            $emService = new  EmailService();
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+            $emService->notifyModAccepted(
+                $this->getContainer(),
+                $owner->getEmail(),
+                $email,
+                $language,
+                $lastPrv->getName(),
+                $lastPrv->getSurname()
+            );
+            return $response->withJson($this->success());
+
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error on request');
         }
-
-        if(isset($body["language"])) {
-            $language = $body["language"];
-        } else {
-            $language = $lastPrv->getLanguage();
-        }
-
-        $flow = [
-            'privacies' => $privacies
-        ];
-        /** @var Owner $owner */
-        $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
-
-
-        $r->setUid($uid )
-            ->setCreated(new \DateTime())
-            ->setStatus(self::STATUS_OPEN)
-            ->setType(self::TYPE_UNSUBSCRIBE_ALL_REQUEST)
-            ->setMail($mail)
-            ->setFlow($flow)
-            ->setNote('')
-            ->setDomain($domain)
-        ;
-
-
-
-        $or = new OwnerUserRequest();
-        $or->setUserRequestId( $r->getUid())
-            ->setOwnerId( $ownerId);
-
-        $em->merge($r);
-        $this->getEmConfig()->merge($or);
-
-        $emailRes = new EmailResource($em, $this->getEmConfig());
-
-        $this->getEmConfig()->flush();
-        $em->flush();
-
 
     }
 
@@ -193,14 +293,7 @@ class UsersRequests  extends AbstractAction{
 
             $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
 
-            /**$emService->notifyModAccepted(
-                    $this->container,
-                    $owner->getEmail(),
-                    $mail,
-                    $language,
-                    $lastPrv->getName(),
-                    $lastPrv->getSurname()
-                    );**/
+
 
             return $response->withJson($this->success());
         } catch (Exception $e) {

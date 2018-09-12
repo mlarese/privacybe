@@ -17,6 +17,21 @@ class EmailService {
     use EmailHelpers;
     use UrlHelpers;
 
+    public function notifyUnsubNewsletters(Container $container, $from, $to, $language, $name, $surname) {
+        $templateData = [
+            "name"=>$name,
+            "surname"=>$surname
+        ];
+
+        $this->sendGenericEmail(
+            $container,
+            $templateData,
+            'notify_unsub_news_executed',
+            'language',
+            $from,
+            $to);
+    }
+
     public function notifyModAccepted(Container $container, $from, $to, $language, $name, $surname) {
             $templateData = [
                 "name"=>$name,
@@ -24,7 +39,7 @@ class EmailService {
             ];
 
             $this->sendGenericEmail(
-                $this->getContainer(),
+                $container,
                 $templateData,
                 'notify_mod_accepted',
                 'language',
@@ -39,7 +54,7 @@ class EmailService {
         ];
 
         $this->sendGenericEmail(
-            $this->getContainer(),
+            $container,
             $templateData,
             'notify_privacy_mod_executed',
             'language',

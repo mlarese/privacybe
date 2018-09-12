@@ -172,7 +172,7 @@ class EmailResource extends AbstractResource{
         $encr = $container->get('encryptor');
         $_k = $this->urlB32EncodeString( $_k, $encr);
 
-        $d['link']="$server/manager/surfer/domainprivacies?_k=$_k";
+        $d['link']="$server/manager/surfer/domainprivacies?_k=$_k&lang=$lang";
 
         /** @var OwnerProxy $ownerRec */
         $ownerRec = $d['owner'];

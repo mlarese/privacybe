@@ -42,7 +42,7 @@ if ( ! is_readable($configFile)) {
 }
 
 
-for ($currentOwner = 0; $currentOwner<100; $currentOwner++) {
+for ($currentOwner = 1; $currentOwner<100; $currentOwner++) {
     $commands = array();
 
     $helperSet = require $configFile;

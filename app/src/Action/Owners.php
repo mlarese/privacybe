@@ -59,6 +59,37 @@ class Owners extends AbstractAction
      */
     private function createPrivacyTables($db) {
         $sql = "
+        CREATE TABLE $db.mailup_list_ttl (
+          id int(11) NOT NULL,
+          guid varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          expire datetime NOT NULL,
+          updated datetime DEFAULT NULL,
+          PRIMARY KEY (id),
+          KEY mailup_list_ttl_guid (guid),
+          KEY mailup_list_expired_values (expire)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        CREATE TABLE $db.mailup_token (
+          id int(11) NOT NULL AUTO_INCREMENT,
+          alertemail varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          clientid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          clientsecret varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          token longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated datetime DEFAULT NULL,
+          status int(11) NOT NULL,
+          PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+        CREATE TABLE $db.mailup_recipient_ttl (
+          id int(11) NOT NULL,
+          list int(11) NOT NULL,
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          expire datetime NOT NULL,
+          updated datetime DEFAULT NULL,
+          PRIMARY KEY (id,list),
+          KEY mailup_recipient_expired_values (expire)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         CREATE TABLE $db.privacy_attachment (
           uid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
           deleted tinyint(1) NOT NULL DEFAULT '0',

@@ -194,7 +194,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy_34',
+                'dbname'   => 'privacy_64',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

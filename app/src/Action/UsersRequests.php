@@ -213,7 +213,6 @@ class UsersRequests  extends AbstractAction{
 
     }
 
-
     /**
      * @param $request Request
      * @param $response Response
@@ -250,6 +249,99 @@ class UsersRequests  extends AbstractAction{
 
             $pres = new  PrivacyResource($em);
             $emService = new  EmailService();
+
+            $lastPrv = $pres->getLastPrivacyByEmail($mail);
+
+
+            if(!isset($lastPrv)) {
+                return $response->withStatus(500, 'Error finding last privacy');
+            }
+
+            if(isset($body["language"])) {
+                $language = $body["language"];
+            } else {
+                $language = $lastPrv->getLanguage();
+            }
+
+            /** @var Owner $owner */
+            $owner = $this->getEmConfig()->find(Owner::class, $ownerId);
+
+
+            $r->setUid($uid )
+                ->setCreated(new \DateTime())
+                ->setStatus(self::STATUS_COMPLETED)
+                ->setType($type)
+                ->setMail($mail)
+                ->setNote('')
+                ->setDomain($reqDomain)
+            ;
+
+
+
+            $or = new OwnerUserRequest();
+            $or->setUserRequestId( $r->getUid())
+                ->setOwnerId( $ownerId);
+
+            $em->merge($r);
+            $this->getEmConfig()->merge($or);
+
+            $emailRes = new EmailResource($em, $this->getEmConfig());
+
+            $this->getEmConfig()->flush();
+            $em->flush();
+
+            $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
+
+
+
+            return $response->withJson($this->success());
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error on request');
+        }
+
+    }
+
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function insertSubscriptionRequestFromLink($request, $response, $args){
+        try {
+
+            $body = [
+                "email"=>$request->getParam('email'),
+                "ownerId"=>$request->getParam('ownerId'),
+                "domain"=>$request->getParam('domain'),
+                "language"=>$request->getParam('language')
+            ];
+            $mail = $body ['email'];
+            $ownerId = $body ['ownerId'];
+            $language = "it";
+            $reqDomain = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+            $type = self::TYPE_SUBSCRIPTIONS_REQUEST;
+            if(isset($body["domain"])) {
+                $reqDomain = $body["domain"];
+            }
+
+
+           $type = self::TYPE_SUBSCRIPTIONS_REQUEST;
+
+            $em = $this->getEmPrivacy($ownerId);
+
+
+            /** @var UserRequest $r */
+            $r = new UserRequest();
+
+            $uid = Uuid::uuid4();
+
+            $pres = new  PrivacyResource($em);
+            $emService = new  EmailService();
+
 
             $lastPrv = $pres->getLastPrivacyByEmail($mail);
 

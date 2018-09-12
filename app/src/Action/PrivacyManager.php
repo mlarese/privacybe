@@ -78,6 +78,7 @@ class PrivacyManager extends AbstractAction
         return $response->withJson(  $privacies);
 
     }
+
     /**
      * @param $request Request
      * @param $response Response

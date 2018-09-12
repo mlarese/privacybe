@@ -61,7 +61,7 @@ trait EmailHelpers
         string $from,
         string $to,
         $settingProp = 'dataone_emails',
-		string $subject
+		string $subject=''
     ) {
         /** @var Client $client */
         $client = $container['email_client'];

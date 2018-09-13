@@ -9,6 +9,7 @@ use App\Action\Attachments;
 use App\Action\DeferredPrivacies;
 use App\Action\Operators;
 use App\Action\PrivacyManager;
+use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
 use App\Action\Users;
 use App\Action\UsersRequests;
@@ -217,7 +218,7 @@ $app->get('/upgrade/domain', 'App\Action\Subscribers:domainList');
 
 $app->post('/upgrade/allow/{domainid}/{pathid}/{email}', 'App\Action\Subscribers:create');
 
-
+/** @var ShareSubscriberList */
 $app->post('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:create');
 
 $app->get('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:list');

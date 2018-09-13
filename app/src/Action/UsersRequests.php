@@ -385,9 +385,7 @@ class UsersRequests  extends AbstractAction{
 
             $emailRes->privacyRequest($language, $mail,$ownerId,$this->getContainer(), $reqDomain);
 
-
-
-            return $response->withJson($this->success());
+            return $response->withRedirect("https://privacy.dataone.online/manager/surfer/soongetmail?language=$language");
         } catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error on request');
@@ -402,7 +400,6 @@ class UsersRequests  extends AbstractAction{
      * @return mixed
      * @throws \Doctrine\ORM\ORMException
      */
-
     public function update($request, $response, $args){
 
         try {

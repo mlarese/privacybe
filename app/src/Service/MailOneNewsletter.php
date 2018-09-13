@@ -92,7 +92,7 @@ class MailOneNewsletter {
                 $query = 'SELECT * FROM email_list_subscribers 
                           WHERE listid = '.$singleId.' 
                           AND subscribedate < '.$limitDate.' 
-                          AND unsubscribeconfirmed = 0';
+                          AND unsubscribeconfirmed = 0  and bounced=0';
 
                 $state = $conn->executeQuery($query);
                 $result = $state->fetchAll();

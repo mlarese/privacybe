@@ -669,7 +669,7 @@ class PrivacyResource extends AbstractResource
 
     }
 
-    public function privacyRecord($email) {
+    public function privacyRecord($email, $domain = null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -705,7 +705,16 @@ class PrivacyResource extends AbstractResource
             ->select($fields)
             ->where('p.deleted=0')
             ->andWhere( "p.email=:email")
-            ->andWhere( $ex->not("p.ip='####'"))
+            ->andWhere( $ex->not("p.ip='####'"));
+
+        if(isset($domain)){
+            $qb->andWhere('p.domain=:domain')
+                ->setParameter('domain', $domain);
+        }
+
+
+
+        $qb
             ->setParameter('email', $email)
                 ->addOrderBy( 'p.termId', 'ASC')
                 ->addOrderBy( 'p.created', 'DESC')
@@ -722,9 +731,14 @@ class PrivacyResource extends AbstractResource
             $privacyRecordIntegrator->integrate($pr);
         }
 
+
         $groupByEmailTerm = new GroupByEmailTerm();
         $results=$groupByEmailTerm->group($results,null);
-        $results =$results[$email];
+
+        if(isset($results[$email]))
+            $results =$results[$email];
+        else
+            $result= [];
 
         // $ret =[];
         // foreach ($results as $term=>$privacy){

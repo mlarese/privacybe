@@ -22,6 +22,12 @@ use App\Console\Command\ImportPortalReservation;
 use App\Console\Command\ImportABSEnquiry;
 use App\Console\Command\ImportStructureReservation;
 use App\Console\Command\ImportStoreONE;
+use App\Console\Command\GenerateMailUpToken;
+use App\Console\Command\GetMailUpToken;
+use App\Console\Command\RefreshMailUpToken;
+use App\Console\Command\MaintenanceMailUp;
+use App\Console\Command\RefreshMailUpResources;
+use App\Console\Command\TestMailUp;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;
@@ -34,13 +40,19 @@ try {
     $application->add(new ImportABSEnquiry());
     $application->add(new ImportStructureReservation());
     $application->add(new ImportStoreONE());
+	$application->add(new GenerateMailUpToken());
+	$application->add(new GetMailUpToken());
+	$application->add(new RefreshMailUpToken());
+	$application->add(new MaintenanceMailUp());
+	$application->add(new RefreshMailUpResources());
+	$application->add(new TestMailUp());
     $application->run();
 
 } catch (\Exception $e) {
     print_r($e->getMessage());
     $log = new LogHelper();
-    $log->error(sprintf(
-        $e->getMessage()
-    ), $e);
+	$log->error(sprintf(
+		$e->getMessage()
+	), $e);
 
 }

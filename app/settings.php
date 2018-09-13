@@ -34,6 +34,17 @@ return [
                     ]
                 ],
             ],
+
+            'notify_unsub_news_executed' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Disiscrizione da newsletter",
+                            "en" => "Newsletters unsubscribe"
+                        ]
+                    ]
+                ]
+            ],
             'news_unsub_email_notif' => [
                 'all' => [
                     "dictionary" => [

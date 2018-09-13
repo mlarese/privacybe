@@ -37,6 +37,12 @@ trait EmailHelpers
         $s = $container->get('settings');
         return $s['dataone_emails']['_options_']['callcenter_email'];
     }
+
+    public function getFrontEndServer(Container $container, $env) {
+        $s = $container->get('settings');
+        return $s['dataone_emails']['_options_'][$env]['fe_address'];
+    }
+
     public function extractLanguage($dictionary, $language, $defaultLanguage = 'en') {
         if(isset($dictionary[$language])) {
             return $dictionary[$language];
@@ -54,7 +60,8 @@ trait EmailHelpers
         string $language,
         string $from,
         string $to,
-        $settingProp = 'dataone_emails'
+        $settingProp = 'dataone_emails',
+		string $subject
     ) {
         /** @var Client $client */
         $client = $container['email_client'];
@@ -71,7 +78,9 @@ trait EmailHelpers
         $templateSettings = $settings[$settingProp][$templateName];
         $aEmailSubject =$templateSettings['all']['dictionary']['email_subject'];
 
-        $subject = $this->extractLanguage($aEmailSubject,$language);
+        if (!isset($subject) || empty($subject)) {
+	        $subject = $this->extractLanguage($aEmailSubject,$language);
+        }
 
         $data = $this->buildGuzzleData($from,$to, $subject,$body  ) ;
         $client->request('POST', '', $data);

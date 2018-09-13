@@ -32,6 +32,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function fnmatch;
+use Interop\Container\Exception\ContainerException;
 use function json_decode;
 use function json_encode;
 use function md5;
@@ -49,6 +50,34 @@ class PrivacyManager extends AbstractAction
 {
     use UrlHelpers;
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getPrivacyiesByEmailOwnerDomain($request, $response, $args) {
+
+        try {
+            $_k = $request->getParam('_k');
+            $encr = $this->getContainer()->get('encryptor');
+            $params = $this->urlB32DecodeToArray($_k, $encr);
+            $email = $params['email'];
+            $ownerId = $params['ownerId'];
+            $domain = $params['domain'];
+            $em = $this->getEmPrivacy($ownerId);
+            $pres = new PrivacyResource($em);
+            $privacies = $pres->privacyRecord($email, $domain);
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Error finding privacies');
+        }
+
+        return $response->withJson(  $privacies);
+
+    }
     /**
      * @param $request Request
      * @param $response Response

@@ -13,6 +13,8 @@ use App\Action\Emails\EmailHelpers;
 use App\Action\Emails\TemplateBuilder;
 use App\Entity\Privacy\Operator;
 use App\Entity\Proxy\OwnerProxy;
+use App\Env\Env;
+use App\Traits\UrlHelpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
@@ -24,6 +26,7 @@ use function str_replace;
 class EmailResource extends AbstractResource{
     private $confEntityManager;
     use EmailHelpers;
+    use UrlHelpers;
 
     public function __construct(EntityManager $prvEntityManager, EntityManager $confEntityManager) {
         parent::__construct($prvEntityManager);
@@ -158,10 +161,18 @@ class EmailResource extends AbstractResource{
 
         if($reqDomain === null || $reqDomain === ''){
             $d = $this->composePrivaciesDataAll($lang, $mail, $ownerId,$privacyId);
+            $_k = "email=$mail&ownerId=$ownerId" ;
         }else{
             $d = $this->composePrivaciesData($lang, $mail, $ownerId,$reqDomain, $privacyId);
+            $_k = "email=$mail&ownerId=$ownerId&domain=$reqDomain" ;
         }
 
+        $server = $this->getFrontEndServer($container, Env::ENV_PROD);
+
+        $encr = $container->get('encryptor');
+        $_k = $this->urlB32EncodeString( $_k, $encr);
+
+        $d['link']="$server/manager/surfer/domainprivacies?_k=$_k&lang=$lang";
 
         /** @var OwnerProxy $ownerRec */
         $ownerRec = $d['owner'];

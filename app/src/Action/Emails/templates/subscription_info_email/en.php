@@ -42,7 +42,7 @@
                 </td></tr>
                 <tr><td colspan="4"><b>
                     If you want to examine the compilation details or modify the subscriptions to the Regulations or revoke them
-                            <a href="#">Click here</a>
+                            <a href="<?=$d['link']?>">Click here</a>
                 </b></td></tr>
 
             </table>

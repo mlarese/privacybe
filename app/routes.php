@@ -21,6 +21,8 @@ $routeMngr = new BaseRoutesManager($app);
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
+$app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
+
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
@@ -72,7 +74,9 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
 /** @var UsersRequests */
-$app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insert');
+$app->post('/api/surfer/unsubnewsrequest', 'App\Action\UsersRequests:insertUnsubscribeNewsRequest');
+$app->post('/api/surfer/unsuballrequest', 'App\Action\UsersRequests:insertUnsubscribeAllRequest');
+$app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insertSubscriptionRequest');
 
 /*********************************************************
  *                  TERM
@@ -117,6 +121,7 @@ $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
+$app->get('/api/surfer/privacybyeod', 'App\Action\PrivacyManager:getPrivacyiesByEmailOwnerDomain');
 $app->get('/api/surfer/privacybye', 'App\Action\PrivacyManager:getPrivacyByEmail');
 /**  @var App\Action\Users */
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');

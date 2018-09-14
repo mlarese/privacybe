@@ -123,6 +123,9 @@ return [
             'mmuser' => 'admin',
             'mmpassword' => '80c90326274099981dc47961023fb56924901085',
         ],
+        'MailUp' => [
+            'entrypoint' => 'mailup/entrypoint'
+        ],
         // monolog settings
         'logger' => [
             'name' => 'app',

@@ -168,7 +168,7 @@ $container['mailone'] = function ($container) {
 
 
 $container['mailup'] = function ($container) {
-    return null;
+
     $settings = $container->get('settings');
     $exportService = new \App\Resource\MailUpDirectExport($container);
 
@@ -191,7 +191,7 @@ $container['mailone_direct'] = function ($container) {
 };
 
 $container['mailup_direct'] = function ($container) {
-    return null;
+
     $exportService = new \App\Resource\MailUpDirectExportAdapter(null);
 
     return $exportService;
@@ -222,7 +222,6 @@ $container['mailone_direct_service'] = function ($container) {
 
 
 $container['mailup_direct_service'] = function ($container) {
-    return null;
 
     $settings = $container->get('settings');
 

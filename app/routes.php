@@ -6,6 +6,7 @@
  *********************************************************/
 
 use App\Action\Attachments;
+use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
 use App\Action\Operators;
 use App\Action\PrivacyManager;
@@ -14,6 +15,7 @@ use App\Action\Subscriptions;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
+use App\Entity\Privacy\Configuration;
 use App\Entity\Privacy\UserRequest;
 
 $routeMngr = new BaseRoutesManager($app);
@@ -64,6 +66,11 @@ $app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewslett
 $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:downloadAttachment');
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
+
+/*********************************************************
+ *                  Config
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/configuration", Configurations::class,'code');
 
 /*********************************************************
  *                  WIDGET

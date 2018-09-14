@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Config\UserLogin;
@@ -193,6 +194,57 @@ class Auth extends AbstractAction
     {
         session_commit();
         return $response->withJson(array("logout" => "ok"));
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function resetPassword($request, $response, $args)
+    {
+        try {
+            $user = $args['user'];
+            $cfgem = $this->getEmConfig();
+            /** @var User $eUser */
+            $eUser = $cfgem->getRepository(User::class)
+                ->findOneBy(['user'=> $user, 'active'=> true, 'deleted'=>0] );
+
+            if (!isset($eUser)){
+                echo $e->getMessage();
+                return $response->withStatus(401, 'User not found');
+
+            }
+            $email = null;
+
+            if($eUser->getOwnerId()===0) {
+                /** @var CustomerCare $cusc */
+                $cusc = $cfgem->find(CustomerCare::class, $eUser->getId());
+                if (!isset($cusc)){
+                    echo $e->getMessage();
+                    return $response->withStatus(401, 'User not found');
+
+                }
+                $email = $cusc->getEmail();
+            }else{
+                $em = $this->getEmPrivacy($eUser->getOwnerId());
+                /** @var Operator $cusc */
+                $oper = $em->find(Operator::class, $eUser->getId());
+
+                if (!isset($oper)){
+                    echo $e->getMessage();
+                    return $response->withStatus(401, 'User not found');
+
+                }
+                $email = $cusc->getEmail();
+            }
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Password reset failed ');
+
+        }
     }
 
     /**

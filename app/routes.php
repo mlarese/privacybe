@@ -207,10 +207,12 @@ $app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
 /*********************************************************
  *                  AUTH
  *********************************************************/
+/** @var \App\Action\Auth */
 $app->post('/api/auth/login', 'App\Action\Auth:login');
 $app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
+$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPassword');
 
 
 //upgrade privacy disclaimere phase < 25th May

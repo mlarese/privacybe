@@ -14,6 +14,7 @@ use App\Resource\PrivacyLogger;
 use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
 use App\Service\AttachmentsService;
+use App\Traits\UrlHelpers;
 use Closure;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
@@ -26,6 +27,7 @@ use Slim\Http\Response;
 class Users extends AbstractAction
 {
     use EmailHelpers;
+    use UrlHelpers;
 
     /**
      * @param $request Request
@@ -249,6 +251,72 @@ class Users extends AbstractAction
      * @param $args
      * @return mixed
      */
+    public function changePasswordReset($request, $response, $args)
+    {
+
+        try {
+
+            $body = $request->getParsedBody();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k = $this->urlB32DecodeString($body['_k'], $enc);
+
+            if(
+                !isset($body['password']) ||
+                !isset($body['repeatPassword'])
+            ) {
+                return $response->withStatus(401, 'Wrong request');
+            }
+
+            if(   strlen($body['password'])<8 ) {
+                return $response->withStatus(401, 'At least 8 characters');
+            }
+
+
+            /** @var User $user */
+            $user = $this->getEmConfig()->find(User::class, $body['userId']);
+
+            if(  !isset($user)) {
+                return $response->withStatus(401, 'User not found');
+            }
+
+
+
+            $user->setPassword(      md5($body['password'])    );
+            $this->getEmConfig()->merge($user);
+            $this->getEmConfig()->flush();
+
+            $emprv = $this->getEmPrivacy( $user->getOwnerId() );
+
+            $opRes = new OperatorResource($emprv);
+
+            $op = $opRes->findOperator($user->getId());
+
+            $this->sendGenericEmail(
+                $this->getContainer(),
+                ["name"=>$op->getName(),"surname"=>$op->getSurname()],
+                'change_password',
+                'it',
+                $this->getCallCenterEmail( $this->getContainer()),
+                $op->getEmail()
+            );
+
+            return $response->withJson($this->success());
+        } catch (ORMException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'ORMException changing password');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception changing password');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
     public function changePassword($request, $response, $args)
     {
 
@@ -299,7 +367,7 @@ class Users extends AbstractAction
                 ["name"=>$op->getName(),"surname"=>$op->getSurname()],
                 'change_password',
                 'it',
-                $this->getCallCenterEmail(),
+                $this->getCallCenterEmail($this->getContainer()),
                 $op->getEmail()
             );
 

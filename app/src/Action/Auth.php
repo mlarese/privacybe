@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use App\Action\Emails\EmailHelpers;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
@@ -9,6 +10,7 @@ use App\Entity\Config\UserLogin;
 use App\Entity\Privacy\Operator;
 use App\Entity\Privacy\Privacy;
 use App\Resource\OperatorResource;
+use App\Traits\UrlHelpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
@@ -21,6 +23,8 @@ use Tuupola\Base62;
 
 class Auth extends AbstractAction
 {
+    use EmailHelpers;
+    use UrlHelpers;
     /**
      * @param       $request Request
      * @param       $user
@@ -212,7 +216,6 @@ class Auth extends AbstractAction
                 ->findOneBy(['user'=> $user, 'active'=> true, 'deleted'=>0] );
 
             if (!isset($eUser)){
-                echo $e->getMessage();
                 return $response->withStatus(401, 'User not found');
 
             }
@@ -222,7 +225,6 @@ class Auth extends AbstractAction
                 /** @var CustomerCare $cusc */
                 $cusc = $cfgem->find(CustomerCare::class, $eUser->getId());
                 if (!isset($cusc)){
-                    echo $e->getMessage();
                     return $response->withStatus(401, 'User not found');
 
                 }
@@ -233,12 +235,32 @@ class Auth extends AbstractAction
                 $oper = $em->find(Operator::class, $eUser->getId());
 
                 if (!isset($oper)){
-                    echo $e->getMessage();
                     return $response->withStatus(401, 'User not found');
 
                 }
                 $email = $cusc->getEmail();
+
             }
+
+            $userId = $eUser->getId();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k= $this->urlB32EncodeString("user=$user&userId=$userId", $enc);
+            $link = "https://privacy.dataone.online/service/preset?_k=$_k&user=$user";
+
+            $data = ['email'=>$email, 'link'=>$_k, 'user'=>$user];
+            $this->sendGenericEmail(
+                $this->getContainer(),
+                $data,
+                'password_reset',
+                'it',
+                $this->getCallCenterEmail($this->getContainer()),
+                $email,
+                'data_one_emails',
+                'password reset'
+
+            );
+
+            return $response->withJson($this->success());
 
         } catch (\Exception $e) {
             echo $e->getMessage();

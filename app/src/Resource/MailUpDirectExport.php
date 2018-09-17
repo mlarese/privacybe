@@ -5,6 +5,7 @@ namespace App\Resource;
 use App\Entity\Config\OwnerRepository;
 
 use App\Entity\Privacy\MailUpListTTL;
+use App\Helpers\DynDb;
 use App\Helpers\MailOneCustomForm;
 use App\Service\MailOneService;
 use App\Service\MailUpService;
@@ -153,6 +154,12 @@ class MailUpDirectExport  implements IDirectExport
     /** @var Configuration */
     private $mailUpConfig;
     private function checkConfig(){
+
+        $settings=$this->container->get('settings');
+        $this->em = DynDb::get($this->container->get('dyn-privacy-db'),$this->owner,$settings, $settings['applicationContext']);
+
+
+
          $this->connector->setOwnerId($this->owner);
 
         /** @var find Configuration record $list */

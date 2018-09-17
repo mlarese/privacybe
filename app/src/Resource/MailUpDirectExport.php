@@ -100,15 +100,25 @@ class MailUpDirectExport  implements IDirectExport
 
         switch ($this->action){
             case 'export':
-                $list = $this->connector->listExist($this->name);
-                if(!isset($list)){
-                    throw new \Exception("List alredy exist");
-                }
+                try{
+                    $list = $this->connector->listExist($this->name);
+                    if(!isset($list)){
+                        throw new \Exception("List alredy exist");
+                    }
 
-                /** @var MailUpListTTL $list */
-                try {
+                    /** @var MailUpListTTL $list */
+                    $mailUpConfig = $this->mailUpConfig[0]->getData();
 
-                    $list = $this->connector->createContactList($this->name, $this->mailUpConfig);
+                    if(isset($mailUpConfig['expireDate']) && $mailUpConfig['expireDate']!='' ){
+                        $mailUpConfig['expireDate'] =  \DateTime::createFromFormat('Y-m-d',$mailUpConfig['expireDate']);
+                                $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
+                        }
+                    else{
+                        $mailUpConfig['expireDate'] = new \DateTime();
+                        $mailUpConfig['expireDate']->modify("+ 30 Days");
+                    }
+
+                    $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
                 }
                 catch (\Exception $e){
@@ -116,6 +126,7 @@ class MailUpDirectExport  implements IDirectExport
                     print_r($e->getMessage());
                     die;
                 }
+
                 $confirmed = 1;
 
                 foreach ($this->data as $value){
@@ -172,7 +183,15 @@ class MailUpDirectExport  implements IDirectExport
 
         $this->connector->setOwnerId($this->owner);
         /** @var find Configuration record $list */
-        $this->mailUpConfig = $this->em->find(Configuration::class,'mailup');
+
+        try{
+            $this->mailUpConfig = $this->em->getRepository(\App\Entity\Privacy\Configuration::class)->findBy(array('code' => 'mailup'));
+        }
+        catch(\Exception $e){
+            print_r($e->getMessage());
+            die;
+        }
+
 
     }
 }

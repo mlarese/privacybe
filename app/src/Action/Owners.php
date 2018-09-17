@@ -24,6 +24,8 @@ use Exception;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use App\Resource\CompanyExistException;
+use App\Resource\EmailExistException;
 
 class Owners extends AbstractAction
 {

@@ -1,8 +1,9 @@
 <?php
 namespace App\Action;
-
+/*
 use App\Entity\Config\Domain;
-use App\Entity\Config\Page;
+
+use App\Entity\Config\Page;*/
 use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyDeferred;

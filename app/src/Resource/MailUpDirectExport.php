@@ -8,7 +8,6 @@ use App\Entity\Privacy\MailUpListTTL;
 use App\Helpers\MailOneCustomForm;
 use App\Service\MailOneService;
 use App\Service\MailUpService;
-use Composer\Config;
 use Doctrine\DBAL\Configuration;
 use Doctrine\ORM\EntityManager;
 

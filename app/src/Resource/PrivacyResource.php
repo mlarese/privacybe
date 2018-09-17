@@ -22,7 +22,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use function get_object_vars;
-use http\Env\Response;
+
 use function json_encode;
 use function print_r;
 use function strtolower;

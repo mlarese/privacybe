@@ -17,6 +17,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use function urlencode;
 
+
 class Emails extends AbstractAction {
 
     use UrlHelpers;

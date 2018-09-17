@@ -4,9 +4,12 @@ namespace App\Resource;
 
 use App\Entity\Config\OwnerRepository;
 
+use App\Entity\Privacy\MailUpListTTL;
 use App\Helpers\MailOneCustomForm;
 use App\Service\MailOneService;
 use App\Service\MailUpService;
+use Composer\Config;
+use Doctrine\DBAL\Configuration;
 use Doctrine\ORM\EntityManager;
 
 class MailUpDirectExport  implements IDirectExport
@@ -27,7 +30,7 @@ class MailUpDirectExport  implements IDirectExport
     protected $ownerreplayemail;
     protected $em;
     /**
-     * @var MailOneService|null
+     * @var MailUpService|null
      */
     protected $connector;
 
@@ -87,12 +90,40 @@ class MailUpDirectExport  implements IDirectExport
     public function export()
     {
         $this->connector =  MailUpService::getInstance();
-
         $this->checkConfig();
 
         $response = array();
+        $today = date("j");    $thisMonth = date("n");    $thisYear = date("Y");
+        $expireDate = date("F j Y", mktime(0,0,0, $thisMonth, $today, $thisYear+10));
+
+
         switch ($this->action){
             case 'export':
+                $list = $this->connector->listExist($this->name);
+                if(!isset($list)){
+                    throw new \Exception("List alredy exist");
+                }
+
+                /** @var MailUpListTTL $list */
+                $list = $this->connector->createContactList($this->name, $this->mailUpConfig);
+                $confirmed = 1;
+
+                foreach ($this->data as $value){
+                    $optionalFields = [];
+                    if(isset($value['language']) &&  $value['language']!=''){
+                        $optionalFields = ['language' =>   $value['language'] ];
+                    }
+                    
+                    $this->connector->addSubscriber(
+                        $list->getId(),
+                        $value['email'],
+                        $confirmed,
+                        $value['name'] ,
+                        $value['surname'],
+                        $optionalFields,
+                        $expireDate
+                    );
+                }
 
                 break;
             case 'list':
@@ -119,15 +150,13 @@ class MailUpDirectExport  implements IDirectExport
         $this->em = $value;
     }
 
+    /** @var Configuration */
+    private $mailUpConfig;
     private function checkConfig(){
-        /**
-         * @var $db EntityManager
-         */
-
-         $db = $this->container->get('em-config');
-
          $this->connector->setOwnerId($this->owner);
 
+        /** @var find Configuration record $list */
+        $this->mailUpConfig = $this->em->find(Configuration::class,'mailup');
 
     }
 }

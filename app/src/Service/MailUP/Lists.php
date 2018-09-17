@@ -41,28 +41,29 @@ class Lists extends Base {
 		return $result;
 	}
 
-	/**
-	 * Create a new MailUP list by Owner ID
-	 *
-	 * @param int $ownerId
-	 * @param string $listName
-	 * @param bool $usedForBusiness
-	 * @param bool $usedForPrivate
-	 * @param string $ownerEmail
-	 * @param string $replyToEmail
-	 * @param string $senderName
-	 * @param string $companyName
-	 * @param string $contactName
-	 * @param string $address
-	 * @param string $city
-	 * @param string $countryCode
-	 * @param string $permissionReminder
-	 * @param string $websiteUrl
-	 * @param \DateTime $expireDate
-	 *
-	 * @return MailUpListTTL
-	 * @throws MailUPListException
-	 */
+    /**
+     * @param int       $ownerId
+     * @param string    $listName
+     * @param bool      $usedForBusiness
+     * @param bool      $usedForPrivate
+     * @param string    $ownerEmail
+     * @param string    $replyToEmail
+     * @param string    $senderName
+     * @param string    $companyName
+     * @param string    $contactName
+     * @param string    $address
+     * @param string    $city
+     * @param string    $countryCode
+     * @param string    $permissionReminder
+     * @param string    $websiteUrl
+     * @param \DateTime $expireDate
+     *
+     * @return MailUpListTTL
+     * @throws MailUPListException
+     * @throws \App\Exception\MailUPException
+     * @throws \App\Exception\MailUPTokenException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function createByOwnerId (
 		int $ownerId,
 		string $listName,

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Service;
+use App\Entity\Privacy\MailUpListTTL;
 use App\Service\MailUP\Lists;
 use App\Service\MailUP\Recipient;
+use DateTime;
 use function exp;
 use FastRoute\RouteParser\Std;
 use GuzzleHttp;
@@ -104,13 +106,16 @@ class MailUpService {
 	}
 
     /**
-     * @param $owner
+     * @param       $listName
+     * @param array $params
      *
-     * @return \stdClass
+     * @return MailUpListTTL
+     * @throws \App\Exception\MailUPException
      * @throws \App\Exception\MailUPListException
+     * @throws \App\Exception\MailUPTokenException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createContactList($listName, array $params) {
-        /** @var \stdClass $ret */
         $ret = $this->getListSrv()->createByOwnerId(
         	$this->ownerId,
 			$listName,
@@ -144,19 +149,19 @@ class MailUpService {
     }
 
     /**
-     * @param       $listId
-     * @param       $email
-     * @param int   $confirmed
-     * @param       $name
-     * @param       $surname
-     * @param       $expireDate
-     * @param array $optionalFields
+     * @param          $listId
+     * @param          $email
+     * @param int      $confirmed
+     * @param          $name
+     * @param          $surname
+     * @param DateTime $expireDate
+     * @param array    $optionalFields
      *
      * @return bool
      * @throws \App\Exception\MailUPListException
      * @throws \App\Exception\MailUPRecipientException
      */
-	public function addSubscriber($listId, $email, $confirmed = 1, $name , $surname, $expireDate, $optionalFields = []) {
+	public function addSubscriber($listId, $email, $confirmed = 1, $name , $surname, DateTime $expireDate,array $optionalFields = []) {
 
 		$srv = new Recipient();
 		$srv->addToListByOwnerId(

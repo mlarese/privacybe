@@ -106,7 +106,16 @@ class MailUpDirectExport  implements IDirectExport
                 }
 
                 /** @var MailUpListTTL $list */
-                $list = $this->connector->createContactList($this->name, $this->mailUpConfig);
+                try {
+
+                    $list = $this->connector->createContactList($this->name, $this->mailUpConfig);
+
+                }
+                catch (\Exception $e){
+
+                    print_r($e->getMessage());
+                    die;
+                }
                 $confirmed = 1;
 
                 foreach ($this->data as $value){
@@ -156,12 +165,12 @@ class MailUpDirectExport  implements IDirectExport
     private function checkConfig(){
 
         $settings=$this->container->get('settings');
+
         $this->em = DynDb::get($this->container->get('dyn-privacy-db'),$this->owner,$settings, $settings['applicationContext']);
 
 
 
-         $this->connector->setOwnerId($this->owner);
-
+        $this->connector->setOwnerId($this->owner);
         /** @var find Configuration record $list */
         $this->mailUpConfig = $this->em->find(Configuration::class,'mailup');
 

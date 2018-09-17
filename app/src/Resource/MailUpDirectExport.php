@@ -89,6 +89,7 @@ class MailUpDirectExport  implements IDirectExport
 
     public function export()
     {
+
         $this->connector =  MailUpService::getInstance();
         $this->checkConfig();
 

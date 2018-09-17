@@ -113,7 +113,7 @@ class MailUpDirectExport  implements IDirectExport
                     if(isset($value['language']) &&  $value['language']!=''){
                         $optionalFields = ['language' =>   $value['language'] ];
                     }
-                    
+
                     $this->connector->addSubscriber(
                         $list->getId(),
                         $value['email'],

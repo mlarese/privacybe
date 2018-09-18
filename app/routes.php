@@ -6,6 +6,7 @@
  *********************************************************/
 
 use App\Action\Attachments;
+use App\Action\AttachmentView;
 use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
 use App\Action\Operators;
@@ -67,7 +68,7 @@ $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:do
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 
-$routeMngr->baseRoutes("/api/user/view", AttachmentView::class);
+$routeMngr->baseRoutes("/api/user/view/{uid}/{fname}", AttachmentView::class);
 
 /*********************************************************
  *                  Config

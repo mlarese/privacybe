@@ -100,6 +100,17 @@ class MailUpDirectExport  implements IDirectExport
 
         switch ($this->action){
             case 'export':
+
+                $mailUpConfig = $this->mailUpConfig[0]->getData();
+                $mailUpConfig['expireDate'] = new \DateTime();
+
+                if(isset($mailUpConfig['expireAfter']) && $mailUpConfig['expireAfter']!='' ){
+                    $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
+                }
+                else{
+                    $mailUpConfig['expireDate']->modify("+ 30 Days");
+                }
+
                 try{
                     $list = $this->connector->listExist($this->name);
                     if(!isset($list)){
@@ -107,23 +118,14 @@ class MailUpDirectExport  implements IDirectExport
                     }
 
                     /** @var MailUpListTTL $list */
-                    $mailUpConfig = $this->mailUpConfig[0]->getData();
-                    $mailUpConfig['expireDate'] = new \DateTime();
 
-                    if(isset($mailUpConfig['expireAfter']) && $mailUpConfig['expireAfter']!='' ){
-                        $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
-                    }
-                    else{
-                        $mailUpConfig['expireDate']->modify("+ 30 Days");
-                    }
 
                     $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
                 }
                 catch (\Exception $e){
 
-                    print_r($e->getMessage());
-                    die;
+                    throw $e;
                 }
 
                 $confirmed = 1;

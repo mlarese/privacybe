@@ -97,6 +97,8 @@ class MailUpService {
 		$lists = $this->getAllContactLists();
 
         foreach ($lists as $list) {
+
+        	var_dump($list);
 			if($list->Name === $listName)  {
 				return $list;
 			}

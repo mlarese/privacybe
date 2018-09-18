@@ -108,13 +108,12 @@ class MailUpDirectExport  implements IDirectExport
 
                     /** @var MailUpListTTL $list */
                     $mailUpConfig = $this->mailUpConfig[0]->getData();
+                    $mailUpConfig['expireDate'] = new \DateTime();
 
-                    if(isset($mailUpConfig['expireDate']) && $mailUpConfig['expireDate']!='' ){
-                        $mailUpConfig['expireDate'] =  \DateTime::createFromFormat('Y-m-d',$mailUpConfig['expireDate']);
-                                $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
-                        }
+                    if(isset($mailUpConfig['expireAfter']) && $mailUpConfig['expireAfter']!='' ){
+                        $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
+                    }
                     else{
-                        $mailUpConfig['expireDate'] = new \DateTime();
                         $mailUpConfig['expireDate']->modify("+ 30 Days");
                     }
 
@@ -142,7 +141,7 @@ class MailUpDirectExport  implements IDirectExport
                         $value['name'] ,
                         $value['surname'],
                         $optionalFields,
-                        $expireDate
+                        $mailUpConfig['expireDate']
                     );
                 }
 

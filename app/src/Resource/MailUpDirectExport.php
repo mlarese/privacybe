@@ -142,8 +142,8 @@ class MailUpDirectExport  implements IDirectExport
                         $confirmed,
                         $value['name'] ,
                         $value['surname'],
-                        $optionalFields,
-                        $mailUpConfig['expireDate']
+                        $mailUpConfig['expireDate'],
+                        $optionalFields
                     );
                 }
 

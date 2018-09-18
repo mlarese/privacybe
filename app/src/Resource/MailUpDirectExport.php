@@ -122,29 +122,31 @@ class MailUpDirectExport  implements IDirectExport
 
                     $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
+
+
+                     $confirmed = 1;
+
+                    foreach ($this->data as $value){
+                        $optionalFields = [];
+                        if(isset($value['language']) &&  $value['language']!=''){
+                            $optionalFields = ['language' =>   $value['language'] ];
+                        }
+
+                        $this->connector->addSubscriber(
+                            $list->getId(),
+                            $value['email'],
+                            $confirmed,
+                            $value['name'] ,
+                            $value['surname'],
+                            $mailUpConfig['expireDate'],
+                            $optionalFields
+                        );
+                    }
                 }
                 catch (\Exception $e){
 
-                    throw $e;
-                }
-
-                $confirmed = 1;
-
-                foreach ($this->data as $value){
-                    $optionalFields = [];
-                    if(isset($value['language']) &&  $value['language']!=''){
-                        $optionalFields = ['language' =>   $value['language'] ];
-                    }
-
-                    $this->connector->addSubscriber(
-                        $list->getId(),
-                        $value['email'],
-                        $confirmed,
-                        $value['name'] ,
-                        $value['surname'],
-                        $mailUpConfig['expireDate'],
-                        $optionalFields
-                    );
+                    print_r($e->getMessage());
+                    die;
                 }
 
                 break;

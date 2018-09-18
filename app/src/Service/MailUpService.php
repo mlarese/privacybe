@@ -98,9 +98,12 @@ class MailUpService {
 
         foreach ($lists as $list) {
 
-        	var_dump($list);
-			if($list->Name === $listName)  {
+
+			if(is_object($list) && property_exists($list,'Name') && $list->Name === $listName)  {
 				return $list;
+			}
+			elseif(is_array($list) && isset($list['Name']) && $list['Name'] == $listName) {
+                return $list;
 			}
 		}
 

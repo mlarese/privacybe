@@ -98,7 +98,6 @@ class MailUpService {
 
         foreach ($lists as $list) {
 
-
 			if(is_object($list) && property_exists($list,'Name') && $list->Name === $listName)  {
 				return $list;
 			}
@@ -181,6 +180,33 @@ class MailUpService {
 
 		return false;
 	}
+
+    /**
+     * @param $listId
+     * @param DateTime $expireDate
+     * @param array $recipients
+     * @return bool
+     * @throws \App\Exception\MailUPListException
+     * @throws \App\Exception\MailUPRecipientException
+     */
+    public function addMultipleSubscriber($listId, DateTime $expireDate,array $recipients) {
+
+        $srv = new Recipient();
+
+		foreach ($recipients as $k => $recipient){
+            $recipients[$k]['Email'] = trim($recipients[$k]['email']);
+			$recipients[$k]['expireDate'] = $expireDate;
+		}
+
+        $srv->addMultipleRecipientsToListByOwnerId(
+            $this->ownerId,
+            $listId,
+            $recipients);
+
+        return false;
+    }
+
+
 
 	public function deleteSubscriber($listId, $email) {
 			return false;

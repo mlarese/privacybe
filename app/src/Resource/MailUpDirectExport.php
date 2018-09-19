@@ -129,29 +129,17 @@ class MailUpDirectExport  implements IDirectExport
                     die;
                 }
 
-                     $confirmed = 1;
+
+                    try {
+
+                        $this->connector->addMultipleSubscriber( $list->getId(),$this->data,$mailUpConfig['expireDate']);
 
 
-                    foreach ($this->data as $value){
-                        $optionalFields = [];
-                        if(isset($value['language']) &&  $value['language']!=''){
-                            $optionalFields = ['language' =>   $value['language'] ];
-                        }
-                        try {
-                            $this->connector->addSubscriber(
-                                $list->getId(),
-                                trim($value['email']),
-                                $confirmed,
-                                $value['name'],
-                                $value['surname'],
-                                $mailUpConfig['expireDate'],
-                                $optionalFields
-                            );
+
                         }
                         catch (\Exception $e){
 
                         }
-                    }
 
 
                 break;

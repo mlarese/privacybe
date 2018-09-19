@@ -130,16 +130,16 @@ class MailUpDirectExport  implements IDirectExport
                 }
 
 
-                    try {
+                try {
 
-                        $this->connector->addMultipleSubscriber( $list->getId(),$this->data,$mailUpConfig['expireDate']);
+                        $this->connector->addMultipleSubscriber( $list->getId(),$mailUpConfig['expireDate'],$this->data);
 
 
 
-                        }
-                        catch (\Exception $e){
+                  }
+                  catch (\Exception $e){
 
-                        }
+                  }
 
 
                 break;

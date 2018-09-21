@@ -22,7 +22,7 @@ $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
-
+$app->get('/api/test/owner/{id}',  'App\GeneralActions:getOwnerById');
 
 /** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');

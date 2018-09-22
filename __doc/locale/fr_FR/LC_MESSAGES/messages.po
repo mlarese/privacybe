@@ -413,7 +413,7 @@ msgid "Add a last minute"
 msgstr "Ajouter Lastminute"
 
 msgid "Add a module"
-msgstr "Ajouter Module"
+msgstr "Ajouter Modules"
 
 msgid "Add a multirate"
 msgstr "Ajouter Tarifs Multiples"
@@ -2498,7 +2498,7 @@ msgid "Edit a last minute"
 msgstr "Éditer Lastminute"
 
 msgid "Edit a module"
-msgstr "Éditer Module"
+msgstr "Éditer Modules"
 
 msgid "Edit a page"
 msgstr "Éditer Une Page"
@@ -4217,17 +4217,17 @@ msgstr "Modifier Mode"
 msgid "Modify pricelist"
 msgstr "Modifier Liste Des Prix"
 
-msgid "Module list"
-msgstr "Liste Module"
+msgid "Modules list"
+msgstr "Liste Modules"
 
-msgid "Module manager"
-msgstr "Manager Module"
+msgid "Modules manager"
+msgstr "Manager Modules"
 
-msgid "Module manager cannot be empty"
-msgstr "Manager Module Ne Peut Pas Être Vide"
+msgid "Modules manager cannot be empty"
+msgstr "Manager Modules Ne Peut Pas Être Vide"
 
-msgid "Module name cannot be empty"
-msgstr "Nom Du Module Ne Peut Pas Être Vide"
+msgid "Modules name cannot be empty"
+msgstr "Nom Du Modules Ne Peut Pas Être Vide"
 
 msgid "Monday"
 msgstr "Lundi"
@@ -7286,7 +7286,7 @@ msgid "Structure mapping"
 msgstr "Mappe Logements"
 
 msgid "Structure module"
-msgstr "Module De Structure"
+msgstr "Modules De Structure"
 
 msgid "Structure name"
 msgstr "Nom Structure"

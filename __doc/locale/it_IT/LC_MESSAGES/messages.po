@@ -10993,8 +10993,8 @@ msgstr "Polacco"
 msgid "Banner"
 msgstr "Banner"
 
-msgid "Widget with fixed height"
-msgstr "Widget con altezza fissa"
+msgid "Widgets with fixed height"
+msgstr "Widgets con altezza fissa"
 
 msgid "Insert into your web site"
 msgstr "Aggiungi al tuo sito web"
@@ -11014,13 +11014,13 @@ msgstr "Evidenziate tutto il codice HTML presonalizzato nella caselle seguente e
 msgid "Preview of the widget"
 msgstr "Anteprima del widget"
 
-msgid "Widget type"
+msgid "Widgets type"
 msgstr "Tipo di widget"
 
-msgid "Widget language"
+msgid "Widgets language"
 msgstr "Lingua preferita"
 
-msgid "Widget code"
+msgid "Widgets code"
 msgstr "Codice"
 
 msgid "Insert into your e-mail"
@@ -15167,7 +15167,7 @@ msgstr "Estensione del file non valida"
 msgid "Invalid MIME type"
 msgstr "Tipo MIME non valido"
 
-msgid "Invalid Phone Booking Module operation"
+msgid "Invalid Phone Booking Modules operation"
 msgstr "Operazione del modulo di prenotazione telefonica non valida"
 
 msgid "Invalid description input type"

@@ -9,10 +9,16 @@
 namespace App\Action;
 
 
-class Widget extends AbstractAction
+use App\Entity\Config\Widget;
+
+class Widgets extends AbstractAction
 {
     public function getAllWidgets(Request $request, Response $response, $args) {
         try {
+            $em =$this->getEmConfig();
+            $rep =$em->getRepository(Widget::class);
+            $widget = $rep->findBy();
+            return $response->withJson($this->toJson($widget));
 
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -22,6 +28,12 @@ class Widget extends AbstractAction
 
     public function getWidget(Request $request, Response $response, $args) {
         try {
+
+            $id = $args['id'];
+            $widget = $this->getEmConfig();
+            $widget->getRepository(Widget::class)->find($id);
+            return $response->withJson( $this->toJson($widget));
+
 
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -40,6 +52,10 @@ class Widget extends AbstractAction
 
     public function insertWidget(Request $request, Response $response, $args) {
         try {
+            $body = $request->getParsedBody();
+
+            $this->getEmConfig()->persist();
+            $this->getEmConfig()->flush();
 
         } catch (\Exception $e) {
             echo $e->getMessage();

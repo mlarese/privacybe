@@ -81,6 +81,7 @@ $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
+$app->put('/api/surfer/acceptupgrade/{id}', 'App\Action\Terms:acceptUpgrade');
 
 /*********************************************************
  *                  TERMS PAGES

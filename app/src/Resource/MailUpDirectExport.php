@@ -101,6 +101,17 @@ class MailUpDirectExport  implements IDirectExport
 
         switch ($this->action){
             case 'export':
+
+                $mailUpConfig = $this->mailUpConfig[0]->getData();
+                $mailUpConfig['expireDate'] = new \DateTime();
+
+                if(isset($mailUpConfig['expireAfter']) && $mailUpConfig['expireAfter']!='' ){
+                    $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
+                }
+                else{
+                    $mailUpConfig['expireDate']->modify("+ 30 Days");
+                }
+
                 try{
                     $list = $this->connector->listExist($this->name);
                     if(!isset($list)){
@@ -108,16 +119,7 @@ class MailUpDirectExport  implements IDirectExport
                     }
 
                     /** @var MailUpListTTL $list */
-                    $mailUpConfig = $this->mailUpConfig[0]->getData();
 
-                    if(isset($mailUpConfig['expireDate']) && $mailUpConfig['expireDate']!='' ){
-                        $mailUpConfig['expireDate'] =  \DateTime::createFromFormat('Y-m-d',$mailUpConfig['expireDate']);
-                                $mailUpConfig['expireDate']->modify("+ " .  $mailUpConfig['expireAfter'] . " Days");
-                        }
-                    else{
-                        $mailUpConfig['expireDate'] = new \DateTime();
-                        $mailUpConfig['expireDate']->modify("+ 30 Days");
-                    }
 
                     $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
@@ -128,24 +130,18 @@ class MailUpDirectExport  implements IDirectExport
                     die;
                 }
 
-                $confirmed = 1;
 
-                foreach ($this->data as $value){
-                    $optionalFields = [];
-                    if(isset($value['language']) &&  $value['language']!=''){
-                        $optionalFields = ['language' =>   $value['language'] ];
-                    }
+                try {
 
-                    $this->connector->addSubscriber(
-                        $list->getId(),
-                        $value['email'],
-                        $confirmed,
-                        $value['name'] ,
-                        $value['surname'],
-                        $optionalFields,
-                        $expireDate
-                    );
-                }
+                        $this->connector->addMultipleSubscriber( $list->getId(),$mailUpConfig['expireDate'],$this->data);
+
+
+
+                  }
+                  catch (\Exception $e){
+
+                  }
+
 
                 break;
             case 'list':

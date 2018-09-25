@@ -8,7 +8,9 @@
 use App\Action\Attachments;
 use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
+use App\Action\Dictionaries;
 use App\Action\Operators;
+use App\Action\Owners;
 use App\Action\PrivacyManager;
 use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
@@ -73,6 +75,11 @@ $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 $routeMngr->baseRoutes("/api/owner/configuration", Configurations::class,'code');
 
 /*********************************************************
+ *                  Owner dictionary
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/dictionary", Dictionaries::class,'code');
+
+/*********************************************************
  *                  WIDGET
  *********************************************************/
 /** @var PrivacyManager */
@@ -98,6 +105,13 @@ $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
+
+/*********************************************************
+ *                  DOMAIN
+ *********************************************************/
+/** @var Owners */
+    $app->get('/api/domain/loadall', 'App\Action\Owners:loadAllDomains');
+
 
 /*********************************************************
  *                  TERMS PAGES
@@ -209,11 +223,12 @@ $app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
  *********************************************************/
 /** @var \App\Action\Auth */
 $app->post('/api/auth/login', 'App\Action\Auth:login');
+/** @var Users */
 $app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
-$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPassword');
-
+$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPasswordEmail');
+$app->post('/api/auth/pwdres', 'App\Action\Auth:resetPassword');
 
 //upgrade privacy disclaimere phase < 25th May
 

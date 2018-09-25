@@ -47,15 +47,16 @@ class PostFilter implements IFilter {
             $counter = 0;
             foreach ($list as &$pr ) {
                 $includeRec = false;
-                foreach ($pr['privacyFlags'] as $f) {
-                    if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
-                        if(  $f['selected']) {
-                            $includeRec = true;
-                            break;
+                if($pr['privacyFlags'] && is_array($pr['privacyFlags']))
+                    foreach ($pr['privacyFlags'] as $f) {
+                        if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
+                            if(  $f['selected']) {
+                                $includeRec = true;
+                                break;
+                            }
                         }
-                    }
 
-                }
+                    }
 
                 if($includeRec) $this->checkLanguage($includeRec, $criteria, $pr);
 

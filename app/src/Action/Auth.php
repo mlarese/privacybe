@@ -2,6 +2,7 @@
 
 namespace App\Action;
 
+use Ambta\DoctrineEncryptBundle\Encryptors\EncryptorInterface;
 use App\Action\Emails\EmailHelpers;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
@@ -13,6 +14,7 @@ use App\Resource\OperatorResource;
 use App\Traits\UrlHelpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Firebase\JWT\JWT;
 use function md5;
 use function session_commit;
@@ -201,12 +203,53 @@ class Auth extends AbstractAction
     }
 
     /**
-     * @param $request Request
-     * @param $response Response
-     * @param $args
-     * @return mixed
+     * @param Request  $request
+     * @param Response $response
+     * @param          $args
+     *
+     * @throws \Interop\Container\Exception\ContainerException
      */
-    public function resetPassword($request, $response, $args)
+    public function resetPassword(Request $request, Response $response, $args){
+        try {
+            $body = $request->getParsedBody();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k = $body['_k'];
+            $props = $this->urlB32DecodeToArray($_k, $enc);
+
+            if($body['user']!==$props['user']) {
+                return $response->withStatus(403, 'Wrong user');
+            }
+            $user = $props['user'];
+            $userId = $props['userId'];
+
+            /** @var User $user */
+            $userObj = $this->getEmConfig()->find(User::class, $userId );
+
+            if(  !isset($userObj)) {
+                return $response->withStatus(401, 'User not found');
+            }
+
+            $userObj->setPassword(      md5($body['password'])    );
+            $this->getEmConfig()->merge($userObj);
+            $this->getEmConfig()->flush();
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Password reset failed ');
+        }
+
+        return $response->withJson($this->success());
+    }
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param          $args
+     *
+     * @return Response
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function resetPasswordEmail(Request $request, Response $response, $args)
     {
         try {
             $user = $args['user'];
@@ -215,11 +258,13 @@ class Auth extends AbstractAction
             $eUser = $cfgem->getRepository(User::class)
                 ->findOneBy(['user'=> $user, 'active'=> true, 'deleted'=>0] );
 
+
             if (!isset($eUser)){
                 return $response->withStatus(401, 'User not found');
 
             }
             $email = null;
+
 
             if($eUser->getOwnerId()===0) {
                 /** @var CustomerCare $cusc */
@@ -231,14 +276,15 @@ class Auth extends AbstractAction
                 $email = $cusc->getEmail();
             }else{
                 $em = $this->getEmPrivacy($eUser->getOwnerId());
-                /** @var Operator $cusc */
+
+                /** @var Operator $oper */
                 $oper = $em->find(Operator::class, $eUser->getId());
 
                 if (!isset($oper)){
                     return $response->withStatus(401, 'User not found');
 
                 }
-                $email = $cusc->getEmail();
+                $email = $oper->getEmail();
 
             }
 
@@ -247,7 +293,7 @@ class Auth extends AbstractAction
             $_k= $this->urlB32EncodeString("user=$user&userId=$userId", $enc);
             $link = "https://privacy.dataone.online/service/preset?_k=$_k&user=$user";
 
-            $data = ['email'=>$email, 'link'=>$_k, 'user'=>$user];
+            $data = ['email'=>$email, 'link'=>$link, 'user'=>$user];
             $this->sendGenericEmail(
                 $this->getContainer(),
                 $data,

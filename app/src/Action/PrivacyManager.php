@@ -10,6 +10,7 @@ use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
 use App\Helpers\UploadsManager;
 use App\InternalImporters\PrivacyImporter;
+use App\Resource\DomainResource;
 use App\Resource\OwnerExistException;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\PostFilter;
@@ -390,6 +391,7 @@ class PrivacyManager extends AbstractAction
         $termId = $params['termId'];
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
+
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
 
         /** @var EntityManager $em */
@@ -397,6 +399,17 @@ class PrivacyManager extends AbstractAction
 
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
+
+         $dmnRsc = new DomainResource($em);
+
+
+        try {
+            $dmnRsc->ownerHas($domainName);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, $e->getMessage());
+        }
+
 
         if($termId===''){
             $termRes = new TermResource($em);

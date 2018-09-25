@@ -122,6 +122,7 @@ $app->get('/api/owner/termspages/{termId}', 'App\Action\TermPages:getTermPages')
 /*********************************************************
  *                  OWNERS
  *********************************************************/
+/** @var Owners */
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
 $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');

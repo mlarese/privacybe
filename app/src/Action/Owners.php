@@ -388,7 +388,7 @@ class Owners extends AbstractAction
         $owners = [];
 
         try{
-            $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
+            $owners = $owR->findBy(["deleted"=>0]);
 
         }catch(Exception $e) {
             echo($e->getMessage());

@@ -59,6 +59,7 @@ if($authMode === 'jwt') {
             "/api/widgetcomp",
             "/api/widget",
             "/api/auth/login",
+            "/api/auth/pwdres",
             "/api/test",
             "/api/surfer",
             "/api/import/dataone/upgrade",

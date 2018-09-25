@@ -2,14 +2,19 @@
 
 namespace App\Action;
 
+use Ambta\DoctrineEncryptBundle\Encryptors\EncryptorInterface;
+use App\Action\Emails\EmailHelpers;
+use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Config\UserLogin;
 use App\Entity\Privacy\Operator;
 use App\Entity\Privacy\Privacy;
 use App\Resource\OperatorResource;
+use App\Traits\UrlHelpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Firebase\JWT\JWT;
 use function md5;
 use function session_commit;
@@ -18,7 +23,10 @@ use Slim\Http\Response;
 use function strtolower;
 use Tuupola\Base62;
 
-class Auth extends AbstractAction {
+class Auth extends AbstractAction
+{
+    use EmailHelpers;
+    use UrlHelpers;
     /**
      * @param       $request Request
      * @param       $user
@@ -26,7 +34,8 @@ class Auth extends AbstractAction {
      *
      * @return mixed
      */
-    private function defineJwtToken ($request, $user, $scope = ["read", "write", "delete"]) {
+    private function defineJwtToken($request, $user, $scope = ["read", "write", "delete"])
+    {
         $requested_scopes = $request->getParsedBody() ?: [];
 
         $settings = $this->getContainer()->get('settings');
@@ -59,30 +68,31 @@ class Auth extends AbstractAction {
      * @return User
      * @throws UserNotAuthorizedException
      */
-    private function userHasAuth ($user, $pwd) {
+    private function userHasAuth($user, $pwd)
+    {
         /**
          * @var User $userEntity
          */
 
-        $userEntity = $this ->getEmConfig()
+        $userEntity = $this->getEmConfig()
             ->getRepository(User::class)
             ->findOneBy(['user' => $user]);
 
         $valid = false;
 
-        $msg='';
-        if(isset($userEntity)) {
+        $msg = '';
+        if (isset($userEntity)) {
             $msg = 'User found';
-            if($userEntity->getActive() && !$userEntity->getDeleted()) {
+            if ($userEntity->getActive() && !$userEntity->getDeleted()) {
                 $cfp = md5($pwd);
                 $cfp = strtolower($cfp);
 
-                $userPwd =  strtolower($userEntity->getPassword());
+                $userPwd = strtolower($userEntity->getPassword());
 
                 if ($userPwd === $cfp) {
                     $valid = true;
                 }
-            } else{
+            } else {
                 $msg = 'User found but not active or deleted';
             }
 
@@ -103,7 +113,8 @@ class Auth extends AbstractAction {
      *
      * @return mixed
      */
-    public function login($request, $response, $args) {
+    public function login($request, $response, $args)
+    {
         session_commit();
         $found = false;
         $user = $request->getParam('username');
@@ -117,39 +128,47 @@ class Auth extends AbstractAction {
         $op = null;
         try {
             $ue = $this->userHasAuth($user, $password);
-            $found = true ;
+            $found = true;
 
-            $opRes = new OperatorResource($this->getEmPrivacy( $ue->getOwnerId() ));
+            $gdprRole = 'customercare';
+            $gdprEmail = '';
 
-            $op = $opRes->findOperator($ue->getId());
+            if ($ue->getOwnerId() > 0) {
+
+                $opRes = new OperatorResource($this->getEmPrivacy($ue->getOwnerId()));
+
+                $op = $opRes->findOperator($ue->getId());
+                $gdprRole = $op->getRole();
+                $gdprEmail = $op->getEmail();
+            }
 
         } catch (UserNotAuthorizedException $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'User not authorized ' );
-        }catch (Exception $e) {
+            return $response->withStatus(401, 'User not authorized ');
+        } catch (Exception $e) {
             echo $e->getMessage();
-            return $response->withStatus(401, 'Authentication error ' );
+            return $response->withStatus(401, 'Authentication error ');
         }
-        $gdprRole =  $op->getRole();
+
         $settings = $this->getContainer()->get('settings');
         $host = $settings["doctrine_config"]['connection']['host'];
-        if($found) {
+        if ($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
-                "email"=> $op->getEmail(),
+                "email" => $gdprEmail,
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
                 "user" => $user,
                 "userName" => $ue->getName(),
                 "role" => $ue->getType(),
                 "ownerId" => $ue->getOwnerId(),
-                "source" => ($host==='127.0.0.1' )?'local': 'remote'
+                "source" => ($host === '127.0.0.1') ? 'local' : 'remote'
             ];
             $data = $this->defineJwtToken($request, $userSpec);
 
 
             $log = new UserLogin();
-            $log->setIpAddress( $this->getIp() )
+            $log->setIpAddress($this->getIp())
                 ->setLoginDate(new DateTime())
                 ->setUserId($ue->getId());
 
@@ -163,10 +182,11 @@ class Auth extends AbstractAction {
         }
     }
 
-    private function getAcl($gdprRole) {
+    private function getAcl($gdprRole)
+    {
 
         return [
-          "see-no-agreement" => ($gdprRole !== 'incharge')
+            "see-no-agreement" => ($gdprRole !== 'incharge')
         ];
     }
 
@@ -176,9 +196,123 @@ class Auth extends AbstractAction {
      * @param $args
      * @return mixed
      */
-    public function logout($request, $response, $args) {
+    public function logout($request, $response, $args)
+    {
         session_commit();
-        return $response->withJson( array("logout"=>"ok"));
+        return $response->withJson(array("logout" => "ok"));
+    }
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param          $args
+     *
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function resetPassword(Request $request, Response $response, $args){
+        try {
+            $body = $request->getParsedBody();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k = $body['_k'];
+            $props = $this->urlB32DecodeToArray($_k, $enc);
+
+            if($body['user']!==$props['user']) {
+                return $response->withStatus(403, 'Wrong user');
+            }
+            $user = $props['user'];
+            $userId = $props['userId'];
+
+            /** @var User $user */
+            $userObj = $this->getEmConfig()->find(User::class, $userId );
+
+            if(  !isset($userObj)) {
+                return $response->withStatus(401, 'User not found');
+            }
+
+            $userObj->setPassword(      md5($body['password'])    );
+            $this->getEmConfig()->merge($userObj);
+            $this->getEmConfig()->flush();
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Password reset failed ');
+        }
+
+        return $response->withJson($this->success());
+    }
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param          $args
+     *
+     * @return Response
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function resetPasswordEmail(Request $request, Response $response, $args)
+    {
+        try {
+            $user = $args['user'];
+            $cfgem = $this->getEmConfig();
+            /** @var User $eUser */
+            $eUser = $cfgem->getRepository(User::class)
+                ->findOneBy(['user'=> $user, 'active'=> true, 'deleted'=>0] );
+
+
+            if (!isset($eUser)){
+                return $response->withStatus(401, 'User not found');
+
+            }
+            $email = null;
+
+
+            if($eUser->getOwnerId()===0) {
+                /** @var CustomerCare $cusc */
+                $cusc = $cfgem->find(CustomerCare::class, $eUser->getId());
+                if (!isset($cusc)){
+                    return $response->withStatus(401, 'User not found');
+
+                }
+                $email = $cusc->getEmail();
+            }else{
+                $em = $this->getEmPrivacy($eUser->getOwnerId());
+
+                /** @var Operator $oper */
+                $oper = $em->find(Operator::class, $eUser->getId());
+
+                if (!isset($oper)){
+                    return $response->withStatus(401, 'User not found');
+
+                }
+                $email = $oper->getEmail();
+
+            }
+
+            $userId = $eUser->getId();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k= $this->urlB32EncodeString("user=$user&userId=$userId", $enc);
+            $link = "https://privacy.dataone.online/service/preset?_k=$_k&user=$user";
+
+            $data = ['email'=>$email, 'link'=>$link, 'user'=>$user];
+            $this->sendGenericEmail(
+                $this->getContainer(),
+                $data,
+                'password_reset',
+                'it',
+                $this->getCallCenterEmail($this->getContainer()),
+                $email,
+                'data_one_emails',
+                'password reset'
+
+            );
+
+            return $response->withJson($this->success());
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Password reset failed ');
+
+        }
     }
 
     /**
@@ -187,12 +321,13 @@ class Auth extends AbstractAction {
      * @param $args
      * @return mixed
      */
-    public function user($request, $response, $args) {
+    public function user($request, $response, $args)
+    {
         session_commit();
         $token = $request->getAttribute("token");
         $ud = $this->getUserData($request);
 
-        return $response->withJson( ["user" => $token['user'] ] );
+        return $response->withJson(["user" => $token['user']]);
     }
     private function resetPassword($request, $response, $args) {
         session_commit();

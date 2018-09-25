@@ -10,6 +10,7 @@ use App\Entity\Privacy\Term;
 use App\Entity\Privacy\TermPage;
 use App\Helpers\UploadsManager;
 use App\InternalImporters\PrivacyImporter;
+use App\Resource\DomainResource;
 use App\Resource\OwnerExistException;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\PostFilter;
@@ -20,6 +21,7 @@ use App\Resource\PropertyNotFoundException;
 use App\Resource\TermPageResource;
 use App\Resource\TermResource;
 use App\Service\DeferredPrivacyService;
+use App\Service\FilesService;
 use App\Traits\UrlHelpers;
 use function base64_encode;
 use DateTime;
@@ -30,8 +32,11 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
+use function fnmatch;
+use Interop\Container\Exception\ContainerException;
 use function json_decode;
 use function json_encode;
+use function md5;
 use function move_uploaded_file;
 use function pathinfo;
 use function print_r;
@@ -45,6 +50,35 @@ use function toJson;
 class PrivacyManager extends AbstractAction
 {
     use UrlHelpers;
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getPrivacyiesByEmailOwnerDomain($request, $response, $args) {
+
+        try {
+            $_k = $request->getParam('_k');
+            $encr = $this->getContainer()->get('encryptor');
+            $params = $this->urlB32DecodeToArray($_k, $encr);
+            $email = $params['email'];
+            $ownerId = $params['ownerId'];
+            $domain = $params['domain'];
+            $em = $this->getEmPrivacy($ownerId);
+            $pres = new PrivacyResource($em);
+            $privacies = $pres->privacyRecord($email, $domain);
+        } catch (Exception $e) {
+            return $response->withStatus(500, 'Error finding privacies');
+        }
+
+        return $response->withJson(  $privacies);
+
+    }
 
     /**
      * @param $request Request
@@ -357,6 +391,7 @@ class PrivacyManager extends AbstractAction
         $termId = $params['termId'];
         $httpReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
+
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
 
         /** @var EntityManager $em */
@@ -364,6 +399,17 @@ class PrivacyManager extends AbstractAction
 
         /** @var EntityManager $em */
         $em = $this->getEmPrivacy($ownerId);
+
+         $dmnRsc = new DomainResource($em);
+
+
+        try {
+            $dmnRsc->ownerHas($domainName);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(403, $e->getMessage());
+        }
+
 
         if($termId===''){
             $termRes = new TermResource($em);
@@ -633,23 +679,19 @@ class PrivacyManager extends AbstractAction
      */
     public function uploadUserPrivacy($request, $response, $args) {
 
-        return $response->withJson($this->success( ["fn"=>"fname"] ));
-
-        $files = $request->getUploadedFiles();
-        $privacyId = $args['uid'];
-        /** @var UploadedFile $file */
-        $file = $files['file'];
-
-        // print_r($file);
-
-        $tmpFileName = $file->file;
-        $fileName = $file->getClientFilename();
-        $pinfo = pathinfo($fileName);
-        $ext = $pinfo['extension'];
-
-        $newFileName = 'prv_'.$privacyId.'.'.$ext;
-
-        return $response->withJson($this->success( ["fn"=>$newFileName] ));
+        try {
+            $files = $request->getUploadedFiles();
+            $ownerId = $this->getOwnerId($request);
+            $privacyId = $args['uid'];
+            /** @var UploadedFile $file */
+            $file = $files['file'];
+            $fsrv = new FilesService($this->getContainer());
+            $fsrv->saveUserAttachment($file, $ownerId, $privacyId);
+            return $response->withJson($this->success());
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'error saving attachment');
+        }
     }
     /**
      * @param $request Request
@@ -666,6 +708,7 @@ class PrivacyManager extends AbstractAction
         $ownerId = $request->getHeader('OwnerId')[0];
         $body = $request->getParsedBody();
 
+        $hasAttachments = false;
         try {
             $ip = $this->getIp();
             $domain = $body['domain'];
@@ -730,6 +773,22 @@ class PrivacyManager extends AbstractAction
         return $response->withJson($this->success()) ;
     }
 
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function downloadAttachment($request, $response, $args) {
+        $ownerId = $this->getOwnerId($request);
+        $privacyUid = $args['uid'];
+        $fname = $args['fname'];
+        $fname = $this->urlB64DecodeString($fname);
+        $fname = md5($fname);
+        die('download '.$ownerId . ' '.$fname);
+    }
     /**
      * @param $request Request
      * @param $response Response

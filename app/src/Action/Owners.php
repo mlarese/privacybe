@@ -8,12 +8,15 @@ use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Privacy\Domain;
 use App\Entity\Privacy\Operator;
+use App\Entity\Proxy\OwnerProxy;
 use App\Resource\DomainResource;
 use App\Resource\OperatorResource;
 use App\Resource\OwnerResource;
 use App\Resource\UserExistException;
 use App\Resource\UserResource;
+use function array_push;
 use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
@@ -21,6 +24,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
+use function is_array;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -39,6 +43,35 @@ class Owners extends AbstractAction
         $this->executeConfigSql("GRANT ALL PRIVILEGES ON $db.* to $user@'%' IDENTIFIED BY '$password';");
     }
 
+    /**
+     * @return Domain[]
+     * @throws ORMException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function loadAllDomains (Request $request, Response $response, $args) {
+        try {
+            $ows = $this->getEmConfig()->getRepository(OwnerProxy::class)->findBy(['deleted' => 0]);
+            /** @var Domain[] $domains */
+            $domains = [];
+            /** @var OwnerProxy $o */
+
+
+            foreach ($ows as $o) {
+                $em = $this->getEmPrivacy($o->getId());
+
+                $ds = DomainResource::getDomainRefs($em, $o->getId());
+                if (isset($ds) && is_array($ds) && count($ds) > 0) {
+                    array_push($domains, ...$ds);
+                }
+                $em->close();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading domains');
+        }
+
+        return $response->withJson($this->toJson($domains));
+    }
     /**
      * @param $dbName
      * @param $user
@@ -59,11 +92,42 @@ class Owners extends AbstractAction
      */
     private function createPrivacyTables($db) {
         $sql = "
+        CREATE TABLE $db.mailup_list_ttl (
+          id int(11) NOT NULL,
+          guid varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          expire datetime NOT NULL,
+          updated datetime DEFAULT NULL,
+          PRIMARY KEY (id),
+          KEY mailup_list_ttl_guid (guid),
+          KEY mailup_list_expired_values (expire)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        CREATE TABLE $db.mailup_token (
+          id int(11) NOT NULL AUTO_INCREMENT,
+          alertemail varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          clientid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          clientsecret varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+          token longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated datetime DEFAULT NULL,
+          status int(11) NOT NULL,
+          PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+        CREATE TABLE $db.mailup_recipient_ttl (
+          id int(11) NOT NULL,
+          list int(11) NOT NULL,
+          created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          expire datetime NOT NULL,
+          updated datetime DEFAULT NULL,
+          PRIMARY KEY (id,list),
+          KEY mailup_recipient_expired_values (expire)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
         CREATE TABLE $db.privacy_attachment (
           uid varchar(128) COLLATE utf8_unicode_ci NOT NULL,
           deleted tinyint(1) NOT NULL DEFAULT '0',
           created datetime DEFAULT CURRENT_TIMESTAMP,
-          attachments longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:json)',
+          attachments longtext COLLATE utf8_unicode_ci,
           PRIMARY KEY (uid),
           KEY privacy_created (created)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;   
@@ -324,7 +388,7 @@ class Owners extends AbstractAction
         $owners = [];
 
         try{
-            $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
+            $owners = $owR->findBy(["deleted"=>0]);
 
         }catch(Exception $e) {
             echo($e->getMessage());

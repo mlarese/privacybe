@@ -44,7 +44,7 @@
                 </td></tr>
                 <tr><td colspan="4"><b>
                     se  desidera  consultare i dettagli di compilazione o modificare le sottoscrizioni alle Normative
-                    o revocarle <a href="#">clicchi qui</a>
+                    o revocarle <a href="<?=$d['link']?>">clicchi qui</a>
                 </b></td></tr>
 
             </table>

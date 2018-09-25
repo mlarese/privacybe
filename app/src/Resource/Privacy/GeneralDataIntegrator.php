@@ -3,6 +3,7 @@
 namespace App\Resource\Privacy;
 
 
+use function is_array;
 use function trim;
 
 class GeneralDataIntegrator
@@ -27,15 +28,17 @@ class GeneralDataIntegrator
 
         $record['_flags_'] = [];
 
-        foreach ($record['privacyFlags'] as $pf) {
-            $unsub = false;
-            $user='';
-            if(isset($pf['unsubscribe']))  $unsub = true;
-            if(isset($pf['user']))  $user = $pf['user'];
 
-            $record['_flags_'][] = ["code" => $pf['code'], "selected" => $pf['selected'], "user" => $user, "unsubscribe" => $unsub, "mandatory" => $pf['mandatory']];
+        if(is_array($record['privacyFlags']))
+            foreach ($record['privacyFlags'] as $pf) {
+                $unsub = false;
+                $user='';
+                if(isset($pf['unsubscribe']))  $unsub = true;
+                if(isset($pf['user']))  $user = $pf['user'];
 
-        }
+                $record['_flags_'][] = ["code" => $pf['code'], "selected" => $pf['selected'], "user" => $user, "unsubscribe" => $unsub, "mandatory" => $pf['mandatory']];
+
+            }
 
         return $record;
     }

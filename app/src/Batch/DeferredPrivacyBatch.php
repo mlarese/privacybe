@@ -48,7 +48,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
     public function sendDeferredEmails($deferredTYPE = DeferredPrivacyService::DEFERRED_TYPE_DOUBLE_OPTIN){
 
         try {
-            $env = $this->detectEnvironment();
+            $env = 'prod';
             $emcfg = $this->emBuilder->buildEmConfig();
             $ownres = new OwnerResource($emcfg);
             /** @var DeferredPrivacyService $srv */
@@ -139,6 +139,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
                         $q->setParameter(1, $priv->getId())
                             ->getQuery()
                             ->execute();
+
+                        $emprv->flush();
                     } catch (Exception $e) {
                         echo ' error ' . $e->getMessage();
                     }

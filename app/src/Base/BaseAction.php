@@ -14,6 +14,27 @@ abstract class BaseAction extends AbstractAction
 
     /** @var Request */
     private $request;
+
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response {
+        return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArgs() {
+        return $this->args;
+    }
     /** @var Response */
     private $response;
     private $args;
@@ -70,6 +91,7 @@ abstract class BaseAction extends AbstractAction
     public function afterGet (&$recordset){}
     public function beforeGetById (&$params){}
     public function afterGetById (&$record, $args){}
+    public function beforeCreate (&$values){}
     public function beforeSave (&$values){}
     abstract public function mandatoryFields();
     public function validate ($values) {return true;}
@@ -92,7 +114,7 @@ abstract class BaseAction extends AbstractAction
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();
             $this->beforeGetById($args);
-            $record = $this->find($args['id']);
+            $record = $this->findOneBy($args);
             $this->afterGetById($record, $args)  ;
             return $response->withJson( $this->toJson( $record));
         } catch (\Exception $e) {
@@ -108,8 +130,11 @@ abstract class BaseAction extends AbstractAction
             $body = $request->getParsedBody();
 
             if(!$this->validate($body)) throw new \Exception('Mandatory field missing');
+            $this->beforeCreate($body);
             $this->beforeSave($body);
+
             $this->create($body);
+
             $this->flush();
             return  $response->withJson( $this->success());
         } catch (\Exception $e) {

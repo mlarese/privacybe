@@ -9,7 +9,8 @@ return [
     'settings' => [
         'attachments' => [
           'users' => [
-              'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}'
+              'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}',
+              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments'
           ]
         ],
         "dataone_emails" => [
@@ -32,6 +33,17 @@ return [
                         ]
                     ]
                 ],
+            ],
+
+            'notify_unsub_news_executed' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Disiscrizione da newsletter",
+                            "en" => "Newsletters unsubscribe"
+                        ]
+                    ]
+                ]
             ],
             'news_unsub_email_notif' => [
                 'all' => [
@@ -90,7 +102,7 @@ return [
                     'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/surfer/confirmdeferred'
+                    'confirm_link' => 'https://privacy.dataone.online/manager/surfer/confirmdeferred'
                 ]
             ],
         ],
@@ -110,6 +122,9 @@ return [
             'entrypoint' => 'http://www.mail-one.it/mailone/xml.php',
             'mmuser' => 'admin',
             'mmpassword' => '80c90326274099981dc47961023fb56924901085',
+        ],
+        'MailUp' => [
+            'entrypoint' => 'mailup/entrypoint'
         ],
         // monolog settings
         'logger' => [
@@ -182,7 +197,7 @@ return [
             'connection' => [
                 'driver'   => 'pdo_mysql',
                 'host'     => '10.0.28.1',
-                'dbname'   => 'privacy_59',
+                'dbname'   => 'privacy_64',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
             ]

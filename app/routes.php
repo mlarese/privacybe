@@ -6,13 +6,19 @@
  *********************************************************/
 
 use App\Action\Attachments;
+use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
+use App\Action\Dictionaries;
 use App\Action\Operators;
+use App\Action\Owners;
 use App\Action\PrivacyManager;
+use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
+use App\Entity\Privacy\Configuration;
+use App\Entity\Privacy\UserRequest;
 
 $routeMngr = new BaseRoutesManager($app);
 
@@ -20,9 +26,11 @@ $routeMngr = new BaseRoutesManager($app);
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
+$app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
+
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
-$app->get('/api/test/owner/{id}',  'App\GeneralActions:getOwnerById');
+
 
 /** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
@@ -56,8 +64,20 @@ $app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewslett
 /*********************************************************
  *                  Attachments
  *********************************************************/
+/** @var PrivacyManager */
+$app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:downloadAttachment');
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
+
+/*********************************************************
+ *                  Config
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/configuration", Configurations::class,'code');
+
+/*********************************************************
+ *                  Owner dictionary
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/dictionary", Dictionaries::class,'code');
 
 /*********************************************************
  *                  WIDGET
@@ -69,7 +89,11 @@ $app->post('/api/widget', 'App\Action\PrivacyManager:savePrivacy');
 /** @var PrivacyManager */
 $app->post('/api/widgetcomp', 'App\Action\PrivacyManager:savePlainPrivacy');
 $app->get('/api/widget/{id}', 'App\Action\PrivacyManager:getWidgetTermById');
-$app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insert');
+/** @var UsersRequests */
+$app->post('/api/surfer/unsubnewsrequest', 'App\Action\UsersRequests:insertUnsubscribeNewsRequest');
+$app->post('/api/surfer/unsuballrequest', 'App\Action\UsersRequests:insertUnsubscribeAllRequest');
+$app->post('/api/widget/userrequest', 'App\Action\UsersRequests:insertSubscriptionRequest');
+$app->get('/api/surfer/userrequest', 'App\Action\UsersRequests:insertSubscriptionRequestFromLink');
 
 /*********************************************************
  *                  TERM
@@ -81,7 +105,13 @@ $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
-$app->put('/api/surfer/acceptupgrade/{id}', 'App\Action\Terms:acceptUpgrade');
+
+/*********************************************************
+ *                  DOMAIN
+ *********************************************************/
+/** @var Owners */
+    $app->get('/api/domain/loadall', 'App\Action\Owners:loadAllDomains');
+
 
 /*********************************************************
  *                  TERMS PAGES
@@ -92,13 +122,12 @@ $app->get('/api/owner/termspages/{termId}', 'App\Action\TermPages:getTermPages')
 /*********************************************************
  *                  OWNERS
  *********************************************************/
+/** @var Owners */
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
 $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
-$app->post('/api/owner/activate', 'App\Action\Owners:activate');
-$app->post('/api/owner/deactivate', 'App\Action\Owners:deactivate');
 
 /*********************************************************
  *                  PRIVACY GROUPED
@@ -111,18 +140,14 @@ $app->put('/api/owner/userlastdata/{id}', 'App\Action\Users:updateMainData');
 $app->post('/api/owner/userterms', 'App\Action\Users:updateTerms');
 
 /*********************************************************
- *                  DICTIONARY
- *********************************************************/
-$routeMngr->baseRoutes("/api/owner/dictionary", Attachments::class);
-
-/*********************************************************
  *                  PRIVACY OWNER AND SURFER
  *********************************************************/
 /**  @var App\Action\PrivacyManager */
 $app->get('/api/owner/privacy', 'App\Action\PrivacyManager:searchPrivacy');
 $app->get('/api/owner/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
 $app->get('/api/surfer/privacy/{id}', 'App\Action\PrivacyManager:getPrivacy');
-$app->get('/api/surfer/privacybye', '?. App\Action\PrivacyManager:getPrivacyByEmail');
+$app->get('/api/surfer/privacybyeod', 'App\Action\PrivacyManager:getPrivacyiesByEmailOwnerDomain');
+$app->get('/api/surfer/privacybye', 'App\Action\PrivacyManager:getPrivacyByEmail');
 /**  @var App\Action\Users */
 $app->delete('/api/surfer/privacybye/{email}', 'App\Action\Users:deleteUserSubscriptions');
 
@@ -192,16 +217,19 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *********************************************************/
 //retrieve term
 $app->get('/api/owner/termtosign/{language}/{termId}', 'App\Action\PrivacyManager:toSuscribeTerm');
+/** @var PrivacyManager */
 $app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
 /*********************************************************
  *                  AUTH
  *********************************************************/
+/** @var \App\Action\Auth */
 $app->post('/api/auth/login', 'App\Action\Auth:login');
+/** @var Users */
 $app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
-$app->get('/api/auth/pwdres', 'App\Action\Auth:resetPassword');
-
+$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPasswordEmail');
+$app->post('/api/auth/pwdres', 'App\Action\Auth:resetPassword');
 
 //upgrade privacy disclaimere phase < 25th May
 
@@ -215,7 +243,7 @@ $app->get('/upgrade/domain', 'App\Action\Subscribers:domainList');
 
 $app->post('/upgrade/allow/{domainid}/{pathid}/{email}', 'App\Action\Subscribers:create');
 
-
+/** @var ShareSubscriberList */
 $app->post('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:create');
 
 $app->get('/api/adapters/{connector}/{adapter}/{action}', 'App\Action\ShareSubscriberList:list');

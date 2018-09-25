@@ -133,6 +133,24 @@ $container['couponStoreOne'] = function ($container) {
     return $couponService;
 };
 
+$container['email_client'] = function ($container) {
+    $settings = $container->get('settings');
+    $options = $settings['mailservice'];
+    $exportService = new Client($options);
+
+    return $exportService;
+};
+
+
+$container['encryptor'] = function ($container) {
+    $settings = $container->get('settings');
+    $options = $settings['doctrine_privacy'];
+
+    $enc = new OpenSslEncryptor($options['encryption_key']);
+    return $enc;
+};
+
+
 $container['csv'] = function ($container) {
 
     $exportService = new \App\Resource\MailOneCsvExport();
@@ -148,14 +166,14 @@ $container['mailone'] = function ($container) {
     return $exportService;
 };
 
-$container['email_client'] = function ($container) {
+
+$container['mailup'] = function ($container) {
+
     $settings = $container->get('settings');
-    $options = $settings['mailservice'];
-    $exportService = new Client($options);
+    $exportService = new \App\Resource\MailUpDirectExport($container);
 
     return $exportService;
 };
-
 
 
 $container['csv_direct'] = function ($container) {
@@ -165,18 +183,16 @@ $container['csv_direct'] = function ($container) {
     return $exportService;
 };
 
-$container['encryptor'] = function ($container) {
-    $settings = $container->get('settings');
-    $options = $settings['doctrine_privacy'];
-
-    $enc = new OpenSslEncryptor($options['encryption_key']);
-    return $enc;
-};
-
-
 $container['mailone_direct'] = function ($container) {
 
     $exportService = new \App\Resource\MailOneDDirectExportAdapter(null);
+
+    return $exportService;
+};
+
+$container['mailup_direct'] = function ($container) {
+
+    $exportService = new \App\Resource\MailUpDirectExportAdapter(null);
 
     return $exportService;
 };
@@ -204,6 +220,15 @@ $container['mailone_direct_service'] = function ($container) {
     return null;
 };
 
+
+$container['mailup_direct_service'] = function ($container) {
+
+    $settings = $container->get('settings');
+
+    $exportService = \App\Service\MailUpService::getInstance($settings['MailUp'],true);
+
+    return $exportService;
+};
 
 $container['direct_service'] = function ($container) {
     $settings = $container->get('settings');

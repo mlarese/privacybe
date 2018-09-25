@@ -7,6 +7,8 @@ use App\Action\Attachments;
 use App\Entity\Privacy\PrivacyAttachment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Exception;
+use function is_string;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -50,7 +52,8 @@ trait BaseResource
             if(!isset($data[$name])) continue;
             $att = $data[$name];
             if($value['type']==='datetime') {
-                $data[$name] = new \DateTime($data[$name]);
+                if(is_string($data[$name]))
+                    $data[$name] = new \DateTime($data[$name]);
             }
 
         }
@@ -83,10 +86,7 @@ trait BaseResource
         //$dtn1 = new DateTimeNormalizer('Y-m-d');
         $s = new Serializer([$dtn, $on, $ard]);
 
-        $clazz = $this->getClazz();
-
-
-        return  $s->denormalize($attributes, $clazz);
+      return  $s->denormalize($attributes, $clazz);
 
 
     }
@@ -158,9 +158,10 @@ trait BaseResource
 
         $classname= $this->getClazz();
 
-        $en = $this->hydrateAdv($values);
+        $en = $this->hydrateAdv($values, $classname);
 
-        $this->em->persist($en);
+
+        $this->em->merge($en);
     }
 
     public function update($values, $params) {

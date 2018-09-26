@@ -54,6 +54,7 @@ class AdvancedImporter {
 
     /**
      * @param array $fields
+     * @param string $columnSeparator
      * @param bool $dryRun
      * @return array
      * @throws ImportException
@@ -62,6 +63,7 @@ class AdvancedImporter {
      */
     function import (
         $fields,
+        $columnSeparator = ';',
         $dryRun = true
     ) {
 
@@ -78,7 +80,10 @@ class AdvancedImporter {
                 'CSV file field not found'
             ));
         }
-        $csv = $this->readCSVFile($fields['file']);
+        $csv = $this->readCSVFile(
+            $fields['file'],
+            $columnSeparator
+        );
 
         // Need UTF8 encode
         $utf8Encode = false;
@@ -211,7 +216,7 @@ class AdvancedImporter {
                 } else {
                     $language = $this->composeValue (
                         $fields['languageDefault'],
-                        $row,
+                        [],
                         false,
                         $utf8Encode
                     );
@@ -359,7 +364,7 @@ class AdvancedImporter {
                 } else {
                     $country = $this->composeValue (
                         $fields['countryDefault'],
-                        $row,
+                        [],
                         false,
                         $utf8Encode
                     );
@@ -746,7 +751,11 @@ class AdvancedImporter {
                     $value .= trim($row[$item]);
                 }
             } else if (is_string($fieldId)) {
-                $value = trim($row[$fieldId]);
+                if (count($row) == 0) {
+                    $value = trim($fieldId);
+                } else {
+                    $value = trim($row[$fieldId]);
+                }
                 if (empty($value)) {
                     return null;
                 }

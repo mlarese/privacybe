@@ -228,6 +228,12 @@ class CustomerCares extends AbstractAction
             $id = $args['id'];
             $owners = $this->getEmConfig()->find(Owner::class,$id);
 
+            $body = $request->getParsedBody();
+            $owners->setActive($body[0]);
+
+
+            $this->getEmConfig()->persist($owners);
+            $this->getEmConfig()->flush();
 
             return $response->withJson(  $this->toJson($owners));
 
@@ -251,6 +257,12 @@ class CustomerCares extends AbstractAction
             $id = $args['id'];
             $owners = $this->getEmConfig()->find(Owner::class,$id);
 
+            $body = $request->getParsedBody();
+            $owners->setActive($body[1]);
+
+
+            $this->getEmConfig()->persist($owners);
+            $this->getEmConfig()->flush();
 
             return $response->withJson(  $this->toJson($owners));
 

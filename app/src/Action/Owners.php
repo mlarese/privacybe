@@ -8,12 +8,15 @@ use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use App\Entity\Privacy\Domain;
 use App\Entity\Privacy\Operator;
+use App\Entity\Proxy\OwnerProxy;
 use App\Resource\DomainResource;
 use App\Resource\OperatorResource;
 use App\Resource\OwnerResource;
 use App\Resource\UserExistException;
 use App\Resource\UserResource;
+use function array_push;
 use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
@@ -21,6 +24,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
+use function is_array;
 use function print_r;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -41,6 +45,35 @@ class Owners extends AbstractAction
         $this->executeConfigSql("GRANT ALL PRIVILEGES ON $db.* to $user@'%' IDENTIFIED BY '$password';");
     }
 
+    /**
+     * @return Domain[]
+     * @throws ORMException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function loadAllDomains (Request $request, Response $response, $args) {
+        try {
+            $ows = $this->getEmConfig()->getRepository(OwnerProxy::class)->findBy(['deleted' => 0]);
+            /** @var Domain[] $domains */
+            $domains = [];
+            /** @var OwnerProxy $o */
+
+
+            foreach ($ows as $o) {
+                $em = $this->getEmPrivacy($o->getId());
+
+                $ds = DomainResource::getDomainRefs($em, $o->getId());
+                if (isset($ds) && is_array($ds) && count($ds) > 0) {
+                    array_push($domains, ...$ds);
+                }
+                $em->close();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading domains');
+        }
+
+        return $response->withJson($this->toJson($domains));
+    }
     /**
      * @param $dbName
      * @param $user
@@ -357,7 +390,7 @@ class Owners extends AbstractAction
         $owners = [];
 
         try{
-            $owners = $owR->findBy(["active" => 1, "deleted"=>0]);
+            $owners = $owR->findBy(["deleted"=>0]);
 
         }catch(Exception $e) {
             echo($e->getMessage());

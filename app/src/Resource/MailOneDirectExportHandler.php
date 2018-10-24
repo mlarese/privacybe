@@ -133,6 +133,7 @@ class MailOneDirectExportHandler implements IExportAdapter
         $adapter->setOwner($this->owner);
 
 
+
         $privacyRes = new PrivacyResource($this->entityManager);
 
         $criteria = $body['filters'];

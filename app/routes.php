@@ -9,7 +9,9 @@ use App\Action\Attachments;
 use App\Action\AttachmentView;
 use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
+use App\Action\Dictionaries;
 use App\Action\Operators;
+use App\Action\Owners;
 use App\Action\PrivacyManager;
 use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
@@ -76,6 +78,11 @@ $routeMngr->baseRoutes("/api/user/view/{uid}/{fname}", AttachmentView::class);
 $routeMngr->baseRoutes("/api/owner/configuration", Configurations::class,'code');
 
 /*********************************************************
+ *                  Owner dictionary
+ *********************************************************/
+$routeMngr->baseRoutes("/api/owner/dictionary", Dictionaries::class,'code');
+
+/*********************************************************
  *                  WIDGET
  *********************************************************/
 /** @var PrivacyManager */
@@ -103,6 +110,13 @@ $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
 $app->delete('/api/owner/term/{id}', 'App\Action\Terms:termDelete');
 
 /*********************************************************
+ *                  DOMAIN
+ *********************************************************/
+/** @var Owners */
+    $app->get('/api/domain/loadall', 'App\Action\Owners:loadAllDomains');
+
+
+/*********************************************************
  *                  TERMS PAGES
  *********************************************************/
 $app->get('/api/owner/termspages', 'App\Action\TermPages:getTermsPages');
@@ -111,6 +125,7 @@ $app->get('/api/owner/termspages/{termId}', 'App\Action\TermPages:getTermPages')
 /*********************************************************
  *                  OWNERS
  *********************************************************/
+/** @var Owners */
 $app->get('/api/owner/profile', 'App\Action\Owners:getOwners');
 $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
@@ -212,11 +227,12 @@ $app->post('/api/owner/user', 'App\Action\PrivacyManager:savePlainPrivacy');
  *********************************************************/
 /** @var \App\Action\Auth */
 $app->post('/api/auth/login', 'App\Action\Auth:login');
+/** @var Users */
 $app->post('/api/auth/chpw', 'App\Action\Users:changePassword');
 $app->post('/api/auth/logout', 'App\Action\Auth:logout');
 $app->get('/api/auth/user', 'App\Action\Auth:user');
-$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPassword');
-
+$app->get('/api/auth/pwdres/{user}', 'App\Action\Auth:resetPasswordEmail');
+$app->post('/api/auth/pwdres', 'App\Action\Auth:resetPassword');
 
 //upgrade privacy disclaimere phase < 25th May
 

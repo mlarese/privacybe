@@ -39,9 +39,9 @@ class DomainResource extends AbstractResource {
             $em = $this->entityManager;
 
         $d = $em->find(Domain::class, $domain);
-
+        // disabilitato momentaneamente
         if(!isset($d)) {
-            throw new Exception('Domain not available');
+            // throw new Exception('Domain not available');
         }
         return true;
     }

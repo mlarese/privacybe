@@ -383,6 +383,9 @@ $(document).ready(function(){
     // TMP csv
     item.append('file', $('#tmpcsv').val())
 
+    // Column separator
+    item.append('columnSeparator', $('#columnSeparator').val())
+
     // UTF8 encode
     item.append('utf8Encode', $('#utf8Encode:checked').length)
 

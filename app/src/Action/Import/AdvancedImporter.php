@@ -67,8 +67,16 @@ class AdvancedImporter extends AbstractAction {
             $service = new AdvancedImporterService();
             ini_set('max_execution_time', 60*60*24);
             ini_set('memory_limit', '4G');
+
+            // Get fields separator
+            $columnSeparator = ';';
+            if (isset($request->getParams()['columnSeparator'])) {
+                $columnSeparator = $request->getParams()['columnSeparator'];
+            }
+
             $result = $service->import(
-                $request->getParams()
+                $request->getParams(),
+                $columnSeparator
             );
         } catch (\Exception $e) {
             ob_clean();

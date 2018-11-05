@@ -13,11 +13,11 @@ use App\Traits\UrlHelpers;
 /**
  *
  * @author jeff
- *        
+ *
  */
 class AttachmentView extends BaseAction
 {
-    
+
     use UrlHelpers;
 
     /**
@@ -57,35 +57,35 @@ class AttachmentView extends BaseAction
      */
     public function beforeGetById($params)
     {
-        $fname = $args['fname'];
-        
+        $fname = $params['fname'];
+
         $fname = $this->urlB64DecodeString($fname);
-        
+
         $matches = [];
-        
+
         if ($fname === false) {
             throw new InvalidAttachmentException();
         }
-        
+
         $ftype = explode('.', $fname);
-        
+
         if (! $ftype || empty($ftype)) {
             throw new InvalidAttachmentException();
         }
-        
+
         $params['foname'] = $fname;
-        
+
         $params['fname'] = md5($fname);
-        
+
         $params['ftype'] = $ftype;
-        
+
         $settings = $this->container->get('settings');
-        
+
         if (! isset($settings['attachments']) || ! isset($settings['attachments']['users']) || ! isset($settings['attachments']['users']['spf_path'])) {
-            
+
             throw new \Exception("Attachment path not configured");
         }
-        
+
         $params['path'] = $settings['attachments']['users']['spf_path'];
     }
 
@@ -108,31 +108,31 @@ class AttachmentView extends BaseAction
     public function findBy($params = [])
     {
         $fname = $params['fname'];
-        
-        $ownerId = $this->getOwnerId($request);
-        
+
+        $ownerId = $this->getOwnerId($this->getRequest());
+
         $privacyId = $params['uid'];
-        
+
         $ftype = $params['ftype'];
-        
+
         $filename = sprintf($params['path'], $ownerId, $privacyId) . '/' . $fname . $ftype;
-        
+
         $params['filename'] = $filename;
-        
+
         $file = file_get_contents($filename);
-        
+
         if ($file === false)
             throw new FileNotFoundException();
-        
+
         return $file;
     }
 
     public function generateResponse($file, Request $request, Response $response, $args)
     {
         $response = $response->withAddedHeader('Cache-Control', 'no-cache, must-revalidate');
-        
+
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
-        
+
         $response = $response->withHeader('Content-type', 'application/octet-stream')
             ->withHeader('Content-Disposition', 'attachment; filename=' . $args['foname'])
             ->withHeader('Content-Transfer-Encoding', 'binary')
@@ -141,7 +141,7 @@ class AttachmentView extends BaseAction
             ->withHeader('Pragma', 'public')
             ->withHeader('Content-Length', filesize($args['filename']))
             ->withBody($file);
-        
+
         return $response;
     }
 
@@ -153,6 +153,7 @@ class AttachmentView extends BaseAction
     public function getById(Request $request, Response $response, $args)
     {
         try {
+
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();
             $this->beforeGetById($args);

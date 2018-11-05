@@ -6,6 +6,7 @@
         <counts>
           <entry key="addDependencyDialog_from_ProjectViewPopup" value="1" />
           <entry key="install_from_ProjectViewPopup" value="2" />
+          <entry key="updateAll_from_ProjectViewPopup" value="1" />
         </counts>
       </usages-collector>
     </session>

@@ -788,6 +788,10 @@ class PrivacyManager extends AbstractAction
         $fname = $args['fname'];
         $fname = $this->urlB64DecodeString($fname);
         $fname = md5($fname);
+
+        $av = new Attachments();
+
+        $av->getById($request, $response, $args);
         die('download '.$ownerId . ' '.$fname);
     }
     /**

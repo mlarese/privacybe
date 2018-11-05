@@ -67,6 +67,9 @@ $app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewslett
  *********************************************************/
 /** @var PrivacyManager */
 $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:downloadAttachment');
+// $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\AttachmentView:getById');
+
+
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
 

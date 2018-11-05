@@ -49,7 +49,6 @@ abstract class BaseAction extends AbstractAction
     public function __construct($container)
     {
         parent::__construct($container);
-        die("base");
         $this->setClazz($this->clazz());
         $this->setBaseParams($this->baseParams());
     }
@@ -111,7 +110,6 @@ abstract class BaseAction extends AbstractAction
 
     }
     public function getById (Request $request, Response $response, $args){
-        die("d");
         try {
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();

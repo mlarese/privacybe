@@ -152,6 +152,7 @@ trait BaseResource
      * @return \Doctrine\ORM\EntityRepository
      */
     public function repository () {
+        echo $this->getClazz() . '<br>';
         return $this->getEm()->getRepository($this->getClazz());
     }
     public function create($values) {

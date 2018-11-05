@@ -5,7 +5,6 @@ use App\Base\BaseAction;
 use App\Entity\Privacy\PrivacyAttachment;
 use App\Resource\InvalidAttachmentException;
 use App\Resource\FileNotFoundException;
-use function is_string;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use App\Traits\UrlHelpers;
@@ -15,8 +14,20 @@ use App\Traits\UrlHelpers;
  * @author jeff
  *
  */
-class AttachmentView extends BaseAction
+class AttachmentsView extends BaseAction
 {
+    /** @var AttachmentsView $instance */
+    private static $instance = null;
+
+    /**
+     * @param $container
+     *
+     * @return AttachmentsView
+     */
+    public static function getInstance($container) {
+        if(self::$instance == null) self::$instance = new  AttachmentsView($container);
+        return self::$instance;
+    }
 
     use UrlHelpers;
 
@@ -55,12 +66,11 @@ class AttachmentView extends BaseAction
      * {@inheritdoc}
      * @see \App\Base\BaseAction::beforeGetById()
      */
-    public function beforeGetById($params)
+    public function beforeGetById(&$params)
     {
+
         $fname = $params['fname'];
-
         $fname = $this->urlB64DecodeString($fname);
-
         $matches = [];
 
         if ($fname === false) {
@@ -113,34 +123,37 @@ class AttachmentView extends BaseAction
 
         $privacyId = $params['uid'];
 
-        $ftype = $params['ftype'];
+        $ftype = $params['ftype'][1];
 
-        $filename = sprintf($params['path'], $ownerId, $privacyId) . '/' . $fname . $ftype;
+        $filename = sprintf($params['path'], $ownerId, $privacyId) . '/' . $fname ;
 
         $params['filename'] = $filename;
 
-        $file = file_get_contents($filename);
+        // $file = file_get_contents($filename);
+        // if ($file === false) throw new FileNotFoundException();
 
-        if ($file === false)
-            throw new FileNotFoundException();
+        $fh = fopen($filename, 'rb');
 
-        return $file;
+        return  new \Slim\Http\Stream($fh);
     }
 
     public function generateResponse($file, Request $request, Response $response, $args)
     {
+
+
         $response = $response->withAddedHeader('Cache-Control', 'no-cache, must-revalidate');
 
         $response = $response->withAddedHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
-
+     //
         $response = $response->withHeader('Content-type', 'application/octet-stream')
             ->withHeader('Content-Disposition', 'attachment; filename=' . $args['foname'])
             ->withHeader('Content-Transfer-Encoding', 'binary')
             ->withHeader('Expires', '0')
             ->withHeader('Cache-Control', 'must-revalidate')
             ->withHeader('Pragma', 'public')
-            ->withHeader('Content-Length', filesize($args['filename']))
-            ->withBody($file);
+            // ->withHeader('Content-Length', filesize($args['fname']))
+            ->withBody($file)
+            ;
 
         return $response;
     }
@@ -157,10 +170,15 @@ class AttachmentView extends BaseAction
             $this->setActionParams($request, $response, $args);
             $this->injectEntityManager();
             $this->beforeGetById($args);
-            $record = $this->findOneBy($args);
+            $uid = $args['uid'];
+            $record = $this->findOneBy(["id"=>$uid]);
+            // $this->findBy($args);
             $this->afterGetById($record, $args);
-            $response = $this->generateResponse($record, $request, $response, $args);
-            return $response;
+            // echo '<pre>'; print_r($args);
+
+            $rs = $this->generateResponse($this->findBy($args), $request, $response, $args);
+
+            return $rs;
         } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error finding records');

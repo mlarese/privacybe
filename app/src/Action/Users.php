@@ -10,7 +10,7 @@ use App\Entity\Privacy\PrivacyAttachment;
 use App\Resource\OperatorResource;
 use App\Resource\Privacy\EmptyFilter;
 use App\Resource\Privacy\GroupByEmail;
-use App\Resource\PrivacyLogger;
+//use App\Resource\PrivacyLogger;
 use App\Resource\PrivacyLoggerResource;
 use App\Resource\PrivacyResource;
 use App\Service\AttachmentsService;

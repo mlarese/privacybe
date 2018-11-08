@@ -1,8 +1,10 @@
 <?php
 namespace App\Action;
-
+/*
 use App\Entity\Config\Domain;
-use App\Entity\Config\Page;
+use App\Entity\Config\Page;*/
+
+use App\Action\AttachmentView;
 use App\Entity\Config\Properties;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyDeferred;
@@ -787,7 +789,13 @@ class PrivacyManager extends AbstractAction
         $fname = $args['fname'];
         $fname = $this->urlB64DecodeString($fname);
         $fname = md5($fname);
-        die('download '.$ownerId . ' '.$fname);
+
+        /** @var AttachmentsView $av */
+       $av = AttachmentsView::getInstance($this->getContainer());
+       return $av->getById($request, $response, $args);
+
+
+        // die('<br>download '.$ownerId . ' '.$fname);
     }
     /**
      * @param $request Request

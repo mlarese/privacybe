@@ -145,7 +145,7 @@ class Auth extends AbstractAction
         } catch (UserNotAuthorizedException $e) {
             echo $e->getMessage();
             return $response->withStatus(401, 'User not authorized ');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(401, 'Authentication error ');
         }

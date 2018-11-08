@@ -6,6 +6,7 @@
  *********************************************************/
 
 use App\Action\Attachments;
+use App\Action\AttachmentView;
 use App\Action\Configurations;
 use App\Action\DeferredPrivacies;
 use App\Action\Dictionaries;
@@ -66,8 +67,13 @@ $app->get('/api/surfer/unsubnews', 'App\Action\Subscriptions:unsubscribeNewslett
  *********************************************************/
 /** @var PrivacyManager */
 $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\PrivacyManager:downloadAttachment');
+// $app->get('/api/user/attachmentdwn/{uid}/{fname}', 'App\Action\AttachmentView:getById');
+
+
 $app->post('/api/user/attachmentupd/{uid}', 'App\Action\PrivacyManager:uploadUserPrivacy');
 $routeMngr->baseRoutes("/api/user/attachment", Attachments::class);
+
+$routeMngr->baseRoutes("/api/user/view/{uid}/{fname}", AttachmentView::class);
 
 /*********************************************************
  *                  Config

@@ -27,6 +27,12 @@ $app->add(new CorsMiddleware(
             "Authorization",
             "If-Match",
             "If-Unmodified-Since",
+            "User-Agent",
+            "Connection",
+            "Pragma",
+            "Accept",
+            "Accept-Encoding",
+            "Accept-Language",
             "Token",
             "OwnerId",
             "Domain",
@@ -47,7 +53,6 @@ $app->add(new CorsMiddleware(
 
 // jwt, oauth
 $authMode = 'jwt';
-
 
 $auth = $settings->get('auth');
 

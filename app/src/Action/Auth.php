@@ -202,44 +202,6 @@ class Auth extends AbstractAction
         return $response->withJson(array("logout" => "ok"));
     }
 
-    /**
-     * @param Request  $request
-     * @param Response $response
-     * @param          $args
-     *
-     * @throws \Interop\Container\Exception\ContainerException
-     */
-    public function resetPassword(Request $request, Response $response, $args){
-        try {
-            $body = $request->getParsedBody();
-            $enc = $this->getContainer()->get('encryptor');
-            $_k = $body['_k'];
-            $props = $this->urlB32DecodeToArray($_k, $enc);
-
-            if($body['user']!==$props['user']) {
-                return $response->withStatus(403, 'Wrong user');
-            }
-            $user = $props['user'];
-            $userId = $props['userId'];
-
-            /** @var User $user */
-            $userObj = $this->getEmConfig()->find(User::class, $userId );
-
-            if(  !isset($userObj)) {
-                return $response->withStatus(401, 'User not found');
-            }
-
-            $userObj->setPassword(      md5($body['password'])    );
-            $this->getEmConfig()->merge($userObj);
-            $this->getEmConfig()->flush();
-
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return $response->withStatus(401, 'Password reset failed ');
-        }
-
-        return $response->withJson($this->success());
-    }
 
     /**
      * @param Request  $request
@@ -329,7 +291,47 @@ class Auth extends AbstractAction
 
         return $response->withJson(["user" => $token['user']]);
     }
-    private function resetPassword($request, $response, $args) {
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param          $args
+     *
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function resetPassword(Request $request, Response $response, $args){
+        try {
+            $body = $request->getParsedBody();
+            $enc = $this->getContainer()->get('encryptor');
+            $_k = $body['_k'];
+            $props = $this->urlB32DecodeToArray($_k, $enc);
+
+            if($body['user']!==$props['user']) {
+                return $response->withStatus(403, 'Wrong user');
+            }
+            $user = $props['user'];
+            $userId = $props['userId'];
+
+            /** @var User $user */
+            $userObj = $this->getEmConfig()->find(User::class, $userId );
+
+            if(  !isset($userObj)) {
+                return $response->withStatus(401, 'User not found');
+            }
+
+            $userObj->setPassword(      md5($body['password'])    );
+            $this->getEmConfig()->merge($userObj);
+            $this->getEmConfig()->flush();
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Password reset failed ');
+        }
+
+        return $response->withJson($this->success());
+    }
+
+    private function resetPassword_errata_checkit($request, $response, $args) {
         session_commit();
         $found = false;
         $user = $request->getParam('username');

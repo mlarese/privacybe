@@ -3,11 +3,28 @@
 namespace App\Resource\Privacy;
 
 
+use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 use function is_array;
 use function trim;
 
 class GeneralDataIntegrator
 {
+    /** @var EncryptorInterface */
+    private $encryptor;
+
+    /**
+     * @return EncryptorInterface
+     */
+    public function getEncryptor(): EncryptorInterface {
+        return $this->encryptor;
+    }
+
+    /**
+     * @param EncryptorInterface $encryptor
+     */
+    public function setEncryptor(EncryptorInterface $encryptor): void {
+        $this->encryptor = $encryptor;
+    }
     public function integrate(&$record)
     {
         // $record['email'] = trim($record['email']);
@@ -29,6 +46,17 @@ class GeneralDataIntegrator
         $record['_flags_'] = [];
 
 
+        if(isset( $this->encryptor)) {
+            if(!isset($record['properties'])) {
+                $record['properties'] = [ "note"=>"nota base"];
+            } else {
+                if($record['properties']["note"]) {
+                    $note = $record['properties']["note"];
+                    if($note!=='')
+                        $record['properties']["note"] = $this->encryptor->decrypt($note);
+                }
+            }
+        }
         if(is_array($record['privacyFlags']))
             foreach ($record['privacyFlags'] as $pf) {
                 $unsub = false;

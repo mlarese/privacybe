@@ -8,11 +8,14 @@
 
 namespace App\Resource\Privacy;
 
+use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
+use App\Manager\ApplicationMiddleware;
 use App\Resource\IResultIntegrator;
 
 class PrivacyRecordIntegrator implements IResultIntegrator {
     private $termPageMap;
     private $termMap;
+    private $encryptor;
 
     /**
      * PrivacyRecordIntegrator constructor.
@@ -23,6 +26,14 @@ class PrivacyRecordIntegrator implements IResultIntegrator {
     {
         $this->termPageMap=$termPageMap;
         $this->termMap=$termMap;
+        $appmdl = ApplicationMiddleware::getInstance();
+        $app = $appmdl->getApp();
+        $cont = $app->getContainer();
+
+        /** @var EncryptorInterface encryptor */
+        $this->encryptor = $cont->get('encryptor');
+
+
     }
 
     public function integrate(&$record) {
@@ -30,6 +41,8 @@ class PrivacyRecordIntegrator implements IResultIntegrator {
         $languageIntegrator = new LanguageIntegrator();
         /** @var IResultIntegrator $generalDataIntegrator */
         $generalDataIntegrator = new GeneralDataIntegrator();
+        $generalDataIntegrator->setEncryptor($this->encryptor);
+
         /** @var IResultIntegrator $treatmentsIntegrator */
         $treatmentsIntegrator = new TreatmentsIntegrator();
         /** @var IResultIntegrator $termIntegrator */

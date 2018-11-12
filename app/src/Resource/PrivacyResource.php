@@ -696,6 +696,7 @@ class PrivacyResource extends AbstractResource
             'p.form',
             // 'p.cryptedForm',
             'p.privacyFlags',
+            'p.properties',
             'p.email'
         ];
 

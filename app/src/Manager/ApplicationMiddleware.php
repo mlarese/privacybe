@@ -11,18 +11,46 @@ use Psr\Http\Message\ResponseInterface as Response;
 class ApplicationMiddleware
 {
 
+    private static $instance = null;
+
+    /** @var null|App  */
     protected $app = null;
 
     protected $settings = [];
 
     protected $applicationRouters = array();
 
+    public static function getInstance() {
+        return self::$instance;
+    }
+
+    /**
+     * @return null|App
+     */
+    public function getApp(): ?App {
+        return $this->app;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSettings(): array {
+        return $this->settings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApplicationRouters(): array {
+        return $this->applicationRouters;
+    }
 
 
     public function __construct(array $settings = [],\Slim\App $app)
     {
         $this->settings = $settings;
         $this->app = $app;
+        self::$instance = $this;
     }
 
     /**

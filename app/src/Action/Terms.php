@@ -354,4 +354,24 @@ class Terms extends AbstractAction{
         return $response->withJson( $this->toJson($res) );
     }
 
+    public function upgradeUsers(Request $request, Response $response, $args) {
+        try {
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error inserting new term');
+        }
+        return $response->withJson($this->success());
+    }
+    public function acceptUpdate(Request $request, Response $response, $args) {
+        try {
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error accepting update ');
+        }
+        return $response->withJson($this->success());
+    }
+
+
 }

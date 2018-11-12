@@ -404,6 +404,9 @@ class Owners extends AbstractAction
     protected function emptyProfile () {
         return ["marker"=>"marker"];
     }
+    protected function dictionary () {
+        return;
+    }
     /**
      * @param $request Request
      * @param $response Response

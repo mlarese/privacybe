@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
+use App\Entity\Config\Owner;
 use App\Entity\Config\User;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -166,6 +167,105 @@ class CustomerCares extends AbstractAction
             $this->getEmConfig()->flush();
 
             return $response->withJson(  $this->toJson($this->success()));
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getWidgets($request, $response, $args)
+    {
+
+        try {
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getOwners($request, $response, $args)
+    {
+
+        try {
+            $em = $this->getEmConfig();
+            $rep = $em->getRepository(Owner::class);
+            $owners = $rep->findBy(['deleted'=>false, 'active'=>true]);
+
+            return $response->withJson($this->success($owners));
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function deactivate($request, $response, $args)
+    {
+
+        try {
+            $id = $args['id'];
+            $owners = $this->getEmConfig()->find(Owner::class,$id);
+
+            $body = $request->getParsedBody();
+            $owners->setActive($body[0]);
+
+
+            $this->getEmConfig()->persist($owners);
+            $this->getEmConfig()->flush();
+
+            return $response->withJson(  $this->toJson($owners));
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function activate($request, $response, $args)
+    {
+
+        try {
+            $id = $args['id'];
+            $owners = $this->getEmConfig()->find(Owner::class,$id);
+
+            $body = $request->getParsedBody();
+            $owners->setActive($body[1]);
+
+
+            $this->getEmConfig()->persist($owners);
+            $this->getEmConfig()->flush();
+
+            return $response->withJson(  $this->toJson($owners));
+
         } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Exception');

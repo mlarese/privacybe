@@ -219,6 +219,26 @@ $app->get('/api/customercare/user', 'App\Action\CustomerCare:getUsers');
 $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
 
 /*********************************************************
+ *                  CUSTOMERCARE OWNERS
+ *********************************************************/
+$app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
+
+/*********************************************************
+ *                  CUSTOMERCARE WIDGETS
+ *********************************************************/
+$app->get('/api/customercare/widget', 'App\Action\CustomerCares:getWidgets');
+
+/*********************************************************
+ *                  CUSTOMERCARE DEACTIVATE
+ *********************************************************/
+$app->put('/api/customercare/deactivateowner/{id}', 'App\Action\CustomerCares:deactivate');
+
+/*********************************************************
+ *                  CUSTOMERCARE ACTIVATE
+ *********************************************************/
+$app->put('/api/customercare/activateowner/{id}', 'App\Action\CustomerCares:activate');
+
+/*********************************************************
  *                  OWNER ADD USER
  *********************************************************/
 //retrieve term

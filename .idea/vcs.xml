@@ -2,11 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/apache/log4php" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/doctrine/orm" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/ramsey/uuid" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/symfony/property-access" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/symfony/property-info" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/symfony/serializer" vcs="Git" />
   </component>
 </project>

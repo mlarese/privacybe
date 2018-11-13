@@ -61,7 +61,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.1',
+                'host'     => '10.0.28.110',
                 'dbname'   => 'privacy_config',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
@@ -84,7 +84,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.1',
+                'host'     => '10.0.28.110',
                 'dbname'   => 'privacy',
                 'user'     => 'prvcfg',
                 'password' => '7d4UXHCeRhyeWbPe',
@@ -101,7 +101,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.1',
+                'host'     => '10.0.28.110',
                 'dbname'   => 'gdpr_upgrade',
                 'user'     => 'gdprupgrade',
                 'password' => 'JGXMOHFnj4EPfnYP',

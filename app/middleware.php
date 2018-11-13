@@ -2,9 +2,12 @@
 use RKA\SessionMiddleware;
 use Slim\App;
 use Slim\Collection;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Tuupola\Middleware\CorsMiddleware;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
+use Tuupola\Middleware\JwtAuthentication;
 
 /**
  * @var Collection $settings
@@ -80,6 +83,26 @@ if($authMode === 'jwt') {
         "secure" => false,
         "attribute" => "token",
         // "relaxed" => ["localhost"],
+        "before" => function ($request, $arguments) {
+            /** @var Request $request */
+            // print_r($arguments);
+            $isUpdate =  $request->isDelete() || $request->isPatch() || $request->isPost() || $request->isPut();
+
+            if($isUpdate) {
+                // print_r($arguments['decoded']['user']->acl);
+                // die(  'end');
+                // $user = $arguments['decoded']['user'] ;
+                // print_r(user);
+
+            }
+
+            return $request;
+        },
+        "after" => function (Response $response, $arguments) {
+            $canGoOn = true;
+            if($canGoOn) return $response;
+            else return $response->withStatus(401);
+        },
         "error" => function ($response, $arguments) {
             $data["status"] = "error";
             $data["message"] = $arguments["message"];

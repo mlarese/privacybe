@@ -186,7 +186,13 @@ class Auth extends AbstractAction
     {
 
         return [
-            "see-no-agreement" => ($gdprRole !== 'incharge')
+            "see-no-agreement" => ($gdprRole !== 'incharge'),
+            "can-save" => ($gdprRole !== 'incharge'),
+            "can-add" => ($gdprRole !== 'incharge'),
+            "can-share" => ($gdprRole !== 'incharge'),
+            "can-export-user-data" => ($gdprRole !== 'incharge' || $gdprRole !== 'incharge_rw'),
+            "can-see-all-user-data" => ($gdprRole !== 'incharge' || $gdprRole !== 'incharge_rw'),
+            "can-manage-operators" => ($gdprRole !== 'incharge')
         ];
     }
 

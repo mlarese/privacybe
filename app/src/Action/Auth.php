@@ -184,14 +184,27 @@ class Auth extends AbstractAction
 
     private function getAcl($gdprRole)
     {
+        /***************************************
+        Roles
+        ==========================
+        owner
+        incharge
+        incharge_rw
+        responsible
+        dp
+        ***************************************/
 
         return [
-            "see-no-agreement" => ($gdprRole !== 'incharge'),
+            "can-see-no-agreement" => ($gdprRole !== 'incharge' && $gdprRole !== 'incharge_rw' ),
             "can-save" => ($gdprRole !== 'incharge'),
             "can-add" => ($gdprRole !== 'incharge'),
+            "can-add-user" => ($gdprRole !== 'incharge'),
             "can-share" => ($gdprRole !== 'incharge'),
-            "can-export-user-data" => ($gdprRole !== 'incharge' || $gdprRole !== 'incharge_rw'),
-            "can-see-all-user-data" => ($gdprRole !== 'incharge' || $gdprRole !== 'incharge_rw'),
+            "can-export-user-data" => ($gdprRole === 'responsible'),
+            "can-see-all-user-data" => ($gdprRole !== 'incharge' && $gdprRole !== 'incharge_rw'),
+            "can-save-user-data" => ($gdprRole !== 'incharge'),
+            "can-save-user-flags" => ($gdprRole !== 'incharge'),
+            "can-see-user-attachments" => ($gdprRole !== 'incharge' && $gdprRole !== 'incharge_rw'),
             "can-manage-operators" => ($gdprRole !== 'incharge')
         ];
     }

@@ -283,6 +283,7 @@ class ImportStructureReservation extends Base
     }
 
     // TODO: mettere questa funzione e quelle presenti in importUpgrade.php in una classe (Helper o Service) esterno
+    // TODO: è stato creato l'helper App\Helpers\PrivacyHelper con questa funzione. Sostiture la chiamata a questa funzione in questa classe con l'helper e testare che il funzionamento sia lo stesso
     private function getPrivacyDb($settings, $ownerId)
     {
         $dynaDb = $settings['doctrine_privacy']['dynamic_db'];

@@ -155,6 +155,7 @@ class Auth extends AbstractAction
         if ($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
+                "options" => $this->getOptions($ue->getOwnerId()),
                 "email" => $gdprEmail,
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
@@ -182,6 +183,19 @@ class Auth extends AbstractAction
         }
     }
 
+    private function getOptions($ownerId) {
+        $ret = [
+            "hasBi" => false
+        ];
+        switch($ownerId) {
+            case 9:
+            case 34:
+                $ret["hasBi"] = true ;
+                break;
+        }
+
+        return $ret;
+    }
     private function getAcl($gdprRole)
     {
         /***************************************
@@ -383,6 +397,7 @@ class Auth extends AbstractAction
         if($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
+                "options" => $this->getOptions($ue->getOwnerId()),
                 "email"=> $op->getEmail(),
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),

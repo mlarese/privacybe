@@ -189,6 +189,7 @@ class Auth extends AbstractAction
         ];
         switch($ownerId) {
             case 9:
+            case 2:
             case 34:
                 $ret["hasBi"] = true ;
                 break;

@@ -185,13 +185,15 @@ class Auth extends AbstractAction
 
     private function getOptions($ownerId) {
         $ret = [
-            "hasBi" => false
+            "hasBi" => false,
+            "hasQuery" => false,
+            "hasAdvMarketing" => false
         ];
         switch($ownerId) {
             case 9:
-            case 2:
             case 34:
                 $ret["hasBi"] = true ;
+                $ret["hasQuery"] = true ;
                 break;
         }
 

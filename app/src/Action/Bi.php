@@ -9,6 +9,14 @@
 namespace App\Action;
 
 
+use App\Entity\Config\Properties;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Exception;
+use function json_decode;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 class Bi extends AbstractAction
 {
     public function ownerPing (Request $request, Response $response, $args) {
@@ -140,6 +148,33 @@ class Bi extends AbstractAction
             return $response->withStatus(500, 'Error searching owners');
         }
 
+    }
+
+
+    public function retrieveDimensions (Request $request, Response $response, $args) {
+
+        try {
+            if (isset($args['ownerId']))
+                $ownerId = $args['ownerId'];
+            else
+                $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $em */
+            $em = $this->getEmBi($ownerId);
+            $rsm = new ResultSetMapping();
+            $rsm->addScalarResult('code', 'code');
+            $rsm->addScalarResult('data', 'data');
+            $query = $em->createNativeQuery('SELECT code, data FROM dimensions', $rsm);
+            $result = $query->getResult();
+            // die("done $ownerId");
+            foreach ($result as &$record) {
+                $record['data'] = json_decode($record['data']);
+            }
+            return $response->withJson($result);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+
+            return $response->withStatus(500, 'Error retriving data');
+        }
     }
 
 }

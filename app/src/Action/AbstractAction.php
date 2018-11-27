@@ -203,6 +203,18 @@ class AbstractAction
         $this->context = $container->get('settings')['applicationContext'];
     }
 
+    protected function getBiDbCredentials($ownerId) {
+        $settings = $this->container['settings'];
+        $dynaDb = $this->container['dyn-privacy-db'];
+
+        return [
+            "db" => 'dwr' . "_$ownerId",
+            "user" => $settings[$this->context]['connection']['user'],
+            "password" => $settings[$this->context]['connection']['password']
+        ];
+
+    }
+
     protected function getGuestDbCredentials($ownerId) {
         if($ownerId!==null) {
 
@@ -271,6 +283,12 @@ class AbstractAction
         return $this->buildEntityManager($ownerId, $user, $pwd);
     }
 
+    public function getEmBi($ownerId)
+    {
+        return $this->buildBiManager($ownerId);
+    }
+
+
     /**
      * @param Request $request
      *
@@ -312,6 +330,55 @@ class AbstractAction
     public function getOwnerId ($request) {
         $user = $this->getUserData($request);
         return $user->ownerId;
+    }
+
+    /**
+     * @param      $ownerId
+     * @param null $user
+     * @param null $pwd
+     *
+     * @return EntityManager
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    private function buildBiManager($ownerId) {
+        $settings = $this->container['settings'];
+        $guestCredentials = $this->getBiDbCredentials($ownerId);
+
+        $dbname = $guestCredentials['db'];
+        $user = $guestCredentials['user'];
+        $pwd = $guestCredentials['password'];
+
+        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+            $settings[$this->context]['meta']['entity_path'],
+            $settings[$this->context]['meta']['auto_generate_proxies'],
+            $settings[$this->context]['meta']['proxy_dir'],
+            $settings[$this->context]['meta']['cache'],
+            false
+        );
+
+
+        $connection = array(
+            'driver'   => $settings[$this->context]['connection']['driver'],
+            'host'     => $settings[$this->context]['connection']['host'],
+            'dbname'   => $dbname,
+            'user'     => $user,
+            'password' => $pwd
+        );
+
+
+
+        $em = \Doctrine\ORM\EntityManager::create($connection , $config);
+
+        $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+            new \Doctrine\Common\Annotations\AnnotationReader(),
+            new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+        );
+
+        $eventManager = $em->getEventManager();
+        $eventManager->addEventSubscriber($subscriber);
+
+        return $em;
     }
 
     /**

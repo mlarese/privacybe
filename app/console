@@ -28,6 +28,7 @@ use App\Console\Command\RefreshMailUpToken;
 use App\Console\Command\MaintenanceMailUp;
 use App\Console\Command\RefreshMailUpResources;
 use App\Console\Command\TestMailUp;
+use App\Console\Command\AccountCleaning;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;
@@ -46,6 +47,7 @@ try {
 	$application->add(new MaintenanceMailUp());
 	$application->add(new RefreshMailUpResources());
 	$application->add(new TestMailUp());
+	$application->add(new AccountCleaning());
     $application->run();
 
 } catch (\Exception $e) {

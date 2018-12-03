@@ -195,7 +195,6 @@ class MailUpService {
 
 		foreach ($recipients as $k => $recipient){
             $recipients[$k]['Email'] = trim($recipients[$k]['email']);
-            $recipients[$k]['campo28'] = trim($recipients[$k]['language']);
 			$recipients[$k]['expireDate'] = $expireDate;
 		}
 

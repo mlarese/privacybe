@@ -154,6 +154,23 @@ class Lists extends Base {
 		$tokenService = new MailUPTokenService();
 		$token = $tokenService->getTokenByOwnerId($ownerId);
 		try {
+
+		var_dump(array($ownerId,$token,				json_encode([
+            'Name' => $listName,
+            'Business' => $usedForBusiness,
+            'Customer' => $usedForPrivate,
+            'OwnerEmail' => $ownerEmail,
+            'ReplyTo' => $replyToEmail,
+            'NLSenderName' => $senderName,
+            'CompanyName' => $companyName,
+            'ContactName' => $contactName,
+            'Address' => $address,
+            'City' => $city,
+            'CountryCode' => $countryCode,
+            'PermissionReminder' => $permissionReminder,
+            'WebSiteUrl' => $websiteUrl,
+            'UseDefaultSettings' => true
+        ])));
 			$result = $this->authorizedApiCall (
 				$ownerId,
 				$token,

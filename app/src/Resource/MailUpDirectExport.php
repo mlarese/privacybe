@@ -114,7 +114,7 @@ class MailUpDirectExport  implements IDirectExport
                 try{
                     $list = $this->connector->listExist($this->name);
                     if(!isset($list)){
-                        throw new \Exception("List alredy exist");
+                        throw new \Exception("List already exist");
                     }
 
                     /** @var MailUpListTTL $list */
@@ -124,8 +124,9 @@ class MailUpDirectExport  implements IDirectExport
 
                 }
                 catch (\Exception $e){
-
+                    print_r("!!!!!!!!!!!!!!!!!!");
                     print_r($e->getMessage());
+                    print_r("-------------------");
                     die;
                 }
 

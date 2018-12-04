@@ -8,6 +8,7 @@ use App\Service\MailUP\Resource as MailUPResourceService;
 use App\Entity\Privacy\MailUpListTTL;
 use Console\Helper\Log as LogHelper;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 class Lists extends Base {
 
@@ -195,6 +196,10 @@ class Lists extends Base {
 				])
 			);
 		}
+        catch (ServerException $es){
+
+            throw new MailUPListException($es->getResponse()->getBody(),$es->getResponse()->getStatusCode());
+        }
         catch (ClientException $eg){
 
             throw new MailUPListException($eg->getResponse()->getBody(),$eg->getResponse()->getStatusCode());

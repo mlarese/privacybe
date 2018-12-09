@@ -1,8 +1,8 @@
 <?php
 
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
+use GDPR\Entity\Owner;
+use GDPR\Entity\OwnerData;
+use GDPR\Entity\Term;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -26,21 +26,21 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$log = new \App\Entity\GeneralLog();
+$log = new \GDPR\Entity\GeneralLog();
 $log ->setLogDate(new DateTime())
     ->setType('user insert')
     ->setDescription('user Juliet added');
 $em ->persist($log);
 $em ->flush();
 
-$log = new \App\Entity\GeneralLog();
+$log = new \GDPR\Entity\GeneralLog();
 $log ->setLogDate(new DateTime())
     ->setType('user insert')
     ->setDescription('user courage added');
 $em ->persist($log);
 $em ->flush();
 
-$log = new \App\Entity\GeneralLog();
+$log = new \GDPR\Entity\GeneralLog();
 $log ->setLogDate(new DateTime())
     ->setDescription('user courage modified')
     ->setType('user modify');

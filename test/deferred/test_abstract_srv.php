@@ -1,7 +1,7 @@
 <?php
 
-use App\Service\DeferredPrivacyService;
-use App\Service\DependencyNotFoundException;
+use GDPR\Service\DeferredPrivacyService;
+use GDPR\Service\DependencyNotFoundException;
 
 require_once "../../vendor/autoload.php";
 

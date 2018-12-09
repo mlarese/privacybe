@@ -1,10 +1,10 @@
 <?php
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
+use GDPR\Entity\Owner;
+use GDPR\Entity\OwnerData;
+use GDPR\Entity\Term;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use App\DoctrineEncrypt\Configuration\Encrypted;
+use GDPR\DoctrineEncrypt\Configuration\Encrypted;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -28,6 +28,6 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$roles = $em->getRepository(\App\Entity\Role::class)->findAll();
+$roles = $em->getRepository(\GDPR\Entity\Role::class)->findAll();
 
 print_r($roles);

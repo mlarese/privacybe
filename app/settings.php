@@ -173,10 +173,10 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.110',
+                'host'     => '127.0.0.1',
                 'dbname'   => 'privacy_config',
-                'user'     => 'prvcfg',
-                'password' => '7d4UXHCeRhyeWbPe',
+                'user'     => 'root',
+                'password' => '',
             ]
         ],
         'doctrine_privacy' => [
@@ -191,15 +191,15 @@ return [
             ],
             'dynamic_db' => [
                 'db'       => 'privacy',
-                'user'     => 'prvusr',
-                'password' => 'fm7bKMWAHVD3thGn',
+                'user'     => 'root',
+                'password' => '',
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.110',
+                'host'     => '127.0.0.1',
                 'dbname'   => 'privacy_64',
-                'user'     => 'prvcfg',
-                'password' => '7d4UXHCeRhyeWbPe',
+                'user'     => 'root',
+                'password' => '',
             ]
         ],
         'doctrine_upgrade' => [
@@ -213,7 +213,7 @@ return [
             ],
             'connection' => [
                 'driver'   => 'pdo_mysql',
-                'host'     => '10.0.28.110',
+                'host'     => '127.0.0.1',
                 'dbname'   => 'gdpr_upgrade',
                 'user'     => 'gdprupgrade',
                 'password' => 'JGXMOHFnj4EPfnYP',

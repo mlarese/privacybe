@@ -17,17 +17,17 @@ require_once('vendor/autoload.php');
 require_once('bootstrap.php');
 
 
-use App\Console\Command\ImportNewsletter;
-use App\Console\Command\ImportPortalReservation;
-use App\Console\Command\ImportABSEnquiry;
-use App\Console\Command\ImportStructureReservation;
-use App\Console\Command\ImportStoreONE;
-use App\Console\Command\GenerateMailUpToken;
-use App\Console\Command\GetMailUpToken;
-use App\Console\Command\RefreshMailUpToken;
-use App\Console\Command\MaintenanceMailUp;
-use App\Console\Command\RefreshMailUpResources;
-use App\Console\Command\TestMailUp;
+use GDPR\Console\Command\ImportNewsletter;
+use GDPR\Console\Command\ImportPortalReservation;
+use GDPR\Console\Command\ImportABSEnquiry;
+use GDPR\Console\Command\ImportStructureReservation;
+use GDPR\Console\Command\ImportStoreONE;
+use GDPR\Console\Command\GenerateMailUpToken;
+use GDPR\Console\Command\GetMailUpToken;
+use GDPR\Console\Command\RefreshMailUpToken;
+use GDPR\Console\Command\MaintenanceMailUp;
+use GDPR\Console\Command\RefreshMailUpResources;
+use GDPR\Console\Command\TestMailUp;
 use Console\Command\ImportUpgrade;
 use Symfony\Component\Console\Application;
 use Console\Helper\Log as LogHelper;

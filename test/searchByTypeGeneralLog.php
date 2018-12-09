@@ -21,7 +21,7 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 );
 
 $em = EntityManager::create($settings['connection'], $config);
-$logs = $em->getRepository(\App\Entity\GeneralLog::class)->findBy([
+$logs = $em->getRepository(\GDPR\Entity\GeneralLog::class)->findBy([
     'type' => 'user insert'
 ]);
 print_r($logs);

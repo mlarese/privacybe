@@ -1,7 +1,7 @@
 <?php
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
+use GDPR\Entity\Owner;
+use GDPR\Entity\OwnerData;
+use GDPR\Entity\Term;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -25,6 +25,6 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$roles = $em->getRepository(\App\Entity\Role::class)->find(8);
+$roles = $em->getRepository(\GDPR\Entity\Role::class)->find(8);
 
 print_r($roles);

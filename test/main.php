@@ -1,8 +1,8 @@
 <?php
 
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
+use GDPR\Entity\Owner;
+use GDPR\Entity\OwnerData;
+use GDPR\Entity\Term;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;

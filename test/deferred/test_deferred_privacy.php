@@ -2,8 +2,8 @@
 
 require_once "../../vendor/autoload.php";
 
-use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
-use App\Service\DeferredPrivacyService;
+use GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use GDPR\Service\DeferredPrivacyService;
 
 
 $privacy = '{"termId":"695b81a4-3d94-435a-9cef-14be3523ed30","paragraphs":[{"text":"test","treatments":[{"code":"dati_personali","restrictive":false,"mandatory":true,"text":"test dati","selected":true},{"code":"newsletter","restrictive":false,"mandatory":false,"text":"test news","selected":false}],"scrolled":false,"title":"Test","scrollText":""}],"language":"it","ownerId":34,"referrer":"http://localhost:3000/owners/users/add"}';

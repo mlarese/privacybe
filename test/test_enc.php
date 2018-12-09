@@ -1,8 +1,8 @@
 <?php
-use App\Entity\Owner;
-use App\Entity\OwnerData;
-use App\Entity\Term;
-use App\Entity\Config\Enc;
+use GDPR\Entity\Owner;
+use GDPR\Entity\OwnerData;
+use GDPR\Entity\Term;
+use GDPR\Entity\Config\Enc;
 use Doctrine\ORM\EntityManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -39,9 +39,9 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+$subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
     new \Doctrine\Common\Annotations\AnnotationReader(),
-    new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor('o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW')
+    new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor('o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW')
 );
 
 $eventManager = $em->getEventManager();

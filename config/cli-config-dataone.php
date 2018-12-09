@@ -1,7 +1,7 @@
 <?php
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use App\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
-use App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber;
+use GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor;
+use GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;

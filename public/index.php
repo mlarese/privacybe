@@ -8,8 +8,10 @@ if (PHP_SAPI == 'cli-server') {
         return false;
     }
 }
-
-require __DIR__ . '/../vendor/autoload.php';
+/**
+ * @var $loader \Composer\Autoload\ClassLoader
+ */
+$loader = require __DIR__ . '/../vendor/autoload.php';
 
 // session_start();
 
@@ -37,8 +39,17 @@ require __DIR__ . '/../app/dependencies.php';
 // Register middleware
 require __DIR__ . '/../app/middleware.php';
 
-// Register routes
-require __DIR__ . '/../app/routes.php';
+// Register modules
+$modules = require __DIR__ . '/../app/modules.php';
 
+foreach ($modules as $module) {
+    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/dependencies.php')){
+        require  __DIR__ . '/../app/module/' . $module . '/config/dependencies.php';
+    }
+    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/routes.php')) {
+        require __DIR__ . '/../app/module/' . $module . '/config/routes.php';
+    }
+    require __DIR__ . '/../app/module/' . $module . '/config/loader.php';
+}
 // Run!
 $app->run();

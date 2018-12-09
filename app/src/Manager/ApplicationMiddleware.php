@@ -1,6 +1,6 @@
 <?php
 
-namespace GDPR\Manager;
+namespace App\Manager;
 
 use Slim\App;
 use RuntimeException;

@@ -43,13 +43,16 @@ require __DIR__ . '/../app/middleware.php';
 $modules = require __DIR__ . '/../app/modules.php';
 
 foreach ($modules as $module) {
+    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/loader.php')) {
+        require __DIR__ . '/../app/module/' . $module . '/config/loader.php';
+    }
     if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/dependencies.php')){
         require  __DIR__ . '/../app/module/' . $module . '/config/dependencies.php';
     }
     if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/routes.php')) {
         require __DIR__ . '/../app/module/' . $module . '/config/routes.php';
     }
-    require __DIR__ . '/../app/module/' . $module . '/config/loader.php';
+
 }
 // Run!
 $app->run();

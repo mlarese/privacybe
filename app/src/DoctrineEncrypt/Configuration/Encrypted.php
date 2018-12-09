@@ -1,6 +1,6 @@
 <?php
 
-namespace GDPR\DoctrineEncrypt\Configuration;
+namespace App\DoctrineEncrypt\Configuration;
 
 /**
  * The Encrypted class handles the @Encrypted annotation.

@@ -1,6 +1,6 @@
 <?php
 
-namespace GDPR\DoctrineEncrypt\Subscribers;
+namespace App\DoctrineEncrypt\Subscribers;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\EventSubscriber;
@@ -9,8 +9,8 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
-use GDPR\DoctrineEncrypt\Configuration\Encrypted;
-use GDPR\DoctrineEncrypt\Encryptors\EncryptorInterface;
+use App\DoctrineEncrypt\Configuration\Encrypted;
+use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
 
 /**
  * Doctrine event subscriber which encrypt/decrypt entities

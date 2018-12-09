@@ -1,6 +1,6 @@
 <?php
 
-namespace GDPR\DoctrineEncrypt\Encryptors;
+namespace App\DoctrineEncrypt\Encryptors;
 
 /**
  * Encryptor interface for encryptors

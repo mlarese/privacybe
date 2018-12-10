@@ -11,6 +11,7 @@ use App\Service\MailOneService;
 use App\Service\MailUpService;
 use Doctrine\DBAL\Configuration;
 use Doctrine\ORM\EntityManager;
+use GuzzleHttp\Exception\ClientException;
 
 class MailUpDirectExport  implements IDirectExport
 {
@@ -114,7 +115,7 @@ class MailUpDirectExport  implements IDirectExport
                 try{
                     $list = $this->connector->listExist($this->name);
                     if(!isset($list)){
-                        throw new \Exception("List alredy exist");
+                        throw new \Exception("List already exist");
                     }
 
                     /** @var MailUpListTTL $list */
@@ -123,9 +124,16 @@ class MailUpDirectExport  implements IDirectExport
                     $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
                 }
+                catch (ClientException $eg){
+                    print_r("!!!!!!!!!!!!!!!!!!");
+                    print_r($eg->getResponse()->getBody());
+                    print_r("-------------------");
+                    die;
+                }
                 catch (\Exception $e){
-
+                    print_r("!!!!!!!!!!!!!!!!!!");
                     print_r($e->getMessage());
+                    print_r("-------------------");
                     die;
                 }
 

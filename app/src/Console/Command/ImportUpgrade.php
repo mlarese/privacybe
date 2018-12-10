@@ -401,6 +401,7 @@ class ImportUpgrade extends Base
         return $em;
     }
 
+    // TODO: è stato creato l'helper App\Helpers\PrivacyHelper con questa funzione. Sostiture la chiamata a questa funzione in questa classe con l'helper e testare che il funzionamento sia lo stesso
     private function getPrivacyDb($settings, $ownerId)
     {
 

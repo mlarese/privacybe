@@ -7,6 +7,8 @@ use App\Service\MailUP\Token as MailUPTokenService;
 use App\Service\MailUP\Resource as MailUPResourceService;
 use App\Entity\Privacy\MailUpListTTL;
 use Console\Helper\Log as LogHelper;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 class Lists extends Base {
 
@@ -154,6 +156,23 @@ class Lists extends Base {
 		$tokenService = new MailUPTokenService();
 		$token = $tokenService->getTokenByOwnerId($ownerId);
 		try {
+
+		var_dump(array($ownerId,$token,				json_encode([
+            'Name' => $listName,
+            'Business' => $usedForBusiness,
+            'Customer' => $usedForPrivate,
+            'OwnerEmail' => $ownerEmail,
+            'ReplyTo' => $replyToEmail,
+            'NLSenderName' => $senderName,
+            'CompanyName' => $companyName,
+            'ContactName' => $contactName,
+            'Address' => $address,
+            'City' => $city,
+            'CountryCode' => $countryCode,
+            'PermissionReminder' => $permissionReminder,
+            'WebSiteUrl' => $websiteUrl,
+            'UseDefaultSettings' => true
+        ])));
 			$result = $this->authorizedApiCall (
 				$ownerId,
 				$token,
@@ -176,7 +195,17 @@ class Lists extends Base {
                     'UseDefaultSettings' => true
 				])
 			);
-		} catch (\Exception $e) {
+		}
+        catch (ServerException $es){
+
+            throw new MailUPListException($es->getResponse()->getBody(),$es->getResponse()->getStatusCode());
+        }
+        catch (ClientException $eg){
+
+            throw new MailUPListException($eg->getResponse()->getBody(),$eg->getResponse()->getStatusCode());
+        }
+		catch (\Exception $e) {
+
 			throw new MailUPListException($e);
 		}
 

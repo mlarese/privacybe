@@ -160,6 +160,11 @@ class Privacy {
     public $privacyFlags;
 
     /**
+     * @ORM\Column(name="note", type="text", nullable=true)
+     */
+    public $note;
+
+    /**
      * @ORM\Column(name="term_id", type="string", nullable=false)
      */
     public $termId;
@@ -217,6 +222,23 @@ class Privacy {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNote() {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     *
+     * @return Privacy
+     */
+    public function setNote($note) {
+        $this->note = $note;
+        return $this;
     }
 
     /**

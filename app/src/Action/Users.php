@@ -482,11 +482,17 @@ class Users extends AbstractAction
             /** @var Privacy $pr */
             $pr = $em->find(Privacy::class, $id);
 
+            $note = '';
+            if(isset($body['note'])) {
+                $note = $body['note'] ;
+            }
+
             $pr
                 ->setName( $body['name'] )
                 ->setSurname( $body['surname'] )
                 ->setEmail( $body['email'] )
                 ->setTelephone( $body['telephone'] )
+                ->setNote($note)
             ;
 
             $em->merge($pr);

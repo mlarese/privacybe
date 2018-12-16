@@ -9,7 +9,6 @@ use GDPR\Helpers\StringTemplate\Engine;
 use GDPR\Service\AttachmentsService;
 use GDPR\Service\DeferredPrivacyService;
 use GuzzleHttp\Client;
-use Slim\App;
 
 $container = $app->getContainer();
 

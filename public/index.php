@@ -19,8 +19,8 @@ require __DIR__ . '/../app/src/DoctrineEncrypt/Configuration/Encrypted.php';
 
 // Instantiate the app
 
-$localSettingsPath = __DIR__ . '/../app/settings_local.php';
-$settingsPath = __DIR__ . '/../app/settings.php';
+$localSettingsPath = __DIR__ . '/../app/config/settings_local.php';
+$settingsPath = __DIR__ . '/../app/config/settings.php';
 
 if(file_exists($localSettingsPath)) {
     $settings = require $localSettingsPath;
@@ -34,14 +34,25 @@ if(file_exists($localSettingsPath)) {
 $app = new \Slim\App($settings);
 
 // Set up dependencies
-require __DIR__ . '/../app/dependencies.php';
+require __DIR__ . '/../app/config/dependencies.php';
 
 // Register middleware
-require __DIR__ . '/../app/middleware.php';
+require __DIR__ . '/../app/config/middleware.php';
 
-// Register modules
-$modules = require __DIR__ . '/../app/modules.php';
+$moduleloader = new \App\Manager\ModuleBuilder();
+$moduleloader->setApp($app);
+$moduleloader->setLoader($loader);
+$moduleloader->setPath(realpath( __DIR__ . '/../app/config/'));
+$moduleloader->setModuleBasePath(realpath(__DIR__ . '/../app/module/'));
 
+$moduleloader->build();
+
+$modules = $moduleloader->getModules();
+
+foreach ($modules as $module) {
+    $module->run();
+}
+/*
 foreach ($modules as $module) {
     if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/loader.php')) {
         require __DIR__ . '/../app/module/' . $module . '/config/loader.php';
@@ -53,6 +64,7 @@ foreach ($modules as $module) {
         require __DIR__ . '/../app/module/' . $module . '/config/routes.php';
     }
 
-}
+}*/
+
 // Run!
 $app->run();

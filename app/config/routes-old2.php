@@ -1,6 +1,5 @@
 <?php
 // Routes
-
 /*********************************************************
  *                  TEST
  *********************************************************/
@@ -120,7 +119,7 @@ $app->delete('/api/owner/term/{id}', 'GDPR\Action\Terms:termDelete');
  *                  DOMAIN
  *********************************************************/
 /** @var Owners */
-    $app->get('/api/domain/loadall', 'GDPR\Action\Owners:loadAllDomains');
+$app->get('/api/domain/loadall', 'GDPR\Action\Owners:loadAllDomains');
 
 
 /*********************************************************

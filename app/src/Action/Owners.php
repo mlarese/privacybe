@@ -173,6 +173,7 @@ class Owners extends AbstractAction
             email VARCHAR(100) NOT NULL, name VARCHAR(100) NOT NULL, 
             status VARCHAR(20) DEFAULT NULL, 
             version INT DEFAULT NULL, 
+            note text CHARACTER SET utf8,
             ref VARCHAR(100) DEFAULT NULL, 
             surname VARCHAR(100) NOT NULL, 
             page varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

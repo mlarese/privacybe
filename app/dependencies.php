@@ -53,6 +53,21 @@ $container['em-config'] = function ($c) {
     return $em;
 };
 
+// Doctrine bi
+$container['em-bi'] = function ($c) {
+    $settings = $c->get('settings');
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        $settings['doctrine_bi']['meta']['entity_path'],
+        $settings['doctrine_bi']['meta']['auto_generate_proxies'],
+        $settings['doctrine_bi']['meta']['proxy_dir'],
+        $settings['doctrine_bi']['meta']['cache'],
+        false
+    );
+
+    $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_bi']['connection'], $config);
+
+    return $em;
+};
 
 /**
  * Super user privacy entity manager

@@ -34,6 +34,7 @@ $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 $app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
 $app->get('/api/test/dimensions/{ownerId}', 'App\Action\Bi:retrieveDimensions');
+$app->get('/api/test/datamart', 'App\Action\Bi:retrieveDatamart');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 

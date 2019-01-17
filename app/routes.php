@@ -1,9 +1,7 @@
 <?php
 // Routes
 
-/*********************************************************
- *                  TEST
- *********************************************************/
+
 
 use App\Action\Attachments;
 use App\Action\AttachmentView;
@@ -27,14 +25,19 @@ $routeMngr = new BaseRoutesManager($app);
 /******************************
  * bi
  ******************************/
-$app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
+// $app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
+$app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
 
+
+/*********************************************************
+ *                  TEST
+ *********************************************************/
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 $app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
 $app->get('/api/test/dimensions/{ownerId}', 'App\Action\Bi:retrieveDimensions');
-$app->get('/api/test/datamart', 'App\Action\Bi:retrieveDatamart');
+$app->get('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 

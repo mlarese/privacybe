@@ -18,18 +18,19 @@ trait BiDemograficTrait{
     private function getDimMonthSerOriginFilterPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
+        $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
 
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
-                dm.opened_month AS dimension,
+                $sqlCaseOpenedMonth AS dimension,
                 sum(dm.price) AS value,
                 $sqlCasePaxType AS filter1,
                 $sqlCaseOrigin AS serie
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2014'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
             GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
         ";
@@ -44,18 +45,18 @@ trait BiDemograficTrait{
     private function getDimMonthSerPaxTypeOriginFilterOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
-
+        $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
-                dm.opened_month AS dimension,
+                $sqlCaseOpenedMonth AS dimension,
                 sum(dm.price) AS value,
-                $sqlCasePaxType AS filter1,
-                $sqlCaseOrigin AS serie
+                $sqlCasePaxType AS serie,
+                $sqlCaseOrigin AS filter1
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2014'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
             GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
         ";
@@ -80,7 +81,7 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2014'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
             GROUP BY dm.opened_year, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, reservation_origin, dm.paxtype
         ";
@@ -90,12 +91,12 @@ trait BiDemograficTrait{
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-    private function createBiResultsetMapping () {
+    private function createBiResultsetMapping ($dimensionType='string', $valueType='integer') {
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('items', 'items');
+        $rsm->addScalarResult('items', 'items', 'integer');
         $rsm->addScalarResult('filter', 'filter');
-        $rsm->addScalarResult('value', 'value');
-        $rsm->addScalarResult('dimension', 'dimension');
+        $rsm->addScalarResult('value', 'value',$valueType);
+        $rsm->addScalarResult('dimension', 'dimension', $dimensionType);
         $rsm->addScalarResult('serie', 'serie');
 
         return $rsm;
@@ -115,7 +116,7 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2014'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
             GROUP BY dm.opened_year,  dm.paxtype,reservation_origin 
             ORDER BY dm.opened_year,  dm.paxtype,reservation_origin
         ";

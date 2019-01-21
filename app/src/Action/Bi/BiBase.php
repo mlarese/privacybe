@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 17/01/2019
- * Time: 17:15
- */
-
-namespace App\Action;
+namespace App\Action\Bi;
 
 
 trait BiBase {

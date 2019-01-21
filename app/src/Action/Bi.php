@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mac
- * Date: 9/21/18
- * Time: 10:24 AM
- */
-
 namespace App\Action;
 
-
-use App\Entity\Config\Properties;
+use App\Action\Bi\BiAgenationTrait;
+use App\Action\Bi\BiDemograficTrait;
+use App\Action\Bi\BiMonthYearTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
@@ -17,9 +11,12 @@ use function json_decode;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+
 class Bi extends AbstractAction
 {
     use BiDemograficTrait;
+    use BiAgenationTrait;
+    use BiMonthYearTrait;
 
     public function ownerPing (Request $request, Response $response, $args) {
 
@@ -35,7 +32,6 @@ class Bi extends AbstractAction
             return $response->withStatus(500, 'Error searching owners');
         }
     }
-
     public function ownerPrivacy (Request $request, Response $response, $args) {
 
         try {
@@ -50,7 +46,6 @@ class Bi extends AbstractAction
         }
 
     }
-
     public function ownerPrivacies (Request $request, Response $response, $args) {
 
         try {
@@ -65,7 +60,6 @@ class Bi extends AbstractAction
         }
 
     }
-
     public function ownerPrivacyAdd (Request $request, Response $response, $args) {
 
         try {
@@ -217,6 +211,8 @@ class Bi extends AbstractAction
 
             switch ($dataDomain) {
                 case 'demografic': $biResponse = $this->biResponseDemografic($structure, $emDirectBi); break;
+                case 'agenation': $biResponse = $this->biResponseAgeNation($structure, $emDirectBi); break;
+                case 'source': $biResponse = $this->biResponseMonthYear($structure, $emDirectBi); break;
             }
 
 

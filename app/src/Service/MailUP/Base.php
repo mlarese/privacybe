@@ -23,6 +23,11 @@ class Base {
 	 */
 	const CALL_TYPE_POST = 'POST';
 
+    /**
+     * PUT type request
+     */
+    const CALL_TYPE_PUT = 'PUT';
+
 	/**
 	 * POST type request
 	 */

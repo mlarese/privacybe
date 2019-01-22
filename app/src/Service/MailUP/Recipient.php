@@ -438,4 +438,108 @@ class Recipient extends Base {
 		return $result;
 	}
 
+    /**
+     * Add multiple recipients to a list by Owner ID
+     *
+     * @param int $ownerId
+     * @param int $listId
+     * @param array $recipients
+     *
+     * @throws MailUPListException
+     * @throws MailUPRecipientException
+     */
+    public function addMultipleRecipientsToLGroupByOwnerId (
+        int $ownerId,
+        int $groupId,
+        array $recipients = []
+    ) {
+        if (empty($groupId)) {
+            throw new MailUPRecipientException(sprintf(
+                "Wrong GroupId ID"
+            ));
+        }
+
+        // Normalize and filter all recipients
+        $filteredRecipients = [];
+        foreach ($recipients as $recipientFields) {
+            $email = '';
+            $expireDate = null;
+            $fields = [];
+            foreach ($recipientFields as $field => $value) {
+                if (!empty($value)) {
+                    if (strtolower($field) == 'email') {
+                        if (filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+                            continue;
+                        } else {
+                            $email = $value;
+                        }
+                    } else if (strtolower($field) == 'expiredate') {
+                        if (is_object($value) && get_class($value) == 'DateTime') {
+                            $expireDate = $value;
+                        }
+                    } else {
+                        $fields[] = [
+                            'Description' => $field,
+                            'Id' => count($fields) + 1,
+                            'Value'  => $value
+                        ];
+                    }
+                }
+            }
+            $filteredRecipients[] = [
+                'Email' => $email,
+                'Fields' => $fields
+            ];
+            if (!empty($email) &&
+                !empty($expireDate)
+            ) {
+                $expiringRecipients[$email] = $expireDate;
+            }
+        }
+
+        $tokenService = new MailUPTokenService();
+        $token = $tokenService->getTokenByOwnerId($ownerId);
+        try {
+            $importId = $this->authorizedApiCall (
+                $ownerId,
+                $token,
+                self::CALL_TYPE_POST,
+                sprintf(
+                    '/API/v1.1/Rest/ConsoleService.svc/Console/Group/%s/Recipients',
+                    $groupId
+                ),
+                json_encode($filteredRecipients)
+            );
+        } catch (\Exception $e) {
+            throw new MailUPListException($e);
+        }
+
+        $importProcessIsWorking = true;
+        do {
+            try {
+                $importResponse = $this->authorizedApiCall (
+                    $ownerId,
+                    $token,
+                    self::CALL_TYPE_GET,
+                    sprintf(
+                        '/API/v1.1/Rest/ConsoleService.svc/Console/Import/%s',
+                        $importId
+                    )
+                );
+                if (is_array($importResponse) &&
+                    isset($importResponse['Completed']) &&
+                    $importResponse['Completed'] == 'True'
+                ) {
+                    $importProcessIsWorking = false;
+                } else {
+                    sleep(3);
+                }
+            } catch (\Exception $e) {
+                throw new MailUPListException($e);
+            }
+        } while ($importProcessIsWorking);
+
+
+    }
+
 }

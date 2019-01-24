@@ -212,7 +212,7 @@ class Bi extends AbstractAction
             switch ($dataDomain) {
                 case 'demografic': $biResponse = $this->biResponseDemografic($structure, $emDirectBi); break;
                 case 'agenation': $biResponse = $this->biResponseAgeNation($structure, $emDirectBi); break;
-                case 'source': $biResponse = $this->biResponseMonthYear($structure, $emDirectBi); break;
+                case 'monthyear': $biResponse = $this->biResponseMonthYear($structure, $emDirectBi); break;
             }
 
 

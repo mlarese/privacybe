@@ -112,15 +112,13 @@ class MailUpDirectExport  implements IDirectExport
                 }
 
                 try{
-                    $list = $this->connector->listExist($this->name);
+                 /*   $list = $this->connector->listExist($this->name);
                     if(!isset($list)){
                         throw new \Exception("List already exist");
-                    }
-
-                    /** @var MailUpListTTL $list */
+                    }*/
 
 
-                    $list = $this->connector->createContactList($this->name,$mailUpConfig);
+                    $list = $this->connector->createGroup($this->name,$mailUpConfig);
 
                 }
                 catch (\Exception $e){
@@ -132,9 +130,11 @@ class MailUpDirectExport  implements IDirectExport
 
 
                 try {
-
-                        $this->connector->addMultipleSubscriber( $list->getId(),$mailUpConfig['expireDate'],$this->data);
-
+                    if($list!==false && isset($list['idGroup']) &&
+                        intval($list['idGroup'])>0
+                    ) {
+                        $this->connector->addGroupMultipleSubscriber($list['idGroup'],$list['idList'], $mailUpConfig['expireDate'], $this->data);
+                    }
 
 
                   }

@@ -11,7 +11,6 @@ use App\Service\MailOneService;
 use App\Service\MailUpService;
 use Doctrine\DBAL\Configuration;
 use Doctrine\ORM\EntityManager;
-use GuzzleHttp\Exception\ClientException;
 
 class MailUpDirectExport  implements IDirectExport
 {
@@ -123,12 +122,6 @@ class MailUpDirectExport  implements IDirectExport
 
                     $list = $this->connector->createContactList($this->name,$mailUpConfig);
 
-                }
-                catch (ClientException $eg){
-                    print_r("!!!!!!!!!!!!!!!!!!");
-                    print_r($eg->getResponse()->getBody());
-                    print_r("-------------------");
-                    die;
                 }
                 catch (\Exception $e){
                     print_r("!!!!!!!!!!!!!!!!!!");

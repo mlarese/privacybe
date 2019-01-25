@@ -249,6 +249,7 @@ class Recipient extends Base {
 			throw new MailUPListException($e);
 		}
 
+        sleep(2);
 		$importProcessIsWorking = true;
 		do {
 			try {
@@ -267,7 +268,7 @@ class Recipient extends Base {
 				) {
 					$importProcessIsWorking = false;
 				} else {
-					sleep(3);
+					sleep(5);
 				}
 			} catch (\Exception $e) {
 				throw new MailUPListException($e);
@@ -450,7 +451,7 @@ class Recipient extends Base {
      */
     public function addMultipleRecipientsToLGroupByOwnerId (
         int $ownerId,
-        int $groupId,
+        int $groupId,int $listId,
         array $recipients = []
     ) {
         if (empty($groupId)) {
@@ -461,6 +462,7 @@ class Recipient extends Base {
 
         // Normalize and filter all recipients
         $filteredRecipients = [];
+        $expiringRecipients = [];
         foreach ($recipients as $recipientFields) {
             $email = '';
             $expireDate = null;
@@ -513,7 +515,7 @@ class Recipient extends Base {
         } catch (\Exception $e) {
             throw new MailUPListException($e);
         }
-
+        sleep(2);
         $importProcessIsWorking = true;
         do {
             try {
@@ -532,13 +534,52 @@ class Recipient extends Base {
                 ) {
                     $importProcessIsWorking = false;
                 } else {
-                    sleep(3);
+                    sleep(5);
                 }
             } catch (\Exception $e) {
                 throw new MailUPListException($e);
             }
         } while ($importProcessIsWorking);
 
+        // @todo read mail, match email and save ttl
+        $allListRecipients = $this->getAllRecipientsFromAListByOwnerId(
+            $ownerId,
+            $listId
+        );
+
+        // Get the entity manager
+        $em = $this->getEntityManagerByOwnerId($ownerId);
+        foreach ($allListRecipients as $recipient) {
+            if (isset($expiringRecipients[$recipient['Email']])) {
+                $recipientId = $recipient['idRecipient'];
+                $expireDate = $expiringRecipients[$recipient['Email']];
+
+
+                $recipientTTL = $em->getRepository(MailUpRecipientTTL::class)
+                    ->find([
+                        'id' => $recipientId,
+                        'list' => $listId
+                    ]);
+
+                    if (is_null($recipientTTL)) {
+
+                        // Save new entity
+                        $recipientTTL = new MailUpRecipientTTL();
+                        $recipientTTL->setId($recipientId)
+                            ->setList($listId)
+                            ->setCreated(new \DateTime('now'))
+                            ->setExpire($expireDate);
+                    } else {
+
+                        // Update entity
+                        $recipientTTL->setUpdated(new \DateTime('now'))
+                            ->setExpire($expireDate);
+                    }
+                    $em->persist($recipientTTL);
+
+            }
+        }
+        $em->flush();
 
     }
 

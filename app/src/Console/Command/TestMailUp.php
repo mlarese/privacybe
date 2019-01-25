@@ -5,8 +5,10 @@ namespace App\Console\Command;
 use App\Exception\MailUPRecipientException;
 use Console\Exception;
 use App\Service\MailUP\Lists as MailUPListService;
+use App\Service\MailUP\Groups as MailUPGroupService;
 use App\Service\MailUP\Recipient as MailUPRecipientService;
 use Console\Command\Base;
+use Doctrine\Common\Util\Debug;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,90 +21,207 @@ class TestMailUp extends Base
             ->setDescription('Test MailUP function (to be use only for DEV)');
     }
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 *
-	 * @return int|null|void
-	 */
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-//		$serviceList = new MailUPListService();
+        $serviceList = new MailUPListService();
+        $groupList = new MailUPGroupService();
 //		// Read list
-//	    $serviceList->readByOwnerId(2);
-//		// Create list
-//		$now = new \DateTime('now');
-//		$expire = clone $now;
-//		$expire->modify('+1 month');
-//	    $listTTL = $serviceList->createByOwnerId (
-//	    	2,
-//		    'Test Automatico ' . $now->format('Y-m-d H:i:s'),
-//		    true,
-//		    false,
-//		    'sirius82@gmail.com',
-//		    'sirius82@gmail.com',
-//		    'TEST Mattias',
-//			'TEST srl',
-//			'Mario Rossi',
-//		    'Via roma 5',
-//		    'Milano',
-//		    'IT',
-//		    'Ciao, ti sei iscritto a questa lista di test',
-//		    'https://test.com',
-//		    $expire
-//	    );
-//	    // Add recipient to list
-//	    $service = new MailUPRecipientService();
-//	    $recipientTTL = $service->addToListByOwnerId (
-//		    2,
-//		    $listTTL->getId(),
-//		    'test6@test.com',
-//		    'Nome',
-//		    'Cognome',
-//		    [
-//		    	'Country' => 'IT'
-//		    ],
-//		    $expire
-//	    );
-//	    // Delete recipient form list
-////	    $service->deleteByOwnerId(
-////		    2,
-////		    $recipientTTL
-////	    );
-//	    // Delete list
-//	    $serviceList->deleteByOwnerId(
-//		    2,
-//		    $listTTL
-//	    );
+        $result = $serviceList->readByOwnerId(2);
+        $gresult = false;
+
+        foreach ($result as $k => $list) {
+
+            try {
+                $gresult = $groupList->createByOwnerId(2, $list['IdList'], "TEST - MMONE - GRUPPO 1", "TEST DESCRIPTION");
+            } catch (\Exception $e) {
+                $message = json_decode($e->getMessage());
+
+                if($message!==false && $message->ErrorCode == 400){
+
+                    $groups = $groupList->readByOwnerId(2,$list['IdList']);
+                    $deleted = false;
+                    foreach ($groups as $kh => $groupdata ){
+                        if($groupdata['Name']=="TEST - MMONE - GRUPPO 1"){
+                            //$gresult = $groupdata;
+                            $groupList->deleteByOwnerId(2,$list['IdList'],$groupdata['idGroup']);
+                            $deleted = true;
+                            break;
+                        }
+                    }
+                    if($deleted){
+                        $gresult =$groupList->createByOwnerId(2, $list['IdList'], "TEST - MMONE - GRUPPO 1", "TEST DESCRIPTION");
+                    }
+
+                }
+            }
+            break;
+        }
+
+        echo 1;
+        if($gresult!==false && isset($gresult['idGroup']) &&
+            intval($gresult['idGroup'])>0
+        ){
+
+            $service = new MailUPRecipientService();
+            $now = new \DateTime('now');
+            $now->modify('+1 days');
+            try {
+                $service->addMultipleRecipientsToLGroupByOwnerId(
+                    2,
+                    $gresult['idGroup'],
+                    [
+                        [
+                            'Email' => 'test00@test.com',
+                            'nome' => 'Giuseppe',
+                            'cognome' => 'Donouts',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test01@test.com',
+                            'nome' => 'Mattias',
+                            'cognome' => 'Constantin',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test02@test.com',
+                            'nome' => 'Giulia',
+                            'cognome' => 'Pastrel',
+                        ],
+                    ]
+                );
+            }
+            catch (\Exception $e ){
+                print_r($e->getMessage());
+            }
+
+        }
+        echo 2;
 
 
 
-	    $service = new MailUPRecipientService();
-	    $now = new \DateTime('now');
-	    $now->modify('+1 days');
-	    $service->addMultipleRecipientsToListByOwnerId (
-	    	2,
-		    1,
-	        [
-	        	[
-	        		'Email' => 'test00@test.com',
-			        'nome' => 'nome0',
-			        'cognome' => 'cognome0',
-			        'expireDate' => $now
-		        ],
-		        [
-			        'Email' => 'test01@test.com',
-			        'nome' => 'nome0',
-			        'cognome' => 'cognom0',
-			        'expireDate' => $now
-		        ],
-		        [
-			        'Email' => 'test02@test.com',
-			        'nome' => 'nom0',
-			        'cognome' => 'cognome0',
-		        ],
-	        ]
-	    );
+        if($gresult!==false && isset($gresult['idGroup']) &&
+            intval($gresult['idGroup'])>0
+        ){
+
+            $service = new MailUPRecipientService();
+            $now = new \DateTime('now');
+            $now->modify('+1 days');
+            try{
+
+
+                $service->addMultipleRecipientsToLGroupByOwnerId(
+                    2,
+                    $gresult['idGroup'],
+                    [
+                        [
+                            'Email' => 'test001@test.com',
+                            'nome' => 'Giuseppe1',
+                            'cognome' => 'Donouts',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test002@test.com',
+                            'nome' => 'Mattias2',
+                            'cognome' => 'Constantin',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test003@test.com',
+                            'nome' => 'Giulia3',
+                            'cognome' => 'Pastrel',
+                        ],
+                    ]
+                );
+            }
+            catch (\Exception $e ){
+                print_r($e->getMessage());
+            }
+
+        }
+        echo 3;
+        if($gresult!==false && isset($gresult['idGroup']) &&
+            intval($gresult['idGroup'])>0
+        ){
+
+            $service = new MailUPRecipientService();
+            $now = new \DateTime('now');
+            $now->modify('+1 days');
+            try{
+                $service->addMultipleRecipientsToLGroupByOwnerId(
+                    2,
+                    $gresult['idGroup'],
+                    [
+                        [
+                            'Email' => 'test001@test.com',
+                            'nome' => 'Giuseppe1',
+                            'cognome' => 'Donouts',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test002@test.com',
+                            'nome' => 'Mattias2',
+                            'cognome' => 'Constantin',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test003@test.com',
+                            'nome' => 'Giulia3',
+                            'cognome' => 'Pastrel',
+                        ],
+                    ]
+                );
+            }
+            catch (\Exception $e ){
+                print_r($e->getMessage());
+            }
+
+        }
+        echo 4;
+        if($gresult!==false && isset($gresult['idGroup']) &&
+            intval($gresult['idGroup'])>0
+        ){
+
+            $service = new MailUPRecipientService();
+            $now = new \DateTime('now');
+            $now->modify('+1 days');
+            try {
+                $service->addMultipleRecipientsToLGroupByOwnerId(
+                    2,
+                    $gresult['idGroup'],
+                    [
+                        [
+                            'Email' => 'test004@test.com',
+                            'nome' => 'Giuseppe4',
+                            'cognome' => 'Donouts',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test005@test.com',
+                            'nome' => 'Mattias5',
+                            'cognome' => 'Constantin',
+                            'expireDate' => $now
+                        ],
+                        [
+                            'Email' => 'test006@test.com',
+                            'nome' => 'Giulia6',
+                            'cognome' => 'Pastrel',
+                        ],
+                    ]
+                );
+            }
+            catch (\Exception $e ){
+                print_r($e->getMessage());
+            }
+        }
+
+        echo 5;
     }
+
 }

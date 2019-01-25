@@ -49,14 +49,14 @@ class TestMailUp extends Base
                     $deleted = false;
                     foreach ($groups as $kh => $groupdata ){
                         if($groupdata['Name']=="TEST - MMONE - GRUPPO 1"){
-                            //$gresult = $groupdata;
-                            $groupList->deleteByOwnerId(2,$list['IdList'],$groupdata['idGroup']);
-                            $deleted = true;
+                            $gresult = $groupdata;
+                            // $groupList->deleteByOwnerId(2,$list['IdList'],$groupdata['idGroup']);
+                            // $deleted = true;
                             break;
                         }
                     }
                     if($deleted){
-                        $gresult =$groupList->createByOwnerId(2, $list['IdList'], "TEST - MMONE - GRUPPO 1", "TEST DESCRIPTION");
+                        //      $gresult =$groupList->createByOwnerId(2, $list['IdList'], "TEST - MMONE - GRUPPO 1", "TEST DESCRIPTION");
                     }
 
                 }
@@ -75,7 +75,7 @@ class TestMailUp extends Base
             try {
                 $service->addMultipleRecipientsToLGroupByOwnerId(
                     2,
-                    $gresult['idGroup'],
+                    $gresult['idGroup'],$gresult['idList'],
                     [
                         [
                             'Email' => 'test00@test.com',
@@ -118,7 +118,7 @@ class TestMailUp extends Base
 
                 $service->addMultipleRecipientsToLGroupByOwnerId(
                     2,
-                    $gresult['idGroup'],
+                    $gresult['idGroup'],$gresult['idList'],
                     [
                         [
                             'Email' => 'test001@test.com',
@@ -151,12 +151,14 @@ class TestMailUp extends Base
         ){
 
             $service = new MailUPRecipientService();
+            echo 3;
             $now = new \DateTime('now');
             $now->modify('+1 days');
+            echo 3;
             try{
                 $service->addMultipleRecipientsToLGroupByOwnerId(
                     2,
-                    $gresult['idGroup'],
+                    $gresult['idGroup'],$gresult['idList'],
                     [
                         [
                             'Email' => 'test001@test.com',
@@ -194,7 +196,7 @@ class TestMailUp extends Base
             try {
                 $service->addMultipleRecipientsToLGroupByOwnerId(
                     2,
-                    $gresult['idGroup'],
+                    $gresult['idGroup'],$gresult['idList'],
                     [
                         [
                             'Email' => 'test004@test.com',

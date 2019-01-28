@@ -157,7 +157,7 @@ class Lists extends Base {
 		$token = $tokenService->getTokenByOwnerId($ownerId);
 		try {
 
-		var_dump(array($ownerId,$token,				json_encode([
+		/*var_dump(array($ownerId,$token,				json_encode([
             'Name' => $listName,
             'Business' => $usedForBusiness,
             'Customer' => $usedForPrivate,
@@ -172,7 +172,7 @@ class Lists extends Base {
             'PermissionReminder' => $permissionReminder,
             'WebSiteUrl' => $websiteUrl,
             'UseDefaultSettings' => true
-        ])));
+        ])));*/
 			$result = $this->authorizedApiCall (
 				$ownerId,
 				$token,

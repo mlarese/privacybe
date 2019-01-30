@@ -1,9 +1,20 @@
-vendor/
-log/*
-cache/*
+# Ignore IDE related folder and files
 .idea/*
 .idea/dbnavigator.xml
 .idea/deployment.xml
 .idea/markdown-exported-files.xml
+
+# Ignore composer data
+composer.lock
+vendor/
+
+# Ignore docker local data
+docker/compose/docker-compose.yml
+docker/data/mysql/*
+
+# Ignore application folder and files
+log/*
+cache/*
 /public/localtest/*
 app/settings_local.php
+

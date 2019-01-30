@@ -12,14 +12,16 @@ use GuzzleHttp\Exception\ServerException;
 
 class Lists extends Base {
 
-	/**
-	 * Read MailUP lists by Owner ID
-	 *
-	 * @param int $ownerId
-	 *
-	 * @return \stdClass
-	 * @throws MailUPListException
-	 */
+    /**
+     * Read MailUP lists by Owner ID
+     *
+     * @param int $ownerId
+     *
+     * @return \stdClass
+     * @throws MailUPListException
+     * @throws \App\Exception\MailUPException
+     * @throws \App\Exception\MailUPTokenException
+     */
 	public function readByOwnerId (
 		int $ownerId
 	) {
@@ -44,6 +46,39 @@ class Lists extends Base {
 	}
 
     /**
+     * Get list details
+     *
+     * @param int $ownerId
+     * @param int $listid
+     * @return \stdClass
+     * @throws MailUPListException
+     * @throws \App\Exception\MailUPException
+     * @throws \App\Exception\MailUPTokenException
+     */
+    public function getDetails (
+        int $ownerId,
+        int $listid
+    ) {
+        $tokenService = new MailUPTokenService();
+        $token = $tokenService->getTokenByOwnerId($ownerId);
+        try {
+            return $this->authorizedApiCall (
+                $ownerId,
+                $token,
+                self::CALL_TYPE_GET,
+                sprintf(
+                    '/API/v1.1/Rest/ConsoleService.svc/Console/List/%s',
+                    $listid
+                )
+            );
+        } catch (\Exception $e) {
+            throw new MailUPListException($e);
+        }
+    }
+
+    /**
+     * Create a list by owner ID
+     *
      * @param int       $ownerId
      * @param string    $listName
      * @param bool      $usedForBusiness
@@ -156,23 +191,6 @@ class Lists extends Base {
 		$tokenService = new MailUPTokenService();
 		$token = $tokenService->getTokenByOwnerId($ownerId);
 		try {
-
-		var_dump(array($ownerId,$token,				json_encode([
-            'Name' => $listName,
-            'Business' => $usedForBusiness,
-            'Customer' => $usedForPrivate,
-            'OwnerEmail' => $ownerEmail,
-            'ReplyTo' => $replyToEmail,
-            'NLSenderName' => $senderName,
-            'CompanyName' => $companyName,
-            'ContactName' => $contactName,
-            'Address' => $address,
-            'City' => $city,
-            'CountryCode' => $countryCode,
-            'PermissionReminder' => $permissionReminder,
-            'WebSiteUrl' => $websiteUrl,
-            'UseDefaultSettings' => true
-        ])));
 			$result = $this->authorizedApiCall (
 				$ownerId,
 				$token,
@@ -224,13 +242,15 @@ class Lists extends Base {
 		return $listTTL;
 	}
 
-	/**
-	 * Maintenance MaiLUP list by Owner ID
-	 *
-	 * @param int $ownerId
-	 *
-	 * @return null
-	 */
+    /**
+     * Maintenance MaiLUP list by Owner ID
+     *
+     * @param int $ownerId
+     *
+     * @return null
+     * @throws \App\Exception\MailUPException
+     * @throws \App\Exception\MailUPTokenException
+     */
 	public function maintenanceListsByOwnerId (
 		int $ownerId
 	) {
@@ -294,15 +314,18 @@ class Lists extends Base {
 		}
 	}
 
-	/**
-	 * Delete MailUP list by Owner ID
-	 *
-	 * @param int $ownerId
-	 * @param MailUpListTTL $listTTL
-	 *
-	 * @return \stdClass
-	 * @throws MailUPListException
-	 */
+    /**
+     * Delete MailUP list by Owner ID
+     *
+     * @param int $ownerId
+     * @param MailUpListTTL $listTTL
+     *
+     * @return \stdClass
+     * @throws MailUPListException
+     * @throws \App\Exception\MailUPException
+     * @throws \App\Exception\MailUPTokenException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function deleteByOwnerId (
 		int $ownerId,
 		MailUpListTTL $listTTL
@@ -340,5 +363,4 @@ class Lists extends Base {
 
 		return $result;
 	}
-
 }

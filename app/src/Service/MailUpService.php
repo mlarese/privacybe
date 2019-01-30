@@ -2,6 +2,7 @@
 
 namespace App\Service;
 use App\Entity\Privacy\MailUpListTTL;
+use App\Service\MailUP\Groups;
 use App\Service\MailUP\Lists;
 use App\Service\MailUP\Recipient;
 use DateTime;
@@ -74,6 +75,11 @@ class MailUpService {
 	/** @var Lists */
 	private $listSrv = null;
 
+	/**
+	 * @var Groups
+	 */
+	private $grpServ = null;
+
     /**
      * @return Lists
      */
@@ -82,6 +88,14 @@ class MailUpService {
         return $this->lstServ;
     }
 
+
+	/**
+	 * @return Groups
+	 */
+	public function getGroupSrv(): Groups {
+		if(!isset($this->grpServ)) $this->grpServ=new Groups();
+		return $this->grpServ;
+	}
     /** @var Lists */
     private $recipientSrv = null;
 
@@ -141,6 +155,64 @@ class MailUpService {
 
         return $ret;
     }
+
+	/**
+	 * @param       $listName
+	 * @param array $params
+	 *
+	 * @return MailUpListTTL
+	 * @throws \App\Exception\MailUPException
+	 * @throws \App\Exception\MailUPListException
+	 * @throws \App\Exception\MailUPTokenException
+	 * @throws \Doctrine\ORM\OptimisticLockException
+	 */
+	public function createGroup($groupName, array $params) {
+
+		$result = $this->getListSrv()->readByOwnerId($this->ownerId);
+
+		if(!$result || empty($result)){
+			$result[] = $this->createContactList('A DATAONE LIST ' . date('Y-m-d') ,$params);
+		}
+
+		$gresult = false;
+
+		foreach ($result as $k => $list) {
+
+			try {
+
+				$gresult = $this->getGroupSrv()->createByOwnerId(
+					$this->ownerId,
+					$list['IdList'],
+					$groupName,'A DATAONE GROUP'
+				);
+
+			} catch (\Exception $e) {
+				$message = json_decode($e->getMessage());
+
+				if($message!==false && $message->ErrorCode == 400){
+
+					$groups = $this->getGroupSrv()->readByOwnerId($this->ownerId,$list['IdList']);
+					$deleted = false;
+					foreach ($groups as $kh => $groupdata ){
+						if($groupdata['Name']==$groupName ){
+
+							$this->getGroupSrv()->deleteByOwnerId($this->ownerId,$list['IdList'],$groupdata['idGroup']);
+							$deleted = true;
+							break;
+						}
+					}
+					if($deleted){
+						    $gresult =$this->getGroupSrv()->createByOwnerId(2, $list['IdList'], "TEST - MMONE - GRUPPO 1", "TEST DESCRIPTION");
+					}
+
+				}
+			}
+			break;
+		}
+
+
+		return $gresult;
+	}
 
     /**
      * @param        $listId
@@ -206,6 +278,31 @@ class MailUpService {
         return false;
     }
 
+
+	/**
+	 * @param $groupId
+	 * @param DateTime $expireDate
+	 * @param array $recipients
+	 * @return bool
+	 * @throws \App\Exception\MailUPListException
+	 * @throws \App\Exception\MailUPRecipientException
+	 */
+	public function addGroupMultipleSubscriber($groupId, $listId,DateTime $expireDate,array $recipients) {
+
+		$srv = new Recipient();
+
+		foreach ($recipients as $k => $recipient){
+			$recipients[$k]['Email'] = trim($recipients[$k]['email']);
+			$recipients[$k]['expireDate'] = $expireDate;
+		}
+
+		$srv->addMultipleRecipientsToLGroupByOwnerId(
+			$this->ownerId,
+			$groupId,$listId,
+			$recipients);
+
+		return false;
+	}
 
 
 	public function deleteSubscriber($listId, $email) {

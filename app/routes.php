@@ -315,3 +315,31 @@ $app->post(
     '/api/import/advancedimporter/import',
     'App\Action\Import\AdvancedImporter:import'
 );
+
+/********************************************************
+ *                      MAIL UP
+ *******************************************************/
+$app->get(
+    '/api/owner/mailup/token',
+    'App\Action\MailUP\Token:getByCurrentOwner'
+);
+$app->get(
+    '/api/owner/mailup/token/{owner_id}',
+    'App\Action\MailUP\Token:getByOwner'
+);
+$app->post(
+    '/api/owner/mailup/token',
+    'App\Action\MailUP\Token:createByCurrentOwner'
+);
+$app->post(
+    '/api/owner/mailup/token/{owner_id}',
+    'App\Action\MailUP\Token:createByOwner'
+);
+$app->put(
+    '/api/owner/mailup/token',
+    'App\Action\MailUP\Token:updateByCurrentOwner'
+);
+$app->put(
+    '/api/owner/mailup/token/{owner_id}',
+    'App\Action\MailUP\Token:updateByOwner'
+);

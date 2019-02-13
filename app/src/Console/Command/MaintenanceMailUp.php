@@ -26,12 +26,14 @@ class MaintenanceMailUp extends Base
 	        );
     }
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 *
-	 * @return int|null|void
-	 */
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     * @throws \App\Exception\MailUPException
+     * @throws Exception\WrongCommandParam
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
@@ -61,12 +63,13 @@ class MaintenanceMailUp extends Base
 	    }
     }
 
-	/**
-	 * Run maintenance by Owner ID
-	 *
-	 * @param int $ownerId
-	 * @param OutputInterface $output
-	 */
+    /**
+     * Run maintenance by Owner ID
+     *
+     * @param int $ownerId
+     * @param OutputInterface $output
+     * @throws Exception\WrongCommandParam
+     */
     private function maintenanceByOwnerId (
     	int $ownerId,
 	    OutputInterface $output

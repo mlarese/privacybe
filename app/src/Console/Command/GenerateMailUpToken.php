@@ -51,6 +51,7 @@ class GenerateMailUpToken extends Base
      * @param OutputInterface $output
      *
      * @return int|null|void
+     * @throws Exception\WrongCommandParam
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

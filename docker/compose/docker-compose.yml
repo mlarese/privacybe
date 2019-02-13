@@ -1,0 +1,64 @@
+version: "3"
+services:
+  dataone_nginx:
+    build: NginX
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - STATIC_VIRTUAL_HOST=static.dataone.test
+      - PRIVACY_VIRTUAL_HOST=privacy.dataone.test
+      - VIRTUAL_HOST=www.dataone.test
+      - VIRTUAL_HOST_ALIAS=dataone.test
+    extra_hosts:
+      - "static.dataone.test:127.0.0.1"
+      - "privacy.dataone.test:127.0.0.1"
+      - "www.dataone.test:127.0.0.1"
+      - "dataone.test:127.0.0.1"
+    depends_on:
+      - dataone_phpfpm
+      - dataone_mariadb
+      - dataone_phpmyadmin
+    volumes:
+      - /home/mattias.costantini/Develop/DataONE:/home/dataone/public_html
+    restart: on-failure
+  dataone_phpfpm:
+    build: PHPFPM
+    environment:
+      - PHP_IDE_CONFIG=serverName=dataone.test
+    extra_hosts:
+      - "remote:172.22.0.1"
+      - "static.dataone.test:172.22.0.6"
+      - "privacy.dataone.test:172.22.0.6"
+      - "www.dataone.test:172.22.0.6"
+      - "dataone.test:172.22.0.6"
+    ports:
+      - "19000:9000"
+    depends_on:
+      - dataone_mariadb
+      - dataone_phpmyadmin
+    volumes:
+      - /home/mattias.costantini/Develop/DataONE:/home/dataone/public_html
+    restart: on-failure
+  dataone_mariadb:
+    build: MariaDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_DATABASE=dataone
+      - MYSQL_USER=dataone
+      - MYSQL_PASSWORD=dataone
+    volumes:
+      - /home/mattias.costantini/Develop/DataONE/docker/data/mysql/:/var/lib/mysql
+    depends_on:
+      - dataone_phpmyadmin
+    ports:
+      - "13306:3306"
+    restart: on-failure
+  dataone_phpmyadmin:
+    build: PhpMyAdmin
+    ports:
+      - "10080:80"
+    restart: on-failure
+  dataone_memcached:
+    build: Memcached
+    restart: on-failure

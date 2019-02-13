@@ -184,10 +184,22 @@ class Base {
 		$settings = $this->getSettings();
 		$em = new EntityManagerBuilder($settings);
 		/** @var \Doctrine\ORM\EntityManager $em */
-		$em = $em->buildSUPrivateEM($ownerId);
-
-		return $em;
+		return $em->buildSUPrivateEM($ownerId);
 	}
+
+    /**
+     * Get the Doctrine config Entity Manager
+     *
+     * @return \Doctrine\ORM\EntityManager
+     * @throws MailUPException
+     */
+	protected function getConfigEntityManager ()
+    {
+        $settings = $this->getSettings();
+        $em = new EntityManagerBuilder($settings);
+        /** @var \Doctrine\ORM\EntityManager $em */
+        return $em->buildEmConfig();
+    }
 
 	/**
 	 * Get SLIM app container

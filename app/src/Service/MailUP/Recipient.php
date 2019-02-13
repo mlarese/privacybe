@@ -504,11 +504,13 @@ class Recipient extends Base {
                             $expireDate = $value;
                         }
                     } else {
-                        $fields[] = [
-                            'Description' => $field,
-                            'Id' => count($fields) + 1,
-                            'Value'  => $value
-                        ];
+                        if(isset($this->defaultMapping[strtolower($field) ])){
+                            $fields[] = [
+                                'Description' => $this->defaultMapping[strtolower($field) ]['label'],
+                                'Id' => $this->defaultMapping[strtolower($field) ]['id'],
+                                'Value'  => $value
+                            ];
+                        }
                     }
                 }
             }

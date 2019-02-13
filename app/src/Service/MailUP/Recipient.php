@@ -11,6 +11,25 @@ use Console\Helper\Log as LogHelper;
 
 class Recipient extends Base {
 
+
+    protected $defaultMapping = array(
+        'name' => array(
+                'label' => 'nome',
+                'id' => 1,
+        ),
+        'surname' => array(
+            'label' => 'cognome',
+            'id' => 2,
+        ),
+        'language' => array(
+            'label' => 'lingua',
+            'id' => 3,
+        ),
+
+    );
+
+
+
     /**
      * Get all recipients by List ID and Owner ID
      *
@@ -213,11 +232,16 @@ class Recipient extends Base {
                             $expireDate = $value;
                         }
                     } else {
-                        $fields[] = [
-                            'Description' => $field,
-                            'Id' => count($fields) + 1,
-                            'Value'  => $value
-                        ];
+
+                        if(isset($this->defaultMapping[strtolower($field) ])){
+                            $fields[] = [
+                                'Description' => $this->defaultMapping[strtolower($field) ]['label'],
+                                'Id' => $this->defaultMapping[strtolower($field) ]['id'],
+                                'Value'  => $value
+                            ];
+                        }
+
+
                     }
                 }
             }

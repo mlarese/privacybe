@@ -37,6 +37,9 @@ $app = new \Slim\App($settings);
 require __DIR__ . '/../app/config/dependencies.php';
 
 // Register middleware
+// Solo quelli a livello di applicazione
+// Il resto è stato spostato a livello di modulo (i moduli hanno gruppi di rotte
+// per ottimizzare le performance)
 require __DIR__ . '/../app/config/middleware.php';
 
 $moduleloader = new \App\Manager\ModuleBuilder();
@@ -52,19 +55,7 @@ $modules = $moduleloader->getModules();
 foreach ($modules as $module) {
     $module->run();
 }
-/*
-foreach ($modules as $module) {
-    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/loader.php')) {
-        require __DIR__ . '/../app/module/' . $module . '/config/loader.php';
-    }
-    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/dependencies.php')){
-        require  __DIR__ . '/../app/module/' . $module . '/config/dependencies.php';
-    }
-    if(file_exists(__DIR__ . '/../app/module/' . $module . '/config/routes.php')) {
-        require __DIR__ . '/../app/module/' . $module . '/config/routes.php';
-    }
-
-}*/
+die;
 
 // Run!
 $app->run();

@@ -1,15 +1,22 @@
 <?php
 
 namespace API\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use OAuth2\Storage\AccessTokenInterface;
 
 /**
  * OAuthAccessToken
+ * @ORM\Entity
+ * @ORM\Table(name="oauth_access_tokens")
+ * @ORM\Entity(repositoryClass="API\Repository\OAuthAccessTokenRepository")
+ *
  */
 class OAuthAccessToken
 {
     /**
-     * @var integer
-     */
+     * @ORM\Id
+     * @ORM\Column(name="access_token", type="string", nullable=false)
+     **/
     private $id;
 
     /**
@@ -38,12 +45,12 @@ class OAuthAccessToken
     private $scope;
 
     /**
-     * @var \YourNamespace\Entity\OAuthClient
+     * @var \API\Entity\OAuthClient
      */
     private $client;
 
     /**
-     * @var \YourNamespace\Entity\OAuthUser
+     * @var \API\Entity\OAuthUser
      */
     private $user;
 
@@ -170,10 +177,10 @@ class OAuthAccessToken
     /**
      * Set client
      *
-     * @param \YourNamespace\Entity\OAuthClient $client
+     * @param \API\Entity\OAuthClient $client
      * @return OAuthAccessToken
      */
-    public function setClient(\YourNamespace\Entity\OAuthClient $client = null)
+    public function setClient(\API\Entity\OAuthClient $client = null)
     {
         $this->client = $client;
         return $this;
@@ -182,7 +189,7 @@ class OAuthAccessToken
     /**
      * Get client
      *
-     * @return \YourNamespace\Entity\OAuthClient
+     * @return \API\Entity\OAuthClient
      */
     public function getClient()
     {
@@ -201,10 +208,10 @@ class OAuthAccessToken
     /**
      * Set user
      *
-     * @param \YourNamespace\Entity\OAuthUser $user
+     * @param \API\Entity\OAuthUser $user
      * @return OAuthRefreshToken
      */
-    public function setUser(\YourNamespace\Entity\OAuthUser $user = null)
+    public function setUser(\API\Entity\OAuthUser $user = null)
     {
         $this->user = $user;
         return $this;
@@ -213,7 +220,7 @@ class OAuthAccessToken
     /**
      * Get user
      *
-     * @return \YourNamespace\Entity\OAuthUser
+     * @return \API\Entity\OAuthUser
      */
     public function getUser()
     {

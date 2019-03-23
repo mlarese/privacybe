@@ -1,15 +1,19 @@
 <?php
 namespace API\Entity;
-
+use Doctrine\ORM\Mapping as ORM;
 /**
  * OAuthRefreshToken
- * @entity(repositoryClass="YourNamespace\Repository\OAuthRefreshTokenRepository")
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="oauth_refresh_tokens")
+ * @ORM\Entity(repositoryClass="API\Repository\OAuthRefreshTokenRepository")
  */
 class OAuthRefreshToken
 {
     /**
-     * @var integer
-     */
+     * @ORM\Id
+     * @ORM\Column(name="refresh_token", type="string", nullable=false)
+     **/
     private $id;
 
     /**
@@ -38,12 +42,12 @@ class OAuthRefreshToken
     private $scope;
 
     /**
-     * @var \YourNamespace\Entity\OAuthClient
+     * @var \API\Entity\OAuthClient
      */
     private $client;
 
     /**
-     * @var \YourNamespace\Entity\OAuthUser
+     * @var \API\Entity\OAuthUser
      */
     private $user;
 
@@ -175,20 +179,19 @@ class OAuthRefreshToken
     /**
      * Set client
      *
-     * @param \YourNamespace\Entity\OAuthClient $client
+     * @param \API\Entity\OAuthClient $client
      * @return OAuthRefreshToken
      */
-    public function setClient(\YourNamespace\Entity\OAuthClient $client = null)
+    public function setClient(\API\Entity\OAuthClient $client = null)
     {
         $this->client = $client;
 
         return $this;
     }
 
+
     /**
-     * Get client
-     *
-     * @return \YourNamespace\Entity\OAuthClient
+     * @return OAuthClient
      */
     public function getClient()
     {
@@ -198,10 +201,10 @@ class OAuthRefreshToken
     /**
      * Set user
      *
-     * @param \YourNamespace\Entity\OAuthUser $user
+     * @param \API\Entity\OAuthUser $user
      * @return OAuthRefreshToken
      */
-    public function setUser(\YourNamespace\Entity\OAuthUser $user = null)
+    public function setUser(\API\Entity\OAuthUser $user = null)
     {
         $this->user = $user;
 
@@ -211,11 +214,11 @@ class OAuthRefreshToken
     /**
      * Get user
      *
-     * @return \YourNamespace\Entity\OAuthUser
+     * @return \API\Entity\OAuthUser
      */
     public function getUser()
     {
-        return $this->client;
+        return $this->user;
     }
 
     public function toArray()

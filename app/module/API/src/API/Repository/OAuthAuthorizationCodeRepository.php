@@ -2,7 +2,7 @@
 namespace API\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use YourNamespace\Entity\OAuthAuthorizationCode;
+use API\Entity\OAuthAuthorizationCode;
 use OAuth2\Storage\AuthorizationCodeInterface;
 
 class OAuthAuthorizationCodeRepository extends EntityRepository implements AuthorizationCodeInterface
@@ -19,9 +19,9 @@ class OAuthAuthorizationCodeRepository extends EntityRepository implements Autho
 
     public function setAuthorizationCode($code, $clientIdentifier, $userEmail, $redirectUri, $expires, $scope = null)
     {
-        $client = $this->_em->getRepository('YourNamespace\Entity\OAuthClient')
-            ->findOneBy(array('client_identifier' => $clientIdentifier));
-        $user = $this->_em->getRepository('YourNamespace\Entity\OAuthUser')
+        $client = $this->_em->getRepository('API\Entity\OAuthClient')
+            ->findOneBy(array('client_id' => $clientIdentifier));
+        $user = $this->_em->getRepository('API\Entity\OAuthUser')
             ->findOneBy(['email' => $userEmail]);
         $authCode = OAuthAuthorizationCode::fromArray([
             'code'           => $code,

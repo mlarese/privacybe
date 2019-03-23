@@ -39,9 +39,9 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
 
 $em = EntityManager::create($settings['connection'], $config);
 
-$subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+$subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
     new \Doctrine\Common\Annotations\AnnotationReader(),
-    new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor('o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW')
+    new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor('o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW')
 );
 
 $eventManager = $em->getEventManager();

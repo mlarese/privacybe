@@ -1,15 +1,20 @@
 <?php
 namespace API\Entity;
-
+use Doctrine\ORM\Mapping as ORM;
 /**
  * OAuthUser
- * @entity(repositoryClass="YourNamespace\Repository\OAuthUserRepository")
+ * @ORM\Entity
+ * @ORM\Table(name="oauth_users")
+ * @ORM\Entity(repositoryClass="API\Repository\OAuthUserRepository")
  */
-class OAuthUser extends EncryptableFieldEntity
+class OAuthUser
 {
+
+    use EncryptableFieldEntity;
     /**
-     * @var integer
-     */
+     * @ORM\Id
+     * @ORM\Column(name="username", type="string", nullable=false)
+     **/
     private $id;
 
     /**

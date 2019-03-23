@@ -2,21 +2,27 @@
 
 namespace API\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 /**
  * OAuthClient
- * @entity(repositoryClass="YourNamespace\Repository\OAuthClientRepository")
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="oauth_clients")
+ * @ORM\Entity(repositoryClass="API\Repository\OAuthClientRepository")
  */
-class OAuthClient extends EncryptableFieldEntity
+class OAuthClient
 {
-    /**
-     * @var integer
-     */
-    private $id;
+    use EncryptableFieldEntity;
+
+
+
 
     /**
      * @var string
+     *  @ORM\Id
+     * @ORM\Column(name="client_id", type="string", nullable=false)
      */
-    private $client_identifier;
+    private $client_id;
 
     /**
      * @var string
@@ -35,7 +41,7 @@ class OAuthClient extends EncryptableFieldEntity
      */
     public function getId()
     {
-        return $this->id;
+        return $this->client_id;
     }
 
     /**
@@ -46,7 +52,7 @@ class OAuthClient extends EncryptableFieldEntity
      */
     public function setClientIdentifier($clientIdentifier)
     {
-        $this->client_identifier = $clientIdentifier;
+        $this->client_id = $clientIdentifier;
         return $this;
     }
 
@@ -57,7 +63,7 @@ class OAuthClient extends EncryptableFieldEntity
      */
     public function getClientIdentifier()
     {
-        return $this->client_identifier;
+        return $this->client_id;
     }
 
     /**
@@ -118,7 +124,7 @@ class OAuthClient extends EncryptableFieldEntity
     public function toArray()
     {
         return [
-            'client_id' => $this->client_identifier,
+            'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
             'redirect_uri' => $this->redirect_uri,
         ];

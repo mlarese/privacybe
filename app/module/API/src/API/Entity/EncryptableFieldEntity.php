@@ -1,7 +1,8 @@
 <?php
 namespace API\Entity;
 
-class EncryptableFieldEntity
+
+trait EncryptableFieldEntity
 {
     protected $hashOptions = ['cost' => 11];
 

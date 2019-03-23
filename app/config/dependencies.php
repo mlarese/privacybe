@@ -42,9 +42,10 @@ $container['em-config'] = function ($c) {
         false
     );
 
-    $subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
         new \Doctrine\Common\Annotations\AnnotationReader(),
-        new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_config']['encryption_key'])
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_config']['encryption_key'])
     );
     $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_config']['connection'], $config);
     $eventManager = $em->getEventManager();
@@ -70,9 +71,9 @@ $container['em-su-privacy'] = function ($c) {
         false
     );
 
-    $subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
         new \Doctrine\Common\Annotations\AnnotationReader(),
-        new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
     );
     $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
     $eventManager = $em->getEventManager();
@@ -92,9 +93,9 @@ $container['em-privacy'] = function ($c) {
     );
 
 
-    $subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+    $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
         new \Doctrine\Common\Annotations\AnnotationReader(),
-        new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+        new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
     );
     $em = \Doctrine\ORM\EntityManager::create($settings['doctrine_privacy']['connection'], $config);
     $eventManager = $em->getEventManager();

@@ -8,7 +8,12 @@
 
 namespace App\Manager;
 
-class ModuleBuilder{
+/**
+ * Class ModuleBuilder
+ * @package App\Manager
+ */
+class ModuleBuilder
+{
 
     protected $modules;
 
@@ -20,42 +25,51 @@ class ModuleBuilder{
 
     protected $path;
 
-    public function setApp($app){
+    public function setApp($app)
+    {
         $this->app = $app;
     }
 
-    public function setLoader($loader){
+    public function setLoader($loader)
+    {
         $this->loader = $loader;
     }
 
-    public function setPath($path){
+    public function setPath($path)
+    {
         $this->path = $path;
     }
 
-    public function setModuleBasePath($path){
+    public function setModuleBasePath($path)
+    {
         $this->mbasepath = $path;
     }
 
-    public function build(){
+    public function build()
+    {
 
         $modules = require $this->path . '/modules.php';
 
 
         foreach ($modules as $module) {
-            $nModule = new Module($module['name'],$this->app,$this->loader);
+            $nModule = new Module($module['name'], $this->app, $this->loader);
 
             $nModule->setModulePath($this->mbasepath);
 
-            if(file_exists($this->mbasepath)) {
+            if (file_exists($this->mbasepath)) {
                 $nModule->setLoader($module['namespace']);
                 $nModule->setRouteGroup($module['group']);
+                if (isset($module['middleware'])) {
+                    $nModule->setMiddleware($module['middleware']);
+                }
             }
 
             $this->modules[] = $nModule;
         }
     }
 
-    public function getModules(){
+    public function getModules()
+    {
 
         return $this->modules;
     }

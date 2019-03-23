@@ -546,6 +546,7 @@ class PrivacyManager extends AbstractAction
 
         // die(" lang=$lang, pageName=$pageName, domainName=$domainName, ownerId=$ownerId, ref=$ref, termId=$termId");
 
+
         /** @var EntityManager $em */
         $cem = $this->getEmConfig();
 

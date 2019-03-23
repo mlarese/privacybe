@@ -274,9 +274,9 @@ class ImportPortalReservation extends Base
 
         $em = \Doctrine\ORM\EntityManager::create($connection, $config);
 
-        $subscriber = new \GDPR\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
+        $subscriber = new \App\DoctrineEncrypt\Subscribers\DoctrineEncryptSubscriber(
             new \Doctrine\Common\Annotations\AnnotationReader(),
-            new \GDPR\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
+            new \App\DoctrineEncrypt\Encryptors\OpenSslEncryptor($settings['doctrine_privacy']['encryption_key'])
         );
 
         $eventManager = $em->getEventManager();

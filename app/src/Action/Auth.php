@@ -187,6 +187,7 @@ class Auth extends AbstractAction
         $ret = [
             "hasBi" => false,
             "hasQuery" => false,
+            "hasPredictive" => false,
             "hasAdvMarketing" => false
         ];
         switch($ownerId) {
@@ -194,6 +195,7 @@ class Auth extends AbstractAction
             case 34:
                 $ret["hasBi"] = true ;
                 $ret["hasQuery"] = true ;
+                $ret["hasPredictive"] = true ;
                 break;
         }
 

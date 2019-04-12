@@ -6,11 +6,47 @@ use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use Doctrine\ORM\EntityManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 class CustomerCares extends AbstractAction
 {
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getDblOptinList($request, $response, $args)
+    {
+
+        try {
+            $rp = $this->getEmConfig()->getRepository(CustomerCare::class);
+
+
+            $query="SELECT  count(*) AS items,
+                dm.opened_year AS filter,
+                sum(dm.price) AS value, 
+                $sqlCasePaxType AS serie,
+                $sqlCaseOrigin AS dimension
+            
+                ";
+
+                $query = $em->createNativeQuery($sql, $rsm);
+                return $query->getResult();
+
+
+
+            $ccs = $rp->findBy(['deleted'=>0, 'active'=>1]);
+
+            return $response->withJson(  $this->toJson($ccs));
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Exception');
+        }
+
+    }
 
     /**
      * @param $request Request

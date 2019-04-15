@@ -177,6 +177,7 @@ return [
                 'dbname' => 'abs_datamart',
                 'user'    => 'root',
                 'password' => 'sZ2YgBnkR9',
+                'charset'  => 'utf8',
             ]
         ],
         'doctrine_config' => [

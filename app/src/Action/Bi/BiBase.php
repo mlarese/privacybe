@@ -2,6 +2,9 @@
 namespace App\Action\Bi;
 
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 trait BiBase {
     public $sqlCasePaxtype = "
         CASE dm.paxtype
@@ -31,4 +34,5 @@ trait BiBase {
     ";
 
     public $sqlCaseOrigin = "reservation_origin";
+
 }

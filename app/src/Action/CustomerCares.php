@@ -6,11 +6,26 @@ use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use Doctrine\ORM\EntityManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 class CustomerCares extends AbstractAction
 {
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getDblOptinList($request, $response, $args)
+    {
+
+
+            return $response->withStatus(500, 'Not implemented');
+
+
+    }
 
     /**
      * @param $request Request

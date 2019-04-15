@@ -4,6 +4,7 @@ namespace App\Action;
 use App\Action\Bi\BiAgenationTrait;
 use App\Action\Bi\BiDemograficTrait;
 use App\Action\Bi\BiMonthYearTrait;
+use App\Action\Bi\BiQBaseTrait;
 use App\Action\Bi\BiReturnsTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -19,6 +20,7 @@ class Bi extends AbstractAction
     use BiAgenationTrait;
     use BiMonthYearTrait;
     use BiReturnsTrait;
+    use BiQBaseTrait;
 
     public function ownerPing (Request $request, Response $response, $args) {
 
@@ -216,6 +218,7 @@ class Bi extends AbstractAction
                 case 'agenation': $biResponse = $this->biResponseAgeNation($structure, $emDirectBi); break;
                 case 'monthyear': $biResponse = $this->biResponseMonthYear($structure, $emDirectBi); break;
                 case 'returns': $biResponse = $this->biResponseReturns($structure, $emDirectBi); break;
+                case 'qbase': $biResponse = $this->biResponseQBase($structure, $emDirectBi, $request); break;
             }
 
 

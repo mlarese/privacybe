@@ -6,6 +6,7 @@ namespace App\Action;
 use App\Entity\Config\ActionHistory;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use App\Entity\Privacy\Configuration;
 use App\Entity\Privacy\Domain;
 use App\Entity\Privacy\Operator;
 use App\Entity\Proxy\OwnerProxy;
@@ -22,6 +23,7 @@ use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use function is_array;
@@ -45,6 +47,33 @@ class Owners extends AbstractAction
         $this->executeConfigSql("GRANT ALL PRIVILEGES ON $db.* to $user@'%' IDENTIFIED BY '$password';");
     }
 
+    /**
+     * @return Domain[]
+     * @throws ORMException
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function ownersStats (Request $request, Response $response, $args) {
+
+
+        $em = $this->getEmConfig();
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('tot', 'tot', 'integer');
+
+        $sql = "SELECT count(active) as tot FROM privacy_config.owner where deleted = 0 and active = 0 ;";
+        $query = $em->createNativeQuery($sql, $rsm);
+        $totDeactive = $query->getResult();
+
+        $sql = "SELECT count(active) as tot FROM privacy_config.owner where deleted = 0 and active = 1 ;";
+        $query = $em->createNativeQuery($sql, $rsm);
+        $totActive = $query->getResult();
+
+        $res = [
+            "total"=> $totDeactive[0]['tot'] + $totActive[0]['tot'],
+            "active"=> $totActive[0]['tot'],
+            "notactive"=> $totDeactive[0]['tot']
+        ];
+        return $response->withJson($res);
+    }
     /**
      * @return Domain[]
      * @throws ORMException
@@ -401,6 +430,39 @@ class Owners extends AbstractAction
         return $response->withJson( $this->toJson($owners));
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getLayouts($request, $response, $args) {
+        try{
+            $ownerId = $this->getOwnerId($request);
+            /** @var EntityManager $emp */
+            $emp = $this->getEmPrivacy($ownerId);
+
+            $currId = 'email-layouts';
+            /** @var Configuration $rec */
+            $rec = $emp->find(Configuration::class, $currId);
+            if($rec==null) {
+                $layouts = [];
+            } else {
+                $data = $rec->getData();
+                if($data==null)
+                    $layouts = [];
+                else
+                    $layouts = $data;
+            }
+        }catch(Exception $e) {
+            echo($e->getMessage());
+            return $response->withStatus(500, 'Exception loading layouts');
+        }
+
+        return $response->withJson( $this->toJson($layouts));
+    }
 
     protected function emptyProfile () {
         return ["marker"=>"marker"];

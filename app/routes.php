@@ -6,6 +6,7 @@
 use App\Action\Attachments;
 use App\Action\AttachmentView;
 use App\Action\Configurations;
+use App\Action\CustomerCares;
 use App\Action\DeferredPrivacies;
 use App\Action\Dictionaries;
 use App\Action\Operators;
@@ -27,6 +28,7 @@ $routeMngr = new BaseRoutesManager($app);
  ******************************/
 // $app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
 $app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
+$app->post('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
 
 
 /*********************************************************
@@ -34,10 +36,13 @@ $app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
  *********************************************************/
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
+$app->get('/api/test/ownersstats', 'App\Action\Owners:ownersStats');
+
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 $app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
 $app->get('/api/test/dimensions/{ownerId}', 'App\Action\Bi:retrieveDimensions');
 $app->get('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
+$app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
@@ -142,6 +147,7 @@ $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
+$app->get('/api/owner/ownersstats', 'App\Action\Owners:ownersStats');
 
 /*********************************************************
  *                  PRIVACY GROUPED
@@ -230,6 +236,20 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *                  CUSTOMERCARE OWNERS
  *********************************************************/
 $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
+
+
+/*********************************************************
+ *                  LAYOUTS
+ *********************************************************/
+/** @var Owners */
+$app->get('/api/owner/layouts', 'App\Action\Owners:getLayouts');
+
+
+/*********************************************************
+ *                  CUSTOMERCARE DOUBLEOPTIN
+ *********************************************************/
+/** @var CustomerCares */
+$app->get('/api/customercare/dbloptinlist', 'App\Action\CustomerCares:getDblOptinList');
 
 /*********************************************************
  *                  CUSTOMERCARE WIDGETS

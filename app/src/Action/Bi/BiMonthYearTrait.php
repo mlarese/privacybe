@@ -7,7 +7,6 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 trait BiMonthYearTrait {
     use BiBase;
-    use BiBase;
 
     private function getMonthYearDimMonthSerOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCaseOrigin = $this->sqlCaseOrigin;

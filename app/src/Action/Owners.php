@@ -440,7 +440,9 @@ class Owners extends AbstractAction
      */
     public function getLayouts($request, $response, $args) {
         try{
-            $ownerId = $this->getOwnerId($request);
+            if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
+            else  $ownerId = $this->getOwnerId($request);
+
             /** @var EntityManager $emp */
             $emp = $this->getEmPrivacy($ownerId);
 
@@ -670,7 +672,9 @@ class Owners extends AbstractAction
      * @throws ORMException
      */
     public function getDomains ($request, $response, $args) {
-        $ownerId = $this->getOwnerId($request);
+        if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
+        else  $ownerId = $this->getOwnerId($request);
+
         /** @var EntityManager $em */
         $emp = $this->getEmPrivacy($ownerId);
 

@@ -129,7 +129,9 @@ class Terms extends AbstractAction{
      */
     public function getAllTerms($request, $response, $args) {
         session_commit();
-        $ownerId = $this->getOwnerId($request);
+
+        if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
+        else  $ownerId = $this->getOwnerId($request);
 
         /**
          * @var EntityManager $em

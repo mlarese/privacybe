@@ -33,7 +33,10 @@ class SubscriptionService {
     public function setUnsubFromNesletters( &$flags, &$term, $user) {
         $today = new \DateTime();
         foreach ($flags as &$value) {
-            if($value['code'] === 'newsletter' || $value['code'] === 'newsletter' ) {
+            if(
+                $value['code'] === 'newsletter' ||
+                $value['code'] === 'newsletters'
+            ) {
                 $value['selected'] = false;
                 $value['unsubscribe'] = $today;
                 $value['user'] = $user;
@@ -46,7 +49,7 @@ class SubscriptionService {
         foreach ($paragraphs as &$parag) {
             $treatments = &$parag['treatments'];
             foreach ($treatments as $key => &$value) {
-                if($value['code'] === 'newsletter' || $value['code'] === 'newsletter' ) {
+                if($value['code'] === 'newsletter' || $value['code'] === 'newsletters' ) {
                     $value['selected'] = false;
                     $value['unsubscribe'] = $today;
                     $value['user'] = $user;

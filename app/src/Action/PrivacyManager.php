@@ -70,11 +70,16 @@ class PrivacyManager extends AbstractAction
             $params = $this->urlB32DecodeToArray($_k, $encr);
             $email = $params['email'];
             $ownerId = $params['ownerId'];
+
+            $domain = null;
+            if(isset($params['domain']))
             $domain = $params['domain'];
+
             $em = $this->getEmPrivacy($ownerId);
             $pres = new PrivacyResource($em);
             $privacies = $pres->privacyRecord($email, $domain);
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Error finding privacies');
         }
 

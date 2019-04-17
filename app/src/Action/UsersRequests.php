@@ -147,6 +147,9 @@ class UsersRequests  extends AbstractAction{
 
             $ownerId = $params['ownerId'];
             $email = $params['email'];
+
+            $domain = null;
+            if(isset($params['domain']))
             $domain = $params['domain'];
             $privacies = $body['privacies'];
             $em = $this->getEmPrivacy($ownerId);

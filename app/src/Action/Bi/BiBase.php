@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 17/01/2019
- * Time: 17:15
- */
+namespace App\Action\Bi;
 
-namespace App\Action;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 trait BiBase {
     public $sqlCasePaxtype = "
@@ -38,4 +34,5 @@ trait BiBase {
     ";
 
     public $sqlCaseOrigin = "reservation_origin";
+
 }

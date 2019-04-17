@@ -1,21 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mauro.larese
- * Date: 17/01/2019
- * Time: 17:09
- */
-
-namespace App\Action;
+namespace App\Action\Bi;
 
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 
-trait BiDemograficTrait{
+trait BiAgenationTrait{
     use BiBase;
 
-    private function getDimMonthSerOriginFilterPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
+    private function createAgeNationsBiResultsetMapping ($dimensionType='string', $valueType='integer') {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('items', 'items', 'integer');
+        $rsm->addScalarResult('filter', 'filter', 'integer');
+        $rsm->addScalarResult('filter2', 'filter2');
+        $rsm->addScalarResult('value', 'value',$valueType);
+        $rsm->addScalarResult('dimension', 'dimension', $dimensionType);
+        $rsm->addScalarResult('serie', 'serie');
+
+        return $rsm;
+    }
+    private function getAgeNationsDimMonthSerOriginFilterPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
@@ -26,29 +30,30 @@ trait BiDemograficTrait{
                 $sqlCaseOpenedMonth AS dimension,
                 sum(dm.price) AS value,
                 $sqlCasePaxType AS filter1,
+                dm.country AS filter2,
                 $sqlCaseOrigin AS serie
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
             WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
-            GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
-            ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
+            GROUP BY dm.opened_year, dm.opened_month, dm.country, reservation_origin, dm.paxtype 
+            ORDER BY dm.opened_year, dm.opened_month, dm.country, reservation_origin, dm.paxtype
         ";
 
-        $rsm = $this->createBiResultsetMapping();
+        $rsm = $this->createAgeNationsBiResultsetMapping();
         $rsm->addScalarResult('filter1', 'filter1');
 
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-
-    private function getDimMonthSerPaxTypeOriginFilterOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
+    private function getAgeNationsDimMonthSerPaxTypeOriginFilterOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
+                dm.country AS filter2,
                 $sqlCaseOpenedMonth AS dimension,
                 sum(dm.price) AS value,
                 $sqlCasePaxType AS serie,
@@ -57,24 +62,24 @@ trait BiDemograficTrait{
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
             WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
-            GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
-            ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
+            GROUP BY dm.opened_year, dm.opened_month, dm.country,reservation_origin, dm.paxtype 
+            ORDER BY dm.opened_year, dm.opened_month, dm.country,reservation_origin, dm.paxtype
         ";
 
-        $rsm = $this->createBiResultsetMapping();
+        $rsm = $this->createAgeNationsBiResultsetMapping();
         $rsm->addScalarResult('filter1', 'filter1');
 
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-
-    private function getDimPaxTypeSerOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
+    private function getAgeNationsDimPaxTypeSerOrigin(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
 
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
+                dm.country AS filter2,
                 sum(dm.price) AS value,
                 $sqlCasePaxType AS dimension,
                 $sqlCaseOrigin AS serie
@@ -82,33 +87,22 @@ trait BiDemograficTrait{
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
             WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
-            GROUP BY dm.opened_year, reservation_origin, dm.paxtype 
-            ORDER BY dm.opened_year, reservation_origin, dm.paxtype
+            GROUP BY dm.opened_year, dm.country, reservation_origin, dm.paxtype 
+            ORDER BY dm.opened_year, dm.country, reservation_origin, dm.paxtype
         ";
 
-        $rsm = $this->createBiResultsetMapping();
+        $rsm = $this->createAgeNationsBiResultsetMapping();
 
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-    private function createBiResultsetMapping ($dimensionType='string', $valueType='integer') {
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('items', 'items', 'integer');
-        $rsm->addScalarResult('filter', 'filter');
-        $rsm->addScalarResult('value', 'value',$valueType);
-        $rsm->addScalarResult('dimension', 'dimension', $dimensionType);
-        $rsm->addScalarResult('serie', 'serie');
-
-        return $rsm;
-    }
-
-
-    private function getDimOriginSerPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1) {
+    private function getAgeNationsDimOriginSerPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
+                dm.country AS filter2,
                 sum(dm.price) AS value, 
                 $sqlCasePaxType AS serie,
                 $sqlCaseOrigin AS dimension
@@ -117,41 +111,68 @@ trait BiDemograficTrait{
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
             WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
-            GROUP BY dm.opened_year,  dm.paxtype,reservation_origin 
-            ORDER BY dm.opened_year,  dm.paxtype,reservation_origin
+            GROUP BY dm.opened_year,  dm.country,dm.paxtype,reservation_origin 
+            ORDER BY dm.opened_year,  dm.country,dm.paxtype,reservation_origin
         ";
 
-        $rsm = $this->createBiResultsetMapping();
+        $rsm = $this->createAgeNationsBiResultsetMapping();
 
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-    private function biResponseDemografic ($structure, $emDirectBi) {
+    private function getAgeNationsCountries (EntityManager $em, $portalCode, $structureId, $portalId = 1) {
+        $sqlCasePaxType = $this->sqlCasePaxtype;
+        $sqlCaseOrigin = $this->sqlCaseOrigin;
+        $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
+
+        $sql = "
+            SELECT  count(country) AS items, country
+            FROM abs_datamart.dm_reservation_$portalCode dm
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            GROUP BY country ORDER BY count(country) desc,country
+            LIMIT 0,10
+        ";
+
+        $rsm = $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('country', 'country');
+
+        $query = $em->createNativeQuery($sql, $rsm);
+        return $query->getResult();
+
+    }
+    private function biResponseAgeNation ($structure, $emDirectBi) {
 
         $biResponse = [];
         $biResponse['structure'] = $structure;
-        $biResponse['paxtype-origin'] = $this->getDimPaxTypeSerOrigin(
+        $biResponse['countries'] = $this->getAgeNationsCountries(
             $emDirectBi,
             $structure['portal_code'],
             $structure['structure_id'],
             $structure['portal_id']
         );
 
-        $biResponse['origin-paxtype'] = $this->getDimOriginSerPaxType(
+        $biResponse['paxtype-origin'] = $this->getAgeNationsDimPaxTypeSerOrigin(
             $emDirectBi,
             $structure['portal_code'],
             $structure['structure_id'],
             $structure['portal_id']
         );
 
-        $biResponse['month-paxtype-origin'] = $this->getDimMonthSerOriginFilterPaxType(
+        $biResponse['origin-paxtype'] = $this->getAgeNationsDimOriginSerPaxType(
             $emDirectBi,
             $structure['portal_code'],
             $structure['structure_id'],
             $structure['portal_id']
         );
 
-        $biResponse['month-origin-paxtype'] = $this->getDimMonthSerPaxTypeOriginFilterOrigin(
+        $biResponse['month-paxtype-origin'] = $this->getAgeNationsDimMonthSerOriginFilterPaxType(
+            $emDirectBi,
+            $structure['portal_code'],
+            $structure['structure_id'],
+            $structure['portal_id']
+        );
+
+        $biResponse['month-origin-paxtype'] = $this->getAgeNationsDimMonthSerPaxTypeOriginFilterOrigin(
             $emDirectBi,
             $structure['portal_code'],
             $structure['structure_id'],
@@ -160,5 +181,4 @@ trait BiDemograficTrait{
 
         return $biResponse;
     }
-
 }

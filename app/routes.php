@@ -14,6 +14,7 @@ use App\Action\Owners;
 use App\Action\PrivacyManager;
 use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
+use App\Action\Terms;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
@@ -117,9 +118,13 @@ $app->get('/api/surfer/userrequest', 'App\Action\UsersRequests:insertSubscriptio
 /*********************************************************
  *                  TERM
  *********************************************************/
+/** @var Terms */
 $app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');
 $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
+
+$app->get('/api/owner/termby/{ownerId}', 'App\Action\Terms:getAllTerms');
+
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
@@ -183,6 +188,7 @@ $app->get('/api/owner/treatment', 'App\Action\Treatments:getAllTreatments');
 $app->get('/api/owner/treatment/{code}', 'App\Action\Treatments:getTreatment');
 
 $app->get('/api/owner/domain', 'App\Action\Owners:getDomains');
+$app->get('/api/owner/domainby/{ownerId}', 'App\Action\Owners:getDomains');
 
 /*********************************************************
  *                  OWNERS OPERATORS
@@ -239,10 +245,20 @@ $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
 
 
 /*********************************************************
+/*********************************************************
+ *                  LAYOUTS
+ *********************************************************/
+/** @var Owners */
+$app->get('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:getOwnerLayouts');
+
+
+/*********************************************************
  *                  CUSTOMERCARE DOUBLEOPTIN
  *********************************************************/
 /** @var CustomerCares */
 $app->get('/api/customercare/dbloptinlist', 'App\Action\CustomerCares:getDblOptinList');
+
+
 
 /*********************************************************
  *                  CUSTOMERCARE WIDGETS

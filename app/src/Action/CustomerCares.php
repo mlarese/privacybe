@@ -21,30 +21,9 @@ class CustomerCares extends AbstractAction
     public function getDblOptinList($request, $response, $args)
     {
 
-        try {
-            $rp = $this->getEmConfig()->getRepository(CustomerCare::class);
 
+            return $response->withStatus(500, 'Not implemented');
 
-            $query="SELECT  count(*) AS items,
-                dm.opened_year AS filter,
-                sum(dm.price) AS value, 
-                $sqlCasePaxType AS serie,
-                $sqlCaseOrigin AS dimension
-            
-                ";
-
-                $query = $em->createNativeQuery($sql, $rsm);
-                return $query->getResult();
-
-
-
-            $ccs = $rp->findBy(['deleted'=>0, 'active'=>1]);
-
-            return $response->withJson(  $this->toJson($ccs));
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            return $response->withStatus(500, 'Exception');
-        }
 
     }
 

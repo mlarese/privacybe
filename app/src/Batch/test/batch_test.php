@@ -1,6 +1,7 @@
 <?php
 
 use \App\Batch\DeferredPrivacyBatch;
+use \App\Resource\IResultIntegrator;
 use App\Env\Env;
 
 require_once '../initbatch.php';

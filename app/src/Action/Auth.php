@@ -192,6 +192,7 @@ class Auth extends AbstractAction
         ];
         switch($ownerId) {
             case 9:
+            case 6:
             case 34:
                 $ret["hasBi"] = true ;
                 $ret["hasQuery"] = true ;

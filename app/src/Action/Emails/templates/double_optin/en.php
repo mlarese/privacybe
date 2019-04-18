@@ -442,7 +442,7 @@
                                     <div style="color:#555555;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;line-height:150%;padding-top:0px;padding-right:30px;padding-bottom:10px;padding-left:20px;">
                                         <div style="font-size: 12px; line-height: 18px; font-family: 'Roboto', Tahoma, Verdana, Segoe, sans-serif; color: #555555;">
                                             <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;"><span style="font-size: 14px; line-height: 21px;"><em><span style="line-height: 21px; font-size: 14px;"><span style="color: #333333; line-height: 21px; font-size: 14px;">Thank you,</span><span style="color: #333333; line-height: 21px; font-size: 14px;"></span></span></em></span></p>
-                                            <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;"><span style="font-size: 14px; line-height: 21px;">%STRUCTURE%</span></p>
+                                            <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;"><span style="font-size: 14px; line-height: 21px;"><?=$d['structure']?></span></p>
                                         </div>
                                     </div>
                                     <!--[if mso]></td></tr></table><![endif]-->

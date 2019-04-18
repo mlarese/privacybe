@@ -1,5 +1,6 @@
 <?php
 
+use App\Manager\ApplicationMiddleware;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -35,3 +36,4 @@ $app = new \Slim\App($settings);
 // Set up dependencies
 require __DIR__ . '/../../../app/dependencies.php';
 
+$am = new ApplicationMiddleware([],$app);

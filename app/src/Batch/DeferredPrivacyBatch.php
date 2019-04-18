@@ -6,6 +6,7 @@ namespace App\Batch;
 use App\Action\Emails\EmailHelpers;
 use App\Action\Emails\PlainTemplateBuilder;
 use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
+use App\Entity\Privacy\Configuration;
 use App\Entity\Privacy\PrivacyDeferred;
 use App\Entity\Proxy\PrivacyDeferredProxy;
 use App\Env\Env;
@@ -18,6 +19,7 @@ use App\Traits\Environment;
 use Exception;
 use Interop\Container\Exception\ContainerException;
 use function print_r;
+use function tmpfile;
 
 class DeferredPrivacyBatch extends AbstractBatch {
     private $emailSender;
@@ -86,7 +88,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                 // solo struttura demo
                 // if($own->getId()!=34) continue;
             }
-
+            // if($own->getId()!=34) continue;
             try {
                 $emprv = $this->emBuilder->buildSUPrivateEM($own->getId());
                 $emailResource = new EmailResource($emprv, $emcfg);
@@ -101,10 +103,57 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     ->where('p.id = ?1');
 
 
+                // recupero email template
+                /** @var Configuration $emailtplRec */
+                $emailtplRec=null;
+                $emailtplRec = $emprv->find(Configuration::class, 'dbloptin-email-template');
+                $hasEmailTemplate = isset($emailtplRec);
+                $emailtplByDomain = [];
+                $emailtpl=[];
 
+                if($hasEmailTemplate) {
+                    $emailtpl = $emailtplRec->getData();
+                    foreach ($emailtpl as $key=>$tpl) {
+                        $tplDomain = $tpl['domain'];
+                        if(!isset($tplDomain) || $tplDomain==='') $tplDomain='default';
+                        $emailtplByDomain[ $tplDomain ] = $tpl;
+                    }
+
+                }
+
+
+                /** @var PrivacyDeferredProxy $priv */
                 foreach ($privs as $priv) {
+                    $email = $priv->getEmail();
+                    if(!isset($email) or $email==='') continue;
+
+                    /***********************************/
+                    /*****   EMAIL TEMPLATE ONLY  ******/
+                    $tplSubject='';
+                    $tplStructure='';
+                    $tplLogo='https://reservation.cmsone.it/backend/images/insurance_letter.png';
+                    $tplHtml='';
+
+                    if($hasEmailTemplate) {
+
+                        $domain = $priv->getDomain();
+                        $lng = $priv->getLanguage();
+                        if(isset($emailtplByDomain[$domain])) {
+                            $currentTpl = $emailtplByDomain[$domain];
+                        } else {
+                            $currentTpl = $emailtplByDomain['default'];
+                        }
+
+                        if(isset($currentTpl['structure'])) $tplStructure = $currentTpl['structure'];
+                        if(isset($currentTpl['logo'])) $tplLogo = $currentTpl['logo'];
+                        if(isset($currentTpl['subject'])) $tplSubject = $currentTpl['subject'];
+                    }
+                    /*****   EMAIL TEMPLATE ONLY  ******/
+                    /***********************************/
+
                     $encOwnerId =  urlencode( base64_encode( $encryptor->encrypt($own->getId()) ) );
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
+
 
                     $_lang = 'en';
                     $emailSubject = $aEmailSubject[$_lang] ;
@@ -124,7 +173,11 @@ class DeferredPrivacyBatch extends AbstractBatch {
                             $priv->getId()
                         );
 
+                        $data['name'] = $priv->getName();
+                        $data['surname'] = $priv->getSurname();
                         $data[ 'enclink'] ="$confirmLink?_j=$encPprivacyUid&_k=$encOwnerId&lang=$_lang";
+                        $data[ 'structure'] = $tplStructure;
+                        $data[ 'logo'] = $tplLogo;
 
                         $this->sendGenericEmail(
                             $this->getContainer(),
@@ -134,6 +187,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                             $own->getEmail(),
                             $priv->getEmail()
                         );
+
 
 
                         $q->setParameter(1, $priv->getId())

@@ -124,30 +124,30 @@ class DeferredPrivacyService extends SlimAbstractService {
             ->setStatus( $status)
             ->setUpdated( new DateTime())
         ;
-
         if(
             $status === DeferredPrivacyService::DEFERRED_STATUS_VISITED
-        ){
+        ) {
             /** @var Privacy $pryR */
             $pryR = $em->find(Privacy::class, $privacyUid);
 
-            $pryR
-                ->setCryptedForm(  $defR->getCryptedForm() )
-                ->setDomain(  $defR->getDomain() )
-                ->setForm(  $defR->getForm() )
-                ->setIp(  $defR->getIp() )
-                ->setPage(  $defR->getPage() )
-                ->setSite(  $defR->getSite() )
-                ->setPrivacy(  $defR->getPrivacy() )
-                ->setPrivacyFlags(  $defR->getPrivacyFlags() )
-            ;
-            $em->merge($pryR);
+            if (isset($pryR)) {
+                $pryR
+                    ->setCryptedForm($defR->getCryptedForm())
+                    ->setDomain($defR->getDomain())
+                    ->setForm($defR->getForm())
+                    ->setIp($defR->getIp())
+                    ->setPage($defR->getPage())
+                    ->setSite($defR->getSite())
+                    ->setPrivacy($defR->getPrivacy())
+                    ->setPrivacyFlags($defR->getPrivacyFlags());
+                $em->merge($pryR);
+            }
+
+            $em->merge($defR);
+
+
+            $em->flush();
         }
-
-        $em->merge($defR);
-
-
-        $em->flush();
 
     }
 

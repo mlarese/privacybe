@@ -73,6 +73,11 @@ class PrivacyManager extends AbstractAction
 
             $domain = null;
             if(isset($params['domain']))
+            $domain = $params['domain'];
+
+
+            $domain = null;
+            if(isset($params['domain']))
                 $domain = $params['domain'];
 
             $em = $this->getEmPrivacy($ownerId);

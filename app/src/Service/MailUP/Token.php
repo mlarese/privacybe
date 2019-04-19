@@ -5,6 +5,7 @@ namespace App\Service\MailUP;
 use App\Entity\Privacy\MailUpToken;
 use App\Exception\MailUPException;
 use App\Exception\MailUPTokenException;
+use App\Entity\Config\OwnerRepository;
 
 class Token extends Base {
 
@@ -18,18 +19,20 @@ class Token extends Base {
 	 */
 	const TOKEN_MAX_DAYS_RETENTION = 90;
 
-	/**
-	 * Get a new MailUP token by Owner ID
-	 *
-	 * @param int $ownerId
-	 * @param string $username
-	 * @param string $password
-	 * @param string $clientId
-	 * @param string $clientSecret
-	 * @param, string $alertEmail
-	 *
-	 * @return MailUPToken
-	 */
+    /**
+     * Get a new MailUP token by Owner ID
+     *
+     * @param int $ownerId
+     * @param string $username
+     * @param string $password
+     * @param string $clientId
+     * @param string $clientSecret
+     * @param $alertEmail
+     * @return MailUPToken
+     * @throws MailUPException
+     * @throws MailUPTokenException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function getNewTokenByOwnerId (
 		$ownerId,
 		$username,
@@ -124,13 +127,15 @@ class Token extends Base {
 		}
 	}
 
-	/**
-	 * Get the current MailUP token by Owner ID
-	 *
-	 * @param int $ownerId
-	 *
-	 * @return MailUPToken
-	 */
+    /**
+     * Get the current MailUP token by Owner ID
+     *
+     * @param int $ownerId
+     *
+     * @return MailUPToken
+     * @throws MailUPException
+     * @throws MailUPTokenException
+     */
 	public function getTokenByOwnerId (
 		$ownerId
 	) {
@@ -150,14 +155,16 @@ class Token extends Base {
  		return $token;
 	}
 
-	/**
-	 * Refresh MailUP token by Owner ID
-	 *
-	 * @param int $ownerId
-	 *
-	 * @return MailUPToken
-	 * @throws MailUPTokenException
-	 */
+    /**
+     * Refresh MailUP token by Owner ID
+     *
+     * @param int $ownerId
+     *
+     * @return MailUPToken
+     * @throws MailUPException
+     * @throws MailUPTokenException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function refreshTokenByOwnerId (
 		$ownerId
 	) {
@@ -223,14 +230,15 @@ class Token extends Base {
 		return $mailUpToken;
 	}
 
-	/**
-	 * Maintenance MailUP token by Owner ID
-	 *
-	 * @param int $ownerId
-	 *
-	 * @return int
-	 * @throws MailUPTokenException
-	 */
+    /**
+     * Maintenance MailUP token by Owner ID
+     *
+     * @param int $ownerId
+     *
+     * @return int
+     * @throws MailUPTokenException
+     * @throws MailUPException
+     */
 	public function maintenanceTokenByOwnerId (
 		$ownerId
 	) {
@@ -258,5 +266,4 @@ class Token extends Base {
 		));
 		return $q->execute();
 	}
-
 }

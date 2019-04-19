@@ -43,14 +43,13 @@ class DeferredPrivacies extends AbstractAction{
             $_k = $body['_k'];
             $_j = $body['_j'];
 
-
-
             /** @var EncryptorInterface $enc */
             $enc = $this->getContainer()->get('encryptor');
-            $ownerId = $enc->decrypt( base64_decode( $_k ));
+            $ownerId = $enc->decrypt( base64_decode( $_k )) * 1;
             $privacyUid = $enc->decrypt( base64_decode( $_j ));
 
-            // die(" o=$ownerId   p=$privacyUid");
+
+
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
 

@@ -120,6 +120,7 @@ class DeferredPrivacyService extends SlimAbstractService {
         /** @var PrivacyDeferred $defR */
         $defR = $em->find(PrivacyDeferred::class, $deferredUid);
 
+        if(!isset($defR)) return;
         $defR
             ->setStatus( $status)
             ->setUpdated( new DateTime())

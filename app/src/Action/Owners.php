@@ -435,22 +435,65 @@ class Owners extends AbstractAction
                     [
                         "code"=>"default",
                         "logo"=>"",
+                        "structure"=>"",
                         "text"=>[
-                            "it"=>"- italiano -",
-                            "en"=>"- inglese -",
-                            "de"=>"- tedesco -"
+                            "it"=>"",
+                            "en"=>"",
+                            "de"=>""
                         ],
                         "subject"=>[
-                            "it"=>"- italiano -",
-                            "en"=>"- inglese -",
-                            "de"=>"- tedesco -"
+                            "it"=>"",
+                            "en"=>"",
+                            "de"=>""
                         ],
-                        "domain"=>"","termid"=>""
+                        "domain"=>"",
+                        "termid"=>""
                     ]
                 ];
 
     }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function setOwnerLayouts($request, $response, $args) {
+        try{
+            if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
+            else  $ownerId = $this->getOwnerId($request);
 
+
+
+            /** @var EntityManager $emp */
+            $emp = $this->getEmPrivacy($ownerId);
+
+            $currId = 'dbloptin-email-template';
+            /** @var Configuration $rec */
+            $rec = $emp->find(Configuration::class, $currId);
+
+            if($rec==null) {
+                $rec = new Configuration();
+                $rec->setCode('dbloptin-email-template')
+                    ->setDescription('Layout per double optin')
+                ;
+            }
+
+            $body = $request->getParsedBody();
+            $rec->setData($body);
+
+            $emp->merge($rec);
+            $emp->flush();
+
+        }catch(Exception $e) {
+            echo($e->getMessage());
+            return $response->withStatus(500, 'Exception saving layouts');
+        }
+
+        return $response->withJson( $this->toJson($this->success()));
+    }
     /**
      * @param $request Request
      * @param $response Response
@@ -460,10 +503,7 @@ class Owners extends AbstractAction
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getOwnerLayouts($request, $response, $args) {
-
         try{
-
-
             if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
             else  $ownerId = $this->getOwnerId($request);
 

@@ -243,13 +243,14 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *********************************************************/
 $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
 
-
 /*********************************************************
 /*********************************************************
  *                  LAYOUTS
  *********************************************************/
 /** @var Owners */
 $app->get('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:getOwnerLayouts');
+$app->put('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:setOwnerLayouts');
+$app->post('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:setOwnerLayouts');
 
 
 /*********************************************************

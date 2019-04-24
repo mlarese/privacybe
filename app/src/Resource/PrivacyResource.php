@@ -186,7 +186,8 @@ class PrivacyResource extends AbstractResource
         $raiseException = false,
         $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO,
         $version=null,
-        $status=null
+        $status=null,
+        $note=null
     ) {
         $privacyEntry = new Privacy();
         $privacyEntry
@@ -207,6 +208,7 @@ class PrivacyResource extends AbstractResource
             ->setPrivacyFlags($privacyFlags)
             ->setTelephone($telephone);
 
+        if(isset($note)) $privacyEntry->setNote($note);
         if(isset($language)) $privacyEntry->setLanguage($language);
         if(isset($page)) $privacyEntry->setPage($page);
         if($status!==null) $privacyEntry->setStatus($status);

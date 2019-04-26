@@ -42,6 +42,30 @@ class DeferredPrivacyBatch extends AbstractBatch {
         $this->emailSender = $emailSender;
     }
 
+    function evalTemplate($htmlTemplate, $d) {
+        $search  = [
+            '%STRUCTURE%',
+            '%NOME%',
+            '%COGNOME%',
+            '%LOGO%'
+        ];
+        $replace = [
+            '<?=$d["structure"]?>',
+            '<?=$d["name"]?>',
+            '<?=$d["surname"]?>',
+            '<?=$d["logo"]?>'
+        ];
+
+        $htmlTemplate = str_replace($search, $replace, $htmlTemplate);
+        $tmp = tmpfile ();
+        $tmpf = stream_get_meta_data ( $tmp );
+        $tmpf = $tmpf ['uri'];
+        fwrite ( $tmp, $htmlTemplate );
+        $ret = include ($tmpf);
+        fclose ( $tmp );
+        return $ret;
+    }
+
     /**
      * @param string $deferredTYPE
      *

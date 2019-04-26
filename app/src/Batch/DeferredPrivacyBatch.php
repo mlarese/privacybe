@@ -42,29 +42,6 @@ class DeferredPrivacyBatch extends AbstractBatch {
         $this->emailSender = $emailSender;
     }
 
-    function evalTemplate($htmlTemplate, $d) {
-        $search  = [
-            '%STRUCTURE%',
-            '%NOME%',
-            '%COGNOME%',
-            '%LOGO%'
-        ];
-        $replace = [
-            '<?=$d["structure"]?>',
-            '<?=$d["name"]?>',
-            '<?=$d["surname"]?>',
-            '<?=$d["logo"]?>'
-        ];
-
-        $htmlTemplate = str_replace($search, $replace, $htmlTemplate);
-        $tmp = tmpfile ();
-        $tmpf = stream_get_meta_data ( $tmp );
-        $tmpf = $tmpf ['uri'];
-        fwrite ( $tmp, $htmlTemplate );
-        $ret = include ($tmpf);
-        fclose ( $tmp );
-        return $ret;
-    }
 
     /**
      * @param string $deferredTYPE
@@ -159,7 +136,6 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $tplHtml='';
 
                     if($hasEmailTemplate) {
-
                         $domain = $priv->getDomain();
                         $lng = $priv->getLanguage();
                         if(isset($emailtplByDomain[$domain])) {
@@ -170,6 +146,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
                         if(isset($currentTpl['structure'])) $tplStructure = $currentTpl['structure'];
                         if(isset($currentTpl['logo'])) $tplLogo = $currentTpl['logo'];
+                        if(isset($currentTpl['subject'])) $tplSubject = $currentTpl['subject'];
                         if(isset($currentTpl['subject'])) $tplSubject = $currentTpl['subject'];
                     }
                     /*****   EMAIL TEMPLATE ONLY  ******/
@@ -203,14 +180,26 @@ class DeferredPrivacyBatch extends AbstractBatch {
                         $data[ 'structure'] = $tplStructure;
                         $data[ 'logo'] = $tplLogo;
 
-                        $this->sendGenericEmail(
-                            $this->getContainer(),
-                            $data,
-                            'double_optin',
-                            $_lang,
-                            $own->getEmail(),
-                            $priv->getEmail()
-                        );
+                        if($hasEmailTemplate)
+                            $this->sendGenericEmailHtml(
+                                $this->getContainer(),
+                                $data,
+                                'double_optin',
+                                $_lang,
+                                $own->getEmail(),
+                                $priv->getEmail(),
+                                'dataone_emails',
+                                '',
+                                ''
+                            );
+                        else
+                            $this->sendGenericEmail(
+                                $this->getContainer(),
+                                $data,
+                                'double_optin',
+                                $_lang,
+                                $own->getEmail(),
+                                $priv->getEmail() );
 
 
 

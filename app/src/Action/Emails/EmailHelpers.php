@@ -9,9 +9,14 @@
 namespace App\Action\Emails;
 
 
+use function fclose;
+use function fwrite;
 use GuzzleHttp\Client;
 use function print_r;
 use Slim\Container;
+use function str_replace;
+use function stream_get_meta_data;
+use function tmpfile;
 
 trait EmailHelpers
 {
@@ -87,4 +92,38 @@ trait EmailHelpers
         return $body;
     }
 
+    public function sendGenericEmailHtml(
+        Container $container,
+        array $templateData,
+        string $templateName,
+        string $language,
+        string $from,
+        string $to,
+        $settingProp = 'dataone_emails',
+        string $subject=null,
+        string $html=null
+    ) {
+        /** @var Client $client */
+        $client = $container['email_client'];
+
+
+        /** @var PlainTemplateBuilder $bld */
+        $bld=$container->get('template_builder');
+        $bld->setTemplateName($templateName);
+        $body=$bld->render($templateData, $language);
+
+
+        // get subject from settings
+        $settings =  $container->get('settings');
+        $templateSettings = $settings[$settingProp][$templateName];
+        $aEmailSubject =$templateSettings['all']['dictionary']['email_subject'];
+
+        if (!isset($subject) || empty($subject)) {
+            $subject = $this->extractLanguage($aEmailSubject,$language);
+        }
+
+        $data = $this->buildGuzzleData($from,$to, $subject,$body  ) ;
+        $client->request('POST', '', $data);
+        return $body;
+    }
 }

@@ -128,16 +128,23 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $email = $priv->getEmail();
                     if(!isset($email) or $email==='') continue;
 
+                    $_lang = 'en';
+                    $emailSubject = $aEmailSubject[$_lang] ;
+                    if(isset($aEmailSubject[$priv->getLanguage()])) {
+                        $_lang = $priv->getLanguage();
+                        $emailSubject = $aEmailSubject[$priv->getLanguage()] ;
+                    }
+
                     /***********************************/
                     /*****   EMAIL TEMPLATE ONLY  ******/
-                    $tplSubject='';
+                    $tplSubject=$emailSubject;
                     $tplStructure='';
                     $tplLogo='https://reservation.cmsone.it/backend/images/insurance_letter.png';
                     $tplHtml='';
 
                     if($hasEmailTemplate) {
                         $domain = $priv->getDomain();
-                        $lng = $priv->getLanguage();
+                        $lng=$priv->getLanguage();
                         if(isset($emailtplByDomain[$domain])) {
                             $currentTpl = $emailtplByDomain[$domain];
                         } else {
@@ -146,8 +153,13 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
                         if(isset($currentTpl['structure'])) $tplStructure = $currentTpl['structure'];
                         if(isset($currentTpl['logo'])) $tplLogo = $currentTpl['logo'];
-                        if(isset($currentTpl['subject'])) $tplSubject = $currentTpl['subject'];
-                        if(isset($currentTpl['subject'])) $tplSubject = $currentTpl['subject'];
+
+                        $tmpLang = 'en';
+                        if(isset($currentTpl['subject'][$lng])) $tmpLang = $lng;
+
+                        $tplSubject = $currentTpl['subject'][$tmpLang];
+                        $tplHtml = $currentTpl['text'][$tmpLang];
+
                     }
                     /*****   EMAIL TEMPLATE ONLY  ******/
                     /***********************************/
@@ -156,12 +168,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
 
 
-                    $_lang = 'en';
-                    $emailSubject = $aEmailSubject[$_lang] ;
-                    if(isset($aEmailSubject[$priv->getLanguage()])) {
-                        $_lang = $priv->getLanguage();
-                        $emailSubject = $aEmailSubject[$priv->getLanguage()] ;
-                    }
+
 
 
                     // echo '-----------'.$emailSubject;
@@ -180,7 +187,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                         $data[ 'structure'] = $tplStructure;
                         $data[ 'logo'] = $tplLogo;
 
-                        if($hasEmailTemplate)
+                        if($hasEmailTemplate) {
                             $this->sendGenericEmailHtml(
                                 $this->getContainer(),
                                 $data,
@@ -189,18 +196,18 @@ class DeferredPrivacyBatch extends AbstractBatch {
                                 $own->getEmail(),
                                 $priv->getEmail(),
                                 'dataone_emails',
-                                '',
-                                ''
+                                $tplSubject,
+                                $tplHtml
                             );
-                        else
+                        }else {
                             $this->sendGenericEmail(
                                 $this->getContainer(),
                                 $data,
                                 'double_optin',
                                 $_lang,
                                 $own->getEmail(),
-                                $priv->getEmail() );
-
+                                $priv->getEmail());
+                        }
 
 
                         $q->setParameter(1, $priv->getId())

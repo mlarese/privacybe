@@ -6,6 +6,7 @@ use App\Action\Bi\BiDemograficTrait;
 use App\Action\Bi\BiMonthYearTrait;
 use App\Action\Bi\BiQBaseTrait;
 use App\Action\Bi\BiReturnsTrait;
+use App\Entity\Privacy\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
@@ -21,6 +22,108 @@ class Bi extends AbstractAction
     use BiMonthYearTrait;
     use BiReturnsTrait;
     use BiQBaseTrait;
+
+
+    const BI_QUERIES_LIST = 'bi-queries-list';
+
+    public function retrieveResultListRecord (Request $request, Response $response, $args) {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $em =$this->getEmPrivacy($ownerId);
+
+            $id = $args['id'];
+
+            /** @var Configuration $rec */
+            $rec = $em->find(Configuration::class, $id);
+            if(!isset($rec)) {
+                return $response->withStatus(500, 'Error loading result - record not found');
+            }
+
+            $list=$rec->getData();
+
+            return $response->withJson($this->toJson($list));
+
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading results');
+        }
+    }
+
+
+    public function retrieveResultList (Request $request, Response $response, $args) {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $em =$this->getEmPrivacy($ownerId);
+
+            /** @var Configuration $rec */
+            $rec = $em->find(Configuration::class, self::BI_QUERIES_LIST);
+            if(!isset($rec)) $list=[];
+            else $list=$rec->getData();
+
+            return $response->withJson($this->toJson($list));
+
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading results');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     *
+     * body {'description':string, id: string, creationDate: date, 'description': string}
+     */
+    public function saveResultList (Request $request, Response $response, $args) {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $em =$this->getEmPrivacy($ownerId);
+
+            /** @var Configuration $recConfig_queryList */
+            $recConfig_queryList = $em->find(Configuration::class, self::BI_QUERIES_LIST);
+            if(!isset($recConfig_queryList)) {
+                $recConfig_queryList=new Configuration();
+                $recConfig_queryList->setCode(self::BI_QUERIES_LIST);
+                $recConfig_queryList->setData([]);
+                $recConfig_queryList->setDescription('Bi queries list');
+            };
+
+            $queryListData = $recConfig_queryList->getData();
+
+            $body = $request->getParsedBody();
+
+            $list_newRecord = [
+                'id'=>$body['id'],
+                'creationDate'=>new \DateTime(),
+                'description'=>$body['description']
+            ];
+            $queryListData[] = $list_newRecord;
+            $recConfig_queryList->setData($queryListData);
+
+            $recConfig_biresult = new Configuration();
+                $recConfig_biresult->setCode($body['id']);
+                $recConfig_biresult->setData([
+                    'data'=>$body['data'],
+                    'filter'=>$body['filter']
+                ]);
+                $recConfig_biresult->setDescription($body['description']);
+
+            $em->merge($recConfig_queryList);
+            $em->merge($recConfig_biresult);
+            $em->flush();
+
+            return $response->withJson($this->toJson($this->success()));
+
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading results');
+        }
+    }
 
     public function ownerPing (Request $request, Response $response, $args) {
 

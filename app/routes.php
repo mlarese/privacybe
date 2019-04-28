@@ -27,9 +27,14 @@ $routeMngr = new BaseRoutesManager($app);
 /******************************
  * bi
  ******************************/
+/** @var \App\Action\Bi */
 // $app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
 $app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
 $app->post('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
+
+$app->get('/api/bi/resultlist', 'App\Action\Bi:retrieveResultList');
+$app->post('/api/bi/resultlist', 'App\Action\Bi:saveResultList');
+$app->get('/api/bi/resultlist/{id}', 'App\Action\Bi:retrieveResultListRecord');
 
 
 /*********************************************************

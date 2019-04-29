@@ -7,6 +7,7 @@ use App\Action\Bi\BiMonthYearTrait;
 use App\Action\Bi\BiQBaseTrait;
 use App\Action\Bi\BiReturnsTrait;
 use App\Entity\Privacy\Configuration;
+use function count;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
@@ -26,10 +27,53 @@ class Bi extends AbstractAction
 
     const BI_QUERIES_LIST = 'bi-queries-list';
 
-    private function generateQueryFilterOptions (EntityManager $em) {
+    private function generateQueryFilterOptionsPax () {
+        return [
+            'Adult with child' => 'Adulti con bambino',
+            'Big family' => 'Famiglia numerosa',
+            'Couples' => 'Coppie',
+            'Couples with child' => 'Coppie con bambino',
+            'Families' => 'Famiglie',
+            'Single' => 'Singoli',
+            'Three Adults' => 'Tre adulti',
+
+        ];
+    }
+    private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
+
+        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null";
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('country', 'country', 'string');
+        $query = $em->createNativeQuery($sql, $rsm);
+        return $query->getResult();
+    }
+
+    private function generateQueryFilterOptions ($ownerId) {
         $res = [];
+        $em = $this->getContainer()->get('em-bi');
+
+        $structures = $this->getStructures($em, $ownerId);
+            $structure = $structures[0];
+            $portalCode = $structure['portal_code'];
+            $structureId = $structure['structure_id'];
+
+        $res['country'] = $this->generateQueryFilterOptionsCountry($em, $portalCode, $structureId);
+        $res['paxType'] = $this->generateQueryFilterOptionsPax();
 
         return $res;
+    }
+
+    public function retrieveQueryFilterOptionsTest (Request $request, Response $response, $args) {
+        $structureId = '36';
+        $portalCode = 'res';
+        $ownerId = 9;
+
+        try {
+            $res = $this->generateQueryFilterOptions($ownerId);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return $response->withJson($this->toJson($res));
     }
     public function retrieveQueryFilterOptions (Request $request, Response $response, $args) {
         try {
@@ -44,15 +88,12 @@ class Bi extends AbstractAction
                 $rec = new Configuration();
                 $rec->setCode($id)
                     ->setDescription('Query filter values')
-                    ->setData($this->generateQueryFilterOptions($em))
+                    ->setData($this->generateQueryFilterOptions($ownerId))
                 ;
             }
 
             $list=$rec->getData();
-
             return $response->withJson($this->toJson($list));
-
-
         } catch (\Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error loading options');

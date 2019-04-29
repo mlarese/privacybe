@@ -199,7 +199,6 @@ class Auth extends AbstractAction
                 $ret["hasPredictive"] = true ;
                 break;
         }
-
         return $ret;
     }
     private function getAcl($gdprRole)

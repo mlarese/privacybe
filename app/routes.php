@@ -37,6 +37,9 @@ $app->post('/api/bi/resultlist', 'App\Action\Bi:saveResultList');
 $app->get('/api/bi/resultlist/{id}', 'App\Action\Bi:retrieveResultListRecord');
 
 
+$app->get('/api/bi/bioptions', 'App\Action\Bi:retrieveQueryFilterOptions');
+
+
 /*********************************************************
  *                  TEST
  *********************************************************/
@@ -51,6 +54,11 @@ $app->get('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatama
 $app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
+
+/*********************************************************
+ *                  TEST OPTIONS
+ *********************************************************/
+$app->get('/api/test/bioptions', 'App\Action\Bi:retrieveQueryFilterOptionsTest');
 
 /** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');

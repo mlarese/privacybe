@@ -26,6 +26,39 @@ class Bi extends AbstractAction
 
     const BI_QUERIES_LIST = 'bi-queries-list';
 
+    private function generateQueryFilterOptions (EntityManager $em) {
+        $res = [];
+
+        return $res;
+    }
+    public function retrieveQueryFilterOptions (Request $request, Response $response, $args) {
+        try {
+            $ownerId = $this->getOwnerId($request);
+            $em =$this->getEmPrivacy($ownerId);
+
+            $id = 'bi-query-filters-options';
+
+            /** @var Configuration $rec */
+            $rec = $em->find(Configuration::class, $id);
+            if(!isset($rec)) {
+                $rec = new Configuration();
+                $rec->setCode($id)
+                    ->setDescription('Query filter values')
+                    ->setData($this->generateQueryFilterOptions($em))
+                ;
+            }
+
+            $list=$rec->getData();
+
+            return $response->withJson($this->toJson($list));
+
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(500, 'Error loading options');
+        }
+
+    }
     public function retrieveResultListRecord (Request $request, Response $response, $args) {
         try {
             $ownerId = $this->getOwnerId($request);

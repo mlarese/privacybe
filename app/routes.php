@@ -27,9 +27,17 @@ $routeMngr = new BaseRoutesManager($app);
 /******************************
  * bi
  ******************************/
+/** @var \App\Action\Bi */
 // $app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
 $app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
 $app->post('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
+
+$app->get('/api/bi/resultlist', 'App\Action\Bi:retrieveResultList');
+$app->post('/api/bi/resultlist', 'App\Action\Bi:saveResultList');
+$app->get('/api/bi/resultlist/{id}', 'App\Action\Bi:retrieveResultListRecord');
+
+
+$app->get('/api/bi/bioptions', 'App\Action\Bi:retrieveQueryFilterOptions');
 
 
 /*********************************************************
@@ -47,6 +55,10 @@ $app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatam
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
+/*********************************************************
+ *                  TEST OPTIONS
+ *********************************************************/
+$app->get('/api/test/bioptions', 'App\Action\Bi:retrieveQueryFilterOptionsTest');
 
 /** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');

@@ -23,6 +23,21 @@ use function tmpfile;
 
 class DeferredPrivacyBatch extends AbstractBatch {
     private $emailSender;
+    private $debug=false;
+
+    /**
+     * @return bool
+     */
+    public function isDebug() {
+        return $this->debug;
+    }
+
+    /**
+     * @param bool $debug
+     */
+    public function setDebug(bool $debug) {
+        $this->debug = $debug;
+    }
     use Environment;
     use EmailHelpers;
     /**
@@ -85,11 +100,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
         foreach ($owns as $own) {
 
-            if($this->getEnv() === Env::ENV_DEV) {
-                // solo struttura demo
-                // if($own->getId()!=34) continue;
-            }
-            // if($own->getId()!=34) continue;
+            if($this->isDebug()) if($own->getId()!=34) continue;
+
             try {
                 $emprv = $this->emBuilder->buildSUPrivateEM($own->getId());
                 $emailResource = new EmailResource($emprv, $emcfg);
@@ -108,12 +120,15 @@ class DeferredPrivacyBatch extends AbstractBatch {
                 /** @var Configuration $emailtplRec */
                 $emailtplRec=null;
                 $emailtplRec = $emprv->find(Configuration::class, 'dbloptin-email-template');
+
                 $hasEmailTemplate = isset($emailtplRec);
                 $emailtplByDomain = [];
                 $emailtpl=[];
 
                 if($hasEmailTemplate) {
+                    if($this->isDebug()) echo '\n-- found template';
                     $emailtpl = $emailtplRec->getData();
+
                     foreach ($emailtpl as $key=>$tpl) {
                         $tplDomain = $tpl['domain'];
                         if(!isset($tplDomain) || $tplDomain==='') $tplDomain='default';
@@ -142,6 +157,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $tplLogo='https://reservation.cmsone.it/backend/images/insurance_letter.png';
                     $tplHtml='';
 
+                    if($this->isDebug()) echo("\n-- $email = $email ");
+
                     if($hasEmailTemplate) {
                         $domain = $priv->getDomain();
                         $lng=$priv->getLanguage();
@@ -149,29 +166,29 @@ class DeferredPrivacyBatch extends AbstractBatch {
                             $currentTpl = $emailtplByDomain[$domain];
                         } else {
                             $currentTpl = $emailtplByDomain['default'];
+                            if($this->isDebug()) echo("\n-- default template");
                         }
+
+                        if($this->isDebug()) echo("\n-- domain = $domain  language=$lng");
 
                         if(isset($currentTpl['structure'])) $tplStructure = $currentTpl['structure'];
                         if(isset($currentTpl['logo'])) $tplLogo = $currentTpl['logo'];
 
                         $tmpLang = 'en';
-                        if(isset($currentTpl['subject'][$lng])) $tmpLang = $lng;
+                        if(isset($currentTpl['text'][$lng])) $tmpLang = $lng;
+                            if(isset($currentTpl['subject'][$lng])) $tplSubject = $currentTpl['subject'][$tmpLang];
+                            $tplHtml = $currentTpl['text'][$tmpLang];
 
-                        $tplSubject = $currentTpl['subject'][$tmpLang];
-                        $tplHtml = $currentTpl['text'][$tmpLang];
+                            if($this->isDebug()) echo("\n-- template language = $tmpLang");
 
                     }
+
                     /*****   EMAIL TEMPLATE ONLY  ******/
                     /***********************************/
 
                     $encOwnerId =  urlencode( base64_encode( $encryptor->encrypt($own->getId()) ) );
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
 
-
-
-
-
-                    // echo '-----------'.$emailSubject;
                     try {
                         $data = $emailResource->composePrivaciesData(
                             $_lang,
@@ -188,6 +205,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
                         $data[ 'logo'] = $tplLogo;
 
                         if($hasEmailTemplate) {
+                            if($this->isDebug()) echo("\n-- sendGenericEmailHtml ") ;
+
                             $this->sendGenericEmailHtml(
                                 $this->getContainer(),
                                 $data,
@@ -209,19 +228,17 @@ class DeferredPrivacyBatch extends AbstractBatch {
                                 $priv->getEmail());
                         }
 
-
-                        $q->setParameter(1, $priv->getId())
-                            ->getQuery()
-                            ->execute();
-
+                        $q->setParameter(1, $priv->getId()) ->getQuery() ->execute();
                         $emprv->flush();
+
+
                     } catch (Exception $e) {
                         echo ' error ' . $e->getMessage();
                     }
                 }
 
             } catch (Exception $e) {
-                echo $e->getMessage().', ';
+                echo $e->getMessage();
             }
 
 

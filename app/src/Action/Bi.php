@@ -29,15 +29,29 @@ class Bi extends AbstractAction
 
     private function generateQueryFilterOptionsPax () {
         return [
-            'Adult with child' => 'Adulti con bambino',
-            'Big family' => 'Famiglia numerosa',
-            'Couples' => 'Coppie',
-            'Couples with child' => 'Coppie con bambino',
-            'Families' => 'Famiglie',
-            'Single' => 'Singoli',
-            'Three Adults' => 'Tre adulti',
+            ["value"=>'Adult with child', "label" => 'Adulti con bambino'],
+            ["value"=>'Couples', "label"  => 'Coppie'],
+            ["value"=>'Couples with child' , "label" => 'Coppie con bambino'],
+            ["value"=>'Families' , "label" => 'Famiglie'],
+            ["value"=>'Big family' , "label" => 'Famiglia numerosa'],
+            ["value"=>'Single' , "label" => 'Singoli'],
+            ["value"=>'Three Adults' , "label" => 'Tre adulti']
 
         ];
+    }
+    private function generateQueryFilterOptionsLanguage ($em,$portalCode, $structureId) {
+
+        $sql = "SELECT  distinctrow raw.reservation_guest_language
+            FROM abs_datamart.dm_reservation_$portalCode dm
+            LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
+            LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
+            WHERE dm.structure_uid = '$portalCode-$structureId' and(not raw.reservation_guest_language is null and not raw.reservation_guest_language='-')
+            ORDER BY raw.reservation_guest_language";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('reservation_guest_language', 'language', 'string');
+        $query = $em->createNativeQuery($sql, $rsm);
+        return $query->getResult();
     }
     private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
 
@@ -47,7 +61,6 @@ class Bi extends AbstractAction
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
-
     private function generateQueryFilterOptions ($ownerId) {
         $res = [];
         $em = $this->getContainer()->get('em-bi');
@@ -57,8 +70,10 @@ class Bi extends AbstractAction
             $portalCode = $structure['portal_code'];
             $structureId = $structure['structure_id'];
 
-        $res['country'] = $this->generateQueryFilterOptionsCountry($em, $portalCode, $structureId);
         $res['paxType'] = $this->generateQueryFilterOptionsPax();
+        $res['language'] = $this->generateQueryFilterOptionsLanguage($em, $portalCode, $structureId);
+        $res['country'] = $this->generateQueryFilterOptionsCountry($em, $portalCode, $structureId);
+
 
         return $res;
     }

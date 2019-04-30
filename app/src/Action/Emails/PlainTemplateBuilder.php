@@ -8,8 +8,6 @@
 
 namespace App\Action\Emails;
 
-
-use const __FILE__;
 use function dirname;
 use Exception;
 use function fclose;
@@ -82,13 +80,15 @@ class PlainTemplateBuilder {
             '%STRUCTURE%',
             '%NOME%',
             '%COGNOME%',
-            '%LOGO%'
+            '%LOGO%',
+            'images/LOGO.jpg'
         ];
         $replace = [
             '<?=$d["enclink"]?>',
             '<?=$d["structure"]?>',
             '<?=$d["name"]?>',
             '<?=$d["surname"]?>',
+            '<?=$d["logo"]?>',
             '<?=$d["logo"]?>'
         ];
 
@@ -97,9 +97,12 @@ class PlainTemplateBuilder {
         $tmpf = stream_get_meta_data ( $tmp );
         $tmpf = $tmpf ['uri'];
         fwrite ( $tmp, $htmlTemplate );
+        ob_start();
         $ret = include ($tmpf);
+        $buffer = ob_get_contents();
+        @ob_end_clean();
         fclose ( $tmp );
-        return $ret;
+        return $buffer;
     }
     /**
      * @param $data

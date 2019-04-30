@@ -110,8 +110,7 @@ trait EmailHelpers
         /** @var PlainTemplateBuilder $bld */
         $bld=$container->get('template_builder');
         $bld->setTemplateName($templateName);
-        $body=$bld->render($templateData, $language);
-
+        $body=$bld->renderHtml($templateData, $html);
 
         // get subject from settings
         $settings =  $container->get('settings');

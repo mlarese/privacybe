@@ -55,10 +55,10 @@ return [
                     ]
                 ],
                 'dev' => [
-                    'confirm_link' => 'http://localhost:3000/surfer/newsunsubemailnotif'
+                    'confirm_link' => 'http://localhost:3000/#/surfer/newsunsubemailnotif'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/surfer/newsunsubemailnotif'
+                    'confirm_link' => 'https://privacy.dataone.online/#/surfer/newsunsubemailnotif'
                 ]
             ],
             'notify_privacy_mod_executed' => [
@@ -99,10 +99,10 @@ return [
                     ]
                 ],
                 'dev' => [
-                    'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
+                    'confirm_link' => 'http://localhost:3000/#/surfer/confirmdeferred'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/manager/surfer/confirmdeferred'
+                    'confirm_link' => 'https://privacy.dataone.online/manager/#/surfer/confirmdeferred'
                 ]
             ],
         ],

@@ -15,6 +15,7 @@ use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
+use function date;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query;
@@ -26,6 +27,7 @@ use function get_object_vars;
 use function json_encode;
 use function print_r;
 use function strtolower;
+use function strtotime;
 use function var_dump;
 
 class PrivacyResource extends AbstractResource
@@ -332,6 +334,107 @@ class PrivacyResource extends AbstractResource
     private function emailDomainType($email) {
         $aEmail = explode('.',$email);
         return strtolower( $aEmail[count($aEmail)-1]);
+    }
+
+    /**
+     * @param null                $criteria
+     * @param IResultGrouper|null $grouper
+     * @param IFilter|null        $filter
+     *
+     * @return array|mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function privacyListIds($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
+
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        if(!isset($filter)) {
+            if(isset($criteria['postFilter'])) {
+                if($criteria['postFilter']) $filter = new PostFilter();
+            } else {
+                $filter = new PostFilter();
+            }
+
+        }
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.id',
+            'p.domain',
+            'p.site',
+            'p.termId',
+            'p.privacyFlags',
+            'p.email'
+        ];
+
+        $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
+
+        $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( $ex->not("p.email=''") )
+            ->andWhere( $ex->not("p.email IS NULL") )
+            ->setMaxResults(100)
+        ;
+
+
+        $qb ->addOrderBy( 'p.email', 'ASC')
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
+
+        if($criteria === null) {
+            $qb ->addOrderBy( 'p.email', 'ASC')
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+        } else {
+
+            $person = null ;
+            $sort = 'default' ;
+            $sortDirection = 'ASC';
+
+            if(isset($criteria['domain']) && $criteria['domain']!=='' && $criteria['domain']!=='all' ) {
+                $crDomain = $criteria['domain'];
+                $qb->andWhere( "p.domain=:domain")
+                    ->setParameter('domain',$crDomain)
+                ;
+            }
+
+            $qb ->addOrderBy( 'p.email', $sortDirection)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
+
+        }
+
+        $results = $qb->getQuery()->getResult();
+
+        // $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+        // foreach ($results as &$pr) {
+            // $privacyRecordIntegrator->integrate($pr);
+        // }
+
+        // if($filter)  $results = $filter->filter($results,$criteria);
+        // if($grouper)  $results = $grouper->group($results,$criteria);
+
+        return $results;
     }
 
     /**

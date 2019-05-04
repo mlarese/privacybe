@@ -39,6 +39,31 @@ class Bi extends AbstractAction
 
         ];
     }
+    private function generateQueryFilterOptionsLeadtime () {
+        return [
+            "Between 1 and 3 days",
+            "Between 4 and 7 days",
+            "Between 8 and 14 days",
+            "Between 15 days and 1 month",
+            "Between 1 and 2 months",
+            "Between 2 and 3 months",
+            "Between 3 and 6 months",
+            "Over 6 Months"
+        ];
+    }
+    private function generateQueryFilterOptionsOrigin () {
+        return [
+          "C",
+          "D",
+          "G",
+          "I",
+          "L",
+          "M",
+          "R",
+          "T",
+          "V"
+        ];
+    }
     private function generateQueryFilterOptionsLanguage ($em,$portalCode, $structureId) {
 
         $sql = "SELECT  distinctrow raw.reservation_guest_language
@@ -61,6 +86,11 @@ class Bi extends AbstractAction
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }
+
+    private function generateQueryFilterOptionsProduct () {
+        return ['reservation'];
+    }
+
     private function generateQueryFilterOptions ($ownerId) {
         $res = [];
         $em = $this->getContainer()->get('em-bi');
@@ -70,6 +100,9 @@ class Bi extends AbstractAction
             $portalCode = $structure['portal_code'];
             $structureId = $structure['structure_id'];
 
+        $res['leadtime'] = $this->generateQueryFilterOptionsLeadtime();
+        $res['origin'] = $this->generateQueryFilterOptionsOrigin();
+        $res['product'] = $this->generateQueryFilterOptionsProduct();
         $res['paxType'] = $this->generateQueryFilterOptionsPax();
         $res['language'] = $this->generateQueryFilterOptionsLanguage($em, $portalCode, $structureId);
         $res['country'] = $this->generateQueryFilterOptionsCountry($em, $portalCode, $structureId);
@@ -399,6 +432,7 @@ class Bi extends AbstractAction
             $biResponse = [];
             $result = [];
 
+            $privacyEm = $this->getEmPrivacy($ownid);
             if(count($structures) == 0) {
                 return $response->withStatus(500, 'No configured structure');
             }
@@ -410,7 +444,7 @@ class Bi extends AbstractAction
                 case 'agenation': $biResponse = $this->biResponseAgeNation($structure, $emDirectBi); break;
                 case 'monthyear': $biResponse = $this->biResponseMonthYear($structure, $emDirectBi); break;
                 case 'returns': $biResponse = $this->biResponseReturns($structure, $emDirectBi); break;
-                case 'qbase': $biResponse = $this->biResponseQBase($structure, $emDirectBi, $request); break;
+                case 'qbase': $biResponse = $this->biResponseQBase($structure, $emDirectBi, $privacyEm, $request); break;
             }
 
 

@@ -2,12 +2,13 @@
 namespace App\Action\Bi;
 
 
+use App\Resource\Privacy\GroupByEmail;
+use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 trait BiDemograficTrait{
     use BiBase;
-
     private function getDemograficDimMonthSerOriginFilterPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1, $addMonth = false) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;

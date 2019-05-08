@@ -8,6 +8,7 @@ use App\Base\BaseResource;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
+use App\Resource\Privacy\GroupByEmail;
 use App\Resource\Privacy\GroupByEmailTerm;
 use App\Resource\Privacy\LanguageIntegrator;
 use App\Resource\Privacy\PostFilter;
@@ -346,6 +347,7 @@ class PrivacyResource extends AbstractResource
      */
     public function privacyListIds($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
 
+        if($grouper==null) $grouper = GroupByEmail();
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -366,12 +368,9 @@ class PrivacyResource extends AbstractResource
         $results = [];
 
         $fields = [
-            'p.id',
-            'p.domain',
-            'p.site',
-            'p.termId',
+            'p.email',
             'p.privacyFlags',
-            'p.email'
+            'p.termId'
         ];
 
         $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
@@ -383,7 +382,9 @@ class PrivacyResource extends AbstractResource
             ->where('p.deleted=0')
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
-            ->setMaxResults(100)
+            //->andWhere( $ex->not("p.ref=''") )
+            //->andWhere( $ex->not("p.ref IS NULL") )
+            // ->setMaxResults(100)
         ;
 
 
@@ -424,14 +425,24 @@ class PrivacyResource extends AbstractResource
 
         }
 
-        $results = $qb->getQuery()->getResult();
+        $sql =  $qb->getQuery()->getSQL();
+
+        // die($sql);
+        $rsm = new ResultSetMapping();
+            $rsm->addScalarResult('email_0', 'email');
+            $rsm->addScalarResult('privacy_flags_1', 'privacyFlags', 'json');
+            $rsm->addScalarResult('term_id_2', 'termId', 'string');
+
+            $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+            $results = $query->getResult();
 
         // $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
         // foreach ($results as &$pr) {
             // $privacyRecordIntegrator->integrate($pr);
         // }
 
-        // if($filter)  $results = $filter->filter($results,$criteria);
+
+        if($filter)  $results = $filter->filter($results,$criteria);
         // if($grouper)  $results = $grouper->group($results,$criteria);
 
         return $results;

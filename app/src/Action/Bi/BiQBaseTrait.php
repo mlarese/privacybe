@@ -6,6 +6,7 @@ use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyResource;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
+use function explode;
 use function print_r;
 use Slim\Http\Request;
 
@@ -63,13 +64,62 @@ trait BiQBaseTrait{
         if( isset($filter[$fieldName]) && count($filter[$fieldName])>0 ){
             $result =  " and $dbName.$fieldName IN ('".implode("','", $filter[$fieldName])."')";
         }
+        return $result;
     }
+
+
+    private function normalizeDate($data, $name) {
+        if(!isset($data[$name])) return null;
+        $res = explode("T",$data[$name]);
+        return $res[0];
+    }
+    private function buildWhere_betweenDate($fieldName, $filterFrom, $filterTo, $data,$dbName = 'dm') {
+
+        $filterFrom = $this->normalizeDate($data, $filterFrom);
+        $filterTo = $this->normalizeDate($data, $filterTo);
+
+        if(!isset($filterFrom)) {
+            if(!$filterTo) return "";
+            return " AND $fieldName <= '$filterTo' ";
+        }else {
+            if(!isset($filterTo)) return " AND $fieldName >= '$filterFrom' ";
+        }
+        return " AND $fieldName between  '$filterFrom' AND '$filterTo'";
+
+    }
+
+    private function buildWhere_filter_ext ($fieldName, $filterName, $data, $dbName = 'dm') {
+
+        if(!isset($data[$filterName])) return "";
+        $filter = $data;
+        $result = "";
+        if( isset($filter[$filterName]) && count($filter[$filterName])>0 ){
+            $result =  " and $dbName.$fieldName IN ('".implode("','", $filter[$filterName])."')";
+        }
+        return $result;
+    }
+
 
     private function filterByPrivacy (&$data, $criteria, $privacyEm ) {
 
         $priRes = new PrivacyResource($privacyEm);
         $list = $priRes->privacyListIds($criteria, new GroupByEmail());
+        return $list;
 
+
+        $listByEmail = [];
+
+        foreach ($list as $record) {
+            $listByEmail[ $record['email'] ] = $record['email'];
+        }
+
+
+        foreach ($data as &$record) {
+            if(array_key_exists($listByEmail,  $record['email']))
+                $record["visible"] = true;
+            else
+                $record["visible"] = false;
+        }
         return $list;
     }
 
@@ -83,44 +133,64 @@ trait BiQBaseTrait{
      *
      * @return array
      *
-     {
-        "dirty": false,
-        "time_range_type": "months",
-        "product": [ "reservation"  ],
-        "origin": [  "C", "D",  "G"   ],
-        "channel": [],
-        "nationality": [ "Albania", "Algeria"  ],
-        "paxtype": [  "Adult with child",  "Couples" ],
-        "checkin_from": "2019-04-30T22:00:00.000Z",
-        "checkin_to": "2019-05-02T22:00:00.000Z",
-        "time_range_value": "1"
-     }
-     *
      */
+
     private function getResponseQBaseData(EntityManager $em, EntityManager $privacyEm, $portalCode, $structureId, $portalId = 1, $queryConfig=[]) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
 
-        $whereCountry =  $this->buildWhere_filter_in("country_iso2",$queryConfig);
-        $wherePax =  $this->buildWhere_filter_in("paxtype",$queryConfig);
-        $whereCity =  $this->buildWhere_filter_in("reservation_city",$queryConfig);
+        // $fieldName, $filterName, $data, $dbName
+
+        // time_range_type: "days"
+        // time_range_value: "2"
+
+        $whereTimeRange="";
+        if(isset($queryConfig['bi']['time_range_value']) && !$queryConfig['bi']['time_range_value']=='') {
+            $time_range_value = $queryConfig['bi']['time_range_value']  ;
+            $time_range_type = $queryConfig['bi']['time_range_type']  ;
+            $today = date('Y-m-d');
+
+            if($time_range_type == 'months' ) $time_range_value = $time_range_value * 30;
+            else if($time_range_type == 'years' ) $time_range_value = $time_range_value * 365;
+            $whereTimeRange=" AND DATEDIFF('$today', dm.opened_date ) <= $time_range_value ";
+        }
+
+        $whereCheckin =$this->buildWhere_betweenDate('checkin_date', 'checkin_from', 'checkin_to', $queryConfig['bi']);
+        $whereCheckout =$this->buildWhere_betweenDate('checkout_date', 'checkout_from', 'checkout_to', $queryConfig['bi']);
+
+        $whereCountry =  $this->buildWhere_filter_ext("country","nationality",$queryConfig['bi']);
+        $wherePax =  $this->buildWhere_filter_ext("paxtype","paxtype",$queryConfig['bi']);
+        $whereProduct="";// $whereProduct =  $this->buildWhere_filter_ext("product","product",$queryConfig['bi']);
+        $whereOrigin =  $this->buildWhere_filter_ext("reservation_origin","origin",$queryConfig['bi'],"raw");
+        $whereChannel="";// $whereChannel =  $this->buildWhere_filter_ext("channel","channel",$queryConfig['bi']);
+        $whereLanguage =  $this->buildWhere_filter_ext("reservation_guest_language","language",$queryConfig['bi'],"raw");
+        $whereLeadTime =  $this->buildWhere_filter_ext("lead_time","leadtime",$queryConfig['bi']);
+
+
+        $whereNights="";
+        if(isset($queryConfig['bi']['nights'])) {
+            $nights = $queryConfig['bi']['nights'];
+            $whereNights=" AND dm.nights = $nights" ;
+        }
+        $whereCity = "";
 
         $sql = "
-            SELECT 
-               
+            SELECT
+
                (select
-                    GROUP_CONCAT(DISTINCT  DATE_FORMAT(reservation_opened_date,'%d/%m/%y')  ORDER BY reservation_opened_date DESC SEPARATOR ' - ') 
-                    from abs_datawarehouse.raw_reservation_$portalCode as raw2 
+                    GROUP_CONCAT(DISTINCT  DATE_FORMAT(reservation_opened_date,'%d/%m/%y')  ORDER BY reservation_opened_date DESC SEPARATOR ' - ')
+                    from abs_datawarehouse.raw_reservation_$portalCode as raw2
                     where raw2.reservation_email=raw.reservation_email
                     and reservation_deleted = 0
                ) as return_dates,
-               count(*), 
+               count(*),
                raw.sync_code,
                reservation_email AS email,
                'reservation' AS product,
                reservation_origin AS origin,
                country,
+               reservation_guest_language as language,
                country_iso2,
                reservation_city AS city,
                dm.paxtype,
@@ -132,27 +202,37 @@ trait BiQBaseTrait{
                reservation_name AS name,
                reservation_surname AS surname,
                reservation_number as code
-               
+
           FROM abs_datamart.dm_reservation_$portalCode dm
           LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
           INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON fact.related_reservation_code = raw.sync_code
-          INNER JOIN 
+          INNER JOIN
             (
-              select max(sync_code) as sync_code 
-              from abs_datawarehouse.raw_reservation_$portalCode 
+              select max(sync_code) as sync_code
+              from abs_datawarehouse.raw_reservation_$portalCode
               group by reservation_email order by reservation_email
-            ) AS raw1  
-            ON fact.related_reservation_code = raw1.sync_code          
-         WHERE 
-            dm.structure_uid = '$portalCode-$structureId' 
+            ) AS raw1
+            ON fact.related_reservation_code = raw1.sync_code
+         WHERE
+            dm.structure_uid = '$portalCode-$structureId'
             AND dm.opened_year >= '2016'
+
             $whereCountry
+            $whereProduct
+            $whereOrigin
+            $whereChannel
+            $whereLanguage
+            $whereCity
             $wherePax
-            $whereCity   
-         
+            $whereCheckin
+            $whereCheckout
+            $whereLeadTime
+            $whereNights
+            $whereTimeRange
+            
          group by reservation_email
-         
-        ORDER BY 
+
+        ORDER BY
                 reservation_email,
                 dm.checkin_date,
                 dm.checkout_date,
@@ -163,10 +243,13 @@ trait BiQBaseTrait{
 
         ";
 
-        // die("$sql");
+       // $this->filterByPrivacy([], $queryConfig,$privacyEm ); die("1");
+
+        // die("<pre>$sql");
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('product', 'product');
         $rsm->addScalarResult('origin', 'origin');
+        $rsm->addScalarResult('language', 'language');
         $rsm->addScalarResult('country', 'country');
         $rsm->addScalarResult('city', 'city');
         $rsm->addScalarResult('country_iso2', 'country_iso2');
@@ -184,9 +267,12 @@ trait BiQBaseTrait{
         $query = $em->createNativeQuery($sql, $rsm);
         $result = $query->getResult();
 
-        $r=$this->filterByPrivacy($result, $queryConfig,$privacyEm );
+        // $result = $this->filterByPrivacy($result, $queryConfig,$privacyEm );
 
-        return $result;
+        return [
+            'result'=>$result,
+            "pv"=>$this->filterByPrivacy($result, $queryConfig,$privacyEm )
+        ];
     }
 
     /**

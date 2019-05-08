@@ -11,6 +11,7 @@ namespace App\Resource\Privacy;
 
 use App\Resource\IFilter;
 use function is_array;
+use function json_decode;
 
 class PostFilter implements IFilter {
     /**
@@ -31,14 +32,11 @@ class PostFilter implements IFilter {
                     foreach($tr['terms'] as $term ) {
                         if($term['selected']) {
                             $validTreatments [$tr['code']][$term['uid']] = $term['selected'];
-
                             $debug[] = $tr['code'] .'#'.$term['uid'] ;
-
                             if($tr['code'] === 'newsletter') {
                                 $validTreatments [$tr['code'].'s'][$term['uid']] = $term['selected'];
                                 $debug[] = $tr['code'] .'s#'.$term['uid'] ;
                             }
-
                         }
                     }
                 }
@@ -47,8 +45,16 @@ class PostFilter implements IFilter {
             $counter = 0;
             foreach ($list as &$pr ) {
                 $includeRec = false;
-                if($pr['privacyFlags'] && is_array($pr['privacyFlags']))
-                    foreach ($pr['privacyFlags'] as $f) {
+                $privacyFlags = null;
+
+                if(isset($pr['privacyFlags']))
+                    $privacyFlags = $pr['privacyFlags'];
+                if(!is_array($privacyFlags)) {
+                    $privacyFlags = json_decode($privacyFlags,true);
+                }
+
+                if($privacyFlags && is_array($privacyFlags))
+                    foreach ($privacyFlags as $f) {
                         if( isset($validTreatments[ $f['code'] ] [$pr['termId']])  ) {
                             if(  $f['selected']) {
                                 $includeRec = true;
@@ -90,7 +96,6 @@ class PostFilter implements IFilter {
             }
 
         }
-
         // print_r($debug);
         unset($list);
         return $ret;

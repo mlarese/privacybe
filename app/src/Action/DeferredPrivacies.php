@@ -64,7 +64,7 @@ class DeferredPrivacies extends AbstractAction{
             $acHistory = new ActionHistory();
                 $acHistory->setType('deferred-visited')
                           ->setUserName( $pr->getEmail() )
-                          ->setDescription("User visited deferred confirmation link ($userEmail)")
+                          ->setDescription("User visited deferred confirmation link email=$userEmail uid=".$pr->getId())
                           ->setDate(new DateTime())
                 ;
 

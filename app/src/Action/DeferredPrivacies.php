@@ -3,22 +3,14 @@
 namespace App\Action;
 
 use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
-use App\Entity\Config\ActionHistory;
+use App\Entity\Privacy\ActionHistory;
 use App\Entity\Privacy\Privacy;
-use App\Entity\Privacy\PrivacyDeferred;
-use App\Entity\Privacy\Term;
-use App\Entity\Privacy\TermHistory;
 use App\Resource\DeferredPrivacyResource;
 use App\Resource\MandatoryFieldMissingException;
 use App\Resource\PrivacyResource;
-use App\Resource\TermPageResource;
-use App\Resource\TermResource;
-use App\Resource\Logs;
 use App\Service\DeferredPrivacyService;
+use DateTime;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use function session_commit;
@@ -64,7 +56,21 @@ class DeferredPrivacies extends AbstractAction{
             $defRes->setVisited($privacyUid);
 
             $prRes = new PrivacyResource($em);
+            /** @var Privacy $pr */
             $pr=$prRes->getPrivacy($privacyUid);
+
+            $userEmail = $pr->getEmail();
+
+            $acHistory = new ActionHistory();
+                $acHistory->setType('deferred-visited')
+                          ->setUserName( $pr->getEmail() )
+                          ->setDescription("User visited deferred confirmation link ($userEmail)")
+                          ->setDate(new DateTime())
+                ;
+
+                $em->merge($acHistory);
+                $em->flush();
+
 
             return $response->withJson( $this->toJson($pr)  );
 
@@ -97,6 +103,17 @@ class DeferredPrivacies extends AbstractAction{
             $res = new DeferredPrivacyResource($em, $srv );
 
             $res->setStatus($uid,$status);
+
+            $acHistory = new ActionHistory();
+            $acHistory->setType('deferred-change-status')
+                ->setUserName( 'service' )
+                ->setDescription("deferred status   uid=$uid   $status=$status")
+                ->setDate(new DateTime())
+            ;
+
+            $em->merge($acHistory);
+            $em->flush();
+
             return $response->withJson($this->success());
 
         } catch (Exception $e) {

@@ -5,6 +5,7 @@ namespace App\Resource;
 
 use App\Action\Terms;
 use App\Base\BaseResource;
+use App\Entity\Privacy\ActionHistory;
 use App\Entity\Privacy\Privacy;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
@@ -17,6 +18,7 @@ use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
 use function date;
+use DateTime;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query;
@@ -231,7 +233,18 @@ class PrivacyResource extends AbstractResource
             $deferredTYpe = $deferred;
             $defSrv = new DeferredPrivacyService();
             $privacyDef = $defSrv->setDeferred($privacyEntry, $deferredTYpe);
+
+            $acHistory = new ActionHistory();
+            $acHistory->setType('deferred-created')
+                ->setUserName( $email )
+                ->setDescription("deffered created $email  uid=$id")
+                ->setDate(new DateTime())
+            ;
+            $this->entityManager->merge($acHistory);
+            $this->entityManager->flush();
         }
+
+
 
         if($raiseException)
         {
@@ -249,6 +262,16 @@ class PrivacyResource extends AbstractResource
                     echo $e;
                     if($raiseException)
                     {
+
+                        $acHistory = new ActionHistory();
+                        $acHistory->setType('deferred-created-error')
+                            ->setUserName( $email )
+                            ->setDescription("error creating deffered  $email  uid=$id ")
+                            ->setDate(new DateTime())
+                        ;
+                        $this->entityManager->merge($acHistory);
+                        $this->entityManager->flush();
+
                         $msg = '**Data not imported: email '.$privacyEntry->getEmail().(($privacyEntry->getName() != '' && $privacyEntry->getSurname() != '') ? ', user '.$privacyEntry->getName().' '.$privacyEntry->getSurname() : '').' **';
                         Throw new Exception($msg);
                     }

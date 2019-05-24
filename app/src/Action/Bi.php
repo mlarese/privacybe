@@ -53,6 +53,17 @@ class Bi extends AbstractAction
     }
     private function generateQueryFilterOptionsOrigin () {
         return [
+            "Online - Booking",
+            "PMS Terzi - PMSONE - Manuale",
+            "OTA",
+            "CRO - Walkin",
+            "CRO - Telefono",
+            "CRO - Form",
+            "CRO - Email"
+        ];
+    }
+    private function generateQueryFilterOptionsChannel () {
+        return [
           "C",
           "D",
           "G",
@@ -80,15 +91,20 @@ class Bi extends AbstractAction
     }
     private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
 
+        $sql = " SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null";
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('room_code', 'room_code', 'string');
+        $query = $em->createNativeQuery($sql, $rsm);
+        return $query->getResult();
+    }
+
+
+    private function generateQueryFilterOptionsProduct ($em,$portalCode, $structureId) {
         $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null";
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('country', 'country', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
-    }
-
-    private function generateQueryFilterOptionsProduct () {
-        return ['reservation'];
     }
 
     private function generateQueryFilterOptions ($ownerId) {
@@ -100,13 +116,13 @@ class Bi extends AbstractAction
             $portalCode = $structure['portal_code'];
             $structureId = $structure['structure_id'];
 
+        $res['channel'] = $this->generateQueryFilterOptionsChannel();
         $res['leadtime'] = $this->generateQueryFilterOptionsLeadtime();
         $res['origin'] = $this->generateQueryFilterOptionsOrigin();
-        $res['product'] = $this->generateQueryFilterOptionsProduct();
+        $res['product'] = $this->generateQueryFilterOptionsProduct($em, $portalCode, $structureId);
         $res['paxType'] = $this->generateQueryFilterOptionsPax();
         $res['language'] = $this->generateQueryFilterOptionsLanguage($em, $portalCode, $structureId);
         $res['country'] = $this->generateQueryFilterOptionsCountry($em, $portalCode, $structureId);
-
 
         return $res;
     }
@@ -123,6 +139,7 @@ class Bi extends AbstractAction
         }
         return $response->withJson($this->toJson($res));
     }
+
     public function retrieveQueryFilterOptions (Request $request, Response $response, $args) {
         try {
             $ownerId = $this->getOwnerId($request);

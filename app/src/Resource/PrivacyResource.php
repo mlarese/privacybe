@@ -409,11 +409,11 @@ class PrivacyResource extends AbstractResource
             ->where('p.deleted=0')
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
-            ->andWhere('p.site LIKE :site')
-            ->setParameter('site', '%step%')
+            ->andWhere("p.site LIKE '%step%'")
+            // ->setParameter('site', '%step%')
             //->andWhere( $ex->not("p.ref=''") )
             //->andWhere( $ex->not("p.ref IS NULL") )
-            // ->setMaxResults(100)
+            //->setMaxResults(100)
         ;
 
 
@@ -456,11 +456,15 @@ class PrivacyResource extends AbstractResource
 
         $sql =  $qb->getQuery()->getSQL();
 
-        die($sql);
+        // die($sql);
         $rsm = new ResultSetMapping();
             $rsm->addScalarResult('email_0', 'email');
             $rsm->addScalarResult('privacy_flags_1', 'privacyFlags', 'json');
             $rsm->addScalarResult('term_id_2', 'termId', 'string');
+            $rsm->addScalarResult('name_3', 'name', 'string');
+            $rsm->addScalarResult('surname_4', 'surname', 'string');
+            $rsm->addScalarResult('id_5', 'id', 'string');
+            $rsm->addScalarResult('created_6', 'created', 'string');
 
             $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
             $results = $query->getResult();
@@ -470,6 +474,8 @@ class PrivacyResource extends AbstractResource
             // $privacyRecordIntegrator->integrate($pr);
         // }
 
+
+        // print_r($results);  die;
 
         if($filter)  $results = $filter->filter($results,$criteria);
         if($grouper)  $results = $grouper->group($results,$criteria);

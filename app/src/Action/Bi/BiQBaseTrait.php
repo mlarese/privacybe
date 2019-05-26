@@ -104,23 +104,18 @@ trait BiQBaseTrait{
 
         $priRes = new PrivacyResource($privacyEm);
         $list = $priRes->privacyListIds($criteria, new GroupByEmail());
-        return $list;
+        // return $list;
 
 
         $listByEmail = [];
 
-        foreach ($list as $record) {
-            $listByEmail[ $record['email'] ] = $record['email'];
-        }
-
 
         foreach ($data as &$record) {
-            if(array_key_exists($listByEmail,  $record['email']))
-                $record["visible"] = true;
-            else
-                $record["visible"] = false;
+            if(array_key_exists($record['email'], $list))
+                $listByEmail[]=&$list[ $record['email'] ];
         }
-        return $list;
+
+        return $listByEmail;
     }
 
 
@@ -306,7 +301,7 @@ trait BiQBaseTrait{
         // $result = $this->filterByPrivacy($result, $queryConfig,$privacyEm );
 
         return [
-            'result'=>$result,
+            'result'=>[],
             "pv"=>$this->filterByPrivacy($result, $queryConfig,$privacyEm )
         ];
     }

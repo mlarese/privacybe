@@ -393,7 +393,11 @@ class PrivacyResource extends AbstractResource
         $fields = [
             'p.email',
             'p.privacyFlags',
-            'p.termId'
+            'p.termId',
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.created'
         ];
 
         $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
@@ -405,6 +409,8 @@ class PrivacyResource extends AbstractResource
             ->where('p.deleted=0')
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
+            ->andWhere('p.site LIKE :site')
+            ->setParameter('site', '%step%')
             //->andWhere( $ex->not("p.ref=''") )
             //->andWhere( $ex->not("p.ref IS NULL") )
             // ->setMaxResults(100)
@@ -450,7 +456,7 @@ class PrivacyResource extends AbstractResource
 
         $sql =  $qb->getQuery()->getSQL();
 
-        // die($sql);
+        die($sql);
         $rsm = new ResultSetMapping();
             $rsm->addScalarResult('email_0', 'email');
             $rsm->addScalarResult('privacy_flags_1', 'privacyFlags', 'json');
@@ -466,7 +472,7 @@ class PrivacyResource extends AbstractResource
 
 
         if($filter)  $results = $filter->filter($results,$criteria);
-        // if($grouper)  $results = $grouper->group($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
 
         return $results;
     }
@@ -494,6 +500,12 @@ class PrivacyResource extends AbstractResource
                 $filter = new PostFilter();
             }
 
+        }
+
+        if(isset($criteria)) {
+            if(isset($criteria['_result_'])) {
+                return $criteria['_result_'];
+            }
         }
 
         $ex = $this->entityManager->getExpressionBuilder();

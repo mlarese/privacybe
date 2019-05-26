@@ -158,10 +158,11 @@ trait BiQBaseTrait{
 
         $whereCheckin =$this->buildWhere_betweenDate('checkin_date', 'checkin_from', 'checkin_to', $queryConfig['bi']);
         $whereCheckout =$this->buildWhere_betweenDate('checkout_date', 'checkout_from', 'checkout_to', $queryConfig['bi']);
+        $whereOpenedDate =$this->buildWhere_betweenDate('opened_date', 'opendate_from', 'opendate_to', $queryConfig['bi']);
 
         $whereCountry =  $this->buildWhere_filter_ext("country","nationality",$queryConfig['bi']);
         $wherePax =  $this->buildWhere_filter_ext("paxtype","paxtype",$queryConfig['bi']);
-        $whereProduct="";// $whereProduct =  $this->buildWhere_filter_ext("product","product",$queryConfig['bi']);
+        $whereProduct =  $this->buildWhere_filter_ext("room_code","product",$queryConfig['bi']);
         $whereOrigin =  $this->buildWhere_filter_ext("reservation_origin","origin",$queryConfig['bi'],"raw");
         $whereChannel="";// $whereChannel =  $this->buildWhere_filter_ext("channel","channel",$queryConfig['bi']);
         $whereLanguage =  $this->buildWhere_filter_ext("reservation_guest_language","language",$queryConfig['bi'],"raw");
@@ -226,6 +227,7 @@ trait BiQBaseTrait{
             $wherePax
             $whereCheckin
             $whereCheckout
+            $whereOpenedDate
             $whereLeadTime
             $whereNights
             $whereTimeRange
@@ -243,25 +245,59 @@ trait BiQBaseTrait{
 
         ";
 
+        $sql = "
+          SELECT DISTINCT reservation_email AS email
+          FROM abs_datamart.dm_reservation_$portalCode dm
+          LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
+          INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON fact.related_reservation_code = raw.sync_code
+
+         WHERE
+            dm.structure_uid = '$portalCode-$structureId'
+            AND dm.opened_year >= '2016'
+
+            $whereCountry
+            $whereProduct
+            $whereOrigin
+            $whereChannel
+            $whereLanguage
+            $whereCity
+            $wherePax
+            $whereCheckin
+            $whereCheckout
+            $whereOpenedDate
+            $whereLeadTime
+            $whereNights
+            $whereTimeRange
+            
+
+        ORDER BY reservation_email
+
+        ";
+
        // $this->filterByPrivacy([], $queryConfig,$privacyEm ); die("1");
 
         // die("<pre>$sql");
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('product', 'product');
-        $rsm->addScalarResult('origin', 'origin');
-        $rsm->addScalarResult('language', 'language');
-        $rsm->addScalarResult('country', 'country');
-        $rsm->addScalarResult('city', 'city');
-        $rsm->addScalarResult('country_iso2', 'country_iso2');
-        $rsm->addScalarResult('paxtype', 'paxtype');
-        $rsm->addScalarResult('checkin', 'checkin');
-        $rsm->addScalarResult('opened', 'opened');
-        $rsm->addScalarResult('checkout', 'checkout');
-        $rsm->addScalarResult('nights', 'nights');
-        $rsm->addScalarResult('name', 'name');
-        $rsm->addScalarResult('surname', 'surname', 'string');
-        $rsm->addScalarResult('lead_time', 'leadtime', 'string');
-        $rsm->addScalarResult('return_dates', 'return_dates', 'string');
+
+        // serve solo email
+        if(false) {
+            $rsm->addScalarResult('product', 'product');
+            $rsm->addScalarResult('origin', 'origin');
+            $rsm->addScalarResult('language', 'language');
+            $rsm->addScalarResult('country', 'country');
+            $rsm->addScalarResult('city', 'city');
+            $rsm->addScalarResult('country_iso2', 'country_iso2');
+            $rsm->addScalarResult('paxtype', 'paxtype');
+            $rsm->addScalarResult('checkin', 'checkin');
+            $rsm->addScalarResult('opened', 'opened');
+            $rsm->addScalarResult('checkout', 'checkout');
+            $rsm->addScalarResult('nights', 'nights');
+            $rsm->addScalarResult('name', 'name');
+            $rsm->addScalarResult('surname', 'surname', 'string');
+            $rsm->addScalarResult('lead_time', 'leadtime', 'string');
+            $rsm->addScalarResult('return_dates', 'return_dates', 'string');
+        }
+
         $rsm->addScalarResult('email', 'email');
 
         $query = $em->createNativeQuery($sql, $rsm);

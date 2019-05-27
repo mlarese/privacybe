@@ -464,7 +464,7 @@ class PrivacyResource extends AbstractResource
             $rsm->addScalarResult('name_3', 'name', 'string');
             $rsm->addScalarResult('surname_4', 'surname', 'string');
             $rsm->addScalarResult('id_5', 'id', 'string');
-            $rsm->addScalarResult('created_6', 'created', 'string');
+            $rsm->addScalarResult('created_6', 'created', 'date');
 
             $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
             $results = $query->getResult();

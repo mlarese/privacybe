@@ -160,8 +160,8 @@ trait BiQBaseTrait{
         $whereCountry =  $this->buildWhere_filter_ext("country","nationality",$queryConfig['bi']);
         $wherePax =  $this->buildWhere_filter_ext("paxtype","paxtype",$queryConfig['bi']);
         $whereProduct =  $this->buildWhere_filter_ext("room_code","product",$queryConfig['bi']);
-        $whereOrigin =  $this->buildWhere_filter_ext("reservation_origin","origin",$queryConfig['bi'],"raw");
-        $whereChannel="";// $whereChannel =  $this->buildWhere_filter_ext("channel","channel",$queryConfig['bi']);
+        $whereOrigin =  "" ; // $this->buildWhere_filter_ext("reservation_origin","origin",$queryConfig['bi'],"raw");
+        $whereChannel =  $this->buildWhere_filter_ext("reservation_origin","channel",$queryConfig['bi'], "raw");
         $whereLanguage =  $this->buildWhere_filter_ext("reservation_guest_language","language",$queryConfig['bi'],"raw");
         $whereLeadTime =  $this->buildWhere_filter_ext("lead_time","leadtime",$queryConfig['bi']);
 

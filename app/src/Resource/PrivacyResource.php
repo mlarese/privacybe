@@ -397,7 +397,8 @@ class PrivacyResource extends AbstractResource
             'p.name',
             'p.surname',
             'p.id',
-            'p.created'
+            'p.created',
+            'p.language'
         ];
 
         $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
@@ -413,7 +414,7 @@ class PrivacyResource extends AbstractResource
             // ->setParameter('site', '%step%')
             //->andWhere( $ex->not("p.ref=''") )
             //->andWhere( $ex->not("p.ref IS NULL") )
-            //->setMaxResults(100)
+            //->setMaxResults(10)
         ;
 
 
@@ -464,7 +465,8 @@ class PrivacyResource extends AbstractResource
             $rsm->addScalarResult('name_3', 'name', 'string');
             $rsm->addScalarResult('surname_4', 'surname', 'string');
             $rsm->addScalarResult('id_5', 'id', 'string');
-            $rsm->addScalarResult('created_6', 'created', 'date');
+            $rsm->addScalarResult('created_6', 'created', 'datetime');
+            $rsm->addScalarResult('language_7', 'language', 'string');
 
             $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
             $results = $query->getResult();
@@ -510,6 +512,7 @@ class PrivacyResource extends AbstractResource
 
         if(isset($criteria)) {
             if(isset($criteria['_result_'])) {
+                // print_r($criteria['_result_']);
                 return $criteria['_result_'];
             }
         }
@@ -540,6 +543,7 @@ class PrivacyResource extends AbstractResource
         $qb
             ->select($fields)
             ->where('p.deleted=0')
+            // ->setMaxResults(30)
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
         ;
@@ -615,8 +619,6 @@ class PrivacyResource extends AbstractResource
 
         // guest[reservation_guest_language]":"en"
 
-
-
         foreach ($results as &$pr) {
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
@@ -625,8 +627,6 @@ class PrivacyResource extends AbstractResource
 
         if($filter)  $results = $filter->filter($results,$criteria);
         if($grouper)  $results = $grouper->group($results,$criteria);
-
-        //print_r($results); die('end');
 
         return $results;
     }

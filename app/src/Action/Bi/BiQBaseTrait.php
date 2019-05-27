@@ -111,8 +111,10 @@ trait BiQBaseTrait{
 
 
         foreach ($data as &$record) {
-            if(array_key_exists($record['email'], $list))
+            if(array_key_exists($record['email'], $list)){
+                $list[ $record['email'] ]['language'] = $record['language'];
                 $listByEmail[]=&$list[ $record['email'] ];
+            }
         }
 
         return $listByEmail;
@@ -241,7 +243,8 @@ trait BiQBaseTrait{
         ";
 
         $sql = "
-          SELECT DISTINCT reservation_email AS email
+          SELECT DISTINCT reservation_email AS email,
+          reservation_guest_language as language
           FROM abs_datamart.dm_reservation_$portalCode dm
           LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
           INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON fact.related_reservation_code = raw.sync_code
@@ -278,7 +281,7 @@ trait BiQBaseTrait{
         if(false) {
             $rsm->addScalarResult('product', 'product');
             $rsm->addScalarResult('origin', 'origin');
-            $rsm->addScalarResult('language', 'language');
+
             $rsm->addScalarResult('country', 'country');
             $rsm->addScalarResult('city', 'city');
             $rsm->addScalarResult('country_iso2', 'country_iso2');
@@ -294,6 +297,7 @@ trait BiQBaseTrait{
         }
 
         $rsm->addScalarResult('email', 'email');
+        $rsm->addScalarResult('language', 'language');
 
         $query = $em->createNativeQuery($sql, $rsm);
         $result = $query->getResult();

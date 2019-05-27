@@ -100,9 +100,9 @@ class Bi extends AbstractAction
 
 
     private function generateQueryFilterOptionsProduct ($em,$portalCode, $structureId) {
-        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null";
+        $sql = " SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null order by room_code";
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('country', 'country', 'string');
+        $rsm->addScalarResult('room_code', 'product', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }

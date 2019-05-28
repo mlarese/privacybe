@@ -91,9 +91,9 @@ class Bi extends AbstractAction
     }
     private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
 
-        $sql = " SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null";
+        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null order by country";
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('room_code', 'room_code', 'string');
+        $rsm->addScalarResult('country', 'country', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }

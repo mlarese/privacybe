@@ -167,7 +167,7 @@ trait BiQBaseTrait{
 
 
         $whereNights="";
-        if(isset($queryConfig['bi']['nights'])) {
+        if(isset($queryConfig['bi']['nights']) && $queryConfig['bi']['nights']!='' ) {
             $nights = $queryConfig['bi']['nights'];
             $whereNights=" AND dm.nights = $nights" ;
         }

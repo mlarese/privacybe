@@ -53,13 +53,15 @@ class Bi extends AbstractAction
     }
     private function generateQueryFilterOptionsOrigin () {
         return [
-            "Online - Booking",
-            "PMS Terzi - PMSONE - Manuale",
-            "OTA",
-            "CRO - Walkin",
-            "CRO - Telefono",
-            "CRO - Form",
-            "CRO - Email"
+            ["value"=>"OB","label" =>"Online - Booking"],
+            ["value"=>"PMS_M","label" =>"PMS Terzi - PMSONE - Manuale"],
+            ["value"=>"CRO" ,"label" => "CRO"]
+            // "PMS Terzi - PMSONE - Manuale",
+            // "OTA",
+            // "CRO - Walkin",
+            // "CRO - Telefono",
+            // "CRO - Form",
+            // "CRO - Email"
         ];
     }
     private function generateQueryFilterOptionsChannel () {

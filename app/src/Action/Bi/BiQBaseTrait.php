@@ -120,6 +120,24 @@ trait BiQBaseTrait{
         return $listByEmail;
     }
 
+    private function buildOriginWhere ($filterGlobal) {
+        if(!isset($filterGlobal['origin'])) return "";
+
+        $filter = $filterGlobal['origin'];
+        $where = "";
+        $count=0;
+        foreach ($filter as $record) {
+            if($count>0) $where.=" OR ";
+            else $where = " AND ( ";
+            if($record=="OB")  $where.=" reservation_number NOT LIKE 'M%' AND dm.origin = 'BOOKINGONE' ";
+            else if($record=="PMS_M")  $where.=" reservation_number LIKE 'M%' ";
+            else if($record=="CRO")  $where.=" dm.origin='CRO' ";
+            $count++;
+        }
+
+        if($count>0) $where.= ")";
+        return $where;
+    }
 
     /**
      * @param EntityManager $em
@@ -160,11 +178,10 @@ trait BiQBaseTrait{
         $whereCountry =  $this->buildWhere_filter_ext("country","nationality",$queryConfig['bi']);
         $wherePax =  $this->buildWhere_filter_ext("paxtype","paxtype",$queryConfig['bi']);
         $whereProduct =  $this->buildWhere_filter_ext("room_code","product",$queryConfig['bi']);
-        $whereOrigin =  "" ; // $this->buildWhere_filter_ext("reservation_origin","origin",$queryConfig['bi'],"raw");
+        $whereOrigin =  $this->buildOriginWhere($queryConfig['bi']) ;
         $whereChannel =  $this->buildWhere_filter_ext("reservation_origin","channel",$queryConfig['bi'], "raw");
         $whereLanguage =  $this->buildWhere_filter_ext("reservation_guest_language","language",$queryConfig['bi'],"raw");
         $whereLeadTime =  $this->buildWhere_filter_ext("lead_time","leadtime",$queryConfig['bi']);
-
 
         $whereNights="";
         if(isset($queryConfig['bi']['nights']) && $queryConfig['bi']['nights']!='' ) {

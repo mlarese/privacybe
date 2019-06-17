@@ -93,7 +93,7 @@ class Bi extends AbstractAction
     }
     private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
 
-        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null order by country";
+        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null and dm.structure_uid = '$portalCode-$structureId'order by country";
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('country', 'country', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
@@ -102,7 +102,7 @@ class Bi extends AbstractAction
 
 
     private function generateQueryFilterOptionsProduct ($em,$portalCode, $structureId) {
-        $sql = " SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null order by room_code";
+        $sql = "SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null  and dm.structure_uid = '$portalCode-$structureId' order by room_code";
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('room_code', 'product', 'string');
         $query = $em->createNativeQuery($sql, $rsm);

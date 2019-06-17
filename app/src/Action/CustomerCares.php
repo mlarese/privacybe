@@ -6,7 +6,10 @@ use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use App\Entity\Privacy\Treatment;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -27,6 +30,46 @@ class CustomerCares extends AbstractAction
 
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getActionHistory($request, $response, $args)
+    {
+        $em = $this->getEmConfig();
+        $rep = $em->getRepository( ActionHistory::class);
+
+        $sql = "
+        SELECT id,  type,  description,  `date`,   history,    user_name
+        FROM privacy_config.action_history
+        ORDER BY date desc ;
+        ";
+
+        $rsm = new ResultSetMapping();
+            $rsm->addScalarResult('id', 'id');
+            $rsm->addScalarResult('type', 'type', 'string');
+            $rsm->addScalarResult('description', 'description', 'string');
+            $rsm->addScalarResult('date', 'date', 'datetime');
+            $rsm->addScalarResult('user_name', 'user_name', 'string');
+            $rsm->addScalarResult('history', 'history', 'json');
+
+
+
+        $query = $em->createNativeQuery($sql, $rsm);
+
+
+        try {
+            $result = $query->getResult();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+
+        return $response->withJson($this->toJson($result));
+
+
+    }
     /**
      * @param $request Request
      * @param $response Response

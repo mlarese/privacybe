@@ -109,8 +109,9 @@ trait BiQBaseTrait{
 
         $listByEmail = [];
 
-
         foreach ($data as &$record) {
+
+
             if(array_key_exists($record['email'], $list)){
                 $list[ $record['email'] ]['language'] = $record['language'];
                 $listByEmail[]=&$list[ $record['email'] ];

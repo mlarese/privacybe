@@ -404,13 +404,21 @@ class PrivacyResource extends AbstractResource
         $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
 
         $qb = $repo->createQueryBuilder('p');
+        /** @var Query\Expr $ex */
         $ex = $qb->expr();
+
+        $siteConditions = array("p.site LIKE '%step%'", "p.site LIKE '%crobackend%'"  , "p.site LIKE '%newsletter%'");
+        $orXSiteConditions = $ex->orX();
+        $orXSiteConditions->addMultiple($siteConditions);
+
+        
         $qb
             ->select($fields)
             ->where('p.deleted=0')
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
-            ->andWhere("p.site LIKE '%step%'")
+            ->andWhere( $orXSiteConditions )
+
             // ->setParameter('site', '%step%')
             //->andWhere( $ex->not("p.ref=''") )
             //->andWhere( $ex->not("p.ref IS NULL") )

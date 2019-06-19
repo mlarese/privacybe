@@ -106,11 +106,11 @@ trait BiQBaseTrait{
         $list = $priRes->privacyListIds($criteria, new GroupByEmail());
         // return $list;
 
+        //die($data['Chris.franek44@gmail.com']);
 
         $listByEmail = [];
 
         foreach ($data as &$record) {
-
 
             if(array_key_exists($record['email'], $list)){
                 $list[ $record['email'] ]['language'] = $record['language'];
@@ -261,8 +261,8 @@ trait BiQBaseTrait{
         ";
 
         $sql = "
-          SELECT DISTINCT reservation_email AS email,
-          reservation_guest_language as language
+          SELECT   reservation_email AS email,
+          min(reservation_guest_language) as language
           FROM abs_datamart.dm_reservation_$portalCode dm
           LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
           INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON fact.related_reservation_code = raw.sync_code
@@ -285,7 +285,7 @@ trait BiQBaseTrait{
             $whereNights
             $whereTimeRange
             
-
+        GROUP BY reservation_email
         ORDER BY reservation_email
 
         ";
@@ -296,23 +296,7 @@ trait BiQBaseTrait{
         $rsm = new ResultSetMapping();
 
         // serve solo email
-        if(false) {
-            $rsm->addScalarResult('product', 'product');
-            $rsm->addScalarResult('origin', 'origin');
 
-            $rsm->addScalarResult('country', 'country');
-            $rsm->addScalarResult('city', 'city');
-            $rsm->addScalarResult('country_iso2', 'country_iso2');
-            $rsm->addScalarResult('paxtype', 'paxtype');
-            $rsm->addScalarResult('checkin', 'checkin');
-            $rsm->addScalarResult('opened', 'opened');
-            $rsm->addScalarResult('checkout', 'checkout');
-            $rsm->addScalarResult('nights', 'nights');
-            $rsm->addScalarResult('name', 'name');
-            $rsm->addScalarResult('surname', 'surname', 'string');
-            $rsm->addScalarResult('lead_time', 'leadtime', 'string');
-            $rsm->addScalarResult('return_dates', 'return_dates', 'string');
-        }
 
         $rsm->addScalarResult('email', 'email');
         $rsm->addScalarResult('language', 'language');

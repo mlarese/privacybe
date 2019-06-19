@@ -407,11 +407,11 @@ class PrivacyResource extends AbstractResource
         /** @var Query\Expr $ex */
         $ex = $qb->expr();
 
-        $siteConditions = array("p.site LIKE '%step%'", "p.site LIKE '%crobackend%'"  , "p.site LIKE '%newsletter%'");
+        $siteConditions = array("p.site = '/'","p.site LIKE '%step%'", "p.site LIKE '%crobackend%'"  , "p.site LIKE '%newsletter%'" , "p.site LIKE '%enquiry%'", "p.site LIKE '%booking%'" );
         $orXSiteConditions = $ex->orX();
         $orXSiteConditions->addMultiple($siteConditions);
 
-        
+
         $qb
             ->select($fields)
             ->where('p.deleted=0')

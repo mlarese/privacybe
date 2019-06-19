@@ -11,8 +11,8 @@ class GroupByEmail implements IResultGrouper
         $res = [];
         foreach ($list as &$r) {
             $email = strtolower($r['email']);
-            if(!isset(      $res      [$email]    )) {
-                            $res      [$email]   = $r;
+            if(!isset(      $res      [$r['email']]    )) {
+                            $res      [$r['email']]   = $r;
             }
         }
 

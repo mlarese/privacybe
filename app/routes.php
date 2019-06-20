@@ -263,6 +263,13 @@ $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
 /** @var CustomerCares */
 $app->get('/api/customercare/actionhistory', 'App\Action\CustomerCares:getActionHistory');
 
+
+/*********************************************************
+ *                  CUSTOMERCARE LOGINS
+ *********************************************************/
+/** @var CustomerCares */
+$app->get('/api/customercare/logins', 'App\Action\CustomerCares:getLoginLogs');
+
 /*********************************************************
 /*********************************************************
  *                  LAYOUTS

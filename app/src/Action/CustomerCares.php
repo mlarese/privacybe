@@ -6,6 +6,7 @@ use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
+use App\Entity\Config\UserLogin;
 use App\Entity\Privacy\Treatment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -30,6 +31,47 @@ class CustomerCares extends AbstractAction
 
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     * @return mixed
+     */
+    public function getLoginLogs($request, $response, $args)
+    {
+        $em = $this->getEmConfig();
+        $rep = $em->getRepository( UserLogin::class);
+
+        $sql = "
+        SELECT user,name,user_login.id, user_login.loginDate, user_login.ip_address, user_login.user_id 
+        FROM privacy_config.user_login
+        LEFT JOIN user on user_login.user_id = user.id 
+        ORDER BY loginDate desc
+        ;
+        
+        ";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('name', 'name', 'string');
+        $rsm->addScalarResult('user', 'user', 'string');
+        $rsm->addScalarResult('loginDate', 'loginDate', 'datetime');
+        $rsm->addScalarResult('ip_address', 'ip_address', 'string');
+
+
+
+        $query = $em->createNativeQuery($sql, $rsm);
+
+
+        try {
+            $result = $query->getResult();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+
+        return $response->withJson($this->toJson($result));
+
+
+    }
     /**
      * @param $request Request
      * @param $response Response

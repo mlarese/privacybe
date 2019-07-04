@@ -4,6 +4,7 @@ namespace App\Action\Bi;
 
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyResource;
+use function array_key_exists;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use function explode;
@@ -99,9 +100,16 @@ trait BiQBaseTrait{
         return $result;
     }
 
-
+    /**
+     * @param $data
+     * @param $criteria
+     * @param $privacyEm
+     *
+     * @return array
+     * @throws \Doctrine\ORM\ORMException
+     */
     private function filterByPrivacy (&$data, $criteria, $privacyEm ) {
-
+        $excluded=[];
         $priRes = new PrivacyResource($privacyEm);
         $list = $priRes->privacyListIds($criteria, new GroupByEmail());
         // return $list;
@@ -112,13 +120,15 @@ trait BiQBaseTrait{
 
         foreach ($data as &$record) {
 
-            if(array_key_exists($record['email'], $list)){
+            if(array_key_exists($record['email'], $list) || array_key_exists(strtolower ($record['email']), $list) ){
                 $list[ $record['email'] ]['language'] = $record['language'];
                 $listByEmail[]=&$list[ $record['email'] ];
+            } else {
+                $excluded[] = $record['email'];
             }
         }
 
-        return $listByEmail;
+        return ['listByEmail'=>$listByEmail, 'excluded'=>$excluded];
     }
 
     private function buildOriginWhere ($filterGlobal) {
@@ -261,7 +271,7 @@ trait BiQBaseTrait{
         ";
 
         $sql = "
-          SELECT   reservation_email AS email,
+          SELECT  distinct reservation_email AS email,
           min(reservation_guest_language) as language
           FROM abs_datamart.dm_reservation_$portalCode dm
           LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
@@ -270,7 +280,7 @@ trait BiQBaseTrait{
          WHERE
             dm.structure_uid = '$portalCode-$structureId'
             AND dm.opened_year >= '2016'
-
+            -- AND dm.type in('RESERVATION')
             $whereCountry
             $whereProduct
             $whereOrigin
@@ -292,7 +302,7 @@ trait BiQBaseTrait{
 
        // $this->filterByPrivacy([], $queryConfig,$privacyEm ); die("1");
 
-        // die("<pre>$sql");
+        //die("<pre>$sql");
         $rsm = new ResultSetMapping();
 
         // serve solo email
@@ -305,10 +315,15 @@ trait BiQBaseTrait{
         $result = $query->getResult();
 
         // $result = $this->filterByPrivacy($result, $queryConfig,$privacyEm );
+        // ['listByEmail'=>$listByEmail, 'excluded'=>$excluded];
+
+        $data = $this->filterByPrivacy($result, $queryConfig,$privacyEm );
 
         return [
-            'result'=>[],
-            "pv"=>$this->filterByPrivacy($result, $queryConfig,$privacyEm )
+            // 'q'=>$sql,
+            'result'=>$result,
+            "excluded"=>&$data['excluded'],
+            "pv"=>&$data['listByEmail']
         ];
     }
 

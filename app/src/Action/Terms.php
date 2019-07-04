@@ -13,6 +13,7 @@ use App\Resource\Logs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;

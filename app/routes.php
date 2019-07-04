@@ -262,6 +262,7 @@ $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
  *********************************************************/
 /** @var CustomerCares */
 $app->get('/api/customercare/actionhistory', 'App\Action\CustomerCares:getActionHistory');
+$app->post('/api/customercare/actionhistory', 'App\Action\CustomerCares:postActionHistory');
 
 
 /*********************************************************
@@ -269,6 +270,7 @@ $app->get('/api/customercare/actionhistory', 'App\Action\CustomerCares:getAction
  *********************************************************/
 /** @var CustomerCares */
 $app->get('/api/customercare/logins', 'App\Action\CustomerCares:getLoginLogs');
+$app->post('/api/customercare/logins', 'App\Action\CustomerCares:postLoginLogs');
 
 /*********************************************************
 /*********************************************************
@@ -285,8 +287,6 @@ $app->post('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:setOwnerLayouts')
  *********************************************************/
 /** @var CustomerCares */
 $app->get('/api/customercare/dbloptinlist', 'App\Action\CustomerCares:getDblOptinList');
-
-
 
 /*********************************************************
  *                  CUSTOMERCARE WIDGETS

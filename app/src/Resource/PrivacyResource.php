@@ -11,6 +11,7 @@ use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\Privacy\GroupByEmailTerm;
+use App\Resource\Privacy\GroupByEmailTermMultiple;
 use App\Resource\Privacy\LanguageIntegrator;
 use App\Resource\Privacy\PostFilter;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
@@ -835,6 +836,86 @@ class PrivacyResource extends AbstractResource
 
     }
 
+    public function privacyRecordGrouped($email, $domain = null) {
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.ip',
+            'p.created',
+            'p.telephone',
+            'p.deleted',
+            'p.ref',
+            'p.domain',
+            'p.note',
+            'p.site',
+            'p.termId',
+            'p.privacy',
+            'p.form',
+            // 'p.cryptedForm',
+            'p.privacyFlags',
+            'p.properties',
+            'p.email'
+        ];
+
+        $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( "p.email=:email")
+            ->andWhere( $ex->not("p.ip='####'"));
+
+        if(isset($domain)){
+            $qb->andWhere('p.domain=:domain')
+                ->setParameter('domain', $domain);
+        }
+
+
+
+        $qb
+            ->setParameter('email', $email)
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
+
+
+        $results = $qb->getQuery()->getResult();
+        $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+
+        // guest[reservation_guest_language]":"en"
+        foreach ($results as &$pr) {
+            $privacyRecordIntegrator->integrate($pr);
+        }
+
+
+        $groupByEmailTerm = new GroupByEmailTerm();
+        $results=$groupByEmailTerm->group($results,null);
+
+        if(isset($results[$email]))
+            $results =$results[$email];
+        else
+            $result= [];
+
+        // $ret =[];
+        // foreach ($results as $term=>$privacy){
+        //     $ret[]=['termId'=>$term, 'privacy'=>$privacy];
+        // }
+        return $results;
+    }
+
     public function privacyRecord($email, $domain = null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
@@ -900,7 +981,7 @@ class PrivacyResource extends AbstractResource
         }
 
 
-        $groupByEmailTerm = new GroupByEmailTerm();
+        $groupByEmailTerm = new GroupByEmailTermMultiple();
         $results=$groupByEmailTerm->group($results,null);
 
         if(isset($results[$email]))

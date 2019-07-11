@@ -19,15 +19,16 @@ class PrivacyLoggerResource extends AbstractResource
             $userName = $userObj->userName;
             $role = $userObj->role;
 
+            $privacyEmail = $p->getEmail();
             $jsonPrivacy = $this->toJson($p);
             $jsonPrivacy = json_encode($jsonPrivacy);
-
+            $pId = $p->getId();
 
             return $this->savePrivacyLog(
                 $p->getId(),
                 $jsonPrivacy,
-                "operator update, user $user - $userName - $role",
-                null,
+                "operator update privacy",
+                "privacyid =  $pId surfer = $privacyEmail  Operator $user",
                 $flush
             );
         } catch (\Exception $e) { }

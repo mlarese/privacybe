@@ -50,7 +50,7 @@ class GeneralDataIntegrator
             if(!isset($record['properties'])) {
                 $record['properties'] = [ "note"=>"nota base"];
             } else {
-                if($record['properties']["note"]) {
+                if(  isset($record['properties']["note"]  )) {
                     $note = $record['properties']["note"];
                     if($note!=='')
                         $record['properties']["note"] = $this->encryptor->decrypt($note);

@@ -452,11 +452,23 @@ class Bi extends AbstractAction
             $result = [];
 
             $privacyEm = $this->getEmPrivacy($ownid);
+            $options = Auth::getOptionsSt($ownid);
+
+
             if(count($structures) == 0) {
                 return $response->withStatus(500, 'No configured structure');
             }
 
             $structure = $structures[0];
+
+            if($options['isPortal'])
+                $structure = [
+                    'portal_code'=>$structure['portal_code'],
+                    'structure_id'=>null,
+                    'portal_id'=>$structure['portal_id']
+                    ];
+            else
+                $structure = $structures[0];
 
             switch ($dataDomain) {
                 case 'demografic': $biResponse = $this->biResponseDemografic($structure, $emDirectBi); break;

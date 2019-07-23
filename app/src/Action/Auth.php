@@ -184,8 +184,9 @@ class Auth extends AbstractAction
         }
     }
 
-    private function getOptions($ownerId) {
+    public static function getOptionsSt($ownerId) {
         $ret = [
+            "isPortal" => false,
             "hasBi" => false,
             "hasQuery" => false,
             "hasPredictive" => false,
@@ -200,6 +201,7 @@ class Auth extends AbstractAction
                 $ret["hasPredictive"] = true ;
                 break;
             case 15: // aba
+                $ret["isPortal"] = true ;
                 $ret["hasBi"] = true ;
                 $ret["hasQuery"] = true ;
                 $ret["hasPredictive"] = true ;
@@ -213,7 +215,11 @@ class Auth extends AbstractAction
         }
         return $ret;
     }
-    private function getAcl($gdprRole)
+
+    private function getOptions($ownerId) {
+        return self::getOptionsSt($ownerId);
+    }
+    public static function getAclSt($gdprRole)
     {
         /***************************************
         Roles
@@ -240,6 +246,9 @@ class Auth extends AbstractAction
         ];
     }
 
+    private function getAcl($gdprRole) {
+        return self::getAclSt($gdprRole);
+    }
     /**
      * @param $request Request
      * @param $response Response

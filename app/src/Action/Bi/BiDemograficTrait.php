@@ -13,6 +13,8 @@ trait BiDemograficTrait{
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
 
         $sql = "
             SELECT  count(*) AS items,
@@ -24,7 +26,10 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND 
+            -- dm.structure_uid = '$portalCode-$structureId' and
+            $structureWhere 
+            dm.opened_year >= '2016'
             GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
         ";
@@ -39,6 +44,9 @@ trait BiDemograficTrait{
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
+
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
@@ -49,7 +57,10 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND 
+            -- dm.structure_uid = '$portalCode-$structureId' and
+            $structureWhere  
+            dm.opened_year >= '2016'
             GROUP BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, dm.opened_month, reservation_origin, dm.paxtype
         ";
@@ -64,6 +75,9 @@ trait BiDemograficTrait{
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
 
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
+
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
@@ -73,7 +87,10 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND
+            $structureWhere 
+            -- dm.structure_uid = '$portalCode-$structureId' and  
+            dm.opened_year >= '2016'
             GROUP BY dm.opened_year, reservation_origin, dm.paxtype 
             ORDER BY dm.opened_year, reservation_origin, dm.paxtype
         ";
@@ -86,6 +103,9 @@ trait BiDemograficTrait{
     private function getDemograficDimOriginSerPaxType(EntityManager $em, $portalCode, $structureId, $portalId = 1) {
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
+
         $sql = "
             SELECT  count(*) AS items,
                 dm.opened_year AS filter,
@@ -96,7 +116,10 @@ trait BiDemograficTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND 
+            -- dm.structure_uid = '$portalCode-$structureId' and
+            $structureWhere  
+            dm.opened_year >= '2016'
             GROUP BY dm.opened_year,  dm.paxtype,reservation_origin 
             ORDER BY dm.opened_year,  dm.paxtype,reservation_origin
         ";

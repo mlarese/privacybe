@@ -9,6 +9,9 @@ trait BiReturnsTrait{
     use BiBase;
 
     private function getReturns(EntityManager $em, $portalCode, $structureId, $portalId = 1) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and ";
+
         $sql = "
             select count(*) as items, checkin_year as dimension, sum(value) as value, status as serie  from (
             SELECT  
@@ -23,7 +26,10 @@ trait BiReturnsTrait{
              FROM abs_datamart.dm_reservation_$portalCode dm
              LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
              LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-             WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.checkin_year >= '2016'  
+             WHERE dm.portal_uid = '$portalCode-$portalId' AND 
+             -- dm.structure_uid = '$portalCode-$structureId' and
+             $structureWhere  
+             dm.checkin_year >= '2016'  
              
             GROUP BY dm.checkin_year , reservation_email
             ORDER BY dm.checkin_year , reservation_email

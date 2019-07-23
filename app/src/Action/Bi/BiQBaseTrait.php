@@ -2,6 +2,7 @@
 namespace App\Action\Bi;
 
 
+use App\Manager\ApplicationMiddleware;
 use App\Resource\Privacy\GroupByEmail;
 use App\Resource\PrivacyResource;
 use function array_key_exists;
@@ -9,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use function explode;
 use function print_r;
+use Slim\App;
 use Slim\Http\Request;
 
 trait BiQBaseTrait{
@@ -23,10 +25,16 @@ trait BiQBaseTrait{
     use BiBase;
 
     public function getBiBaseCountries (EntityManager $em, $portalCode, $structureId, $portalId = 1) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
+
         $sql = "
             SELECT  count(country) AS items, country, country_iso2
             FROM abs_datamart.dm_reservation_$portalCode dm
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND 
+            -- dm.structure_uid = '$portalCode-$structureId' and
+            $structureWhere  
+            dm.opened_year >= '2016'
             GROUP BY country ORDER BY count(country) desc,country
         ";
 
@@ -40,13 +48,17 @@ trait BiQBaseTrait{
     }
 
     public function getBiBaseCities (EntityManager $em, $portalCode, $structureId, $portalId = 1) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
         $sql = "
             SELECT distinct reservation_city as city 
               FROM abs_datamart.dm_reservation_res dm
                    LEFT JOIN abs_datawarehouse.fact_reservation_res AS fact ON dm.sync_code = fact.related_sync_code
                    LEFT JOIN abs_datawarehouse.raw_reservation_res AS raw ON fact.related_reservation_code = raw.sync_code
              WHERE 
-                dm.structure_uid = '$portalCode-$structureId' and  dm.opened_year >= '2016'
+                -- dm.structure_uid = '$portalCode-$structureId' and
+                $structureWhere  
+                dm.opened_year >= '2016'
                     
             ORDER BY  reservation_city 
         ";
@@ -162,6 +174,9 @@ trait BiQBaseTrait{
      */
 
     private function getResponseQBaseData(EntityManager $em, EntityManager $privacyEm, $portalCode, $structureId, $portalId = 1, $queryConfig=[]) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and ";
+
         $sqlCasePaxType = $this->sqlCasePaxtype;
         $sqlCaseOrigin = $this->sqlCaseOrigin;
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
@@ -240,8 +255,9 @@ trait BiQBaseTrait{
             ) AS raw1
             ON fact.related_reservation_code = raw1.sync_code
          WHERE
-            dm.structure_uid = '$portalCode-$structureId'
-            AND dm.opened_year >= '2016'
+            -- dm.structure_uid = '$portalCode-$structureId' and
+            $structureWhere
+            dm.opened_year >= '2016'
 
             $whereCountry
             $whereProduct

@@ -10,7 +10,11 @@ namespace App\Service;
 
 
 use function file_exists;
+use function ftp_get;
+use function md5;
 use function mkdir;
+use mysql_xdevapi\Exception;
+use function pathinfo;
 use Slim\Container;
 use Slim\Http\UploadedFile;
 use function sprintf;
@@ -51,4 +55,19 @@ class FilesService {
 
         $file->moveTo($path . '/'.$fileName);
     }
+
+
+
+    public function buildPrivacyAttachmentFileName ($tmpFileName , $ownerId, $id) {
+
+        $settings = $this->container->get('settings');
+        $userAtt = $settings['attachments']['users'];
+
+        $path = $userAtt['spf_path'];
+        $path =sprintf($path, $ownerId,$id);
+
+        return $path;
+    }
+
+
 }

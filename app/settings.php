@@ -10,7 +10,10 @@ return [
         'attachments' => [
           'users' => [
               'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}',
-              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments'
+              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments',
+              'ftp_server' => '10.0.20.201',
+              'ftp_user_name' => 'dataone-upload',
+              'ftp_user_pass' => 'DeonjuKod9Jity'
           ]
         ],
         "dataone_emails" => [

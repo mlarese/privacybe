@@ -948,6 +948,7 @@ class PrivacyManager extends AbstractAction
      * @return Privacy
      */
     public static function savePlainPrivacyByAssoc($privacyResource,$data,$ownerId, $ip='') {
+
         $domain = $data['domain'];
 
         $email = "";
@@ -1142,6 +1143,9 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $prRes->setContainer($this->getContainer());
+            $prRes->setOwnerId($ownerId);
+
             $ip = $this->getIp();
 
             $pr = self::savePlainPrivacyByAssoc(
@@ -1179,6 +1183,9 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $prRes->setContainer($this->getContainer());
+            $prRes->setOwnerId($ownerId);
+
             $ip = $this->getIp();
 
             $pr = self::savePlainPrivacyByAssoc(

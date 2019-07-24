@@ -7,6 +7,7 @@ use App\Action\Terms;
 use App\Base\BaseResource;
 use App\Entity\Privacy\ActionHistory;
 use App\Entity\Privacy\Privacy;
+use App\Entity\Privacy\PrivacyAttachment;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
 use App\Resource\Privacy\GroupByEmail;
@@ -18,6 +19,7 @@ use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
+use App\Service\FilesService;
 use function date;
 use DateTime;
 use Doctrine\Common\Collections\Criteria;
@@ -26,17 +28,46 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
+use function file_exists;
+use const FTP_BINARY;
+use function ftp_get;
+use function ftp_login;
+use function ftp_pasv;
 use function get_object_vars;
 
+use function json_decode;
 use function json_encode;
+use function md5;
+use function mkdir;
+use function pathinfo;
 use function print_r;
+use Slim\Container;
 use function strtolower;
 use function strtotime;
 use function var_dump;
 
 class PrivacyResource extends AbstractResource
 {
+    /** @var Container $container  */
+    private $container = null;
+    private $ownerId = null;
 
+    /**
+     * @return null
+     */
+    public function getOwnerId() {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param null $ownerId
+     *
+     * @return PrivacyResource
+     */
+    public function setOwnerId($ownerId) {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
     /**
      * @param $privacyId
      *
@@ -54,6 +85,27 @@ class PrivacyResource extends AbstractResource
         }
 
         return $prRec;
+    }
+
+    /**
+     * @return null
+     */
+    public function getContainer() {
+        return $this->container;
+    }
+
+    public function hasContainer() {
+        return isset($this->container);
+    }
+
+    /**
+     * @param null $container
+     *
+     * @return PrivacyResource
+     */
+    public function setContainer($container) {
+        $this->container = $container;
+        return $this;
     }
 
     /**
@@ -172,7 +224,7 @@ class PrivacyResource extends AbstractResource
      * @return Privacy
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function savePrivacy(
+    public function  savePrivacy(
         $ip,
         $form,
         $cryptedForm,
@@ -228,7 +280,78 @@ class PrivacyResource extends AbstractResource
         }
 
         $isDeferred = ($deferred !== DeferredPrivacyService::DEFERRED_TYPE_NO);
+        $hasAttachments = false;
         $privacyDef = null;
+        $privacyAttachment = null;
+        // controllo se esiste allegato: se esiste la procedura double-optin non è necessaria
+        if($isDeferred) {
+            if(isset($form) && isset($form['MMattachedfiles']) ) {
+                $fservice = new FilesService($this->getContainer());
+                $container = $this->getContainer();
+                $settings = $container->get('settings');
+                $userAtt = $settings['attachments']['users'];
+
+                $ftp_server = $userAtt["ftp_server"];
+                $ftp_user_name = $userAtt["ftp_user_name"];
+                $ftp_user_pass = $userAtt["ftp_user_pass"];
+
+                $ftpConnId = ftp_connect ($ftp_server);
+                $login_result = ftp_login($ftpConnId, $ftp_user_name, $ftp_user_pass);
+                ftp_pasv ( $ftpConnId , true ) ;
+
+                $hasAttachments = true;
+                $isDeferred = false;
+                $attachs = json_decode( $form['MMattachedfiles'], true );
+
+                $privacyAttachment = new PrivacyAttachment();
+                $privacyAttachment->setId($id)
+                    ->setCreated(new DateTime())
+                    ->setDeleted(false);
+
+                $count = 1;
+                $attachments = [];
+                $hasAttachments=true;
+                foreach ($attachs as $key=>$att) {
+                    $ftpFileName = $att['token'];
+                    $structureId = $att['path'];
+                    $inst = $att['inst'];
+
+                    $path_parts = pathinfo($ftpFileName);
+                    $ext=$path_parts['extension'];
+                    $oFileName = "Double optin attachment $count.".$ext;
+
+                    $fileName = md5($oFileName) ;
+
+                    $ftpFileName_Path = "/TMPGDPR/$inst/$structureId/$ftpFileName";
+                    $localFileName = $fservice->buildPrivacyAttachmentFileName($ftpFileName_Path, $this->getOwnerId(), $id);
+                    if(!file_exists($localFileName)) mkdir($localFileName,0777,true);
+                    $localFileName.='/'.$fileName;
+
+                    //die($localFileName);
+
+                    // die($ftpFileName_Path);
+                    if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
+                        $attachments[] = [
+                            "created" => new DateTime(),
+                            "fileName" => $oFileName,
+                            "description" => "Double optin attachment"
+                        ];
+
+                    } else {
+                        echo "error";
+                        throw new Exception('File '. $tmpFileName . ' not downloaded ');
+                    }
+
+
+                    $count++;
+                }
+
+
+                ftp_close($ftpConnId);
+                $privacyAttachment->setAttachments(  json_encode( $this->toJson($attachments)  ));
+                // print_r($privacyAttachment);die;
+            }
+        }
 
         if($isDeferred) {
             $deferredTYpe = $deferred;
@@ -253,9 +376,13 @@ class PrivacyResource extends AbstractResource
             {
                 try {
                     $this->entityManager->merge($privacyEntry);
-
                     if($isDeferred) {
                         $this->entityManager->merge($privacyDef);
+                    }
+                    if($hasAttachments) {
+                        if(isset($privacyAttachment)) {
+                            $this->entityManager->merge($privacyAttachment);
+                        }
                     }
 
                     $this->entityManager->flush();
@@ -290,6 +417,12 @@ class PrivacyResource extends AbstractResource
                 if($isDeferred) {
                     $this->entityManager->merge($privacyDef);
                 }
+
+                if($hasAttachments) {
+                    if(isset($privacyAttachment)) {
+                        $this->entityManager->merge($privacyAttachment);
+                    }
+                }
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 echo $e;
@@ -297,6 +430,13 @@ class PrivacyResource extends AbstractResource
 
             return $privacyEntry;
         }
+
+    }
+
+    private function downloadPrivacyDblOptinAttachments($privacyEntry, $mMattachedfiles) {
+        $newAttachment = new PrivacyAttachment();
+
+        // $fileService = new FilesService()
 
     }
 

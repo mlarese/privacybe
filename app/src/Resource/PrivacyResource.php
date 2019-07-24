@@ -330,18 +330,22 @@ class PrivacyResource extends AbstractResource
                     //die($localFileName);
 
                     // die($ftpFileName_Path);
-                    if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
-                        $attachments[] = [
-                            "created" => new DateTime(),
-                            "fileName" => $oFileName,
-                            "description" => "Double optin attachment"
-                        ];
 
-                    } else {
-                        echo "error";
-                        throw new Exception('File '. $tmpFileName . ' not downloaded ');
+                    try {
+                        if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
+                            $attachments[] = [
+                                "created" => new DateTime(),
+                                "fileName" => $oFileName,
+                                "description" => "Double optin attachment"
+                            ];
+
+                        } else {
+                            // echo "error";
+                            // throw new Exception('File '. $tmpFileName . ' not downloaded ');
+                        }
+                    }catch(Exception $e) {
+
                     }
-
 
                     $count++;
                 }

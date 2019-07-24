@@ -335,7 +335,7 @@ class PrivacyResource extends AbstractResource
 
                     // die($ftpFileName_Path);
 
-                    $prProperties['attachments_download'] ['file_name']  =  '$oFileName';
+                    $prProperties['attachments_download'] ['file_name']  =  $oFileName;
                     $prProperties['attachments_download'] ['success']  =  false;
 
                     try {
@@ -350,7 +350,7 @@ class PrivacyResource extends AbstractResource
 
                         } else {
                             // echo "error";
-                            throw new Exception('File '. $oFileName . ' not saved ');
+                            // throw new Exception('File '. $oFileName . ' not saved ');
                         }
                     }catch(Exception $e) {
 

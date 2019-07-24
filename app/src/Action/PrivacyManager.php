@@ -1160,6 +1160,7 @@ class PrivacyManager extends AbstractAction
             $ph = $prRes->savePrivacyLog($pr->getId(), $jsonPrivacy, 'save from website');
 
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Exception saving privacy');
         }
 

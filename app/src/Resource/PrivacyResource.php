@@ -279,6 +279,8 @@ class PrivacyResource extends AbstractResource
             $this->getRepository();
         }
 
+        $prProperties = null;
+
         $isDeferred = ($deferred !== DeferredPrivacyService::DEFERRED_TYPE_NO);
         $hasAttachments = false;
         $privacyDef = null;
@@ -311,6 +313,8 @@ class PrivacyResource extends AbstractResource
                 $count = 1;
                 $attachments = [];
                 $hasAttachments=true;
+                $prProperties['attachments_download'] = [];
+
                 foreach ($attachs as $key=>$att) {
                     $ftpFileName = $att['token'];
                     $structureId = $att['path'];
@@ -331,6 +335,8 @@ class PrivacyResource extends AbstractResource
 
                     // die($ftpFileName_Path);
 
+                    $prProperties['attachments_download'] ['file_name']  =  '$oFileName';
+                    $prProperties['attachments_download'] ['success']  =  false;
                     try {
                         if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
                             $attachments[] = [
@@ -338,6 +344,8 @@ class PrivacyResource extends AbstractResource
                                 "fileName" => $oFileName,
                                 "description" => "Double optin attachment"
                             ];
+
+                            $prProperties['attachments_download'] ['success']=true;
 
                         } else {
                             // echo "error";
@@ -409,6 +417,8 @@ class PrivacyResource extends AbstractResource
                     }
                 }
 
+                if(isset($prProperties))
+                    $privacyEntry->setProperties( json_encode($prProperties) );
                 return $privacyEntry;
             }
 

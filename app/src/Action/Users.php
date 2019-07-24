@@ -231,8 +231,7 @@ class Users extends AbstractAction
             $em = $this->getEmPrivacy($ownerId);
 
             $email = $args['email'];
-            $email = urldecode(   base64_decode($email));
-
+            $email = base64_decode(urldecode($email)) ;
 
             $privacyRes = new PrivacyResource($em);
             $user = $privacyRes->privacyRecord($email);

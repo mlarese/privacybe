@@ -1114,13 +1114,13 @@ class PrivacyResource extends AbstractResource
             ->select($fields)
             ->where('p.deleted=0')
             ->andWhere( "p.email=:email")
-            ->andWhere( $ex->not("p.ip='####'"));
+            ->andWhere( $ex->not("p.ip='####'"))
+        ;
 
         if(isset($domain)){
             $qb->andWhere('p.domain=:domain')
                 ->setParameter('domain', $domain);
         }
-
 
 
         $qb
@@ -1131,6 +1131,8 @@ class PrivacyResource extends AbstractResource
                 ->addOrderBy( 'p.site', 'ASC')
             ;
 
+
+        // die ($email);
 
         $results = $qb->getQuery()->getResult();
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);

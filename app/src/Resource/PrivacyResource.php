@@ -419,6 +419,7 @@ class PrivacyResource extends AbstractResource
 
                 if(isset($prProperties))
                     $privacyEntry->setProperties( json_encode($prProperties) );
+
                 return $privacyEntry;
             }
 
@@ -442,6 +443,8 @@ class PrivacyResource extends AbstractResource
                 echo $e;
             }
 
+            if(isset($prProperties))
+                $privacyEntry->setProperties( json_encode($prProperties) );
             return $privacyEntry;
         }
 

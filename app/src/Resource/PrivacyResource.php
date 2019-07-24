@@ -313,7 +313,7 @@ class PrivacyResource extends AbstractResource
                 $count = 1;
                 $attachments = [];
                 $hasAttachments=true;
-                $prProperties['attachments_download'] = [];
+                $prProperties = ['attachments_download'=> []];
 
                 foreach ($attachs as $key=>$att) {
                     $ftpFileName = $att['token'];
@@ -337,6 +337,7 @@ class PrivacyResource extends AbstractResource
 
                     $prProperties['attachments_download'] ['file_name']  =  '$oFileName';
                     $prProperties['attachments_download'] ['success']  =  false;
+
                     try {
                         if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
                             $attachments[] = [
@@ -349,7 +350,7 @@ class PrivacyResource extends AbstractResource
 
                         } else {
                             // echo "error";
-                            // throw new Exception('File '. $tmpFileName . ' not downloaded ');
+                            throw new Exception('File '. $oFileName . ' not saved ');
                         }
                     }catch(Exception $e) {
 
@@ -387,6 +388,8 @@ class PrivacyResource extends AbstractResource
             if($this->entityManager->isOpen())
             {
                 try {
+                    if(isset($prProperties))
+                        $privacyEntry->setProperties( json_encode($prProperties) );
                     $this->entityManager->merge($privacyEntry);
                     if($isDeferred) {
                         $this->entityManager->merge($privacyDef);
@@ -417,8 +420,7 @@ class PrivacyResource extends AbstractResource
                     }
                 }
 
-                if(isset($prProperties))
-                    $privacyEntry->setProperties( json_encode($prProperties) );
+
 
                 return $privacyEntry;
             }
@@ -428,6 +430,8 @@ class PrivacyResource extends AbstractResource
         else
         {
             try {
+                if(isset($prProperties))
+                    $privacyEntry->setProperties( json_encode($prProperties) );
                 $this->entityManager->merge($privacyEntry);
                 if($isDeferred) {
                     $this->entityManager->merge($privacyDef);
@@ -443,8 +447,7 @@ class PrivacyResource extends AbstractResource
                 echo $e;
             }
 
-            if(isset($prProperties))
-                $privacyEntry->setProperties( json_encode($prProperties) );
+
             return $privacyEntry;
         }
 

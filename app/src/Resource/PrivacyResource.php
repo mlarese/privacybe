@@ -5,32 +5,69 @@ namespace App\Resource;
 
 use App\Action\Terms;
 use App\Base\BaseResource;
+use App\Entity\Privacy\ActionHistory;
 use App\Entity\Privacy\Privacy;
+use App\Entity\Privacy\PrivacyAttachment;
 use App\Entity\Privacy\PrivacyHistory;
 use App\Resource\Privacy\GeneralDataIntegrator;
+use App\Resource\Privacy\GroupByEmail;
 use App\Resource\Privacy\GroupByEmailTerm;
+use App\Resource\Privacy\GroupByEmailTermMultiple;
 use App\Resource\Privacy\LanguageIntegrator;
 use App\Resource\Privacy\PostFilter;
 use App\Resource\Privacy\PrivacyRecordIntegrator;
 use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
+use App\Service\FilesService;
+use function date;
+use DateTime;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
+use function file_exists;
+use const FTP_BINARY;
+use function ftp_get;
+use function ftp_login;
+use function ftp_pasv;
 use function get_object_vars;
 
+use function json_decode;
 use function json_encode;
+use function md5;
+use function mkdir;
+use function pathinfo;
 use function print_r;
+use Slim\Container;
 use function strtolower;
+use function strtotime;
 use function var_dump;
 
 class PrivacyResource extends AbstractResource
 {
+    /** @var Container $container  */
+    private $container = null;
+    private $ownerId = null;
 
+    /**
+     * @return null
+     */
+    public function getOwnerId() {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param null $ownerId
+     *
+     * @return PrivacyResource
+     */
+    public function setOwnerId($ownerId) {
+        $this->ownerId = $ownerId;
+        return $this;
+    }
     /**
      * @param $privacyId
      *
@@ -48,6 +85,27 @@ class PrivacyResource extends AbstractResource
         }
 
         return $prRec;
+    }
+
+    /**
+     * @return null
+     */
+    public function getContainer() {
+        return $this->container;
+    }
+
+    public function hasContainer() {
+        return isset($this->container);
+    }
+
+    /**
+     * @param null $container
+     *
+     * @return PrivacyResource
+     */
+    public function setContainer($container) {
+        $this->container = $container;
+        return $this;
     }
 
     /**
@@ -166,7 +224,7 @@ class PrivacyResource extends AbstractResource
      * @return Privacy
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function savePrivacy(
+    public function  savePrivacy(
         $ip,
         $form,
         $cryptedForm,
@@ -186,7 +244,8 @@ class PrivacyResource extends AbstractResource
         $raiseException = false,
         $deferred = DeferredPrivacyService::DEFERRED_TYPE_NO,
         $version=null,
-        $status=null
+        $status=null,
+        $note=null
     ) {
         $privacyEntry = new Privacy();
         $privacyEntry
@@ -207,6 +266,7 @@ class PrivacyResource extends AbstractResource
             ->setPrivacyFlags($privacyFlags)
             ->setTelephone($telephone);
 
+        if(isset($note)) $privacyEntry->setNote($note);
         if(isset($language)) $privacyEntry->setLanguage($language);
         if(isset($page)) $privacyEntry->setPage($page);
         if($status!==null) $privacyEntry->setStatus($status);
@@ -219,24 +279,125 @@ class PrivacyResource extends AbstractResource
             $this->getRepository();
         }
 
+        $prProperties = null;
+
         $isDeferred = ($deferred !== DeferredPrivacyService::DEFERRED_TYPE_NO);
+        $hasAttachments = false;
         $privacyDef = null;
+        $privacyAttachment = null;
+        // controllo se esiste allegato: se esiste la procedura double-optin non è necessaria
+        if($isDeferred) {
+            if(isset($form) && isset($form['MMattachedfiles']) ) {
+                $fservice = new FilesService($this->getContainer());
+                $container = $this->getContainer();
+                $settings = $container->get('settings');
+                $userAtt = $settings['attachments']['users'];
+
+                $ftp_server = $userAtt["ftp_server"];
+                $ftp_user_name = $userAtt["ftp_user_name"];
+                $ftp_user_pass = $userAtt["ftp_user_pass"];
+
+                $ftpConnId = ftp_connect ($ftp_server);
+                $login_result = ftp_login($ftpConnId, $ftp_user_name, $ftp_user_pass);
+                ftp_pasv ( $ftpConnId , true ) ;
+
+                $hasAttachments = true;
+                $isDeferred = false;
+                $attachs = json_decode( $form['MMattachedfiles'], true );
+
+                $privacyAttachment = new PrivacyAttachment();
+                $privacyAttachment->setId($id)
+                    ->setCreated(new DateTime())
+                    ->setDeleted(false);
+
+                $count = 1;
+                $attachments = [];
+                $hasAttachments=true;
+                $prProperties = ['attachments_download'=> []];
+
+                foreach ($attachs as $key=>$att) {
+                    $ftpFileName = $att['token'];
+                    $structureId = $att['path'];
+                    $inst = $att['inst'];
+
+                    $path_parts = pathinfo($ftpFileName);
+                    $ext=$path_parts['extension'];
+                    $oFileName = "Double optin attachment $count.".$ext;
+
+                    $fileName = md5($oFileName) ;
+
+                    $ftpFileName_Path = "/TMPGDPR/$inst/$structureId/$ftpFileName";
+                    $localFileName = $fservice->buildPrivacyAttachmentFileName($ftpFileName_Path, $this->getOwnerId(), $id);
+                    if(!file_exists($localFileName)) mkdir($localFileName,0777,true);
+                    $localFileName.='/'.$fileName;
+
+                    //die($localFileName);
+
+                    // die($ftpFileName_Path);
+
+                    $prProperties['attachments_download'] ['file_name']  =  $oFileName;
+                    $prProperties['attachments_download'] ['success']  =  false;
+
+                    try {
+                        if (ftp_get($ftpConnId, $localFileName, $ftpFileName_Path, FTP_BINARY)) {
+                            $attachments[] = [
+                                "created" => new DateTime(),
+                                "fileName" => $oFileName,
+                                "description" => "Double optin attachment"
+                            ];
+
+                            $prProperties['attachments_download'] ['success']=true;
+
+                        } else {
+                            // echo "error";
+                            // throw new Exception('File '. $oFileName . ' not saved ');
+                        }
+                    }catch(Exception $e) {
+
+                    }
+
+                    $count++;
+                }
+
+
+                ftp_close($ftpConnId);
+                $privacyAttachment->setAttachments(  json_encode( $this->toJson($attachments)  ));
+                // print_r($privacyAttachment);die;
+            }
+        }
 
         if($isDeferred) {
             $deferredTYpe = $deferred;
             $defSrv = new DeferredPrivacyService();
             $privacyDef = $defSrv->setDeferred($privacyEntry, $deferredTYpe);
+
+            $acHistory = new ActionHistory();
+            $acHistory->setType('deferred-created')
+                ->setUserName( $email )
+                ->setDescription("deffered created $email  uid=$id")
+                ->setDate(new DateTime())
+            ;
+            $this->entityManager->merge($acHistory);
+            $this->entityManager->flush();
         }
+
+
 
         if($raiseException)
         {
             if($this->entityManager->isOpen())
             {
                 try {
+                    if(isset($prProperties))
+                        $privacyEntry->setProperties( json_encode($prProperties) );
                     $this->entityManager->merge($privacyEntry);
-
                     if($isDeferred) {
                         $this->entityManager->merge($privacyDef);
+                    }
+                    if($hasAttachments) {
+                        if(isset($privacyAttachment)) {
+                            $this->entityManager->merge($privacyAttachment);
+                        }
                     }
 
                     $this->entityManager->flush();
@@ -244,10 +405,22 @@ class PrivacyResource extends AbstractResource
                     echo $e;
                     if($raiseException)
                     {
+
+                        $acHistory = new ActionHistory();
+                        $acHistory->setType('deferred-created-error')
+                            ->setUserName( $email )
+                            ->setDescription("error creating deffered  $email  uid=$id ")
+                            ->setDate(new DateTime())
+                        ;
+                        $this->entityManager->merge($acHistory);
+                        $this->entityManager->flush();
+
                         $msg = '**Data not imported: email '.$privacyEntry->getEmail().(($privacyEntry->getName() != '' && $privacyEntry->getSurname() != '') ? ', user '.$privacyEntry->getName().' '.$privacyEntry->getSurname() : '').' **';
                         Throw new Exception($msg);
                     }
                 }
+
+
 
                 return $privacyEntry;
             }
@@ -257,17 +430,33 @@ class PrivacyResource extends AbstractResource
         else
         {
             try {
+                if(isset($prProperties))
+                    $privacyEntry->setProperties( json_encode($prProperties) );
                 $this->entityManager->merge($privacyEntry);
                 if($isDeferred) {
                     $this->entityManager->merge($privacyDef);
+                }
+
+                if($hasAttachments) {
+                    if(isset($privacyAttachment)) {
+                        $this->entityManager->merge($privacyAttachment);
+                    }
                 }
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 echo $e;
             }
 
+
             return $privacyEntry;
         }
+
+    }
+
+    private function downloadPrivacyDblOptinAttachments($privacyEntry, $mMattachedfiles) {
+        $newAttachment = new PrivacyAttachment();
+
+        // $fileService = new FilesService()
 
     }
 
@@ -340,6 +529,139 @@ class PrivacyResource extends AbstractResource
      * @return array|mixed
      * @throws \Doctrine\ORM\ORMException
      */
+    public function privacyListIds($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
+
+        if($grouper==null) $grouper = GroupByEmail();
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        if(!isset($filter)) {
+            if(isset($criteria['postFilter'])) {
+                if($criteria['postFilter']) $filter = new PostFilter();
+            } else {
+                $filter = new PostFilter();
+            }
+
+        }
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.email',
+            'p.privacyFlags',
+            'p.termId',
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.created',
+            'p.language'
+        ];
+
+        $this->entityManager->getConfiguration()->addCustomDatetimeFunction('DATE', 'DateFunction');
+
+        $qb = $repo->createQueryBuilder('p');
+        /** @var Query\Expr $ex */
+        $ex = $qb->expr();
+
+        $siteConditions = array("p.site = '/'","p.site LIKE '%step%'", "p.site LIKE '%crobackend%'"  , "p.site LIKE '%newsletter%'" , "p.site LIKE '%enquiry%'", "p.site LIKE '%booking%'" );
+        $orXSiteConditions = $ex->orX();
+        $orXSiteConditions->addMultiple($siteConditions);
+
+
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( $ex->not("p.email=''") )
+            ->andWhere( $ex->not("p.email IS NULL") )
+            ->andWhere( $orXSiteConditions )
+
+            // ->setParameter('site', '%step%')
+            //->andWhere( $ex->not("p.ref=''") )
+            //->andWhere( $ex->not("p.ref IS NULL") )
+            //->setMaxResults(10)
+        ;
+
+
+        $qb ->addOrderBy( 'p.email', 'ASC')
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
+
+        if($criteria === null) {
+            $qb ->addOrderBy( 'p.email', 'ASC')
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+        } else {
+
+            $person = null ;
+            $sort = 'default' ;
+            $sortDirection = 'ASC';
+
+            if(isset($criteria['domain']) && $criteria['domain']!=='' && $criteria['domain']!=='all' ) {
+                $crDomain = $criteria['domain'];
+                $qb->andWhere( "p.domain=:domain")
+                    ->setParameter('domain',$crDomain)
+                ;
+            }
+
+            $qb ->addOrderBy( 'p.email', $sortDirection)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
+
+        }
+
+        $sql =  $qb->getQuery()->getSQL();
+
+        // die($sql);
+        $rsm = new ResultSetMapping();
+            $rsm->addScalarResult('email_0', 'email');
+            $rsm->addScalarResult('privacy_flags_1', 'privacyFlags', 'json');
+            $rsm->addScalarResult('term_id_2', 'termId', 'string');
+            $rsm->addScalarResult('name_3', 'name', 'string');
+            $rsm->addScalarResult('surname_4', 'surname', 'string');
+            $rsm->addScalarResult('id_5', 'id', 'string');
+            $rsm->addScalarResult('created_6', 'created', 'datetime');
+            $rsm->addScalarResult('language_7', 'language', 'string');
+
+            $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+            $results = $query->getResult();
+
+        // $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+        // foreach ($results as &$pr) {
+            // $privacyRecordIntegrator->integrate($pr);
+        // }
+
+
+        // print_r($results);  die;
+
+        if($filter)  $results = $filter->filter($results,$criteria);
+        if($grouper)  $results = $grouper->group($results,$criteria);
+
+        return $results;
+    }
+
+    /**
+     * @param null                $criteria
+     * @param IResultGrouper|null $grouper
+     * @param IFilter|null        $filter
+     *
+     * @return array|mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function privacyListFw($criteria=null, IResultGrouper $grouper = null, IFilter $filter=null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
@@ -355,6 +677,13 @@ class PrivacyResource extends AbstractResource
                 $filter = new PostFilter();
             }
 
+        }
+
+        if(isset($criteria)) {
+            if(isset($criteria['_result_'])) {
+                // print_r($criteria['_result_']);
+                return $criteria['_result_'];
+            }
         }
 
         $ex = $this->entityManager->getExpressionBuilder();
@@ -383,6 +712,7 @@ class PrivacyResource extends AbstractResource
         $qb
             ->select($fields)
             ->where('p.deleted=0')
+            // ->setMaxResults(30)
             ->andWhere( $ex->not("p.email=''") )
             ->andWhere( $ex->not("p.email IS NULL") )
         ;
@@ -458,8 +788,6 @@ class PrivacyResource extends AbstractResource
 
         // guest[reservation_guest_language]":"en"
 
-
-
         foreach ($results as &$pr) {
             $privacyRecordIntegrator->integrate($pr);
             unset($pr['privacy']);
@@ -468,8 +796,6 @@ class PrivacyResource extends AbstractResource
 
         if($filter)  $results = $filter->filter($results,$criteria);
         if($grouper)  $results = $grouper->group($results,$criteria);
-
-        //print_r($results); die('end');
 
         return $results;
     }
@@ -670,7 +996,7 @@ class PrivacyResource extends AbstractResource
 
     }
 
-    public function privacyRecord($email, $domain = null) {
+    public function privacyRecordGrouped($email, $domain = null) {
         $repo = $this->getRepository();
         $termRes = new TermResource($this->entityManager);
         $termPageRes = new TermPageResource($this->entityManager);
@@ -719,11 +1045,11 @@ class PrivacyResource extends AbstractResource
 
         $qb
             ->setParameter('email', $email)
-                ->addOrderBy( 'p.termId', 'ASC')
-                ->addOrderBy( 'p.created', 'DESC')
-                ->addOrderBy( 'p.domain', 'ASC')
-                ->addOrderBy( 'p.site', 'ASC')
-            ;
+            ->addOrderBy( 'p.termId', 'ASC')
+            ->addOrderBy( 'p.created', 'DESC')
+            ->addOrderBy( 'p.domain', 'ASC')
+            ->addOrderBy( 'p.site', 'ASC')
+        ;
 
 
         $results = $qb->getQuery()->getResult();
@@ -736,6 +1062,88 @@ class PrivacyResource extends AbstractResource
 
 
         $groupByEmailTerm = new GroupByEmailTerm();
+        $results=$groupByEmailTerm->group($results,null);
+
+        if(isset($results[$email]))
+            $results =$results[$email];
+        else
+            $result= [];
+
+        // $ret =[];
+        // foreach ($results as $term=>$privacy){
+        //     $ret[]=['termId'=>$term, 'privacy'=>$privacy];
+        // }
+        return $results;
+    }
+
+    public function privacyRecord($email, $domain = null) {
+        $repo = $this->getRepository();
+        $termRes = new TermResource($this->entityManager);
+        $termPageRes = new TermPageResource($this->entityManager);
+
+        $termMap = $termRes->map();
+        $termPageMap = $termPageRes->map();
+
+        $ex = $this->entityManager->getExpressionBuilder();
+        $results = [];
+
+        $fields = [
+            'p.name',
+            'p.surname',
+            'p.id',
+            'p.ip',
+            'p.created',
+            'p.telephone',
+            'p.deleted',
+            'p.ref',
+            'p.domain',
+            'p.note',
+            'p.site',
+            'p.termId',
+            'p.privacy',
+            'p.form',
+            // 'p.cryptedForm',
+            'p.privacyFlags',
+            'p.properties',
+            'p.email'
+        ];
+
+        $qb = $repo->createQueryBuilder('p');
+        $ex = $qb->expr();
+        $qb
+            ->select($fields)
+            ->where('p.deleted=0')
+            ->andWhere( "p.email=:email")
+            ->andWhere( $ex->not("p.ip='####'"))
+        ;
+
+        if(isset($domain)){
+            $qb->andWhere('p.domain=:domain')
+                ->setParameter('domain', $domain);
+        }
+
+
+        $qb
+            ->setParameter('email', $email)
+                ->addOrderBy( 'p.termId', 'ASC')
+                ->addOrderBy( 'p.created', 'DESC')
+                ->addOrderBy( 'p.domain', 'ASC')
+                ->addOrderBy( 'p.site', 'ASC')
+            ;
+
+
+        // die ($email);
+
+        $results = $qb->getQuery()->getResult();
+        $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);
+
+        // guest[reservation_guest_language]":"en"
+        foreach ($results as &$pr) {
+            $privacyRecordIntegrator->integrate($pr);
+        }
+
+
+        $groupByEmailTerm = new GroupByEmailTermMultiple();
         $results=$groupByEmailTerm->group($results,null);
 
         if(isset($results[$email]))

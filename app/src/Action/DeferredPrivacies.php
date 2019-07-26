@@ -3,22 +3,14 @@
 namespace App\Action;
 
 use App\DoctrineEncrypt\Encryptors\EncryptorInterface;
-use App\Entity\Config\ActionHistory;
+use App\Entity\Privacy\ActionHistory;
 use App\Entity\Privacy\Privacy;
-use App\Entity\Privacy\PrivacyDeferred;
-use App\Entity\Privacy\Term;
-use App\Entity\Privacy\TermHistory;
 use App\Resource\DeferredPrivacyResource;
 use App\Resource\MandatoryFieldMissingException;
 use App\Resource\PrivacyResource;
-use App\Resource\TermPageResource;
-use App\Resource\TermResource;
-use App\Resource\Logs;
 use App\Service\DeferredPrivacyService;
+use DateTime;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use function session_commit;
@@ -43,14 +35,16 @@ class DeferredPrivacies extends AbstractAction{
             $_k = $body['_k'];
             $_j = $body['_j'];
 
-
-
             /** @var EncryptorInterface $enc */
             $enc = $this->getContainer()->get('encryptor');
-            $ownerId = $enc->decrypt( base64_decode( $_k ));
+            $ownerId = $enc->decrypt( base64_decode( $_k )) * 1;
             $privacyUid = $enc->decrypt( base64_decode( $_j ));
 
-            // die(" o=$ownerId   p=$privacyUid");
+            /*********** test ***********
+            $privacyUid = '05c4d000-657a-11e8-a451-870c5a3d92f6';
+            $ownerId=34;
+            *********** test ***********/
+
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
 
@@ -62,7 +56,21 @@ class DeferredPrivacies extends AbstractAction{
             $defRes->setVisited($privacyUid);
 
             $prRes = new PrivacyResource($em);
+            /** @var Privacy $pr */
             $pr=$prRes->getPrivacy($privacyUid);
+
+            $userEmail = $pr->getEmail();
+
+            $acHistory = new ActionHistory();
+                $acHistory->setType('deferred-visited')
+                          ->setUserName( $pr->getEmail() )
+                          ->setDescription("User visited deferred confirmation link email=$userEmail uid=".$pr->getId())
+                          ->setDate(new DateTime())
+                ;
+
+                $em->merge($acHistory);
+                $em->flush();
+
 
             return $response->withJson( $this->toJson($pr)  );
 
@@ -95,6 +103,17 @@ class DeferredPrivacies extends AbstractAction{
             $res = new DeferredPrivacyResource($em, $srv );
 
             $res->setStatus($uid,$status);
+
+            $acHistory = new ActionHistory();
+            $acHistory->setType('deferred-change-status')
+                ->setUserName( 'service' )
+                ->setDescription("deferred status   uid=$uid   $status=$status")
+                ->setDate(new DateTime())
+            ;
+
+            $em->merge($acHistory);
+            $em->flush();
+
             return $response->withJson($this->success());
 
         } catch (Exception $e) {

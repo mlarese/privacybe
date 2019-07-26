@@ -13,6 +13,7 @@ use App\Resource\Logs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\TransactionRequiredException;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -129,7 +130,9 @@ class Terms extends AbstractAction{
      */
     public function getAllTerms($request, $response, $args) {
         session_commit();
-        $ownerId = $this->getOwnerId($request);
+
+        if(isset($args['ownerId'])) $ownerId = $args['ownerId'];
+        else  $ownerId = $this->getOwnerId($request);
 
         /**
          * @var EntityManager $em

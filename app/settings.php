@@ -10,7 +10,10 @@ return [
         'attachments' => [
           'users' => [
               'path' => '/repository/dataone/owners/{ownerId}/privacy/{privacyId}',
-              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments'
+              'spf_path' => '/home/dataone/attachments/repository/dataone/owners/%s/users/%s/attachments',
+              'ftp_server' => '10.0.20.201',
+              'ftp_user_name' => 'dataone-upload',
+              'ftp_user_pass' => 'DeonjuKod9Jity'
           ]
         ],
         "dataone_emails" => [
@@ -55,10 +58,10 @@ return [
                     ]
                 ],
                 'dev' => [
-                    'confirm_link' => 'http://localhost:3000/surfer/newsunsubemailnotif'
+                    'confirm_link' => 'http://localhost:3000/#/surfer/newsunsubemailnotif'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/surfer/newsunsubemailnotif'
+                    'confirm_link' => 'https://privacy.dataone.online/#/surfer/newsunsubemailnotif'
                 ]
             ],
             'notify_privacy_mod_executed' => [
@@ -99,10 +102,10 @@ return [
                     ]
                 ],
                 'dev' => [
-                    'confirm_link' => 'http://localhost:3000/surfer/confirmdeferred'
+                    'confirm_link' => 'http://localhost:3000/#/surfer/confirmdeferred'
                 ],
                 'prod' => [
-                    'confirm_link' => 'https://privacy.dataone.online/manager/surfer/confirmdeferred'
+                    'confirm_link' => 'https://privacy.dataone.online/manager/#/surfer/confirmdeferred'
                 ]
             ],
         ],
@@ -160,6 +163,25 @@ return [
 
             // Session namespace
             'namespace'      => 'privacy_app'
+        ],
+        'doctrine_bi' => [
+            'meta' => [
+                'entity_path' => [
+                    'app/src/Entity/Bi'
+                ],
+                'auto_generate_proxies' => true,
+                'proxy_dir' =>  __DIR__.'/../cache/dconfig/proxies',
+                'cache' => null,
+            ],
+            'connection' => [
+                'driver'   => 'pdo_mysql',
+                'host' => '10.30.0.11',
+                'port' => '3306',
+                'dbname' => 'abs_datamart',
+                'user'    => 'root',
+                'password' => 'sZ2YgBnkR9',
+                'charset'  => 'utf8',
+            ]
         ],
         'doctrine_config' => [
             'encryption_key' => 'o71aD2Ep.Gj4I<5KL6MN7OP_qR98>-UW',

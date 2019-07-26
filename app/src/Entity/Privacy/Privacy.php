@@ -16,6 +16,7 @@ use App\DoctrineEncrypt\Configuration\Encrypted;
  *          @ORM\Index(name="privacy_version", columns={"version"}),
  *          @ORM\Index(name="privacy_status", columns={"status"}),
  *          @ORM\Index(name="privacy_term_id", columns={"domain","term_id"}),
+ *          @ORM\Index(name="privacy_deleted", columns={"deleted"}),
  *          @ORM\Index(name="privacy_language", columns={"domain","language"}),
  *          @ORM\Index(name="privacy_email", columns={"email"})
  *     }

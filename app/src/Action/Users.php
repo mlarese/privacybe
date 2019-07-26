@@ -16,10 +16,12 @@ use App\Resource\PrivacyResource;
 use App\Service\AttachmentsService;
 use App\Traits\UrlHelpers;
 use Closure;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Interop\Container\Exception\ContainerException;
+use function print_r;
 use function session_commit;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -229,8 +231,7 @@ class Users extends AbstractAction
             $em = $this->getEmPrivacy($ownerId);
 
             $email = $args['email'];
-            $email = urldecode(   base64_decode($email));
-
+            $email = base64_decode(urldecode($email)) ;
 
             $privacyRes = new PrivacyResource($em);
             $user = $privacyRes->privacyRecord($email);
@@ -438,6 +439,49 @@ class Users extends AbstractAction
                 /** @var Privacy $p */
                 $p = $em->find(Privacy::class, $privacy['id']);
 
+
+                $props=$p->getProperties();
+
+                if(!isset($props['history'])) {
+                    $props['history'] = [];
+                }
+
+
+                $newF = $privacy['privacyFlags'];
+                $oldF = $p->getPrivacyFlags();
+
+                $oldFByCode = [];
+
+                foreach ($oldF as $flag_prv) {
+                    $oldFByCode [$flag_prv['code']]= $flag_prv['selected'];
+                }
+                $variations = [];
+                foreach ($newF as $flag_prv) {
+                    $oldFlag = $oldFByCode[$flag_prv['code']];
+                    // echo $flag_prv['code'] . ' ' . $flag_prv['selected'] . '-' .$oldFlag;
+                    if($flag_prv['selected'] !== $oldFlag) {
+                        $variations[] = [
+                            'action'=> $flag_prv['selected']?'granted':'revoked',
+                            'flag'=> $flag_prv['code']
+                        ];
+                    }
+                }
+
+                $user = $userData->user;
+                $role = $userData->role;
+                // print_r($userData);die;
+                $props['history'] []= [
+                   'update' =>  new DateTime(),
+                   'new_flags' =>  $privacy['privacyFlags'],
+                   'old_flags' =>  $p->getPrivacyFlags(),
+                   'variations' =>  $variations,
+                   'user'=> $user
+                ] ;
+
+                // print_r($props); die;
+
+                $p->setProperties($props);
+
                 $p->setPrivacy($privacy['privacy'])
                     ->setPrivacyFlags($privacy['privacyFlags'])
                 ;
@@ -449,6 +493,8 @@ class Users extends AbstractAction
             }
 
             $em->flush();
+
+
 
         } catch (ORMException $e) {
             echo $e->getMessage();

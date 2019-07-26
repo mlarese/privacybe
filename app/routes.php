@@ -1,13 +1,12 @@
 <?php
 // Routes
 
-/*********************************************************
- *                  TEST
- *********************************************************/
+
 
 use App\Action\Attachments;
 use App\Action\AttachmentView;
 use App\Action\Configurations;
+use App\Action\CustomerCares;
 use App\Action\DeferredPrivacies;
 use App\Action\Dictionaries;
 use App\Action\Operators;
@@ -15,6 +14,7 @@ use App\Action\Owners;
 use App\Action\PrivacyManager;
 use App\Action\ShareSubscriberList;
 use App\Action\Subscriptions;
+use App\Action\Terms;
 use App\Action\Users;
 use App\Action\UsersRequests;
 use App\Base\BaseRoutesManager;
@@ -24,14 +24,41 @@ use App\Entity\Privacy\UserRequest;
 $routeMngr = new BaseRoutesManager($app);
 
 
+/******************************
+ * bi
+ ******************************/
+/** @var \App\Action\Bi */
+// $app->get('/api/bi/dimensions', 'App\Action\Bi:retrieveDimensions');
+$app->get('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
+$app->post('/api/bi/datamart/{domain}', 'App\Action\Bi:retrieveDatamart');
+
+$app->get('/api/bi/resultlist', 'App\Action\Bi:retrieveResultList');
+$app->post('/api/bi/resultlist', 'App\Action\Bi:saveResultList');
+$app->get('/api/bi/resultlist/{id}', 'App\Action\Bi:retrieveResultListRecord');
+
+
+$app->get('/api/bi/bioptions', 'App\Action\Bi:retrieveQueryFilterOptions');
+
+
+/*********************************************************
+ *                  TEST
+ *********************************************************/
 $app->get('/api/test/welcome', 'App\Action\Test:welcome');
 $app->get('/api/test/enc', 'App\Action\Test:testEnc');
+$app->get('/api/test/ownersstats', 'App\Action\Owners:ownersStats');
+
 $app->get('/api/test/encread', 'App\Action\Test:testEncRead');
 $app->get('/api/test/encdec', 'App\Action\Test:testEncDec');
-
+$app->get('/api/test/dimensions/{ownerId}', 'App\Action\Bi:retrieveDimensions');
+$app->get('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
+$app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatamart');
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
+/*********************************************************
+ *                  TEST OPTIONS
+ *********************************************************/
+$app->get('/api/test/bioptions', 'App\Action\Bi:retrieveQueryFilterOptionsTest');
 
 /** @var App\Action\Emails\Emails */
 $app->get('/api/test/email', 'App\Action\Emails\Emails:privacyRequestTest');
@@ -104,9 +131,13 @@ $app->get('/api/surfer/userrequest', 'App\Action\UsersRequests:insertSubscriptio
 /*********************************************************
  *                  TERM
  *********************************************************/
+/** @var Terms */
 $app->put('/api/owner/term/{id}', 'App\Action\Terms:updateTerm');
 $app->post('/api/owner/term', 'App\Action\Terms:insertTerm');
 $app->get('/api/owner/term', 'App\Action\Terms:getAllTerms');
+
+$app->get('/api/owner/termby/{ownerId}', 'App\Action\Terms:getAllTerms');
+
 $app->get('/api/owner/term/{id}', 'App\Action\Terms:getTerm');
 $app->get('/api/owner/termfilter', 'App\Action\Terms:termsAndTreatsFW');
 $app->post('/api/owner/termcopy', 'App\Action\Terms:termCopy');
@@ -134,6 +165,7 @@ $app->get('/api/owner/profile/{id}', 'App\Action\Owners:getOwnerById');
 $app->post('/api/owner/profile', 'App\Action\Owners:newOwner');
 $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
+$app->get('/api/owner/ownersstats', 'App\Action\Owners:ownersStats');
 
 /*********************************************************
  *                  PRIVACY GROUPED
@@ -169,6 +201,7 @@ $app->get('/api/owner/treatment', 'App\Action\Treatments:getAllTreatments');
 $app->get('/api/owner/treatment/{code}', 'App\Action\Treatments:getTreatment');
 
 $app->get('/api/owner/domain', 'App\Action\Owners:getDomains');
+$app->get('/api/owner/domainby/{ownerId}', 'App\Action\Owners:getDomains');
 
 /*********************************************************
  *                  OWNERS OPERATORS
@@ -222,6 +255,38 @@ $app->get('/api/customercare/user/{id}', 'App\Action\CustomerCare:getUser');
  *                  CUSTOMERCARE OWNERS
  *********************************************************/
 $app->get('/api/customercare/owner', 'App\Action\CustomerCares:getOwners');
+
+
+/*********************************************************
+ *                  CUSTOMERCARE ACTIONHISTORY
+ *********************************************************/
+/** @var CustomerCares */
+$app->get('/api/customercare/actionhistory', 'App\Action\CustomerCares:getActionHistory');
+$app->post('/api/customercare/actionhistory', 'App\Action\CustomerCares:postActionHistory');
+
+
+/*********************************************************
+ *                  CUSTOMERCARE LOGINS
+ *********************************************************/
+/** @var CustomerCares */
+$app->get('/api/customercare/logins', 'App\Action\CustomerCares:getLoginLogs');
+$app->post('/api/customercare/logins', 'App\Action\CustomerCares:postLoginLogs');
+
+/*********************************************************
+/*********************************************************
+ *                  LAYOUTS
+ *********************************************************/
+/** @var Owners */
+$app->get('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:getOwnerLayouts');
+$app->put('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:setOwnerLayouts');
+$app->post('/api/owner/layoutby/{ownerId}', 'App\Action\Owners:setOwnerLayouts');
+
+
+/*********************************************************
+ *                  CUSTOMERCARE DOUBLEOPTIN
+ *********************************************************/
+/** @var CustomerCares */
+$app->get('/api/customercare/dbloptinlist', 'App\Action\CustomerCares:getDblOptinList');
 
 /*********************************************************
  *                  CUSTOMERCARE WIDGETS

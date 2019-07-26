@@ -4,6 +4,7 @@ namespace App\Action;
 
 use Ambta\DoctrineEncryptBundle\Encryptors\EncryptorInterface;
 use App\Action\Emails\EmailHelpers;
+use App\Entity\Config\ActionHistory;
 use App\Entity\Config\CustomerCare;
 use App\Entity\Config\Owner;
 use App\Entity\Config\User;
@@ -155,6 +156,7 @@ class Auth extends AbstractAction
         if ($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
+                "options" => $this->getOptions($ue->getOwnerId()),
                 "email" => $gdprEmail,
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),
@@ -182,7 +184,42 @@ class Auth extends AbstractAction
         }
     }
 
-    private function getAcl($gdprRole)
+    public static function getOptionsSt($ownerId) {
+        $ret = [
+            "isPortal" => false,
+            "hasBi" => false,
+            "hasQuery" => false,
+            "hasPredictive" => false,
+            "hasAdvMarketing" => false
+        ];
+        switch($ownerId) {
+            case 9: // nettuno
+            case 6:
+            case 34:
+                $ret["hasBi"] = true ;
+                $ret["hasQuery"] = true ;
+                $ret["hasPredictive"] = true ;
+                break;
+            case 15: // aba
+                $ret["isPortal"] = true ;
+                $ret["hasBi"] = true ;
+                $ret["hasQuery"] = true ;
+                $ret["hasPredictive"] = true ;
+                break;
+            case 53: // vidi
+                $ret["hasBi"] = true ;
+                $ret["hasQuery"] = true ;
+                $ret["hasPredictive"] = false ;
+                break;
+
+        }
+        return $ret;
+    }
+
+    private function getOptions($ownerId) {
+        return self::getOptionsSt($ownerId);
+    }
+    public static function getAclSt($gdprRole)
     {
         /***************************************
         Roles
@@ -209,6 +246,9 @@ class Auth extends AbstractAction
         ];
     }
 
+    private function getAcl($gdprRole) {
+        return self::getAclSt($gdprRole);
+    }
     /**
      * @param $request Request
      * @param $response Response
@@ -273,6 +313,18 @@ class Auth extends AbstractAction
             $enc = $this->getContainer()->get('encryptor');
             $_k= $this->urlB32EncodeString("user=$user&userId=$userId", $enc);
             $link = "https://privacy.dataone.online/service/preset?_k=$_k&user=$user";
+            $userType= $eUser->getType();
+
+            $ah=new ActionHistory();
+            $ah->setDate(new \DateTime())
+                ->setType("${userType}_email_password_rest")
+                ->setUserName($eUser->getUser())
+                ->setDescription($userType .' sent reset password email user='.$eUser->getUser())
+            ;
+
+            $this->getEmConfig()->persist($ah);
+            $this->getEmConfig()->flush();
+
 
             $data = ['email'=>$email, 'link'=>$link, 'user'=>$user];
             $this->sendGenericEmail(
@@ -331,12 +383,26 @@ class Auth extends AbstractAction
             $user = $props['user'];
             $userId = $props['userId'];
 
-            /** @var User $user */
+            /** @var User $userObj */
             $userObj = $this->getEmConfig()->find(User::class, $userId );
 
             if(  !isset($userObj)) {
                 return $response->withStatus(401, 'User not found');
             }
+
+            $userType= $userObj->getType();
+
+            $ah=new ActionHistory();
+            $ah->setDate(new \DateTime())
+                ->setType("${userType}_password_rest")
+                ->setUserName($userObj->getUser())
+                ->setDescription($userType .' reset password user='.$userObj->getUser())
+            ;
+
+            $this->getEmConfig()->persist($ah);
+            $this->getEmConfig()->flush();
+
+
 
             $userObj->setPassword(      md5($body['password'])    );
             $this->getEmConfig()->merge($userObj);
@@ -383,6 +449,7 @@ class Auth extends AbstractAction
         if($found) {
             $userSpec = [
                 "acl" => $this->getAcl($gdprRole),
+                "options" => $this->getOptions($ue->getOwnerId()),
                 "email"=> $op->getEmail(),
                 "gdprRole" => $gdprRole,
                 "userId" => $ue->getId(),

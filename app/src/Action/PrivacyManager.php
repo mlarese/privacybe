@@ -70,11 +70,21 @@ class PrivacyManager extends AbstractAction
             $params = $this->urlB32DecodeToArray($_k, $encr);
             $email = $params['email'];
             $ownerId = $params['ownerId'];
+
+            $domain = null;
+            if(isset($params['domain']))
             $domain = $params['domain'];
+
+
+            $domain = null;
+            if(isset($params['domain']))
+                $domain = $params['domain'];
+
             $em = $this->getEmPrivacy($ownerId);
             $pres = new PrivacyResource($em);
             $privacies = $pres->privacyRecord($email, $domain);
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Error finding privacies');
         }
 
@@ -938,6 +948,7 @@ class PrivacyManager extends AbstractAction
      * @return Privacy
      */
     public static function savePlainPrivacyByAssoc($privacyResource,$data,$ownerId, $ip='') {
+
         $domain = $data['domain'];
 
         $email = "";
@@ -1132,6 +1143,9 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $prRes->setContainer($this->getContainer());
+            $prRes->setOwnerId($ownerId);
+
             $ip = $this->getIp();
 
             $pr = self::savePlainPrivacyByAssoc(
@@ -1146,6 +1160,7 @@ class PrivacyManager extends AbstractAction
             $ph = $prRes->savePrivacyLog($pr->getId(), $jsonPrivacy, 'save from website');
 
         } catch (Exception $e) {
+            echo $e->getMessage();
             return $response->withStatus(500, 'Exception saving privacy');
         }
 
@@ -1169,6 +1184,9 @@ class PrivacyManager extends AbstractAction
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $prRes = new PrivacyResource($em);
+            $prRes->setContainer($this->getContainer());
+            $prRes->setOwnerId($ownerId);
+
             $ip = $this->getIp();
 
             $pr = self::savePlainPrivacyByAssoc(

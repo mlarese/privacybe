@@ -42,7 +42,6 @@ class ShareSubscriberList extends AbstractAction
 
         $container = $this->getContainer();
 
-
         try{
 
 

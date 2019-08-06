@@ -42,7 +42,7 @@ class AdvancedImporter {
         }
 
         // Read CSV file
-        $tmpFile = '/tmp/advancedimport_' . md5(mktime());
+        $tmpFile = $this->getTemporaryImportFolder() . 'advancedimport_' . md5(mktime());
         copy($file, $tmpFile);
         $csv = $this->readCSVFile($tmpFile, $columnSeparator);
 
@@ -50,6 +50,16 @@ class AdvancedImporter {
             'tmp_csv' => $tmpFile,
             'header' => array_flip($csv->header)
         ];
+    }
+
+    /**
+     * Temporary shared folder
+     *
+     * @return string
+     */
+    protected function getTemporaryImportFolder ()
+    {
+        return $_SERVER['DOCUMENT_ROOT'] . '/import/tmp/';
     }
 
     /**
@@ -400,7 +410,7 @@ class AdvancedImporter {
                     );
                 }
                 if (is_null($registrationDate)) {
-                    unset($registrationDate);
+                    $registrationDate = new \DateTime('now');
                 } else if (isset($fields['registrationDateFormat'])) {
                     try {
                         switch (strtolower($fields['registrationDateFormat'])) {
@@ -540,6 +550,11 @@ class AdvancedImporter {
                     ) {
                         $codeDatiPersonali = $termParagraphs[0]['treatments'][0]['name'];
                     }
+                    if (isset($termParagraphs[0]['treatments'][1]['name']) &&
+                        !empty($termParagraphs[0]['treatments'][1]['name'])
+                    ) {
+                        $codeNewsletter = $termParagraphs[0]['treatments'][1]['name'];
+                    }
                     $tmpRegistrationUrl = parse_url($registrationUrl);
                     $privacyEntity->setEmail($email)
                         ->setIp(isset($ipaddress) ? $ipaddress : '')
@@ -584,9 +599,16 @@ class AdvancedImporter {
                             [
                                 [
                                     'code' => $codeDatiPersonali,
-                                    'selected' => true,
+                                    'selected' => $personalDataAgreement,
                                     'mandatory' => true,
-                                    'text' => (isset($termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['treatments'][0]['text']['en']
+                                    'text' => (isset($termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['treatments'][0]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['treatments'][0]['text']['en'],
+                                    'termId' => $termId
+                                ],[
+                                    'code' => $codeNewsletter,
+                                    'selected' => $newsletterAgreement,
+                                    'mandatory' => false,
+                                    'text' => (isset($termParagraphs[0]['treatments'][1]['text'][$privacyEntity->getLanguage()])) ? $termParagraphs[0]['treatments'][1]['text'][$privacyEntity->getLanguage()] : $termParagraphs[0]['treatments'][1]['text']['en'],
+                                    'termId' => $termId
                                 ]
                             ]
                         )->setPrivacy(
@@ -646,8 +668,12 @@ class AdvancedImporter {
         $delimiter = ';'
     ) {
         $csv = fopen($file, 'r');
+        if ($csv === false) {
+            return $csv;
+        }
         $header = [];
         $body = [];
+        // @todo da sistemare il loop
         while (($tmp = fgetcsv($csv, 10000, $delimiter)) !== false) {
             if (count($header) == 0)  {
                 $header = $tmp;

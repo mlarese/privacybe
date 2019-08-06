@@ -373,6 +373,7 @@ $(document).ready(function(){
     var item = new FormData();
     var emitter = $(e.originalEvent.explicitOriginalTarget)
     var dryRun = true
+    console.log(emitter)
     if (emitter.hasClass('dry-run-csv')) {
       item.append('action', 'dry-run')
     } else if (emitter.hasClass('submit-csv')) {
@@ -570,13 +571,13 @@ $(document).ready(function(){
         });
         if (res) {
           if (dryRun) {
-            $dryRunExamples = 'Righe trovate: ' + res.result.total_counter + '<br>Righe che possono essere caricate: ' + res.result.imported_counter + '<br>'
-            $dryRunExamples += '<br>Esempio di riga decodificata:<br>'
-            $dryRunExamples += JSON.stringify(res.result.examples[0]) + '<br>'
+            var dryRunExamples = 'Righe trovate: ' + res.result.total_counter + ' Righe che possono essere caricate: ' + res.result.imported_counter + ' '
+            dryRunExamples += 'Esempio di riga decodificata: '
+            dryRunExamples += JSON.stringify(res.result.examples[0]) + ' '
             swal({
               type: 'success',
               title: 'CSV Dry Run',
-              html: $dryRunExamples
+              text: dryRunExamples
             });
           } else {
             swal({

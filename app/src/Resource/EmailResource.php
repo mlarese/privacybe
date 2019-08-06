@@ -85,11 +85,17 @@ class EmailResource extends AbstractResource{
     public function composePrivaciesData($lang, $mail, $ownerId, $reqDomain,$privacyId = null) {
 
         $privacyRes = new PrivacyResource($this->entityManager);
+
         $privacies = $privacyRes->privacyRecord($mail);
+
         $opRes = new OperatorResource($this->getEntityManager());
+
+
 
         $owner = '';
         $ownerRec = null;
+
+
 
         try {
             /** @var Operator $rep */
@@ -116,10 +122,10 @@ class EmailResource extends AbstractResource{
         $validPrivacies = [];
         foreach ($privacies as $pruid => &$domain) {
             foreach ($domain as &$term) {
-                if ($term['domain'] === $reqDomain) {
+                if (isset($term['domain']) === $reqDomain) {
 
                     if ($privacyId !== null) {
-                        if ($term['id'] !== $privacyId) continue;
+                        if (isset($term['id']) !== $privacyId) continue;
                     }
 
 

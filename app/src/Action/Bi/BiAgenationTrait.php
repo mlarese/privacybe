@@ -102,7 +102,7 @@ trait BiAgenationTrait{
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
             WHERE dm.portal_uid = '$portalCode-$portalId' AND 
-            --  dm.structure_uid = '$portalCode-$structureId' and
+            
             $structureWhere  
             dm.opened_year >= '2016'
             GROUP BY dm.opened_year, dm.country, reservation_origin, dm.paxtype 
@@ -131,8 +131,7 @@ trait BiAgenationTrait{
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.portal_uid = '$portalCode-$portalId' AND 
-            -- dm.structure_uid = '$portalCode-$structureId' and
+            WHERE dm.portal_uid = '$portalCode-$portalId' AND  
             $structureWhere  
             dm.opened_year >= '2016'
             GROUP BY dm.opened_year,  dm.country,dm.paxtype,reservation_origin 
@@ -150,19 +149,19 @@ trait BiAgenationTrait{
         $sqlCaseOpenedMonth = $this->sqlCaseOpenedMonth;
 
         $structureWhere = '';
-        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and ";
+        if("$structureId"!="" ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and ";
 
         $sql = "
             SELECT  count(country) AS items, country
             FROM abs_datamart.dm_reservation_$portalCode dm
             WHERE dm.portal_uid = '$portalCode-$portalId' AND 
             $structureWhere
-            -- dm.structure_uid = '$portalCode-$structureId' and  
             dm.opened_year >= '2016'
             GROUP BY country ORDER BY count(country) desc,country
             LIMIT 0,10
         ";
 
+        // die('<pre>'.$sql . ' ----- |'.$structureId.'|');
         $rsm = $rsm = new ResultSetMapping();
         $rsm->addScalarResult('country', 'country');
 

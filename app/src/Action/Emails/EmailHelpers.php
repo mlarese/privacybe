@@ -21,6 +21,7 @@ use function tmpfile;
 trait EmailHelpers
 {
     public function buildGuzzleData ($from, $to, $subject, $body, $sender = 'dataone') {
+
         return [
             'allow_redirects' => false,
             'headers' => [

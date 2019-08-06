@@ -16,6 +16,7 @@ use App\Resource\OwnerResource;
 use App\Resource\UserResource;
 use App\Service\DeferredPrivacyService;
 use App\Traits\Environment;
+use function count;
 use Exception;
 use Interop\Container\Exception\ContainerException;
 use function print_r;
@@ -98,9 +99,17 @@ class DeferredPrivacyBatch extends AbstractBatch {
             throw new Exception('unable to start batch');
         }
 
-        foreach ($owns as $own) {
+        if($this->isDebug()) echo("\n-- tot owners  = " . count($owns) . '   ') ;
 
-            if($this->isDebug()) if($own->getId()!=34) continue;
+        $owCounter = 0;
+        foreach ($owns as $own) {
+            $owCounter++;
+
+            // if($this->isDebug()) echo("\n-- current  = " . $owCounter . "   ") ;
+
+            if($this->isDebug()) if($own->getId()!=34 && $own->getId()!=15) continue;
+            if($this->isDebug()) echo("\n-- owner id = ".$own->getId() . "   ") ;
+
 
             try {
                 $emprv = $this->emBuilder->buildSUPrivateEM($own->getId());
@@ -125,8 +134,9 @@ class DeferredPrivacyBatch extends AbstractBatch {
                 $emailtplByDomain = [];
                 $emailtpl=[];
 
+
                 if($hasEmailTemplate) {
-                    if($this->isDebug()) echo '\n-- found template';
+                    if($this->isDebug()) echo "\n-- found template";
                     $emailtpl = $emailtplRec->getData();
 
                     foreach ($emailtpl as $key=>$tpl) {
@@ -183,6 +193,11 @@ class DeferredPrivacyBatch extends AbstractBatch {
 
                     }
 
+                    if($this->isDebug()) {
+                        echo "\n--- language $tmpLang\n";
+                        //print_r($currentTpl);
+                    }
+
                     /*****   EMAIL TEMPLATE ONLY  ******/
                     /***********************************/
 
@@ -190,6 +205,7 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     $encPprivacyUid = urlencode( base64_encode( $encryptor->encrypt($priv->getId()) ) );
 
                     try {
+
                         $data = $emailResource->composePrivaciesData(
                             $_lang,
                             $priv->getEmail(),

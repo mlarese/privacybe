@@ -11,4 +11,6 @@ $cont = $app->getContainer();
 /** @var DeferredPrivacyBatch $df */
 $df = $cont->get('deferred_privacy_batch');
 $df->setDebug(true);
+
+echo "\n-- starting";
 $df->sendDeferredEmails();

@@ -78,13 +78,16 @@ class Bi extends AbstractAction
         ];
     }
     private function generateQueryFilterOptionsLanguage ($em,$portalCode, $structureId) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
 
         $sql = "SELECT  distinctrow raw.reservation_guest_language
             FROM abs_datamart.dm_reservation_$portalCode dm
             LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
             LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw ON fact.related_reservation_code = raw.sync_code
-            WHERE dm.structure_uid = '$portalCode-$structureId' and(not raw.reservation_guest_language is null and not raw.reservation_guest_language='-')
+            WHERE $structureWhere (not raw.reservation_guest_language is null and not raw.reservation_guest_language='-')
             ORDER BY raw.reservation_guest_language";
+
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('reservation_guest_language', 'language', 'string');
@@ -92,8 +95,10 @@ class Bi extends AbstractAction
         return $query->getResult();
     }
     private function generateQueryFilterOptionsCountry ($em,$portalCode, $structureId) {
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
 
-        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where not  country is null and dm.structure_uid = '$portalCode-$structureId'order by country";
+        $sql = " SELECT  distinct country FROM abs_datamart.dm_reservation_$portalCode dm where $structureWhere not  country is null  order by country";
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('country', 'country', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
@@ -102,7 +107,9 @@ class Bi extends AbstractAction
 
 
     private function generateQueryFilterOptionsProduct ($em,$portalCode, $structureId) {
-        $sql = "SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where not  room_code is null  and dm.structure_uid = '$portalCode-$structureId' order by room_code";
+        $structureWhere = '';
+        if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
+        $sql = "SELECT  distinct room_code FROM abs_datamart.dm_reservation_$portalCode dm where $structureWhere not  room_code is null     order by room_code";
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('room_code', 'product', 'string');
         $query = $em->createNativeQuery($sql, $rsm);
@@ -113,10 +120,23 @@ class Bi extends AbstractAction
         $res = [];
         $em = $this->getContainer()->get('em-bi');
 
+        $options = Auth::getOptionsSt($ownerId);
         $structures = $this->getStructures($em, $ownerId);
+        $structure = $structures[0];
+
+        if($options['isPortal'])
+            $structure = [
+                'portal_code'=>$structure['portal_code'],
+                'structure_id'=>null,
+                'portal_id'=>$structure['portal_id']
+            ];
+        else
             $structure = $structures[0];
-            $portalCode = $structure['portal_code'];
-            $structureId = $structure['structure_id'];
+
+        ;
+
+        $portalCode = $structure['portal_code'];
+        $structureId = $structure['structure_id'];
 
         $res['channel'] = $this->generateQueryFilterOptionsChannel();
         $res['leadtime'] = $this->generateQueryFilterOptionsLeadtime();

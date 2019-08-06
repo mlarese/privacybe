@@ -233,9 +233,14 @@ class Users extends AbstractAction
             $email = $args['email'];
             $email = base64_decode(urldecode($email)) ;
 
+
+            // die('--- '.$email);
+
             $privacyRes = new PrivacyResource($em);
             $user = $privacyRes->privacyRecord($email);
 
+
+            // print_r($user);die;
 
         } catch (\Exception $e) {
             echo $e->getMessage();

@@ -1132,7 +1132,7 @@ class PrivacyResource extends AbstractResource
             ;
 
 
-        // die ($email);
+        // die ($qb->getQuery()->getSQL());
 
         $results = $qb->getQuery()->getResult();
         $privacyRecordIntegrator = new PrivacyRecordIntegrator($termPageMap, $termMap);

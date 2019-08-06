@@ -396,6 +396,12 @@ class Recipient extends Base {
                 // Send an error email
                 $tokenService = new MailUPTokenService();
                 $token = $tokenService->getTokenByOwnerId($ownerId);
+
+                $email = 'debug@mm-one.com';
+
+                if($token!==null){
+                    $email = $token->getAlertEmail();
+                }
                 $this->sendGenericEmail (
                     $this->getContainer(),
                     [ 'error_message' => sprintf(
@@ -408,7 +414,7 @@ class Recipient extends Base {
                     'mailup/error',
                     'it',
                     'privacy@mm-one.com',
-                    $token->getAlertEmail(),
+                    $email,
                     'dataone_emails',
                     'ATTENZIONE: problema di eliminazione di un recipient da una lista di MailUP'
                 );

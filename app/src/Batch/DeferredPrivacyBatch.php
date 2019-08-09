@@ -16,6 +16,7 @@ use App\Resource\OwnerResource;
 use App\Resource\UserResource;
 use App\Service\DeferredPrivacyService;
 use App\Traits\Environment;
+use function array_keys;
 use function count;
 use Exception;
 use Interop\Container\Exception\ContainerException;
@@ -170,6 +171,8 @@ class DeferredPrivacyBatch extends AbstractBatch {
                     if($this->isDebug()) echo("\n-- $email = $email ");
 
                     if($hasEmailTemplate) {
+                        // print_r(  array_keys($emailtplByDomain));
+
                         $domain = $priv->getDomain();
                         $lng=$priv->getLanguage();
                         if(isset($emailtplByDomain[$domain])) {

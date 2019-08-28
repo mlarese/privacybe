@@ -108,6 +108,15 @@ return [
                     'confirm_link' => 'https://privacy.dataone.online/manager/#/surfer/confirmdeferred'
                 ]
             ],
+            'mailup/error' => [
+                'all' => [
+                    "dictionary" => [
+                        "email_subject" => [
+                            "it" => "Mail up integration warning"
+                        ]
+                    ]
+                ]
+            ],
         ],
 
         'label' => 'production',

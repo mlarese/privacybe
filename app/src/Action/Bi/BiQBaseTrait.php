@@ -175,6 +175,7 @@ trait BiQBaseTrait{
 
     private function getResponseQBaseData(EntityManager $em, EntityManager $privacyEm, $portalCode, $structureId, $portalId = 1, $queryConfig=[]) {
         $structureWhere = '';
+
         if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and ";
 
         $sqlCasePaxType = $this->sqlCasePaxtype;
@@ -291,11 +292,11 @@ trait BiQBaseTrait{
           min(reservation_guest_language) as language
           FROM abs_datamart.dm_reservation_$portalCode dm
           LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
-          INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON fact.related_reservation_code = raw.sync_code
+          INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON SUBSTRING_INDEX(fact.related_reservation_code,'-',-1) = raw.reservation_id
 
          WHERE
-            dm.structure_uid = '$portalCode-$structureId'
-            AND dm.opened_year >= '2016'
+            -- dm.structure_uid = '$portalCode-$structureId'
+            dm.opened_year >= '2016'
             -- AND dm.type in('RESERVATION')
             $whereCountry
             $whereProduct
@@ -303,6 +304,7 @@ trait BiQBaseTrait{
             $whereChannel
             $whereLanguage
             $whereCity
+            $structureWhere
             $wherePax
             $whereCheckin
             $whereCheckout
@@ -313,12 +315,12 @@ trait BiQBaseTrait{
             
         GROUP BY reservation_email
         ORDER BY reservation_email
-
+         
         ";
 
        // $this->filterByPrivacy([], $queryConfig,$privacyEm ); die("1");
 
-        //die("<pre>$sql");
+        // die("<pre>$sql");
         $rsm = new ResultSetMapping();
 
         // serve solo email
@@ -336,7 +338,7 @@ trait BiQBaseTrait{
         $data = $this->filterByPrivacy($result, $queryConfig,$privacyEm );
 
         return [
-            // 'q'=>$sql,
+            'q'=>$sql,
             'result'=>$result,
             "excluded"=>&$data['excluded'],
             "pv"=>&$data['listByEmail']

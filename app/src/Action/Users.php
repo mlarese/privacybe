@@ -108,7 +108,7 @@ class Users extends AbstractAction
         $ownerId = $this->getOwnerId($request);
         session_commit();
         ini_set('memory_limit', '1024M');
-        set_time_limit ( 300 );
+        set_time_limit ( 9000 );
 
         try {
             /** @var EntityManager $em */

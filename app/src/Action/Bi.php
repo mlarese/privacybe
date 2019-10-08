@@ -82,9 +82,7 @@ class Bi extends AbstractAction
         // if($structureId!=null ) $structureWhere="dm.structure_uid = '$portalCode-$structureId' and";
 
         $sql = "SELECT  distinctrow raw.reservation_guest_language
-            FROM abs_datamart.dm_reservation_$portalCode dm
-            LEFT JOIN abs_datawarehouse.fact_reservation_$portalCode AS fact ON dm.sync_code = fact.related_sync_code
-            LEFT JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON SUBSTRING_INDEX(fact.related_reservation_code,'-',-1) = raw.reservation_id
+            FROM abs_datawarehouse.raw_reservation_$portalCode AS raw  
             
             WHERE $structureWhere (not raw.reservation_guest_language is null and not raw.reservation_guest_language='-')
             ORDER BY raw.reservation_guest_language";

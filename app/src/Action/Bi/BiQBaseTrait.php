@@ -258,7 +258,7 @@ trait BiQBaseTrait{
          WHERE
             -- dm.structure_uid = '$portalCode-$structureId' and
             $structureWhere
-            dm.opened_year >= '2016'
+            dm.opened_year >= '2016' and
 
             $whereCountry
             $whereProduct
@@ -295,9 +295,9 @@ trait BiQBaseTrait{
           INNER JOIN abs_datawarehouse.raw_reservation_$portalCode AS raw  ON SUBSTRING_INDEX(fact.related_reservation_code,'-',-1) = raw.reservation_id
 
          WHERE
-            -- dm.structure_uid = '$portalCode-$structureId'
+             
             dm.opened_year >= '2016'
-            -- AND dm.type in('RESERVATION')
+             
             $whereCountry
             $whereProduct
             $whereOrigin

@@ -209,7 +209,7 @@ class Auth extends AbstractAction
             case 53: // vidi
                 $ret["hasBi"] = true ;
                 $ret["hasQuery"] = true ;
-                $ret["hasPredictive"] = false ;
+                $ret["hasPredictive"] = true ;
                 break;
 
         }

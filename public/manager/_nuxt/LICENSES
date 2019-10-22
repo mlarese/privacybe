@@ -1,4 +1,52 @@
 /*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
 	 * The buffer module from node.js, for the browser.
 	 *
 	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
@@ -12,8 +60,21 @@
  */
 
 /**
- * vuex v3.0.1
- * (c) 2017 Evan You
+  * vue-class-component v7.1.0
+  * (c) 2015-present Evan You
+  * @license MIT
+  */
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/**
+ * vuex v3.1.1
+ * (c) 2019 Evan You
  * @license MIT
  */
 
@@ -25,10 +86,36 @@
  */
 
 /*!
- * vue-i18n v7.6.0 
+ * vue-i18n v7.8.1 
  * (c) 2018 kazuya kawaguchi
  * Released under the MIT License.
  */
+
+/*!*************************************************!*\
+  !*** ./node_modules/cache-control-esm/index.js ***!
+  \*************************************************/
+
+/*! exports provided: CacheControl, parse, format, default */
+
+/*! core-js/modules/es7.symbol.async-iterator */
+
+/*! core-js/modules/es6.symbol */
+
+/*! core-js/modules/web.dom.iterable */
+
+/*! core-js/modules/es6.array.is-array */
+
+/*! core-js/modules/es6.object.define-property */
+
+/*! core-js/modules/es6.string.trim */
+
+/*! core-js/modules/es6.regexp.split */
+
+/*! core-js/modules/es6.array.for-each */
+
+/*! core-js/modules/es6.number.constructor */
+
+/*! core-js/modules/es6.number.is-finite */
 
 /*!*****************************************************!*\
   !*** ./node_modules/core-js/modules/_a-function.js ***!
@@ -45,6 +132,14 @@
 /*! ./_wks */
 
 /*! ./_hide */
+
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/modules/_advance-string-index.js ***!
+  \***************************************************************/
+
+/*! no static exports found */
+
+/*! ./_string-at */
 
 /*!****************************************************!*\
   !*** ./node_modules/core-js/modules/_an-object.js ***!
@@ -65,6 +160,52 @@
 /*! ./_to-length */
 
 /*! ./_to-absolute-index */
+
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/modules/_array-methods.js ***!
+  \********************************************************/
+
+/*! no static exports found */
+
+/*! ./_ctx */
+
+/*! ./_iobject */
+
+/*! ./_to-object */
+
+/*! ./_to-length */
+
+/*! ./_array-species-create */
+
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/modules/_array-species-constructor.js ***!
+  \********************************************************************/
+
+/*! no static exports found */
+
+/*! ./_is-object */
+
+/*! ./_is-array */
+
+/*! ./_wks */
+
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/modules/_array-species-create.js ***!
+  \***************************************************************/
+
+/*! no static exports found */
+
+/*! ./_array-species-constructor */
+
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/modules/_classof.js ***!
+  \**************************************************/
+
+/*! no static exports found */
+
+/*! ./_cof */
+
+/*! ./_wks */
 
 /*!**********************************************!*\
   !*** ./node_modules/core-js/modules/_cof.js ***!
@@ -116,6 +257,18 @@
 
 /*! no static exports found */
 
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_enum-keys.js ***!
+  \****************************************************/
+
+/*! no static exports found */
+
+/*! ./_object-keys */
+
+/*! ./_object-gops */
+
+/*! ./_object-pie */
+
 /*!*************************************************!*\
   !*** ./node_modules/core-js/modules/_export.js ***!
   \*************************************************/
@@ -137,6 +290,42 @@
   \************************************************/
 
 /*! no static exports found */
+
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/modules/_fix-re-wks.js ***!
+  \*****************************************************/
+
+/*! no static exports found */
+
+/*! ./es6.regexp.exec */
+
+/*! ./_redefine */
+
+/*! ./_hide */
+
+/*! ./_fails */
+
+/*! ./_defined */
+
+/*! ./_wks */
+
+/*! ./_regexp-exec */
+
+/*!************************************************!*\
+  !*** ./node_modules/core-js/modules/_flags.js ***!
+  \************************************************/
+
+/*! no static exports found */
+
+/*! ./_an-object */
+
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/modules/_function-to-string.js ***!
+  \*************************************************************/
+
+/*! no static exports found */
+
+/*! ./_shared */
 
 /*!*************************************************!*\
   !*** ./node_modules/core-js/modules/_global.js ***!
@@ -182,9 +371,27 @@
 
 /*! ./_dom-create */
 
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/modules/_inherit-if-required.js ***!
+  \**************************************************************/
+
+/*! no static exports found */
+
+/*! ./_is-object */
+
+/*! ./_set-proto */
+
 /*!**************************************************!*\
   !*** ./node_modules/core-js/modules/_iobject.js ***!
   \**************************************************/
+
+/*! no static exports found */
+
+/*! ./_cof */
+
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/modules/_is-array.js ***!
+  \***************************************************/
 
 /*! no static exports found */
 
@@ -195,6 +402,18 @@
   \****************************************************/
 
 /*! no static exports found */
+
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_is-regexp.js ***!
+  \****************************************************/
+
+/*! no static exports found */
+
+/*! ./_is-object */
+
+/*! ./_cof */
+
+/*! ./_wks */
 
 /*!******************************************************!*\
   !*** ./node_modules/core-js/modules/_iter-create.js ***!
@@ -254,6 +473,22 @@
 
 /*! no static exports found */
 
+/*!***********************************************!*\
+  !*** ./node_modules/core-js/modules/_meta.js ***!
+  \***********************************************/
+
+/*! no static exports found */
+
+/*! ./_uid */
+
+/*! ./_is-object */
+
+/*! ./_has */
+
+/*! ./_object-dp */
+
+/*! ./_fails */
+
 /*!********************************************************!*\
   !*** ./node_modules/core-js/modules/_object-create.js ***!
   \********************************************************/
@@ -300,6 +535,52 @@
 
 /*! ./_descriptors */
 
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_object-gopd.js ***!
+  \******************************************************/
+
+/*! no static exports found */
+
+/*! ./_object-pie */
+
+/*! ./_property-desc */
+
+/*! ./_to-iobject */
+
+/*! ./_to-primitive */
+
+/*! ./_has */
+
+/*! ./_ie8-dom-define */
+
+/*! ./_descriptors */
+
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/_object-gopn-ext.js ***!
+  \**********************************************************/
+
+/*! no static exports found */
+
+/*! ./_to-iobject */
+
+/*! ./_object-gopn */
+
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_object-gopn.js ***!
+  \******************************************************/
+
+/*! no static exports found */
+
+/*! ./_object-keys-internal */
+
+/*! ./_enum-bug-keys */
+
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_object-gops.js ***!
+  \******************************************************/
+
+/*! no static exports found */
+
 /*!*****************************************************!*\
   !*** ./node_modules/core-js/modules/_object-gpo.js ***!
   \*****************************************************/
@@ -336,6 +617,12 @@
 
 /*! ./_enum-bug-keys */
 
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/modules/_object-pie.js ***!
+  \*****************************************************/
+
+/*! no static exports found */
+
 /*!********************************************************!*\
   !*** ./node_modules/core-js/modules/_property-desc.js ***!
   \********************************************************/
@@ -356,7 +643,39 @@
 
 /*! ./_uid */
 
+/*! ./_function-to-string */
+
 /*! ./_core */
+
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/modules/_regexp-exec-abstract.js ***!
+  \***************************************************************/
+
+/*! no static exports found */
+
+/*! ./_classof */
+
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_regexp-exec.js ***!
+  \******************************************************/
+
+/*! no static exports found */
+
+/*! ./_flags */
+
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_set-proto.js ***!
+  \****************************************************/
+
+/*! no static exports found */
+
+/*! ./_is-object */
+
+/*! ./_an-object */
+
+/*! ./_ctx */
+
+/*! ./_object-gopd */
 
 /*!************************************************************!*\
   !*** ./node_modules/core-js/modules/_set-to-string-tag.js ***!
@@ -391,6 +710,56 @@
 /*! ./_global */
 
 /*! ./_library */
+
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/modules/_species-constructor.js ***!
+  \**************************************************************/
+
+/*! no static exports found */
+
+/*! ./_an-object */
+
+/*! ./_a-function */
+
+/*! ./_wks */
+
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/modules/_strict-method.js ***!
+  \********************************************************/
+
+/*! no static exports found */
+
+/*! ./_fails */
+
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_string-at.js ***!
+  \****************************************************/
+
+/*! no static exports found */
+
+/*! ./_to-integer */
+
+/*! ./_defined */
+
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/_string-trim.js ***!
+  \******************************************************/
+
+/*! no static exports found */
+
+/*! ./_export */
+
+/*! ./_defined */
+
+/*! ./_fails */
+
+/*! ./_string-ws */
+
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/_string-ws.js ***!
+  \****************************************************/
+
+/*! no static exports found */
 
 /*!************************************************************!*\
   !*** ./node_modules/core-js/modules/_to-absolute-index.js ***!
@@ -446,6 +815,30 @@
 
 /*! no static exports found */
 
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/modules/_wks-define.js ***!
+  \*****************************************************/
+
+/*! no static exports found */
+
+/*! ./_global */
+
+/*! ./_core */
+
+/*! ./_library */
+
+/*! ./_wks-ext */
+
+/*! ./_object-dp */
+
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/modules/_wks-ext.js ***!
+  \**************************************************/
+
+/*! no static exports found */
+
+/*! ./_wks */
+
 /*!**********************************************!*\
   !*** ./node_modules/core-js/modules/_wks.js ***!
   \**********************************************/
@@ -457,6 +850,28 @@
 /*! ./_uid */
 
 /*! ./_global */
+
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.array.for-each.js ***!
+  \************************************************************/
+
+/*! no static exports found */
+
+/*! ./_export */
+
+/*! ./_array-methods */
+
+/*! ./_strict-method */
+
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.array.is-array.js ***!
+  \************************************************************/
+
+/*! no static exports found */
+
+/*! ./_export */
+
+/*! ./_is-array */
 
 /*!************************************************************!*\
   !*** ./node_modules/core-js/modules/es6.array.iterator.js ***!
@@ -474,6 +889,56 @@
 
 /*! ./_iter-define */
 
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.date.to-string.js ***!
+  \************************************************************/
+
+/*! no static exports found */
+
+/*! ./_redefine */
+
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.number.constructor.js ***!
+  \****************************************************************/
+
+/*! no static exports found */
+
+/*! ./_global */
+
+/*! ./_has */
+
+/*! ./_cof */
+
+/*! ./_inherit-if-required */
+
+/*! ./_to-primitive */
+
+/*! ./_fails */
+
+/*! ./_object-gopn */
+
+/*! ./_object-gopd */
+
+/*! ./_object-dp */
+
+/*! ./_string-trim */
+
+/*! ./_object-create */
+
+/*! ./_descriptors */
+
+/*! ./_redefine */
+
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.number.is-finite.js ***!
+  \**************************************************************/
+
+/*! no static exports found */
+
+/*! ./_export */
+
+/*! ./_global */
+
 /*!********************************************************************!*\
   !*** ./node_modules/core-js/modules/es6.object.define-property.js ***!
   \********************************************************************/
@@ -486,25 +951,235 @@
 
 /*! ./_object-dp */
 
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.object.to-string.js ***!
+  \**************************************************************/
+
+/*! no static exports found */
+
+/*! ./_classof */
+
+/*! ./_wks */
+
+/*! ./_redefine */
+
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.regexp.exec.js ***!
+  \*********************************************************/
+
+/*! no static exports found */
+
+/*! ./_regexp-exec */
+
+/*! ./_export */
+
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.regexp.flags.js ***!
+  \**********************************************************/
+
+/*! no static exports found */
+
+/*! ./_descriptors */
+
+/*! ./_object-dp */
+
+/*! ./_flags */
+
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.regexp.split.js ***!
+  \**********************************************************/
+
+/*! no static exports found */
+
+/*! ./_is-regexp */
+
+/*! ./_an-object */
+
+/*! ./_species-constructor */
+
+/*! ./_advance-string-index */
+
+/*! ./_to-length */
+
+/*! ./_regexp-exec-abstract */
+
+/*! ./_regexp-exec */
+
+/*! ./_fails */
+
+/*! ./_fix-re-wks */
+
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.regexp.to-string.js ***!
+  \**************************************************************/
+
+/*! no static exports found */
+
+/*! ./es6.regexp.flags */
+
+/*! ./_an-object */
+
+/*! ./_flags */
+
+/*! ./_descriptors */
+
+/*! ./_redefine */
+
+/*! ./_fails */
+
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.string.trim.js ***!
+  \*********************************************************/
+
+/*! no static exports found */
+
+/*! ./_string-trim */
+
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/es6.symbol.js ***!
+  \****************************************************/
+
+/*! no static exports found */
+
+/*! ./_global */
+
+/*! ./_has */
+
+/*! ./_descriptors */
+
+/*! ./_export */
+
+/*! ./_redefine */
+
+/*! ./_meta */
+
+/*! ./_fails */
+
+/*! ./_shared */
+
+/*! ./_set-to-string-tag */
+
+/*! ./_uid */
+
+/*! ./_wks */
+
+/*! ./_wks-ext */
+
+/*! ./_wks-define */
+
+/*! ./_enum-keys */
+
+/*! ./_is-array */
+
+/*! ./_an-object */
+
+/*! ./_is-object */
+
+/*! ./_to-object */
+
+/*! ./_to-iobject */
+
+/*! ./_to-primitive */
+
+/*! ./_property-desc */
+
+/*! ./_object-create */
+
+/*! ./_object-gopn-ext */
+
+/*! ./_object-gopd */
+
+/*! ./_object-gops */
+
+/*! ./_object-dp */
+
+/*! ./_object-keys */
+
+/*! ./_object-gopn */
+
+/*! ./_object-pie */
+
+/*! ./_library */
+
+/*! ./_hide */
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/modules/es7.symbol.async-iterator.js ***!
+  \*******************************************************************/
+
+/*! no static exports found */
+
+/*! ./_wks-define */
+
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom.iterable.js ***!
+  \**********************************************************/
+
+/*! no static exports found */
+
+/*! ./es6.array.iterator */
+
+/*! ./_object-keys */
+
+/*! ./_redefine */
+
+/*! ./_global */
+
+/*! ./_hide */
+
+/*! ./_iterators */
+
+/*! ./_wks */
+
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
 
 /*! no static exports found */
 
+/*!********************!*\
+  !*** ./src/api.js ***!
+  \********************/
+
+/*! exports provided: setup, setupCache, serializeQuery, default */
+
+/*! core-js/modules/es6.object.to-string */
+
+/*! regenerator-runtime/runtime */
+
+/*! axios */
+
+/*! lodash/omit */
+
+/*! lodash/merge */
+
+/*! lodash/isFunction */
+
+/*! ./request */
+
+/*! ./cache */
+
+/*! ./config */
+
 /*!**********************!*\
   !*** ./src/cache.js ***!
   \**********************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: read, write, key, invalidate, serializeQuery, default */
 
 /*! regenerator-runtime/runtime */
+
+/*! core-js/modules/es6.regexp.to-string */
+
+/*! core-js/modules/es6.date.to-string */
+
+/*! core-js/modules/es6.object.to-string */
 
 /*! lodash/isString */
 
 /*! lodash/isFunction */
+
+/*! lodash/map */
 
 /*! ./serialize */
 
@@ -512,9 +1187,7 @@
   !*** ./src/config.js ***!
   \***********************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: defaults, makeConfig, mergeRequestConfig, default */
 
 /*! axios */
 
@@ -530,9 +1203,7 @@
   !*** ./src/exclude.js ***!
   \************************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: default */
 
 /*! lodash/find */
 
@@ -542,43 +1213,31 @@
   !*** ./src/index.js ***!
   \**********************/
 
-/*! no static exports found */
+/*! exports provided: default, setup, setupCache, serializeQuery */
 
-/*! core-js/modules/es6.object.define-property */
-
-/*! regenerator-runtime/runtime */
-
-/*! axios */
-
-/*! lodash/omit */
-
-/*! lodash/merge */
-
-/*! lodash/isFunction */
-
-/*! ./request */
-
-/*! ./config */
+/*! ./api */
 
 /*!**********************!*\
   !*** ./src/limit.js ***!
   \**********************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: default */
 
 /*! regenerator-runtime/runtime */
+
+/*! core-js/modules/es6.object.to-string */
 
 /*!***********************!*\
   !*** ./src/memory.js ***!
   \***********************/
 
-/*! no static exports found */
+/*! exports provided: default */
 
 /*! core-js/modules/es6.object.define-property */
 
 /*! core-js/modules/es6.array.iterator */
+
+/*! core-js/modules/es6.object.to-string */
 
 /*! regenerator-runtime/runtime */
 
@@ -590,13 +1249,11 @@
   !*** ./src/request.js ***!
   \************************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: default */
 
 /*! regenerator-runtime/runtime */
 
-/*! lodash/extend */
+/*! core-js/modules/es6.object.to-string */
 
 /*! ./response */
 
@@ -608,43 +1265,29 @@
   !*** ./src/response.js ***!
   \*************************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: default */
 
 /*! regenerator-runtime/runtime */
+
+/*! core-js/modules/es6.object.to-string */
 
 /*! ./limit */
 
 /*! ./cache */
 
+/*! cache-control-esm */
+
 /*!**************************!*\
   !*** ./src/serialize.js ***!
   \**************************/
 
-/*! no static exports found */
-
-/*! core-js/modules/es6.object.define-property */
+/*! exports provided: default */
 
 /*! lodash/omit */
-
-/*!****************************!*\
-  !*** multi ./src/index.js ***!
-  \****************************/
-
-/*! no static exports found */
-
-/*! ./src/index.js */
 
 /*!*************************************************************************************!*\
   !*** external {"umd":"axios","amd":"axios","commonjs":"axios","commonjs2":"axios"} ***!
   \*************************************************************************************/
-
-/*! no static exports found */
-
-/*!*********************************************************************************************************************!*\
-  !*** external {"umd":"lodash/extend","amd":"lodash/extend","commonjs":"lodash/extend","commonjs2":"lodash/extend"} ***!
-  \*********************************************************************************************************************/
 
 /*! no static exports found */
 
@@ -719,25 +1362,17 @@
  * @version   v4.2.4+314e4831
  */
 
-/*!
- * JavaScript Cookie v2.2.0
- * https://github.com/js-cookie/js-cookie
- *
- * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
- * Released under the MIT license
- */
-
 /**
- * vue-meta v1.5.0
- * (c) 2018 Declan de Wet & Atinux
+ * vue-meta v1.6.0
+ * (c) 2019 Declan de Wet & Sébastien Chopin (@Atinux)
  * @license MIT
  */
 
 /*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
 
 /*!
  * cookie

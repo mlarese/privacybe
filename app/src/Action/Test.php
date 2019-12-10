@@ -17,7 +17,7 @@ use Slim\Http\UploadedFile;
 class Test extends AbstractAction
 {
 
-    use UrlHelpers;
+    use UrlHelpers; 
 
     /**
      * @param $request Request

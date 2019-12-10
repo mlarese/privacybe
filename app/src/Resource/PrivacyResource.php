@@ -20,6 +20,7 @@ use App\Resource\Privacy\TermIntegrator;
 use App\Resource\Privacy\TreatmentsIntegrator;
 use App\Service\DeferredPrivacyService;
 use App\Service\FilesService;
+use function array_values;
 use function date;
 use DateTime;
 use Doctrine\Common\Collections\Criteria;
@@ -1207,40 +1208,95 @@ class PrivacyResource extends AbstractResource
      * @return mixed
      */
     public function nativeExtractFlags ($criteria) {
+        $email = ''; if(isset($criteria['email'])) { $email=$criteria['email']; $email=" AND email='$email'"; }
+        $domain = ''; if(isset($criteria['domain'])) { $domain=$criteria['domain']; $domain=" AND domain='$domain'";}
+
         $sql = "
             SELECT privacy_entry.email,
                privacy_entry.domain,
-               privacy_entry.site
-
+               privacy_entry.email,
+               privacy_entry.site,
+               privacy_entry.privacy_flags,
+               created
+               
               FROM privacy_entry 
                 
               where 
               privacy_entry.deleted = 0 
               AND (not email IS NULL AND NOT email = '')
-              limit 100
+              $email
+              $domain
+              
+              order by created
             ";
         $rsm = new ResultSetMapping();
 
-
+        $rsm->addScalarResult('created', 'created');
         $rsm->addScalarResult('email', 'email');
         $rsm->addScalarResult('domain', 'domain');
         $rsm->addScalarResult('site', 'site');
-        $rsm->addScalarResult('term_uid', 'term_uid');
-        $rsm->addScalarResult('term_id', 'term_id');
-        $rsm->addScalarResult('pr_term_id', 'pr_term_id');
+        $rsm->addScalarResult('privacy_flags', 'privacy_flags','json');
 
 
         $qn = $this->entityManager->createNativeQuery($sql, $rsm);
 
         try {
             $users = $qn->getResult();
+
+            $elaboratedUsers = array();
+            foreach($users as $user)  {
+                $email = $user['email'];
+                $flags = $user['privacy_flags'];
+
+                if(!isset($elaboratedUsers[$email]))
+                    $elaboratedUsers[$email] = array(
+                        "email"=>$email,
+                        "hasPrivacy"=>false,
+                        "hasNewsletters"=>false,
+                        "dateNewsletters"=>null,
+                        "datePrivacy"=>null,
+                        "deleted"=>false,
+                        "domain"=>$user ['domain']
+                    );
+
+                $curUser = &$elaboratedUsers[$email];
+
+                foreach ($flags as $fl)  {
+                    if( $fl ['code'] === 'newsletter'  &&  $fl ['selected']  )  {
+                        $curUser ['hasNewsletters'] = true;
+                        $curUser ['dateNewsletters'] = $user  ['created'] ;
+
+                    }
+
+                    if( $fl ['code'] === 'newsletters'  &&  $fl ['selected']  )  {
+                        $curUser ['hasNewsletters'] = true;
+                        $curUser ['dateNewsletters'] = $user  ['created'] ;
+
+                    }
+
+                    if( $fl ['code'] === 'newsletter'  &&  $fl ['selected']  )  {
+                        $curUser ['hasNewsletters'] = true;
+                        $curUser ['dateNewsletters'] = $user  ['created'] ;
+
+                    }
+
+                    if( $fl ['code'] === 'dati_personali'  &&  $fl ['selected']  )  {
+                        $curUser ['hasPrivacy'] = true;
+                        $curUser ['datePrivacy'] = $user  ['created'] ;
+
+                    }
+                }
+
+
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
             die('error');
         }
 
 
-        return $users;
+        //return $users;
+        return array_values( $elaboratedUsers);
     }
 
 }

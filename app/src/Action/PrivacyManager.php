@@ -1243,14 +1243,20 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function retrieveFlags($request, $response, $args) {
-        $domain = $request->getParam('domain');
-        $ownerId=$args['owner_id'];
 
-        /** @var EntityManager $em */
-        $em = $this->getEmPrivacy($ownerId);
-        $privacyRes = new PrivacyResource($em);
-
-        die("dominio $domain ownerId $ownerId");
+        try {
+            $domain = $request->getParam('domain');
+            $ownerId = $args['owner_id'];
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $privacyRes = new PrivacyResource($em);
+            $criteria = ["domain"=>$domain];
+            $users = $privacyRes->nativeExtractFlags($criteria);
+            return $response->withJson($users);
+        } catch (Exception $e) {
+            echo ( $e->getMessage());
+            return $response->withStatus(500, 'System Error');
+        }
 
     }
 
@@ -1262,18 +1268,21 @@ class PrivacyManager extends AbstractAction
      * @return mixed
      */
     public function retrieveFlag($request, $response, $args) {
-        $domain = $request->getParam('domain');
-        $ownerId=$args['owner_id'];
-        $email=$args['entry_email'];
 
-        /** @var EntityManager $em */
-        $em = $this->getEmPrivacy($ownerId);
-        $privacyRes = new PrivacyResource($em);
-
-        $criteria = [];
-        $users = $privacyRes->nativeExtractFlags($criteria);
-
-        return $response->withJson( $users );
+        try {
+            $domain = $request->getParam('domain');
+            $ownerId = $args['owner_id'];
+            $email = $args['entry_email'];
+            /** @var EntityManager $em */
+            $em = $this->getEmPrivacy($ownerId);
+            $privacyRes = new PrivacyResource($em);
+            $criteria = ["domain"=>$domain, "email"=>$email];
+            $users = $privacyRes->nativeExtractFlags($criteria);
+            return $response->withJson($users);
+        } catch (Exception $e) {
+           echo ( $e->getMessage());
+            return $response->withStatus(500, 'System Error');
+        }
         // die("dominio $domain ownerId $ownerId  entry_email $email");
     }
 }

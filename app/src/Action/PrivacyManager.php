@@ -1227,7 +1227,6 @@ class PrivacyManager extends AbstractAction
             $privacyRes = new PrivacyResource($em);
             $users = $privacyRes->nativeSearchPrivacy($criteria);
 
-
         } catch (Exception $e) {
             echo $e->getMessage();
             return $response->withStatus(500, 'Error');
@@ -1236,4 +1235,44 @@ class PrivacyManager extends AbstractAction
         return $response->withJson( $users);
     }
 
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function retrieveFlags($request, $response, $args) {
+        $domain = $request->getParam('domain');
+        $ownerId=$args['owner_id'];
+
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+        $privacyRes = new PrivacyResource($em);
+
+        die("dominio $domain ownerId $ownerId");
+
+    }
+
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function retrieveFlag($request, $response, $args) {
+        $domain = $request->getParam('domain');
+        $ownerId=$args['owner_id'];
+        $email=$args['entry_email'];
+
+        /** @var EntityManager $em */
+        $em = $this->getEmPrivacy($ownerId);
+        $privacyRes = new PrivacyResource($em);
+
+        $criteria = [];
+        $users = $privacyRes->nativeExtractFlags($criteria);
+
+        die("dominio $domain ownerId $ownerId  entry_email $email");
+    }
 }

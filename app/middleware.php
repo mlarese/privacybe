@@ -63,6 +63,7 @@ if($authMode === 'jwt') {
     $app->add(new Tuupola\Middleware\JwtAuthentication([
         "path" => ["/api", "/api/auth"],
         "ignore" => [
+            "/api/common",
             "/api/widgetreq",
             "/api/widgetcomp",
             "/api/widget",

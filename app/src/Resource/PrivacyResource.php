@@ -750,7 +750,6 @@ class PrivacyResource extends AbstractResource
                 ;
             }
 
-
             if(isset($criteria['created']) && $criteria['created']!=='') {
                 $created = $criteria['created'] ;
                 $dt = date($created);
@@ -1201,4 +1200,47 @@ class PrivacyResource extends AbstractResource
 
         return $users;
     }
+
+
+    /**
+     * @param $criteria
+     * @return mixed
+     */
+    public function nativeExtractFlags ($criteria) {
+        $sql = "
+            SELECT privacy_entry.email,
+               privacy_entry.domain,
+               privacy_entry.site
+
+              FROM privacy_entry 
+                
+              where 
+              privacy_entry.deleted = 0 
+              AND (not email IS NULL AND NOT email = '')
+              limit 100
+            ";
+        $rsm = new ResultSetMapping();
+
+
+        $rsm->addScalarResult('email', 'email');
+        $rsm->addScalarResult('domain', 'domain');
+        $rsm->addScalarResult('site', 'site');
+        $rsm->addScalarResult('term_uid', 'term_uid');
+        $rsm->addScalarResult('term_id', 'term_id');
+        $rsm->addScalarResult('pr_term_id', 'pr_term_id');
+
+
+        $qn = $this->entityManager->createNativeQuery($sql, $rsm);
+
+        try {
+            $users = $qn->getResult();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            die('error');
+        }
+
+
+        return $users;
+    }
+
 }

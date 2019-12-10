@@ -167,6 +167,12 @@ $app->put('/api/owner/profile/{id}', 'App\Action\Owners:updateOwner');
 $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 $app->get('/api/owner/ownersstats', 'App\Action\Owners:ownersStats');
 
+
+$app->get('/api/common/owner/{owner_id}/entries', 'App\Action\PrivacyManager:retrieveFlags');
+$app->get('/api/common/owner/{owner_id}/entry/{entry_email}', 'App\Action\PrivacyManager:retrieveFlag');
+
+
+
 /*********************************************************
  *                  PRIVACY GROUPED
  *********************************************************/

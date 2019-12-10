@@ -17,7 +17,7 @@ use Slim\Http\UploadedFile;
 class Test extends AbstractAction
 {
 
-    use UrlHelpers; 
+    use UrlHelpers;
 
     /**
      * @param $request Request
@@ -47,9 +47,7 @@ class Test extends AbstractAction
         $c = $request->getCookieParams();
 
         return $response->withJson([
-            "result" => "welcome",
-            'c'=>$c,
-            'get' => $args
+            "result" => "welcome"
         ]);
     }
 

@@ -1273,6 +1273,7 @@ class PrivacyManager extends AbstractAction
         $criteria = [];
         $users = $privacyRes->nativeExtractFlags($criteria);
 
-        die("dominio $domain ownerId $ownerId  entry_email $email");
+        return $response->withJson( $users );
+        // die("dominio $domain ownerId $ownerId  entry_email $email");
     }
 }

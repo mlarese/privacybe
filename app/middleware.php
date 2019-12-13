@@ -87,14 +87,15 @@ if($authMode === 'jwt') {
         "before" => function ($request, $arguments) {
             /** @var Request $request */
             // print_r($arguments);
-            $isUpdate =  $request->isDelete() || $request->isPatch() || $request->isPost() || $request->isPut();
+            $isUpdate =  $request->isDelete() || $request->isPatch() || $request->isPost() || $request->isPut()  || $request->isOptions();
 
-            if($isUpdate) {
-                // print_r($arguments['decoded']['user']->acl);
-                // die(  'end');
-                // $user = $arguments['decoded']['user'] ;
-                // print_r(user);
+            $tkd = $arguments['decoded'];
+            $scope = $tkd['scope'];
 
+            if(is_array($scope) && count($scope)>0 && $scope[0]==='protected_read') {
+                if($isUpdate) {
+                    die( json_encode(['status'=>401]));
+                }
             }
 
             return $request;

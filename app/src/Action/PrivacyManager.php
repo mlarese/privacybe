@@ -1246,7 +1246,7 @@ class PrivacyManager extends AbstractAction
 
         try {
             $domain = $request->getParam('domain');
-            $ownerId = $args['owner_id'];
+            $ownerId = $this->getOwnerId($request);
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);
             $privacyRes = new PrivacyResource($em);
@@ -1271,7 +1271,7 @@ class PrivacyManager extends AbstractAction
 
         try {
             $domain = $request->getParam('domain');
-            $ownerId = $args['owner_id'];
+            $ownerId = $this->getOwnerId($request);
             $email = $args['entry_email'];
             /** @var EntityManager $em */
             $em = $this->getEmPrivacy($ownerId);

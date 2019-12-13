@@ -55,6 +55,9 @@ $app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatam
 
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
+/** token generator must be commented */
+// $app->post('/api/test/tg', 'App\Action\Auth:create4YearJwtToken');
+
 /*********************************************************
  *                  TEST OPTIONS
  *********************************************************/
@@ -168,8 +171,8 @@ $app->put('/api/owner/config/{id}', 'App\Action\Owners:updateOwnerProfile');
 $app->get('/api/owner/ownersstats', 'App\Action\Owners:ownersStats');
 
 
-$app->get('/api/common/owner/{owner_id}/entries', 'App\Action\PrivacyManager:retrieveFlags');
-$app->get('/api/common/owner/{owner_id}/entry/{entry_email}', 'App\Action\PrivacyManager:retrieveFlag');
+$app->get('/api/owner/entries', 'App\Action\PrivacyManager:retrieveFlags');
+$app->get('/api/owner/entry/{entry_email}', 'App\Action\PrivacyManager:retrieveFlag');
 
 
 

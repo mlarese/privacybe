@@ -63,6 +63,101 @@ class Auth extends AbstractAction
         return $data;
     }
 
+    private function define4YearJwtToken($request, $user, $scope = ["read", "write", "delete"])
+    {
+        $requested_scopes = $request->getParsedBody() ?: [];
+
+        $settings = $this->getContainer()->get('settings');
+        $auth = $settings->get('auth');
+
+        $now = new DateTime();
+        $future = new DateTime("+4 years");
+        $server = $request->getServerParams();
+        $jti = (new Base62())->encode(random_bytes(16));
+        $payload = [
+            "iat" => $now->getTimeStamp(),
+            "exp" => $future->getTimeStamp(),
+            "jti" => $jti,
+            "scope" => $scope,
+            "user" => $user,
+            "sub" => $user['user']
+        ];
+        $secret = $auth['secret'];
+        $token = JWT::encode($payload, $secret, "HS256");
+
+        $data["token"] = $token;
+        $data["expires"] = $future->getTimeStamp();
+
+        return $data;
+    }
+    /**
+     * @param $request Request
+     * @param $response Response
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function create4YearJwtToken($request, $response, $args)
+    {
+        session_commit();
+        $found = false;
+        $user = $request->getParam('username');
+        $password = $request->getParam('password');
+
+
+        // echo 'here' ; die;
+        /** @var User $ue */
+        $ue = null;
+        /** @var Operator $op */
+        $op = null;
+        try {
+            $ue = $this->userHasAuth($user, $password);
+            $found = true;
+
+            $gdprRole = 'customercare';
+            $gdprEmail = '';
+
+            if ($ue->getOwnerId() > 0) {
+
+                $opRes = new OperatorResource($this->getEmPrivacy($ue->getOwnerId()));
+
+                $op = $opRes->findOperator($ue->getId());
+                $gdprRole = $op->getRole();
+                $gdprEmail = $op->getEmail();
+            }
+
+        } catch (UserNotAuthorizedException $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'User not authorized ');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return $response->withStatus(401, 'Authentication error ');
+        }
+
+        $settings = $this->getContainer()->get('settings');
+        $host = $settings["doctrine_config"]['connection']['host'];
+        if ($found) {
+            $userSpec = [
+                "acl" => $this->getAcl($gdprRole),
+                "options" => $this->getOptions($ue->getOwnerId()),
+                "email" => $gdprEmail,
+                "gdprRole" => $gdprRole,
+                "userId" => $ue->getId(),
+                "user" => $user,
+                "userName" => $ue->getName(),
+                "role" => $ue->getType(),
+                "ownerId" => $ue->getOwnerId(),
+                "source" => ($host === '127.0.0.1') ? 'local' : 'remote'
+            ];
+            $data = $this->define4YearJwtToken($request, $userSpec, ['protected_read']);
+
+            return $response->withStatus(201)
+                ->withHeader("Content-Type", "application/json")
+                ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
+        }
+    }
+
     /**
      * @param $user
      * @param $pwd

@@ -1245,7 +1245,7 @@ class PrivacyResource extends AbstractResource
 
             $elaboratedUsers = array();
             foreach($users as $user)  {
-                $email = $user['email'];
+                $email = strtolower( $user['email'] );
                 $flags = $user['privacy_flags'];
 
                 if(!isset($elaboratedUsers[$email]))

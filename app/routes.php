@@ -56,7 +56,7 @@ $app->post('/api/test/datamart/{ownerId}/{domain}', 'App\Action\Bi:retrieveDatam
 $app->post('/api/test/upload', 'App\Action\Test:upload');
 
 /** token generator must be commented */
-// $app->post('/api/test/tg', 'App\Action\Auth:create4YearJwtToken');
+$app->post('/api/test/tg', 'App\Action\Auth:create4YearJwtToken');
 
 /*********************************************************
  *                  TEST OPTIONS
